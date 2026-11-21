@@ -1,17 +1,64 @@
 {
- "generated_at": "2026-11-21T02:56:24Z",
- "prices_as_of": null,
- "live_prices": 0,
+ "generated_at": "2026-11-21T23:46:18Z",
+ "prices_as_of": "2026-11-21T23:45:39Z",
+ "live_prices": 5,
  "scrape": {
-  "started": "2026-11-21T02:56:24Z",
-  "finished": "2026-11-21T02:56:24Z",
-  "mode": "offline",
-  "runner": "local",
-  "ok": 0,
-  "failed": 0,
+  "started": "2026-11-21T23:45:39Z",
+  "finished": "2026-11-21T23:46:18Z",
+  "mode": "live",
+  "runner": "github-actions",
+  "ok": 5,
+  "failed": 13,
   "tracked_links": 18,
-  "by_retailer": {},
-  "notes": [],
+  "by_retailer": {
+   "gamestop": {
+    "ok": 2,
+    "failed": 0,
+    "blocked": 0
+   },
+   "target": {
+    "ok": 0,
+    "failed": 2,
+    "blocked": 0
+   },
+   "lego": {
+    "ok": 0,
+    "failed": 1,
+    "blocked": 1
+   },
+   "amazon": {
+    "ok": 0,
+    "failed": 2,
+    "blocked": 0
+   },
+   "bestbuy": {
+    "ok": 0,
+    "failed": 5,
+    "blocked": 0
+   },
+   "walmart": {
+    "ok": 0,
+    "failed": 3,
+    "blocked": 3
+   },
+   "tonies": {
+    "ok": 2,
+    "failed": 0,
+    "blocked": 0
+   },
+   "playstation": {
+    "ok": 1,
+    "failed": 0,
+    "blocked": 0
+   }
+  },
+  "notes": [
+   "Target: no prices read this run (parse). Last known prices kept.",
+   "LEGO.com didn't give this machine any prices, most likely because it blocks automated traffic from cloud servers. Last known prices kept. Running the scraper on a home computer usually helps (see README).",
+   "Amazon: no prices read this run (parse). Last known prices kept.",
+   "Best Buy didn't give this machine any prices, most likely because it blocks automated traffic from cloud servers. Last known prices kept. Running the scraper on a home computer usually helps (see README).",
+   "Walmart didn't give this machine any prices, most likely because it blocks automated traffic from cloud servers. Last known prices kept. Running the scraper on a home computer usually helps (see README)."
+  ],
   "api": false
  },
  "retailers": {
@@ -707,13 +754,26 @@
      "retailer_name": "tonies",
      "url": "https://us.tonies.com/products/myfirsttonies-farmset-starter-set-toniebox2-pink",
      "label": "Farm set, Cloud Pink",
-     "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "price": 169.99,
+     "in_stock": true,
+     "checked_at": "2026-11-21T23:46:17Z",
+     "source": "us.tonies.com product page",
+     "verification_method": "retailer-html",
+     "name": "My First Tonies Farm Set Toniebox 2 Starter Set - Cloud Pink",
+     "stale": false
     }
    ],
-   "price_status": "typical",
-   "history": []
+   "price": 169.99,
+   "price_retailer": "tonies",
+   "price_url": "https://us.tonies.com/products/myfirsttonies-farmset-starter-set-toniebox2-pink",
+   "price_status": "live",
+   "price_checked_at": "2026-11-21T23:46:17Z",
+   "history": [
+    [
+     "2026-11-21",
+     169.99
+    ]
+   ]
   },
   {
    "id": "toniebox-2-starter",
@@ -752,13 +812,26 @@
      "retailer_name": "tonies",
      "url": "https://us.tonies.com/products/toniebox2-starter-set-disney-frozen-sky-blue",
      "label": "Disney Frozen set, Sky Blue",
-     "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "price": 149.99,
+     "in_stock": true,
+     "checked_at": "2026-11-21T23:46:06Z",
+     "source": "us.tonies.com product page",
+     "verification_method": "retailer-html",
+     "name": "Disney Frozen Toniebox 2 Starter Set - Sky Blue",
+     "stale": false
     }
    ],
-   "price_status": "typical",
-   "history": []
+   "price": 149.99,
+   "price_retailer": "tonies",
+   "price_url": "https://us.tonies.com/products/toniebox2-starter-set-disney-frozen-sky-blue",
+   "price_status": "live",
+   "price_checked_at": "2026-11-21T23:46:06Z",
+   "history": [
+    [
+     "2026-11-21",
+     149.99
+    ]
+   ]
   },
   {
    "id": "little-tikes-cozy-coupe",
@@ -1778,8 +1851,9 @@
      "url": "https://www.amazon.com/dp/B0BQZFVJTB",
      "sku": "B0BQZFVJTB",
      "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "stale": true,
+     "error": "Couldn't find the price: page doesn't mention this link's ASIN (it may redirect to another product)",
+     "last_attempt": "2026-11-21T23:46:17Z"
     },
     {
      "retailer": "walmart",
@@ -1788,8 +1862,10 @@
      "sku": "1107995384",
      "label": "Blue",
      "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "stale": true,
+     "error": "the store showed a bot check instead of the product (px-captcha, robot or human)",
+     "last_attempt": "2026-11-21T23:46:06Z",
+     "blocked": true
     }
    ],
    "price_status": "typical",
@@ -1997,8 +2073,9 @@
      "sku": "1006663864",
      "label": "Wanda the Pink Watermelon",
      "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "stale": true,
+     "error": "Couldn't find the price: no product price data found on the Target page",
+     "last_attempt": "2026-11-21T23:46:06Z"
     },
     {
      "retailer": "target",
@@ -2007,8 +2084,9 @@
      "sku": "1006663868",
      "label": "Shon the Lavender Loch Ness Monster",
      "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "stale": true,
+     "error": "Couldn't find the price: no product price data found on the Target page",
+     "last_attempt": "2026-11-21T23:45:40Z"
     }
    ],
    "price_status": "typical",
@@ -2278,8 +2356,10 @@
      "url": "https://www.lego.com/en-us/product/smart-play-training-house-with-pikachu-72164",
      "sku": "72164",
      "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "stale": true,
+     "error": "HTTP 403 with a bot-check page",
+     "last_attempt": "2026-11-21T23:45:40Z",
+     "blocked": true
     },
     {
      "retailer": "amazon",
@@ -2287,8 +2367,9 @@
      "url": "https://www.amazon.com/dp/B0GHYFH499",
      "sku": "B0GHYFH499",
      "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "stale": true,
+     "error": "Couldn't find the price: page doesn't mention this link's ASIN (it may redirect to another product)",
+     "last_attempt": "2026-11-21T23:45:40Z"
     }
    ],
    "price_status": "typical",
@@ -2562,8 +2643,9 @@
      "url": "https://www.bestbuy.com/product/pokemon-trading-card-game-30th-celebration-elite-trainer-box/JJG2TL8XCJ",
      "sku": "13138238",
      "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "stale": true,
+     "error": "robots.txt unreachable (TimeoutError: The read operation timed out), so the site is skipped this run",
+     "last_attempt": "2026-11-21T23:45:40Z"
     }
    ],
    "price_status": "typical",
@@ -3315,8 +3397,10 @@
      "url": "https://www.walmart.com/ip/Nintendo-Switch-2-System/15949610846",
      "sku": "15949610846",
      "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "stale": true,
+     "error": "the store showed a bot check instead of the product (px-captcha, robot or human)",
+     "last_attempt": "2026-11-21T23:46:07Z",
+     "blocked": true
     }
    ],
    "price_status": "typical",
@@ -3357,8 +3441,9 @@
      "url": "https://www.bestbuy.com/product/switch-2-mario-kart-world-bundle/J7GSL57WWG",
      "sku": "6689812",
      "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "stale": true,
+     "error": "skipped: the store kept refusing requests this run",
+     "last_attempt": "2026-11-21T23:46:18Z"
     }
    ],
    "price_status": "typical",
@@ -3441,21 +3526,36 @@
      "url": "https://www.bestbuy.com/product/the-legend-of-zelda-ocarina-of-time-nintendo-switch-2/J7GSL5C746",
      "sku": "6691853",
      "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "stale": true,
+     "error": "skipped: the store kept refusing requests this run",
+     "last_attempt": "2026-11-21T23:46:12Z"
     },
     {
      "retailer": "gamestop",
      "retailer_name": "GameStop",
      "url": "https://www.gamestop.com/video-games/nintendo-switch-2/products/the-legend-of-zelda-ocarina-of-time---nintendo-switch-2/20036066.html",
      "sku": "20036066",
-     "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "price": 59.99,
+     "in_stock": true,
+     "open_box": 64.99,
+     "checked_at": "2026-11-21T23:46:18Z",
+     "source": "www.gamestop.com product page",
+     "verification_method": "retailer-html",
+     "name": "The Legend of Zelda: Ocarina of Time - Nintendo Switch 2",
+     "stale": false
     }
    ],
-   "price_status": "typical",
-   "history": []
+   "price": 59.99,
+   "price_retailer": "gamestop",
+   "price_url": "https://www.gamestop.com/video-games/nintendo-switch-2/products/the-legend-of-zelda-ocarina-of-time---nintendo-switch-2/20036066.html",
+   "price_status": "live",
+   "price_checked_at": "2026-11-21T23:46:18Z",
+   "history": [
+    [
+     "2026-11-21",
+     59.99
+    ]
+   ]
   },
   {
    "id": "pokemon-pokopia",
@@ -3971,20 +4071,32 @@
      "retailer_name": "Best Buy",
      "url": "https://www.bestbuy.com/product/playstation-5-slim-digital-edition-console-825gb/JXHQ37TYYL",
      "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "stale": true,
+     "error": "skipped: the store kept refusing requests this run",
+     "last_attempt": "2026-11-21T23:46:17Z"
     },
     {
      "retailer": "playstation",
      "retailer_name": "PlayStation Direct",
      "url": "https://direct.playstation.com/en-us/buy-consoles/playstation5-digital-edition-console-825-gb",
-     "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "price": 599.0,
+     "checked_at": "2026-11-21T23:46:18Z",
+     "source": "direct.playstation.com product page",
+     "verification_method": "retailer-html",
+     "stale": false
     }
    ],
-   "price_status": "typical",
-   "history": []
+   "price": 599.0,
+   "price_retailer": "playstation",
+   "price_url": "https://direct.playstation.com/en-us/buy-consoles/playstation5-digital-edition-console-825-gb",
+   "price_status": "live",
+   "price_checked_at": "2026-11-21T23:46:18Z",
+   "history": [
+    [
+     "2026-11-21",
+     599.0
+    ]
+   ]
   },
   {
    "id": "ps5-disc",
@@ -4063,8 +4175,9 @@
      "sku": "6684968",
      "label": "PS5",
      "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "stale": true,
+     "error": "skipped: the store kept refusing requests this run",
+     "last_attempt": "2026-11-21T23:46:17Z"
     },
     {
      "retailer": "walmart",
@@ -4073,8 +4186,10 @@
      "sku": "20482917228",
      "label": "PS5",
      "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "stale": true,
+     "error": "the store showed a bot check instead of the product (px-captcha, robot or human)",
+     "last_attempt": "2026-11-21T23:46:12Z",
+     "blocked": true
     },
     {
      "retailer": "gamestop",
@@ -4082,13 +4197,26 @@
      "url": "https://www.gamestop.com/video-games/playstation-5/products/grand-theft-auto-vi---playstation-5-code-in-box/448295.html",
      "sku": "448295",
      "label": "PS5",
-     "on_sale": false,
-     "error": "not checked yet",
-     "stale": true
+     "price": 79.99,
+     "in_stock": true,
+     "checked_at": "2026-11-21T23:45:39Z",
+     "source": "www.gamestop.com product page",
+     "verification_method": "retailer-html",
+     "name": "Grand Theft Auto VI - PlayStation 5 (Code in Box)",
+     "stale": false
     }
    ],
-   "price_status": "typical",
-   "history": []
+   "price": 79.99,
+   "price_retailer": "gamestop",
+   "price_url": "https://www.gamestop.com/video-games/playstation-5/products/grand-theft-auto-vi---playstation-5-code-in-box/448295.html",
+   "price_status": "live",
+   "price_checked_at": "2026-11-21T23:45:39Z",
+   "history": [
+    [
+     "2026-11-21",
+     79.99
+    ]
+   ]
   },
   {
    "id": "astro-bot",
