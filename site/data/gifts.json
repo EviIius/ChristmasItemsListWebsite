@@ -1,0 +1,5900 @@
+{
+ "generated_at": "2026-11-21T02:56:24Z",
+ "prices_as_of": null,
+ "live_prices": 0,
+ "scrape": {
+  "started": "2026-11-21T02:56:24Z",
+  "finished": "2026-11-21T02:56:24Z",
+  "mode": "offline",
+  "runner": "local",
+  "ok": 0,
+  "failed": 0,
+  "tracked_links": 18,
+  "by_retailer": {},
+  "notes": [],
+  "api": false
+ },
+ "retailers": {
+  "target": {
+   "name": "Target",
+   "home": "https://www.target.com",
+   "search": "https://www.target.com/s?searchTerm={q}",
+   "parser": "target",
+   "hosts": [
+    "target.com"
+   ],
+   "good_for": "Bullseye's Top Toys, LEGO, Squishmallows and lots of Target-only exclusives.",
+   "group": "big"
+  },
+  "walmart": {
+   "name": "Walmart",
+   "home": "https://www.walmart.com",
+   "search": "https://www.walmart.com/search?q={q}",
+   "parser": "walmart",
+   "hosts": [
+    "walmart.com"
+   ],
+   "good_for": "Low everyday prices on toys, games and consoles, plus its Top Toys list.",
+   "group": "big"
+  },
+  "amazon": {
+   "name": "Amazon",
+   "home": "https://www.amazon.com",
+   "search": "https://www.amazon.com/s?k={q}",
+   "parser": "amazon",
+   "hosts": [
+    "amazon.com"
+   ],
+   "good_for": "Almost everything, delivered fast. On hot items, check that Amazon is the seller.",
+   "group": "big"
+  },
+  "bestbuy": {
+   "name": "Best Buy",
+   "home": "https://www.bestbuy.com",
+   "search": "https://www.bestbuy.com/site/searchpage.jsp?st={q}",
+   "parser": "bestbuy",
+   "hosts": [
+    "bestbuy.com"
+   ],
+   "good_for": "Consoles, video games, headphones and tech, with price matching.",
+   "group": "big"
+  },
+  "gamestop": {
+   "name": "GameStop",
+   "home": "https://www.gamestop.com",
+   "search": "https://www.gamestop.com/search/?q={q}",
+   "parser": "jsonld",
+   "hosts": [
+    "gamestop.com"
+   ],
+   "good_for": "Games, consoles, Pokémon cards and collectibles. Pre-owned games cost less.",
+   "group": "games"
+  },
+  "nintendo": {
+   "name": "Nintendo Store",
+   "home": "https://www.nintendo.com/us/store/",
+   "search": "https://www.nintendo.com/us/search/#q={q}",
+   "parser": "jsonld",
+   "hosts": [
+    "nintendo.com"
+   ],
+   "good_for": "Switch 2 games, consoles, amiibo and eShop codes straight from Nintendo.",
+   "group": "games"
+  },
+  "playstation": {
+   "name": "PlayStation Direct",
+   "home": "https://direct.playstation.com/en-us/",
+   "search": null,
+   "parser": "jsonld",
+   "hosts": [
+    "direct.playstation.com"
+   ],
+   "good_for": "PS5 consoles, controllers and bundles from Sony.",
+   "group": "games"
+  },
+  "pokemoncenter": {
+   "name": "Pokémon Center",
+   "home": "https://www.pokemoncenter.com",
+   "search": "https://www.pokemoncenter.com/search/{q}",
+   "parser": "jsonld",
+   "hosts": [
+    "pokemoncenter.com"
+   ],
+   "good_for": "Official Pokémon plush, cards and exclusives.",
+   "group": "games"
+  },
+  "lego": {
+   "name": "LEGO.com",
+   "home": "https://www.lego.com/en-us",
+   "search": "https://www.lego.com/en-us/search?q={q}",
+   "parser": "jsonld",
+   "hosts": [
+    "lego.com"
+   ],
+   "good_for": "Every LEGO set, store exclusives and Insiders points.",
+   "group": "toys"
+  },
+  "fivebelow": {
+   "name": "Five Below",
+   "home": "https://www.fivebelow.com",
+   "search": "https://www.fivebelow.com/search?q={q}",
+   "parser": "jsonld",
+   "hosts": [
+    "fivebelow.com"
+   ],
+   "good_for": "Squishy dumplings, NeeDoh and $5 stocking stuffers. Limit of 5 squishies per person per day.",
+   "group": "toys"
+  },
+  "kohls": {
+   "name": "Kohl's",
+   "home": "https://www.kohls.com",
+   "search": "https://www.kohls.com/search.jsp?search={q}",
+   "parser": "jsonld",
+   "hosts": [
+    "kohls.com"
+   ],
+   "good_for": "Toys, LEGO, clothes and kitchen gear; Kohl's Cash stacks with sales.",
+   "group": "toys"
+  },
+  "tonies": {
+   "name": "tonies",
+   "home": "https://us.tonies.com",
+   "search": "https://us.tonies.com/search?q={q}",
+   "parser": "jsonld",
+   "hosts": [
+    "tonies.com"
+   ],
+   "good_for": "Toniebox 2 starter sets and character figures.",
+   "group": "toys"
+  },
+  "buildabear": {
+   "name": "Build-A-Bear",
+   "home": "https://www.buildabear.com",
+   "search": "https://www.buildabear.com/search?q={q}",
+   "parser": "jsonld",
+   "hosts": [
+    "buildabear.com"
+   ],
+   "good_for": "Make-your-own stuffed animals and gift cards.",
+   "group": "toys"
+  },
+  "barnesnoble": {
+   "name": "Barnes & Noble",
+   "home": "https://www.barnesandnoble.com",
+   "search": "https://www.barnesandnoble.com/s/{q}",
+   "parser": "jsonld",
+   "hosts": [
+    "barnesandnoble.com"
+   ],
+   "good_for": "Books, manga, puzzles and LEGO.",
+   "group": "books"
+  },
+  "bookshop": {
+   "name": "Bookshop.org",
+   "home": "https://bookshop.org",
+   "search": "https://bookshop.org/search?keywords={q}",
+   "parser": "jsonld",
+   "hosts": [
+    "bookshop.org"
+   ],
+   "good_for": "Books that support local bookstores.",
+   "group": "books"
+  },
+  "michaels": {
+   "name": "Michaels",
+   "home": "https://www.michaels.com",
+   "search": "https://www.michaels.com/search?q={q}",
+   "parser": "jsonld",
+   "hosts": [
+    "michaels.com"
+   ],
+   "good_for": "Craft kits, art supplies, beads and bracelet kits.",
+   "group": "books"
+  },
+  "etsy": {
+   "name": "Etsy",
+   "home": "https://www.etsy.com",
+   "search": "https://www.etsy.com/search?q={q}",
+   "parser": "jsonld",
+   "hosts": [
+    "etsy.com"
+   ],
+   "good_for": "Personalized and handmade gifts. Order early for Christmas delivery.",
+   "group": "books"
+  },
+  "sephora": {
+   "name": "Sephora",
+   "home": "https://www.sephora.com",
+   "search": "https://www.sephora.com/search?keyword={q}",
+   "parser": "jsonld",
+   "hosts": [
+    "sephora.com"
+   ],
+   "good_for": "Teen and adult beauty favorites and gift sets.",
+   "group": "style"
+  },
+  "ulta": {
+   "name": "Ulta Beauty",
+   "home": "https://www.ulta.com",
+   "search": "https://www.ulta.com/search?search={q}",
+   "parser": "jsonld",
+   "hosts": [
+    "ulta.com"
+   ],
+   "good_for": "Beauty, hair tools and value sets.",
+   "group": "style"
+  },
+  "macys": {
+   "name": "Macy's",
+   "home": "https://www.macys.com",
+   "search": "https://www.macys.com/shop/featured/{q}",
+   "parser": "jsonld",
+   "hosts": [
+    "macys.com"
+   ],
+   "good_for": "Clothes, slippers, bags and beauty.",
+   "group": "style"
+  },
+  "dicks": {
+   "name": "Dick's Sporting Goods",
+   "home": "https://www.dickssportinggoods.com",
+   "search": "https://www.dickssportinggoods.com/search/SearchDisplay?searchTerm={q}",
+   "parser": "jsonld",
+   "hosts": [
+    "dickssportinggoods.com"
+   ],
+   "good_for": "Balls, scooters, team gear and outdoor toys.",
+   "group": "style"
+  },
+  "apple": {
+   "name": "Apple",
+   "home": "https://www.apple.com",
+   "search": "https://www.apple.com/us/search/{q}",
+   "parser": "jsonld",
+   "hosts": [
+    "apple.com"
+   ],
+   "good_for": "AirPods, iPad, AirTag and gift cards.",
+   "group": "style"
+  },
+  "costco": {
+   "name": "Costco",
+   "home": "https://www.costco.com",
+   "search": "https://www.costco.com/CatalogSearch?dept=All&keyword={q}",
+   "parser": "jsonld",
+   "hosts": [
+    "costco.com"
+   ],
+   "good_for": "Big bundles and discounted gift cards (membership needed).",
+   "group": "warehouse"
+  },
+  "samsclub": {
+   "name": "Sam's Club",
+   "home": "https://www.samsclub.com",
+   "search": "https://www.samsclub.com/s/{q}",
+   "parser": "jsonld",
+   "hosts": [
+    "samsclub.com"
+   ],
+   "good_for": "Bundles, electronics and gift cards (membership needed).",
+   "group": "warehouse"
+  }
+ },
+ "interests": {
+  "squishies": {
+   "label": "Squishies & fidgets",
+   "emoji": "🫧",
+   "short": "squishies"
+  },
+  "plush": {
+   "label": "Stuffed animals & plush",
+   "emoji": "🧸",
+   "short": "plush"
+  },
+  "lego": {
+   "label": "LEGO & building",
+   "emoji": "🧱",
+   "short": "LEGO"
+  },
+  "switch": {
+   "label": "Nintendo Switch",
+   "emoji": "🍄",
+   "short": "Switch games"
+  },
+  "playstation": {
+   "label": "PlayStation",
+   "emoji": "🎮",
+   "short": "PlayStation"
+  },
+  "xbox": {
+   "label": "Xbox",
+   "emoji": "🟢",
+   "short": "Xbox"
+  },
+  "pc": {
+   "label": "PC gaming & VR",
+   "emoji": "🖥️",
+   "short": "PC gaming"
+  },
+  "pokemon": {
+   "label": "Pokémon & trading cards",
+   "emoji": "⚡",
+   "short": "Pokémon"
+  },
+  "kpop": {
+   "label": "K-pop & anime",
+   "emoji": "🎤",
+   "short": "K-pop and anime"
+  },
+  "characters": {
+   "label": "Characters & movies",
+   "emoji": "🎬",
+   "short": "favorite characters"
+  },
+  "dolls": {
+   "label": "Dolls & pretend play",
+   "emoji": "🏡",
+   "short": "dolls and pretend play"
+  },
+  "pets": {
+   "label": "Interactive pets & creatures",
+   "emoji": "🐣",
+   "short": "interactive pets"
+  },
+  "vehicles": {
+   "label": "Cars, trucks & RC",
+   "emoji": "🚗",
+   "short": "cars and trucks"
+  },
+  "arts": {
+   "label": "Arts & crafts",
+   "emoji": "🎨",
+   "short": "arts and crafts"
+  },
+  "stem": {
+   "label": "Science & STEM",
+   "emoji": "🔬",
+   "short": "science"
+  },
+  "books": {
+   "label": "Books & reading",
+   "emoji": "📚",
+   "short": "books"
+  },
+  "games": {
+   "label": "Board & card games",
+   "emoji": "🎲",
+   "short": "board games"
+  },
+  "outdoor": {
+   "label": "Outdoor & sports",
+   "emoji": "⚽",
+   "short": "sports and outdoors"
+  },
+  "music": {
+   "label": "Music & audio",
+   "emoji": "🎧",
+   "short": "music"
+  },
+  "tech": {
+   "label": "Tech & gadgets",
+   "emoji": "📱",
+   "short": "tech"
+  },
+  "beauty": {
+   "label": "Beauty & self-care",
+   "emoji": "💄",
+   "short": "beauty"
+  },
+  "fashion": {
+   "label": "Clothes & accessories",
+   "emoji": "👟",
+   "short": "clothes"
+  },
+  "room": {
+   "label": "Room decor & cozy",
+   "emoji": "🛋️",
+   "short": "room decor"
+  },
+  "kitchen": {
+   "label": "Cooking & kitchen",
+   "emoji": "🍳",
+   "short": "cooking"
+  },
+  "collectibles": {
+   "label": "Collectibles & blind boxes",
+   "emoji": "🎁",
+   "short": "collectibles"
+  },
+  "baby": {
+   "label": "Baby & toddler",
+   "emoji": "🍼",
+   "short": "baby toys"
+  },
+  "giftcards": {
+   "label": "Gift cards",
+   "emoji": "💳",
+   "short": "gift cards"
+  }
+ },
+ "categories": {
+  "baby": {
+   "label": "Baby & toddler"
+  },
+  "toys": {
+   "label": "Toys"
+  },
+  "plush": {
+   "label": "Plush"
+  },
+  "squishy": {
+   "label": "Squishies"
+  },
+  "building": {
+   "label": "Building sets"
+  },
+  "videogames": {
+   "label": "Video games"
+  },
+  "consoles": {
+   "label": "Consoles & accessories"
+  },
+  "cards": {
+   "label": "Trading cards"
+  },
+  "tech": {
+   "label": "Tech"
+  },
+  "arts": {
+   "label": "Arts & crafts"
+  },
+  "stem": {
+   "label": "Science & STEM"
+  },
+  "books": {
+   "label": "Books"
+  },
+  "games": {
+   "label": "Board & card games"
+  },
+  "outdoor": {
+   "label": "Outdoor & sports"
+  },
+  "beauty": {
+   "label": "Beauty"
+  },
+  "fashion": {
+   "label": "Clothes & accessories"
+  },
+  "room": {
+   "label": "Room & cozy"
+  },
+  "kitchen": {
+   "label": "Kitchen"
+  },
+  "collectibles": {
+   "label": "Collectibles"
+  },
+  "giftcards": {
+   "label": "Gift cards"
+  }
+ },
+ "items": [
+  {
+   "id": "fp-little-people-mario",
+   "name": "Little People My Mario Adventure Playset",
+   "brand": "Fisher-Price",
+   "emoji": "🍄",
+   "category": "baby",
+   "interests": [
+    "baby",
+    "characters"
+   ],
+   "ages": [
+    1,
+    5
+   ],
+   "typical": 49.99,
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Chunky Mario playset with music and two figures sized for toddler hands. A Toy Insider pick for ages 0–2 this year.",
+   "search": "Little People My Mario Adventure Playset",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "tickle-me-elmo-giggle-max",
+   "name": "Tickle Me Elmo Giggle Max (18-inch)",
+   "brand": "Sesame Street",
+   "emoji": "😂",
+   "category": "plush",
+   "interests": [
+    "baby",
+    "plush",
+    "characters"
+   ],
+   "ages": [
+    1,
+    5
+   ],
+   "typical": 39.99,
+   "range": [
+    34.99,
+    39.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "A big 18-inch Elmo who laughs harder the more you tickle him. On The Toy Insider and Amazon lists for 2026.",
+   "search": "Tickle Me Elmo Giggle Max (18-inch)",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "ms-rachel-learning-box",
+   "name": "Ms. Rachel Surprise Learning Box",
+   "brand": "Ms. Rachel",
+   "emoji": "📦",
+   "category": "baby",
+   "interests": [
+    "baby"
+   ],
+   "ages": [
+    1,
+    3
+   ],
+   "typical": 20.99,
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Open, shake and discover: a first-words toy built around the Ms. Rachel songs toddlers already know.",
+   "search": "Ms. Rachel Surprise Learning Box",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "duplo-classic-brick-box",
+   "name": "LEGO DUPLO Classic Brick Box (10913)",
+   "brand": "LEGO",
+   "emoji": "🧱",
+   "category": "building",
+   "interests": [
+    "lego",
+    "baby"
+   ],
+   "ages": [
+    1,
+    5
+   ],
+   "typical": 29.99,
+   "range": [
+    23.99,
+    34.99
+   ],
+   "tags": [],
+   "blurb": "A tub of big, easy-grip DUPLO bricks: the classic first building set, and often on sale.",
+   "search": "LEGO DUPLO Classic Brick Box 10913",
+   "stores": [
+    "lego",
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "vtech-sit-to-stand-walker",
+   "name": "VTech Sit-to-Stand Learning Walker",
+   "brand": "VTech",
+   "emoji": "🚶",
+   "category": "baby",
+   "interests": [
+    "baby"
+   ],
+   "ages": [
+    1,
+    3
+   ],
+   "typical": 39.99,
+   "range": [
+    29.99,
+    44.99
+   ],
+   "tags": [],
+   "blurb": "A play panel that pops off a push walker, so it works for sitting babies and new walkers.",
+   "search": "VTech Sit-to-Stand Learning Walker",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "fp-4in1-activity-table",
+   "name": "Laugh & Learn 4-in-1 Activity Table & Easel",
+   "brand": "Fisher-Price",
+   "emoji": "🎨",
+   "category": "baby",
+   "interests": [
+    "baby",
+    "arts"
+   ],
+   "ages": [
+    1,
+    3
+   ],
+   "typical": 59.99,
+   "range": [
+    56.99,
+    64.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Activity table that turns into an easel, with lights, songs and first-words play. On Walmart's Top Toys list.",
+   "search": "Laugh & Learn 4-in-1 Activity Table & Easel",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "toniebox-2-my-first",
+   "name": "Toniebox 2 Starter Set with My First Tonies",
+   "brand": "tonies",
+   "emoji": "🎵",
+   "category": "baby",
+   "interests": [
+    "baby",
+    "music"
+   ],
+   "ages": [
+    1,
+    4
+   ],
+   "typical": 169.99,
+   "range": [
+    149.99,
+    169.99
+   ],
+   "tags": [],
+   "blurb": "Screen-free audio player: little ones set a soft figure on top to play songs and sounds. Has a sleep timer and sunrise light.",
+   "search": "Toniebox 2 My First Tonies starter set",
+   "stores": [
+    "tonies",
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [
+    {
+     "retailer": "tonies",
+     "retailer_name": "tonies",
+     "url": "https://us.tonies.com/products/myfirsttonies-farmset-starter-set-toniebox2-pink",
+     "label": "Farm set, Cloud Pink",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    }
+   ],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "toniebox-2-starter",
+   "name": "Toniebox 2 Starter Set (Bluey, Pokémon, Frozen and more)",
+   "brand": "tonies",
+   "emoji": "🎧",
+   "category": "toys",
+   "interests": [
+    "music",
+    "characters"
+   ],
+   "ages": [
+    3,
+    9
+   ],
+   "typical": 139.99,
+   "range": [
+    139.99,
+    169.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "The audio player kids run themselves; each starter set comes with one character. The Bluey and Pokémon sets are on Target's Top Toys list.",
+   "search": "Toniebox 2 starter set",
+   "stores": [
+    "tonies",
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [
+    {
+     "retailer": "tonies",
+     "retailer_name": "tonies",
+     "url": "https://us.tonies.com/products/toniebox2-starter-set-disney-frozen-sky-blue",
+     "label": "Disney Frozen set, Sky Blue",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    }
+   ],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "little-tikes-cozy-coupe",
+   "name": "Little Tikes Cozy Coupe ride-on",
+   "brand": "Little Tikes",
+   "emoji": "🚗",
+   "category": "baby",
+   "interests": [
+    "baby",
+    "vehicles",
+    "outdoor"
+   ],
+   "ages": [
+    1,
+    5
+   ],
+   "typical": 64.99,
+   "range": [
+    59.99,
+    79.99
+   ],
+   "tags": [],
+   "blurb": "The foot-powered car toddlers have loved for decades. Amazon has an exclusive white Cloud Collection version this year.",
+   "search": "Little Tikes Cozy Coupe ride-on",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "jellycat-bartholomew",
+   "name": "Jellycat Bartholomew Bear (medium)",
+   "brand": "Jellycat",
+   "emoji": "🐻",
+   "category": "plush",
+   "interests": [
+    "plush",
+    "baby"
+   ],
+   "ages": [
+    1,
+    30
+   ],
+   "typical": 42.0,
+   "range": [
+    38.0,
+    50.0
+   ],
+   "tags": [],
+   "blurb": "A very soft, floppy bear that suits a newborn or a grown-up just as well.",
+   "search": "Jellycat Bartholomew Bear (medium)",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls",
+    "macys"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "board-books",
+   "name": "Board books (Eric Carle, Sandra Boynton, Pete the Cat)",
+   "brand": "Various",
+   "emoji": "📗",
+   "category": "books",
+   "interests": [
+    "books",
+    "baby"
+   ],
+   "ages": [
+    1,
+    4
+   ],
+   "typical": 8.99,
+   "range": [
+    5.99,
+    12.99
+   ],
+   "tags": [],
+   "blurb": "Chunky, chew-proof books for reading together at bedtime.",
+   "search": "board books toddler",
+   "stores": [
+    "barnesnoble",
+    "bookshop",
+    "target",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "stacking-shape-sorter",
+   "name": "Stacking and shape-sorter toys",
+   "brand": "Fisher-Price, Melissa & Doug",
+   "emoji": "🔺",
+   "category": "baby",
+   "interests": [
+    "baby"
+   ],
+   "ages": [
+    1,
+    3
+   ],
+   "typical": 14.99,
+   "range": [
+    9.99,
+    24.99
+   ],
+   "tags": [],
+   "blurb": "Simple stack-and-sort toys that build hand skills.",
+   "search": "shape sorter toddler toy",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "strider-balance-bike",
+   "name": "Strider 12 Classic balance bike",
+   "brand": "Strider",
+   "emoji": "🚲",
+   "category": "outdoor",
+   "interests": [
+    "baby",
+    "outdoor",
+    "vehicles"
+   ],
+   "ages": [
+    2,
+    5
+   ],
+   "typical": 119.99,
+   "range": [
+    99.99,
+    139.99
+   ],
+   "tags": [],
+   "blurb": "A pedal-free bike that teaches balance first, so the move to a real bike is easier. Add a helmet.",
+   "search": "Strider balance bike",
+   "stores": [
+    "dicks",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "play-kitchen",
+   "name": "Wooden play kitchen",
+   "brand": "KidKraft, Melissa & Doug",
+   "emoji": "🍳",
+   "category": "toys",
+   "interests": [
+    "dolls",
+    "baby"
+   ],
+   "ages": [
+    2,
+    6
+   ],
+   "typical": 129.99,
+   "range": [
+    79.99,
+    199.99
+   ],
+   "tags": [],
+   "blurb": "A pretend kitchen that gets years of play. Check the box for assembly time before Christmas Eve.",
+   "search": "wooden play kitchen",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "lovevery-play-kit",
+   "name": "Lovevery Play Kit",
+   "brand": "Lovevery",
+   "emoji": "🧺",
+   "category": "baby",
+   "interests": [
+    "baby",
+    "stem"
+   ],
+   "ages": [
+    1,
+    3
+   ],
+   "typical": 80.0,
+   "range": [
+    80.0,
+    100.0
+   ],
+   "tags": [],
+   "blurb": "A box of stage-based toys for babies and toddlers, picked for their age in months.",
+   "search": "Lovevery play kit",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "melissa-doug-cheery-lane",
+   "name": "Cheery Lane Modular Play House & Figures",
+   "brand": "Melissa & Doug",
+   "emoji": "🏡",
+   "category": "toys",
+   "interests": [
+    "dolls"
+   ],
+   "ages": [
+    3,
+    6
+   ],
+   "typical": 34.99,
+   "range": [
+    34.97,
+    44.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Snap-together dollhouse rooms with little figures, so the house can grow over time. A Toy Insider 2026 pick.",
+   "search": "Cheery Lane Modular Play House & Figures",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "bluey-heeler-house",
+   "name": "Bluey Light and Surprise Heeler House",
+   "brand": "Bluey",
+   "emoji": "🏠",
+   "category": "toys",
+   "interests": [
+    "characters",
+    "dolls"
+   ],
+   "ages": [
+    3,
+    6
+   ],
+   "typical": 159.99,
+   "range": [
+    129.99,
+    159.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "The Heelers' house with lights, sounds and hidden surprises. A big under-the-tree gift for Bluey fans.",
+   "search": "Bluey Light and Surprise Heeler House",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "paw-patrol-megasaurus",
+   "name": "PAW Patrol: The Dino Movie Megasaurus Dino Vehicle",
+   "brand": "Spin Master",
+   "emoji": "🦖",
+   "category": "toys",
+   "interests": [
+    "characters",
+    "vehicles"
+   ],
+   "ages": [
+    3,
+    6
+   ],
+   "typical": 64.99,
+   "range": [
+    44.99,
+    64.99
+   ],
+   "tags": [
+    "hot",
+    "new"
+   ],
+   "blurb": "Giant dino vehicle from the new PAW Patrol movie; open the top and an inflatable dinosaur pops out.",
+   "search": "PAW Patrol: The Dino Movie Megasaurus Dino Vehicle",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "play-doh-sizzlin-kitchen",
+   "name": "Play-Doh Super Sizzlin' Kitchen Playset",
+   "brand": "Play-Doh",
+   "emoji": "🍳",
+   "category": "arts",
+   "interests": [
+    "arts",
+    "dolls"
+   ],
+   "ages": [
+    3,
+    7
+   ],
+   "typical": 44.99,
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Pretend stovetop with sizzle sounds and molds for squishing dough into meals.",
+   "search": "Play-Doh Super Sizzlin' Kitchen Playset",
+   "stores": [
+    "michaels",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "yum-yum-yoshi",
+   "name": "Yum Yum Yoshi 9.5-inch Figure",
+   "brand": "Jakks Pacific",
+   "emoji": "🍏",
+   "category": "toys",
+   "interests": [
+    "characters"
+   ],
+   "ages": [
+    3,
+    8
+   ],
+   "typical": 29.99,
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Yoshi's tongue rolls out to grab a magnetic apple. Great for little Mario fans.",
+   "search": "Nintendo Yum Yum Yoshi figure",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "furreal-gabby-tiger",
+   "name": "furReal Gabby the Grow & Roar Tiger",
+   "brand": "furReal",
+   "emoji": "🐯",
+   "category": "plush",
+   "interests": [
+    "pets",
+    "plush"
+   ],
+   "ages": [
+    3,
+    8
+   ],
+   "typical": 79.99,
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Interactive tiger cub that reacts to feeding and cuddles, and roars as it 'grows'.",
+   "search": "furReal Gabby the Grow & Roar Tiger",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "magna-tiles-undersea",
+   "name": "MAGNA-TILES Undersea Adventure 58-Piece Set",
+   "brand": "MAGNA-TILES",
+   "emoji": "🐠",
+   "category": "building",
+   "interests": [
+    "lego",
+    "stem"
+   ],
+   "ages": [
+    3,
+    8
+   ],
+   "typical": 89.99,
+   "tags": [],
+   "blurb": "Magnetic tiles that click together into ocean scenes. Open-ended enough to last for years.",
+   "search": "MAGNA-TILES Undersea Adventure 58-Piece Set",
+   "stores": [
+    "lego",
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "spidey-webquarters",
+   "name": "Spidey and His Amazing Friends Rescue Webquarters",
+   "brand": "Marvel",
+   "emoji": "🕷️",
+   "category": "toys",
+   "interests": [
+    "characters"
+   ],
+   "ages": [
+    3,
+    7
+   ],
+   "typical": 64.99,
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Tall Spidey playset with lights and sounds, from Amazon's 2026 top toys.",
+   "search": "Spidey and His Amazing Friends Rescue Webquarters",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "crayola-story-creator",
+   "name": "Crayola Story Creator Kids Tablet",
+   "brand": "Crayola",
+   "emoji": "📒",
+   "category": "arts",
+   "interests": [
+    "arts"
+   ],
+   "ages": [
+    4,
+    8
+   ],
+   "typical": 34.99,
+   "tags": [
+    "hot"
+   ],
+   "blurb": "A drawing-and-storytelling tablet toy from Crayola, picked for Amazon's 2026 Makers & Builders list.",
+   "search": "Crayola Story Creator Kids Tablet",
+   "stores": [
+    "michaels",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "monster-jam-megalodon-rc",
+   "name": "Monster Jam Chomping Megalodon RC Truck",
+   "brand": "Monster Jam",
+   "emoji": "🦈",
+   "category": "toys",
+   "interests": [
+    "vehicles"
+   ],
+   "ages": [
+    4,
+    10
+   ],
+   "typical": 49.99,
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Remote-control monster truck with a chomping shark jaw on the front.",
+   "search": "Monster Jam Chomping Megalodon RC Truck",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "hot-wheels-mutant-takedown",
+   "name": "Hot Wheels Monster Trucks Mutant Monster Takedown Playset",
+   "brand": "Hot Wheels",
+   "emoji": "🏁",
+   "category": "toys",
+   "interests": [
+    "vehicles"
+   ],
+   "ages": [
+    4,
+    9
+   ],
+   "typical": 53.99,
+   "range": [
+    44.99,
+    59.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Monster-truck battle playset that comes with the Rhinomite truck.",
+   "search": "Hot Wheels Monster Trucks Mutant Monster Takedown Playset",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "jelly-blox",
+   "name": "Jelly Blox Jelly Jungle Set",
+   "brand": "Jelly Blox",
+   "emoji": "🍮",
+   "category": "squishy",
+   "interests": [
+    "squishies",
+    "lego"
+   ],
+   "ages": [
+    2,
+    8
+   ],
+   "typical": 29.99,
+   "tags": [],
+   "blurb": "Squishy, jiggly building blocks for little hands. A sensory pick on Amazon's list.",
+   "search": "Jelly Blox Jelly Jungle Set",
+   "stores": [
+    "fivebelow",
+    "target",
+    "walmart",
+    "amazon",
+    "michaels"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "primal-hatch-megalodon",
+   "name": "Primal Hatch Megalodon Hatching Shark Egg",
+   "brand": "Primal Hatch",
+   "emoji": "🥚",
+   "category": "toys",
+   "interests": [
+    "pets"
+   ],
+   "ages": [
+    5,
+    10
+   ],
+   "typical": 49.99,
+   "tags": [
+    "hot",
+    "new"
+   ],
+   "blurb": "Kids help a baby megalodon break out of its egg. The follow-up to last year's viral hatching dinosaur.",
+   "search": "Primal Hatch Megalodon Hatching Shark Egg",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "bitzee-hamster-ball",
+   "name": "Bitzee Hamster Ball digital pet",
+   "brand": "Bitzee",
+   "emoji": "🐹",
+   "category": "toys",
+   "interests": [
+    "pets",
+    "tech"
+   ],
+   "ages": [
+    5,
+    10
+   ],
+   "typical": 42.99,
+   "range": [
+    22.99,
+    42.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "A digital hamster that reacts to touch and tilting. Target has had it well under list price.",
+   "search": "Bitzee Hamster Ball digital pet",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "bitzee-kpop",
+   "name": "Bitzee KPop Demon Hunters interactive pet",
+   "brand": "Bitzee",
+   "emoji": "🎤",
+   "category": "toys",
+   "interests": [
+    "kpop",
+    "pets",
+    "tech"
+   ],
+   "ages": [
+    5,
+    12
+   ],
+   "typical": 34.99,
+   "range": [
+    26.24,
+    34.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Collect the HUNTR/X characters in a Bitzee that responds to touch.",
+   "search": "Bitzee KPop Demon Hunters interactive pet",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "kpdh-golden-doll",
+   "name": "KPop Demon Hunters HUNTR/X 'Golden' Singing Doll",
+   "brand": "Mattel",
+   "emoji": "🎤",
+   "category": "toys",
+   "interests": [
+    "kpop",
+    "dolls",
+    "music"
+   ],
+   "ages": [
+    5,
+    12
+   ],
+   "typical": 31.99,
+   "range": [
+    26.98,
+    31.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Rumi, Mira or Zoey in her signature outfit, and she sings. One of the most-wanted dolls of the year.",
+   "search": "KPop Demon Hunters Golden singing doll",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "pikachu-puppetronic",
+   "name": "Pokémon Pikachu Puppetronic",
+   "brand": "RealFX",
+   "emoji": "⚡",
+   "category": "toys",
+   "interests": [
+    "pokemon",
+    "pets"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 79.99,
+   "tags": [
+    "hot"
+   ],
+   "blurb": "A lifelike animatronic Pikachu that reacts as you play. On The Toy Insider and Amazon 2026 lists.",
+   "search": "Pokémon Pikachu Puppetronic",
+   "stores": [
+    "pokemoncenter",
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "american-girl-elsa",
+   "name": "American Girl Elsa Doll",
+   "brand": "American Girl",
+   "emoji": "❄️",
+   "category": "toys",
+   "interests": [
+    "dolls",
+    "characters"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "typical": 145.0,
+   "tags": [
+    "hot",
+    "new"
+   ],
+   "blurb": "An 18-inch American Girl version of Elsa, braid and all. An Amazon exclusive this year.",
+   "search": "American Girl Elsa Doll",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "barbie-dreamhouse",
+   "name": "Barbie DreamHouse",
+   "brand": "Barbie",
+   "emoji": "🏰",
+   "category": "toys",
+   "interests": [
+    "dolls"
+   ],
+   "ages": [
+    3,
+    9
+   ],
+   "typical": 199.99,
+   "range": [
+    179.99,
+    249.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "The big multi-story Barbie house with furniture and play features. It tops Target's 2026 list.",
+   "search": "Barbie DreamHouse",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "barbie-marble-run",
+   "name": "Barbie Sparkle Marble Run",
+   "brand": "Barbie",
+   "emoji": "🔮",
+   "category": "toys",
+   "interests": [
+    "dolls",
+    "stem"
+   ],
+   "ages": [
+    5,
+    10
+   ],
+   "typical": 34.99,
+   "tags": [],
+   "blurb": "Build-your-own marble run with a Barbie twist.",
+   "search": "Barbie Sparkle Marble Run",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "beyblade-x",
+   "name": "Beyblade X starters and battle sets",
+   "brand": "Hasbro",
+   "emoji": "🌀",
+   "category": "toys",
+   "interests": [
+    "games",
+    "collectibles"
+   ],
+   "ages": [
+    8,
+    14
+   ],
+   "typical": 19.99,
+   "range": [
+    14.99,
+    49.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Fast battling tops; battle sets come with a stadium. A Target Top Toys pick.",
+   "search": "Beyblade X starters and battle sets",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "nerf-n-series",
+   "name": "Nerf N Series blasters",
+   "brand": "Nerf",
+   "emoji": "🎯",
+   "category": "outdoor",
+   "interests": [
+    "outdoor"
+   ],
+   "ages": [
+    8,
+    14
+   ],
+   "typical": 29.99,
+   "range": [
+    14.99,
+    49.99
+   ],
+   "tags": [],
+   "blurb": "Nerf's newest blaster line, from small sidearms to big motorized blasters.",
+   "search": "Nerf N Series blasters",
+   "stores": [
+    "dicks",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "chompsaw",
+   "name": "ChompSaw Kid-Safe Cardboard Power Tool",
+   "brand": "ChompSaw",
+   "emoji": "🪚",
+   "category": "stem",
+   "interests": [
+    "stem",
+    "arts"
+   ],
+   "ages": [
+    5,
+    12
+   ],
+   "typical": 294.99,
+   "range": [
+    269.99,
+    294.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "A real power tool that cuts cardboard but not fingers, with an inventor's workbook. A big gift for makers.",
+   "search": "ChompSaw Kid-Safe Cardboard Power Tool",
+   "stores": [
+    "target",
+    "amazon",
+    "walmart",
+    "barnesnoble"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "crunchlabs-crunchinator",
+   "name": "CrunchLabs The Crunchinator",
+   "brand": "CrunchLabs",
+   "emoji": "🔧",
+   "category": "stem",
+   "interests": [
+    "stem"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "typical": 34.99,
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Mark Rober's hands-on build-it-then-crush-it engineering toy.",
+   "search": "CrunchLabs Crunchinator Mark Rober",
+   "stores": [
+    "target",
+    "amazon",
+    "walmart",
+    "barnesnoble"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "needoh-nice-cube",
+   "name": "NeeDoh Nice Cube",
+   "brand": "Schylling",
+   "emoji": "🧊",
+   "category": "squishy",
+   "interests": [
+    "squishies"
+   ],
+   "ages": [
+    3,
+    30
+   ],
+   "typical": 9.99,
+   "range": [
+    7.99,
+    14.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "The squishy cube behind 2026's NeeDoh craze. Dough-filled, slow to squish, and it always pops back square.",
+   "note": "Sells out fast and resellers mark it up. Check that the store itself is the seller.",
+   "search": "NeeDoh Nice Cube",
+   "stores": [
+    "fivebelow",
+    "target",
+    "walmart",
+    "amazon",
+    "michaels"
+   ],
+   "offers": [
+    {
+     "retailer": "amazon",
+     "retailer_name": "Amazon",
+     "url": "https://www.amazon.com/dp/B0BQZFVJTB",
+     "sku": "B0BQZFVJTB",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    },
+    {
+     "retailer": "walmart",
+     "retailer_name": "Walmart",
+     "url": "https://www.walmart.com/ip/Nee-Doh-Nice-Cube-Squish-Toy-Ages-3-Blue-1ct/1107995384",
+     "sku": "1107995384",
+     "label": "Blue",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    }
+   ],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "needoh-shapes",
+   "name": "NeeDoh Gumdrop, Nice Berg and Teenie squishies",
+   "brand": "Schylling",
+   "emoji": "🍬",
+   "category": "squishy",
+   "interests": [
+    "squishies"
+   ],
+   "ages": [
+    3,
+    30
+   ],
+   "typical": 7.99,
+   "range": [
+    3.99,
+    14.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Other NeeDoh shapes and minis; a few different squishes make a great stocking.",
+   "search": "NeeDoh",
+   "stores": [
+    "fivebelow",
+    "target",
+    "walmart",
+    "amazon",
+    "michaels"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "squishy-dumplings",
+   "name": "Squishy dumplings (mystery blind bags)",
+   "brand": "RMS and others",
+   "emoji": "🥟",
+   "category": "squishy",
+   "interests": [
+    "squishies",
+    "collectibles"
+   ],
+   "ages": [
+    5,
+    30
+   ],
+   "typical": 5.0,
+   "range": [
+    3.0,
+    10.0
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Glittery, collectible dumpling squishies. Half the fun is not knowing which one you'll get.",
+   "note": "Five Below limits squishies to 5 per person per day.",
+   "search": "squishy dumpling",
+   "stores": [
+    "fivebelow",
+    "target",
+    "walmart",
+    "amazon",
+    "michaels"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "animal-squishies",
+   "name": "Capybara, axolotl and Highland cow squishies",
+   "brand": "Various",
+   "emoji": "🦫",
+   "category": "squishy",
+   "interests": [
+    "squishies"
+   ],
+   "ages": [
+    5,
+    30
+   ],
+   "typical": 9.99,
+   "range": [
+    5.0,
+    15.0
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Cute-animal squishies are the next wave of the trend, led by capybaras, axolotls and Highland cows.",
+   "search": "capybara squishy",
+   "stores": [
+    "fivebelow",
+    "target",
+    "walmart",
+    "amazon",
+    "michaels"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "la-squish",
+   "name": "La Squish slow-rise squishy",
+   "brand": "La Squish",
+   "emoji": "🍞",
+   "category": "squishy",
+   "interests": [
+    "squishies"
+   ],
+   "ages": [
+    5,
+    30
+   ],
+   "typical": 7.99,
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Slow-rising foam squishy from Target; an easy stocking stuffer.",
+   "search": "La Squish slow rise squishy",
+   "stores": [
+    "fivebelow",
+    "target",
+    "walmart",
+    "amazon",
+    "michaels"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "gui-gui-slime-haul",
+   "name": "GUI GUI Mega Slime Haul",
+   "brand": "GUI GUI",
+   "emoji": "🧪",
+   "category": "squishy",
+   "interests": [
+    "squishies",
+    "arts"
+   ],
+   "ages": [
+    6,
+    12
+   ],
+   "typical": 29.99,
+   "tags": [
+    "hot"
+   ],
+   "blurb": "A big box of ready-made slimes and mix-ins for the slime-obsessed. A Toy Insider 2026 pick.",
+   "search": "GUI GUI Mega Slime Haul",
+   "stores": [
+    "fivebelow",
+    "target",
+    "walmart",
+    "amazon",
+    "michaels"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "squishmallows-12",
+   "name": "Squishmallows 12-inch plush",
+   "brand": "Squishmallows",
+   "emoji": "🧸",
+   "category": "plush",
+   "interests": [
+    "plush",
+    "squishies"
+   ],
+   "ages": [
+    3,
+    30
+   ],
+   "typical": 16.99,
+   "range": [
+    14.99,
+    24.99
+   ],
+   "tags": [],
+   "blurb": "Hundreds of characters, so it's easy to match a favorite animal or color. Collectors of every age love them.",
+   "search": "Squishmallows 12 inch",
+   "stores": [
+    "fivebelow",
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [
+    {
+     "retailer": "target",
+     "retailer_name": "Target",
+     "url": "https://www.target.com/p/squishmallows-12-inch-plush-wanda-the-pink-watermelon/-/A-1006663864",
+     "sku": "1006663864",
+     "label": "Wanda the Pink Watermelon",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    },
+    {
+     "retailer": "target",
+     "retailer_name": "Target",
+     "url": "https://www.target.com/p/squishmallows-12-inch-plush-shon-the-lavender-loch-ness-monster/-/A-1006663868",
+     "sku": "1006663868",
+     "label": "Shon the Lavender Loch Ness Monster",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    }
+   ],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "squishmallows-24",
+   "name": "Squishmallows 24-inch jumbo plush",
+   "brand": "Squishmallows",
+   "emoji": "🛏️",
+   "category": "plush",
+   "interests": [
+    "plush",
+    "squishies",
+    "room"
+   ],
+   "ages": [
+    3,
+    30
+   ],
+   "typical": 44.99,
+   "range": [
+    39.99,
+    59.99
+   ],
+   "tags": [],
+   "blurb": "Pillow-sized Squishmallow; a big, cozy box to unwrap.",
+   "search": "Squishmallows 24 inch",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "kpdh-squishmallows",
+   "name": "Squishmallows KPop Demon Hunters 8-inch (Derpy, Sussie, Rumi)",
+   "brand": "Squishmallows",
+   "emoji": "🐯",
+   "category": "plush",
+   "interests": [
+    "kpop",
+    "plush",
+    "squishies"
+   ],
+   "ages": [
+    3,
+    30
+   ],
+   "typical": 14.99,
+   "range": [
+    9.99,
+    14.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Squishmallow versions of the movie's characters, including Derpy the tiger. Toy Insider 2026 picks.",
+   "search": "Squishmallows KPop Demon Hunters",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "pokemon-plush",
+   "name": "Pokémon plush (Pikachu, Eevee and friends)",
+   "brand": "Pokémon",
+   "emoji": "🐭",
+   "category": "plush",
+   "interests": [
+    "pokemon",
+    "plush"
+   ],
+   "ages": [
+    3,
+    30
+   ],
+   "typical": 14.99,
+   "range": [
+    9.99,
+    29.99
+   ],
+   "tags": [],
+   "blurb": "Official 8-inch Pokémon plush. Pokémon Center has the widest selection.",
+   "search": "Pokemon plush",
+   "stores": [
+    "pokemoncenter",
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "jellycat-amuseables",
+   "name": "Jellycat Amuseables (food and object plush)",
+   "brand": "Jellycat",
+   "emoji": "🥐",
+   "category": "plush",
+   "interests": [
+    "plush",
+    "room"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 30.0,
+   "range": [
+    25.0,
+    45.0
+   ],
+   "tags": [],
+   "blurb": "Smiling croissants, coffee cups and more; popular with teens and adults.",
+   "search": "Jellycat Amuseables (food and object plush)",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls",
+    "macys"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "fao-fox-plush",
+   "name": "FAO Schwarz x Amazon Fox 12-inch plush",
+   "brand": "FAO Schwarz",
+   "emoji": "🦊",
+   "category": "plush",
+   "interests": [
+    "plush"
+   ],
+   "ages": [
+    3,
+    12
+   ],
+   "typical": 19.99,
+   "tags": [],
+   "blurb": "A soft fox plush, one of the Amazon-only toys on its 2026 list.",
+   "search": "FAO Schwarz fox plush",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "build-a-bear",
+   "name": "Build-A-Bear Workshop bear or gift card",
+   "brand": "Build-A-Bear",
+   "emoji": "🧸",
+   "category": "plush",
+   "interests": [
+    "plush"
+   ],
+   "ages": [
+    3,
+    12
+   ],
+   "typical": 40.0,
+   "range": [
+    25.0,
+    60.0
+   ],
+   "tags": [],
+   "blurb": "Make-your-own stuffed animal; a gift card turns it into an outing.",
+   "search": "Build-A-Bear",
+   "stores": [
+    "buildabear",
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "care-bears-bag-charms",
+   "name": "Care Bears plush bag charms",
+   "brand": "Care Bears",
+   "emoji": "🐻",
+   "category": "collectibles",
+   "interests": [
+    "collectibles",
+    "fashion",
+    "plush"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 9.99,
+   "range": [
+    7.99,
+    14.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Mini Care Bears that clip onto a backpack. On Walmart's 2026 Top Toys list.",
+   "search": "Care Bears bag charm",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "gamestop"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "lego-pokemon-pikachu-house",
+   "name": "LEGO Pokémon SMART Play: Training House with Pikachu (72164)",
+   "brand": "LEGO",
+   "emoji": "⚡",
+   "category": "building",
+   "interests": [
+    "lego",
+    "pokemon"
+   ],
+   "ages": [
+    6,
+    14
+   ],
+   "typical": 69.99,
+   "tags": [
+    "hot",
+    "new"
+   ],
+   "blurb": "LEGO Pokémon is new this year. This set comes with a SMART Brick, so Pikachu reacts as kids play.",
+   "search": "LEGO Pokemon Training House with Pikachu 72164",
+   "stores": [
+    "pokemoncenter",
+    "lego",
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [
+    {
+     "retailer": "lego",
+     "retailer_name": "LEGO.com",
+     "url": "https://www.lego.com/en-us/product/smart-play-training-house-with-pikachu-72164",
+     "sku": "72164",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    },
+    {
+     "retailer": "amazon",
+     "retailer_name": "Amazon",
+     "url": "https://www.amazon.com/dp/B0GHYFH499",
+     "sku": "B0GHYFH499",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    }
+   ],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "lego-sw-throne-room",
+   "name": "LEGO Star Wars SMART Play: Throne Room Duel & A-Wing",
+   "brand": "LEGO",
+   "emoji": "⚔️",
+   "category": "building",
+   "interests": [
+    "lego",
+    "characters"
+   ],
+   "ages": [
+    8,
+    14
+   ],
+   "typical": 159.99,
+   "range": [
+    127.95,
+    159.99
+   ],
+   "tags": [
+    "hot",
+    "new"
+   ],
+   "blurb": "Interactive Star Wars set; the SMART Bricks add lightsaber sounds and reactions. A Toy Insider 2026 pick.",
+   "search": "LEGO Star Wars SMART Play: Throne Room Duel & A-Wing",
+   "stores": [
+    "lego",
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "lego-sw-tie-fighter",
+   "name": "LEGO Star Wars SMART Play: Darth Vader's TIE Fighter",
+   "brand": "LEGO",
+   "emoji": "🚀",
+   "category": "building",
+   "interests": [
+    "lego",
+    "characters"
+   ],
+   "ages": [
+    8,
+    14
+   ],
+   "typical": 69.99,
+   "tags": [
+    "new"
+   ],
+   "blurb": "A smaller way into LEGO's new SMART Play sets.",
+   "search": "LEGO Star Wars SMART Play: Darth Vader's TIE Fighter",
+   "stores": [
+    "lego",
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "lego-city-lava-coaster",
+   "name": "LEGO City Lava Land Roller Coaster Park",
+   "brand": "LEGO",
+   "emoji": "🎢",
+   "category": "building",
+   "interests": [
+    "lego"
+   ],
+   "ages": [
+    7,
+    12
+   ],
+   "typical": 99.99,
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Theme-park build with a working coaster, from Amazon's 2026 Top Toys list.",
+   "search": "LEGO City Lava Land Roller Coaster Park",
+   "stores": [
+    "lego",
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "lego-speed-champions",
+   "name": "LEGO Speed Champions car",
+   "brand": "LEGO",
+   "emoji": "🏎️",
+   "category": "building",
+   "interests": [
+    "lego",
+    "vehicles"
+   ],
+   "ages": [
+    9,
+    30
+   ],
+   "typical": 24.99,
+   "range": [
+    24.99,
+    29.99
+   ],
+   "tags": [],
+   "blurb": "Detailed real-world race cars at a stocking-stuffer price.",
+   "search": "LEGO Speed Champions",
+   "stores": [
+    "lego",
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "toy-advent-calendars",
+   "name": "Toy advent calendars (LEGO, NeeDoh, Polly Pocket)",
+   "brand": "Various",
+   "emoji": "📅",
+   "category": "building",
+   "interests": [
+    "lego",
+    "squishies",
+    "collectibles"
+   ],
+   "ages": [
+    5,
+    30
+   ],
+   "typical": 34.99,
+   "range": [
+    19.99,
+    49.99
+   ],
+   "tags": [],
+   "blurb": "A small surprise behind each door from December 1, so buy it now to have it in time.",
+   "search": "toy advent calendar 2026",
+   "stores": [
+    "lego",
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "lego-botanicals-mushrooms",
+   "name": "LEGO Botanicals Woodland Mushrooms",
+   "brand": "LEGO",
+   "emoji": "🍄",
+   "category": "building",
+   "interests": [
+    "lego",
+    "room"
+   ],
+   "ages": [
+    14,
+    30
+   ],
+   "typical": 79.99,
+   "tags": [],
+   "blurb": "A display build for older kids and adults, on Amazon's 2026 list.",
+   "search": "LEGO Botanicals Woodland Mushrooms",
+   "stores": [
+    "lego",
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "lego-botanicals-flowers",
+   "name": "LEGO Botanicals flower bouquets",
+   "brand": "LEGO",
+   "emoji": "💐",
+   "category": "building",
+   "interests": [
+    "lego",
+    "room"
+   ],
+   "ages": [
+    12,
+    30
+   ],
+   "typical": 49.99,
+   "range": [
+    29.99,
+    59.99
+   ],
+   "tags": [],
+   "blurb": "Flowers that never wilt; a favorite build for teens and adults.",
+   "search": "LEGO Botanicals bouquet",
+   "stores": [
+    "lego",
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "pokemon-30th-etb",
+   "name": "Pokémon TCG: 30th Celebration Elite Trainer Box",
+   "brand": "Pokémon",
+   "emoji": "🃏",
+   "category": "cards",
+   "interests": [
+    "pokemon",
+    "collectibles",
+    "games"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 59.99,
+   "range": [
+    49.99,
+    89.99
+   ],
+   "tags": [
+    "hot",
+    "new"
+   ],
+   "blurb": "The 30th-anniversary set: booster packs, a Nidorina promo card, sleeves and dice in a collector box.",
+   "note": "Marketplace sellers mark hot card products up. Compare with the store's own price.",
+   "search": "Pokémon TCG: 30th Celebration Elite Trainer Box",
+   "stores": [
+    "pokemoncenter",
+    "target",
+    "walmart",
+    "bestbuy",
+    "gamestop",
+    "amazon"
+   ],
+   "offers": [
+    {
+     "retailer": "bestbuy",
+     "retailer_name": "Best Buy",
+     "url": "https://www.bestbuy.com/product/pokemon-trading-card-game-30th-celebration-elite-trainer-box/JJG2TL8XCJ",
+     "sku": "13138238",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    }
+   ],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "pokemon-booster-bundle",
+   "name": "Pokémon TCG booster bundle (6 packs)",
+   "brand": "Pokémon",
+   "emoji": "🃏",
+   "category": "cards",
+   "interests": [
+    "pokemon",
+    "collectibles"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 29.99,
+   "range": [
+    26.94,
+    39.99
+   ],
+   "tags": [],
+   "blurb": "Six booster packs from a current set; the newest is Mega Evolution—Delta Reign.",
+   "search": "Pokemon booster bundle",
+   "stores": [
+    "pokemoncenter",
+    "target",
+    "walmart",
+    "bestbuy",
+    "gamestop",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "lorcana-starter",
+   "name": "Disney Lorcana TCG Collection Starter Set",
+   "brand": "Ravensburger",
+   "emoji": "✨",
+   "category": "cards",
+   "interests": [
+    "games",
+    "collectibles",
+    "characters"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 49.99,
+   "range": [
+    44.99,
+    59.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "A Disney trading card game that's easy to learn. The Rapunzel Edition starter is a Toy Insider 2026 pick.",
+   "search": "Disney Lorcana TCG Collection Starter Set",
+   "stores": [
+    "target",
+    "walmart",
+    "bestbuy",
+    "gamestop",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "miniverse-record-player",
+   "name": "MGA's Miniverse Real Music Record Player",
+   "brand": "MGA's Miniverse",
+   "emoji": "📀",
+   "category": "collectibles",
+   "interests": [
+    "collectibles",
+    "music",
+    "arts"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 21.99,
+   "tags": [
+    "hot"
+   ],
+   "blurb": "A tiny record player that actually plays. A Toy Insider pick for ages 8 and up.",
+   "search": "MGA's Miniverse Real Music Record Player",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "gamestop"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "polly-pocket-peanuts",
+   "name": "Polly Pocket x Peanuts Collector Compact",
+   "brand": "Polly Pocket",
+   "emoji": "🐶",
+   "category": "collectibles",
+   "interests": [
+    "collectibles",
+    "dolls"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 54.99,
+   "tags": [],
+   "blurb": "A collector compact that opens into a tiny Peanuts world.",
+   "search": "Polly Pocket x Peanuts Collector Compact",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "gamestop"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "funko-pop",
+   "name": "Funko Pop! vinyl figure",
+   "brand": "Funko",
+   "emoji": "🗿",
+   "category": "collectibles",
+   "interests": [
+    "collectibles",
+    "characters"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 12.99,
+   "range": [
+    10.99,
+    16.99
+   ],
+   "tags": [],
+   "blurb": "Big-headed figures of nearly every character. Pick their current favorite.",
+   "search": "Funko Pop",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "gamestop"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "pop-mart-blind-box",
+   "name": "Pop Mart blind boxes (Labubu and friends)",
+   "brand": "Pop Mart",
+   "emoji": "🎁",
+   "category": "collectibles",
+   "interests": [
+    "collectibles",
+    "fashion"
+   ],
+   "ages": [
+    12,
+    30
+   ],
+   "typical": 27.99,
+   "range": [
+    19.99,
+    34.99
+   ],
+   "tags": [],
+   "blurb": "Mystery collectible figures and bag charms; last year's craze is still going.",
+   "search": "Pop Mart blind box",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "gamestop"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "anime-figures",
+   "name": "Anime prize figures (One Piece, Demon Slayer, Dragon Ball)",
+   "brand": "Banpresto and others",
+   "emoji": "🗡️",
+   "category": "collectibles",
+   "interests": [
+    "kpop",
+    "collectibles"
+   ],
+   "ages": [
+    12,
+    30
+   ],
+   "typical": 24.99,
+   "range": [
+    19.99,
+    39.99
+   ],
+   "tags": [],
+   "blurb": "Affordable display figures of favorite anime characters.",
+   "search": "anime figure Banpresto",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "gamestop"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "kanoodle-fan",
+   "name": "Kanoodle Fan Edition (20th Anniversary)",
+   "brand": "Educational Insights",
+   "emoji": "🧩",
+   "category": "games",
+   "interests": [
+    "games",
+    "stem"
+   ],
+   "ages": [
+    7,
+    30
+   ],
+   "typical": 16.99,
+   "tags": [],
+   "blurb": "Pocket-size logic puzzle with hundreds of challenges.",
+   "search": "Kanoodle Fan Edition (20th Anniversary)",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "barnesnoble"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "catan-on-the-road",
+   "name": "CATAN On The Road card game",
+   "brand": "CATAN",
+   "emoji": "🛣️",
+   "category": "games",
+   "interests": [
+    "games"
+   ],
+   "ages": [
+    10,
+    30
+   ],
+   "typical": 9.99,
+   "tags": [],
+   "blurb": "A quick card-game version of CATAN, under $10 on Amazon's list.",
+   "search": "CATAN On The Road card game",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "barnesnoble"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "uno-no-mercy",
+   "name": "UNO Show 'em No Mercy",
+   "brand": "Mattel",
+   "emoji": "🟥",
+   "category": "games",
+   "interests": [
+    "games"
+   ],
+   "ages": [
+    7,
+    30
+   ],
+   "typical": 12.99,
+   "range": [
+    9.99,
+    14.99
+   ],
+   "tags": [],
+   "blurb": "The brutal version of UNO that teens and adults love to argue over.",
+   "search": "UNO Show 'em No Mercy",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "barnesnoble"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "giant-tower-stack",
+   "name": "Giant Tower Stack jumbo block game",
+   "brand": "Relatable",
+   "emoji": "🗼",
+   "category": "games",
+   "interests": [
+    "games",
+    "outdoor"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 69.99,
+   "tags": [],
+   "blurb": "Oversized stacking game for family nights and parties.",
+   "search": "Giant Tower Stack jumbo block game",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "barnesnoble"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "crayola-art-case",
+   "name": "Crayola Inspiration Art Case (140 pieces)",
+   "brand": "Crayola",
+   "emoji": "🖍️",
+   "category": "arts",
+   "interests": [
+    "arts"
+   ],
+   "ages": [
+    4,
+    10
+   ],
+   "typical": 24.99,
+   "range": [
+    19.99,
+    29.99
+   ],
+   "tags": [],
+   "blurb": "Crayons, markers, colored pencils and paper in one carry case.",
+   "search": "Crayola Inspiration Art Case (140 pieces)",
+   "stores": [
+    "michaels",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "play-doh-blooms",
+   "name": "Play-Doh Blooms Flower Bouquet Making Kit",
+   "brand": "Play-Doh",
+   "emoji": "🌸",
+   "category": "arts",
+   "interests": [
+    "arts"
+   ],
+   "ages": [
+    5,
+    10
+   ],
+   "typical": 39.99,
+   "tags": [],
+   "blurb": "Squish dough into a bouquet of flowers. From Amazon's 2026 makers list.",
+   "search": "Play-Doh Blooms Flower Bouquet Making Kit",
+   "stores": [
+    "michaels",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "bracelet-kit",
+   "name": "Bracelet-making kit (clay beads or rubber bands)",
+   "brand": "Various",
+   "emoji": "📿",
+   "category": "arts",
+   "interests": [
+    "arts",
+    "fashion"
+   ],
+   "ages": [
+    6,
+    14
+   ],
+   "typical": 19.99,
+   "range": [
+    9.99,
+    29.99
+   ],
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Make and trade friendship bracelets. A bracelet studio made Amazon's 2026 list.",
+   "search": "bracelet making kit",
+   "stores": [
+    "michaels",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "ohuhu-markers",
+   "name": "Ohuhu alcohol art markers",
+   "brand": "Ohuhu",
+   "emoji": "🖊️",
+   "category": "arts",
+   "interests": [
+    "arts"
+   ],
+   "ages": [
+    10,
+    30
+   ],
+   "typical": 39.99,
+   "range": [
+    24.99,
+    59.99
+   ],
+   "tags": [],
+   "blurb": "Dual-tip markers that teen artists use for anime and illustration.",
+   "search": "Ohuhu alcohol art markers",
+   "stores": [
+    "michaels",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "snap-circuits-jr",
+   "name": "Snap Circuits Jr. SC-100",
+   "brand": "Elenco",
+   "emoji": "🔌",
+   "category": "stem",
+   "interests": [
+    "stem"
+   ],
+   "ages": [
+    8,
+    14
+   ],
+   "typical": 39.99,
+   "range": [
+    29.99,
+    44.99
+   ],
+   "tags": [],
+   "blurb": "Snap-together electronics kit with 100 projects and no soldering.",
+   "search": "Snap Circuits Jr. SC-100",
+   "stores": [
+    "target",
+    "amazon",
+    "walmart",
+    "barnesnoble"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "rock-tumbler",
+   "name": "National Geographic Rock Tumbler Kit",
+   "brand": "National Geographic",
+   "emoji": "💎",
+   "category": "stem",
+   "interests": [
+    "stem"
+   ],
+   "ages": [
+    8,
+    14
+   ],
+   "typical": 89.99,
+   "range": [
+    69.99,
+    99.99
+   ],
+   "tags": [],
+   "blurb": "Turns rough rocks into polished gems over a few weeks.",
+   "search": "National Geographic Rock Tumbler Kit",
+   "stores": [
+    "target",
+    "amazon",
+    "walmart",
+    "barnesnoble"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "dog-man",
+   "name": "Dog Man graphic novels",
+   "brand": "Dav Pilkey",
+   "emoji": "🐕",
+   "category": "books",
+   "interests": [
+    "books"
+   ],
+   "ages": [
+    6,
+    10
+   ],
+   "typical": 12.99,
+   "range": [
+    9.99,
+    14.99
+   ],
+   "tags": [],
+   "blurb": "Funny comics that turn reluctant readers into fans.",
+   "search": "Dog Man book",
+   "stores": [
+    "barnesnoble",
+    "bookshop",
+    "target",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "wimpy-kid",
+   "name": "Diary of a Wimpy Kid (newest book)",
+   "brand": "Jeff Kinney",
+   "emoji": "📓",
+   "category": "books",
+   "interests": [
+    "books"
+   ],
+   "ages": [
+    8,
+    12
+   ],
+   "typical": 14.99,
+   "range": [
+    12.99,
+    16.99
+   ],
+   "tags": [],
+   "blurb": "A new Wimpy Kid comes out every fall, a reliable win for 8 to 12-year-olds.",
+   "search": "Diary of a Wimpy Kid new book",
+   "stores": [
+    "barnesnoble",
+    "bookshop",
+    "target",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "manga-volumes",
+   "name": "Manga volumes (One Piece, Spy x Family and more)",
+   "brand": "Various",
+   "emoji": "📖",
+   "category": "books",
+   "interests": [
+    "books",
+    "kpop"
+   ],
+   "ages": [
+    12,
+    30
+   ],
+   "typical": 11.99,
+   "range": [
+    9.99,
+    14.99
+   ],
+   "tags": [],
+   "blurb": "A few volumes of a series they're into. Check the age rating on the back.",
+   "search": "manga",
+   "stores": [
+    "barnesnoble",
+    "bookshop",
+    "target",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "booktok-novels",
+   "name": "BookTok bestsellers (romantasy and thrillers)",
+   "brand": "Various",
+   "emoji": "📚",
+   "category": "books",
+   "interests": [
+    "books"
+   ],
+   "ages": [
+    18,
+    30
+   ],
+   "typical": 19.99,
+   "range": [
+    16.99,
+    32.99
+   ],
+   "tags": [],
+   "blurb": "Whatever's trending on BookTok. Many of the popular romantasy picks are adult reads.",
+   "search": "BookTok bestsellers",
+   "stores": [
+    "barnesnoble",
+    "bookshop",
+    "target",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "kindle-kids",
+   "name": "Kindle Kids",
+   "brand": "Amazon",
+   "emoji": "📘",
+   "category": "tech",
+   "interests": [
+    "books",
+    "tech"
+   ],
+   "ages": [
+    7,
+    12
+   ],
+   "typical": 129.99,
+   "range": [
+    99.99,
+    139.99
+   ],
+   "tags": [],
+   "blurb": "A Kindle with a kid-proof case and a year of Amazon Kids+ books.",
+   "search": "Kindle Kids",
+   "stores": [
+    "bestbuy",
+    "target",
+    "amazon",
+    "walmart"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "kindle-paperwhite",
+   "name": "Kindle Paperwhite",
+   "brand": "Amazon",
+   "emoji": "📖",
+   "category": "tech",
+   "interests": [
+    "books",
+    "tech"
+   ],
+   "ages": [
+    12,
+    30
+   ],
+   "typical": 159.99,
+   "range": [
+    129.99,
+    179.99
+   ],
+   "tags": [],
+   "blurb": "Glare-free e-reader with weeks of battery life.",
+   "search": "Kindle Paperwhite",
+   "stores": [
+    "bestbuy",
+    "target",
+    "amazon",
+    "walmart"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "switch-2",
+   "name": "Nintendo Switch 2",
+   "brand": "Nintendo",
+   "emoji": "🕹️",
+   "category": "consoles",
+   "interests": [
+    "switch"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 499.99,
+   "tags": [],
+   "blurb": "Nintendo's newest console. The US price went up to $499.99 on September 1.",
+   "search": "Nintendo Switch 2",
+   "stores": [
+    "nintendo",
+    "bestbuy",
+    "target",
+    "walmart",
+    "gamestop",
+    "amazon",
+    "costco"
+   ],
+   "offers": [
+    {
+     "retailer": "walmart",
+     "retailer_name": "Walmart",
+     "url": "https://www.walmart.com/ip/Nintendo-Switch-2-System/15949610846",
+     "sku": "15949610846",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    }
+   ],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "switch-2-mkw-bundle",
+   "name": "Nintendo Switch 2 + Mario Kart World Bundle",
+   "brand": "Nintendo",
+   "emoji": "🏎️",
+   "category": "consoles",
+   "interests": [
+    "switch"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 549.99,
+   "tags": [
+    "hot"
+   ],
+   "blurb": "Console plus Mario Kart World, the easiest way to start on Switch 2.",
+   "search": "Nintendo Switch 2 + Mario Kart World Bundle",
+   "stores": [
+    "nintendo",
+    "bestbuy",
+    "target",
+    "walmart",
+    "gamestop",
+    "amazon",
+    "costco"
+   ],
+   "offers": [
+    {
+     "retailer": "bestbuy",
+     "retailer_name": "Best Buy",
+     "url": "https://www.bestbuy.com/product/switch-2-mario-kart-world-bundle/J7GSL57WWG",
+     "sku": "6689812",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    }
+   ],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "mario-kart-world",
+   "name": "Mario Kart World",
+   "brand": "Nintendo",
+   "emoji": "🏁",
+   "category": "videogames",
+   "interests": [
+    "switch"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 79.99,
+   "tags": [],
+   "rating": "E",
+   "platforms": [
+    "Switch 2"
+   ],
+   "blurb": "Open-world Mario Kart with 24-racer races; the Switch 2 must-have for families.",
+   "search": "Mario Kart World",
+   "stores": [
+    "nintendo",
+    "bestbuy",
+    "gamestop",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "zelda-oot-ns2",
+   "name": "The Legend of Zelda: Ocarina of Time (Switch 2)",
+   "brand": "Nintendo",
+   "emoji": "🗡️",
+   "category": "videogames",
+   "interests": [
+    "switch"
+   ],
+   "ages": [
+    10,
+    30
+   ],
+   "typical": 69.99,
+   "range": [
+    59.99,
+    69.99
+   ],
+   "tags": [
+    "hot",
+    "new"
+   ],
+   "rating": "E10+",
+   "platforms": [
+    "Switch 2"
+   ],
+   "blurb": "The N64 classic rebuilt for Switch 2 with voiced scenes and all-new visuals. Out since November 5.",
+   "note": "$59.99 as a digital download, $69.99 for the physical game.",
+   "search": "Zelda Ocarina of Time Switch 2",
+   "stores": [
+    "nintendo",
+    "bestbuy",
+    "gamestop",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [
+    {
+     "retailer": "bestbuy",
+     "retailer_name": "Best Buy",
+     "url": "https://www.bestbuy.com/product/the-legend-of-zelda-ocarina-of-time-nintendo-switch-2/J7GSL5C746",
+     "sku": "6691853",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    },
+    {
+     "retailer": "gamestop",
+     "retailer_name": "GameStop",
+     "url": "https://www.gamestop.com/video-games/nintendo-switch-2/products/the-legend-of-zelda-ocarina-of-time---nintendo-switch-2/20036066.html",
+     "sku": "20036066",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    }
+   ],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "pokemon-pokopia",
+   "name": "Pokémon Pokopia",
+   "brand": "Nintendo",
+   "emoji": "🌱",
+   "category": "videogames",
+   "interests": [
+    "switch",
+    "pokemon"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 69.99,
+   "tags": [
+    "new"
+   ],
+   "platforms": [
+    "Switch 2"
+   ],
+   "blurb": "Cozy Pokémon life sim: play as a Ditto and build a town with Pokémon friends.",
+   "search": "Pokémon Pokopia",
+   "stores": [
+    "nintendo",
+    "bestbuy",
+    "gamestop",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "switch-sports-resort",
+   "name": "Nintendo Switch Sports Resort",
+   "brand": "Nintendo",
+   "emoji": "🏄",
+   "category": "videogames",
+   "interests": [
+    "switch"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 59.99,
+   "tags": [
+    "new"
+   ],
+   "platforms": [
+    "Switch 2"
+   ],
+   "blurb": "Motion-controlled sports for the whole family, with Wii Sports Resort favorites. Out since October 22.",
+   "search": "Nintendo Switch Sports Resort",
+   "stores": [
+    "nintendo",
+    "bestbuy",
+    "gamestop",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "donkey-kong-bananza",
+   "name": "Donkey Kong Bananza",
+   "brand": "Nintendo",
+   "emoji": "🍌",
+   "category": "videogames",
+   "interests": [
+    "switch"
+   ],
+   "ages": [
+    7,
+    30
+   ],
+   "typical": 69.99,
+   "tags": [],
+   "platforms": [
+    "Switch 2"
+   ],
+   "blurb": "Smash-through-everything 3D platformer and one of Switch 2's best games.",
+   "search": "Donkey Kong Bananza",
+   "stores": [
+    "nintendo",
+    "bestbuy",
+    "gamestop",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "kirby-air-riders",
+   "name": "Kirby Air Riders",
+   "brand": "Nintendo",
+   "emoji": "⭐",
+   "category": "videogames",
+   "interests": [
+    "switch"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 69.99,
+   "tags": [],
+   "platforms": [
+    "Switch 2"
+   ],
+   "blurb": "Fast, chaotic racing for parties and siblings.",
+   "search": "Kirby Air Riders",
+   "stores": [
+    "nintendo",
+    "bestbuy",
+    "gamestop",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "acnh-ns2",
+   "name": "Animal Crossing: New Horizons – Nintendo Switch 2 Edition",
+   "brand": "Nintendo",
+   "emoji": "🏝️",
+   "category": "videogames",
+   "interests": [
+    "switch"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 64.99,
+   "range": [
+    59.99,
+    64.99
+   ],
+   "tags": [],
+   "platforms": [
+    "Switch 2"
+   ],
+   "blurb": "The cozy island game, upgraded for Switch 2.",
+   "search": "Animal Crossing New Horizons Switch 2 Edition",
+   "stores": [
+    "nintendo",
+    "bestbuy",
+    "gamestop",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "mario-party-jamboree-ns2",
+   "name": "Super Mario Party Jamboree – Nintendo Switch 2 Edition + Jamboree TV",
+   "brand": "Nintendo",
+   "emoji": "🎲",
+   "category": "videogames",
+   "interests": [
+    "switch",
+    "games"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 79.99,
+   "tags": [],
+   "platforms": [
+    "Switch 2"
+   ],
+   "blurb": "Board-game party with a huge pile of minigames, plus new camera and microphone modes.",
+   "search": "Super Mario Party Jamboree Switch 2 Edition",
+   "stores": [
+    "nintendo",
+    "bestbuy",
+    "gamestop",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "splatoon-raiders",
+   "name": "Splatoon Raiders",
+   "brand": "Nintendo",
+   "emoji": "🦑",
+   "category": "videogames",
+   "interests": [
+    "switch"
+   ],
+   "ages": [
+    10,
+    30
+   ],
+   "typical": 49.99,
+   "tags": [
+    "new"
+   ],
+   "platforms": [
+    "Switch 2"
+   ],
+   "blurb": "Single-player Splatoon treasure-hunting adventure.",
+   "search": "Splatoon Raiders",
+   "stores": [
+    "nintendo",
+    "bestbuy",
+    "gamestop",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "mario-kart-8-deluxe",
+   "name": "Mario Kart 8 Deluxe",
+   "brand": "Nintendo",
+   "emoji": "🛞",
+   "category": "videogames",
+   "interests": [
+    "switch"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 59.99,
+   "range": [
+    49.99,
+    59.99
+   ],
+   "tags": [],
+   "rating": "E",
+   "platforms": [
+    "Switch",
+    "Switch 2"
+   ],
+   "blurb": "Still the go-to party racer for original Switch owners, and it plays on Switch 2 too.",
+   "search": "Mario Kart 8 Deluxe",
+   "stores": [
+    "nintendo",
+    "bestbuy",
+    "gamestop",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "minecraft",
+   "name": "Minecraft",
+   "brand": "Mojang",
+   "emoji": "⛏️",
+   "category": "videogames",
+   "interests": [
+    "switch",
+    "playstation",
+    "xbox",
+    "pc"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 29.99,
+   "tags": [],
+   "rating": "E10+",
+   "platforms": [
+    "Switch",
+    "PS5",
+    "Xbox",
+    "PC"
+   ],
+   "blurb": "Build anything, alone or with friends. Runs on nearly every console.",
+   "search": "Minecraft",
+   "stores": [
+    "bestbuy",
+    "gamestop",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "eshop-card",
+   "name": "Nintendo eShop gift card",
+   "brand": "Nintendo",
+   "emoji": "💳",
+   "category": "giftcards",
+   "interests": [
+    "giftcards",
+    "switch"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 50.0,
+   "range": [
+    20.0,
+    100.0
+   ],
+   "tags": [],
+   "blurb": "Lets them pick their own games; a safe bet when you don't know their library.",
+   "search": "Nintendo eShop gift card",
+   "stores": [
+    "nintendo",
+    "target",
+    "walmart",
+    "bestbuy",
+    "amazon",
+    "costco",
+    "samsclub"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "switch-2-pro-controller",
+   "name": "Nintendo Switch 2 Pro Controller",
+   "brand": "Nintendo",
+   "emoji": "🎮",
+   "category": "consoles",
+   "interests": [
+    "switch"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 84.99,
+   "range": [
+    79.99,
+    89.99
+   ],
+   "tags": [],
+   "blurb": "Full-size controller for long sessions in TV mode.",
+   "search": "Nintendo Switch 2 Pro Controller",
+   "stores": [
+    "nintendo",
+    "bestbuy",
+    "target",
+    "walmart",
+    "gamestop",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "microsd-express",
+   "name": "microSD Express card, 256GB (for Switch 2)",
+   "brand": "Samsung, SanDisk",
+   "emoji": "💾",
+   "category": "consoles",
+   "interests": [
+    "switch",
+    "tech"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 59.99,
+   "range": [
+    49.99,
+    79.99
+   ],
+   "tags": [],
+   "blurb": "Switch 2 needs the newer microSD Express cards for extra game storage.",
+   "search": "microSD Express 256GB Switch 2",
+   "stores": [
+    "bestbuy",
+    "target",
+    "walmart",
+    "gamestop",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "switch-2-case",
+   "name": "Switch 2 carrying case and screen protector",
+   "brand": "Various",
+   "emoji": "🧳",
+   "category": "consoles",
+   "interests": [
+    "switch"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 24.99,
+   "range": [
+    14.99,
+    39.99
+   ],
+   "tags": [],
+   "blurb": "Protects the console on trips; a good add-on gift.",
+   "search": "Switch 2 carrying case",
+   "stores": [
+    "bestbuy",
+    "target",
+    "walmart",
+    "gamestop",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "amiibo",
+   "name": "amiibo figures",
+   "brand": "Nintendo",
+   "emoji": "👾",
+   "category": "collectibles",
+   "interests": [
+    "switch",
+    "collectibles"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 15.99,
+   "range": [
+    15.99,
+    29.99
+   ],
+   "tags": [],
+   "blurb": "Collectible figures that unlock extras in supported games.",
+   "search": "amiibo figures",
+   "stores": [
+    "nintendo",
+    "target",
+    "walmart",
+    "amazon",
+    "gamestop"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "ps5-digital",
+   "name": "PlayStation 5 Digital Edition",
+   "brand": "Sony",
+   "emoji": "🎮",
+   "category": "consoles",
+   "interests": [
+    "playstation"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 599.99,
+   "range": [
+    499.99,
+    599.99
+   ],
+   "tags": [],
+   "blurb": "Sony's list price is $599.99; its Black Friday sale takes $100 off from November 21.",
+   "search": "PS5 Digital Edition",
+   "stores": [
+    "bestbuy",
+    "target",
+    "walmart",
+    "gamestop",
+    "amazon",
+    "playstation",
+    "costco"
+   ],
+   "offers": [
+    {
+     "retailer": "bestbuy",
+     "retailer_name": "Best Buy",
+     "url": "https://www.bestbuy.com/product/playstation-5-slim-digital-edition-console-825gb/JXHQ37TYYL",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    },
+    {
+     "retailer": "playstation",
+     "retailer_name": "PlayStation Direct",
+     "url": "https://direct.playstation.com/en-us/buy-consoles/playstation5-digital-edition-console-825-gb",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    }
+   ],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "ps5-disc",
+   "name": "PlayStation 5 (1TB, with disc drive)",
+   "brand": "Sony",
+   "emoji": "💿",
+   "category": "consoles",
+   "interests": [
+    "playstation"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 649.99,
+   "range": [
+    549.99,
+    649.99
+   ],
+   "tags": [],
+   "blurb": "The disc model plays physical games and Blu-ray movies.",
+   "search": "PS5 console disc",
+   "stores": [
+    "bestbuy",
+    "target",
+    "walmart",
+    "gamestop",
+    "amazon",
+    "playstation",
+    "costco"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "gta-vi",
+   "name": "Grand Theft Auto VI",
+   "brand": "Rockstar Games",
+   "emoji": "🌴",
+   "category": "videogames",
+   "interests": [
+    "playstation",
+    "xbox"
+   ],
+   "ages": [
+    17,
+    30
+   ],
+   "typical": 79.99,
+   "tags": [
+    "hot",
+    "new"
+   ],
+   "rating": "M",
+   "platforms": [
+    "PS5",
+    "Xbox Series X|S"
+   ],
+   "blurb": "The year's biggest launch, out since November 19. The boxed copy is a download code, not a disc.",
+   "note": "Rated M (Mature 17+).",
+   "search": "Grand Theft Auto VI",
+   "stores": [
+    "bestbuy",
+    "gamestop",
+    "target",
+    "walmart",
+    "amazon",
+    "playstation"
+   ],
+   "offers": [
+    {
+     "retailer": "bestbuy",
+     "retailer_name": "Best Buy",
+     "url": "https://www.bestbuy.com/product/grand-theft-auto-vi-code-in-box-delivers-11-12-26-playable-11-19-26-playstation-5/JXHY5RW2JZ",
+     "sku": "6684968",
+     "label": "PS5",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    },
+    {
+     "retailer": "walmart",
+     "retailer_name": "Walmart",
+     "url": "https://www.walmart.com/ip/Grand-Theft-Auto-VI-PlayStation-5-Game/20482917228",
+     "sku": "20482917228",
+     "label": "PS5",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    },
+    {
+     "retailer": "gamestop",
+     "retailer_name": "GameStop",
+     "url": "https://www.gamestop.com/video-games/playstation-5/products/grand-theft-auto-vi---playstation-5-code-in-box/448295.html",
+     "sku": "448295",
+     "label": "PS5",
+     "on_sale": false,
+     "error": "not checked yet",
+     "stale": true
+    }
+   ],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "astro-bot",
+   "name": "Astro Bot",
+   "brand": "Sony",
+   "emoji": "🤖",
+   "category": "videogames",
+   "interests": [
+    "playstation"
+   ],
+   "ages": [
+    7,
+    30
+   ],
+   "typical": 59.99,
+   "range": [
+    39.99,
+    59.99
+   ],
+   "tags": [],
+   "platforms": [
+    "PS5"
+   ],
+   "blurb": "A joyful platformer that shows off the PS5 controller; great for younger PlayStation players.",
+   "search": "Astro Bot PS5",
+   "stores": [
+    "bestbuy",
+    "gamestop",
+    "target",
+    "walmart",
+    "amazon",
+    "playstation"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "lego-batman-game",
+   "name": "LEGO Batman: Legacy of the Dark Knight",
+   "brand": "Warner Bros. Games",
+   "emoji": "🦇",
+   "category": "videogames",
+   "interests": [
+    "playstation",
+    "xbox",
+    "switch",
+    "pc",
+    "lego"
+   ],
+   "ages": [
+    10,
+    30
+   ],
+   "typical": 69.99,
+   "range": [
+    49.99,
+    69.99
+   ],
+   "tags": [
+    "new"
+   ],
+   "rating": "E10+",
+   "platforms": [
+    "PS5",
+    "Xbox Series X|S",
+    "Switch 2",
+    "PC"
+   ],
+   "blurb": "LEGO retelling of Batman's story with lots of suits and vehicles. Out on PS5, Xbox and PC in May, Switch 2 in September.",
+   "search": "LEGO Batman: Legacy of the Dark Knight",
+   "stores": [
+    "bestbuy",
+    "gamestop",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "marvels-wolverine",
+   "name": "Marvel's Wolverine",
+   "brand": "Sony",
+   "emoji": "🐾",
+   "category": "videogames",
+   "interests": [
+    "playstation"
+   ],
+   "ages": [
+    17,
+    30
+   ],
+   "typical": 69.99,
+   "tags": [
+    "new"
+   ],
+   "rating": "M",
+   "platforms": [
+    "PS5"
+   ],
+   "blurb": "Insomniac's brutal Wolverine adventure, out since September 15.",
+   "note": "Rated M (Mature 17+) for blood, gore and strong language.",
+   "search": "Marvel's Wolverine",
+   "stores": [
+    "bestbuy",
+    "gamestop",
+    "target",
+    "walmart",
+    "amazon",
+    "playstation"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "sports-games",
+   "name": "This year's sports games (Madden NFL 27, EA Sports FC, NBA 2K)",
+   "brand": "EA, 2K",
+   "emoji": "🏈",
+   "category": "videogames",
+   "interests": [
+    "playstation",
+    "xbox",
+    "switch",
+    "outdoor"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 69.99,
+   "range": [
+    59.99,
+    69.99
+   ],
+   "tags": [],
+   "platforms": [
+    "PS5",
+    "Xbox Series X|S",
+    "Switch 2"
+   ],
+   "blurb": "The new season's football, soccer and basketball games for sports fans.",
+   "search": "Madden NFL 27",
+   "stores": [
+    "bestbuy",
+    "gamestop",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "cod-mw4",
+   "name": "Call of Duty: Modern Warfare 4",
+   "brand": "Activision",
+   "emoji": "🪖",
+   "category": "videogames",
+   "interests": [
+    "playstation",
+    "xbox",
+    "pc"
+   ],
+   "ages": [
+    17,
+    30
+   ],
+   "typical": 69.99,
+   "tags": [
+    "new"
+   ],
+   "rating": "M",
+   "platforms": [
+    "PS5",
+    "Xbox Series X|S",
+    "PC",
+    "Switch 2"
+   ],
+   "blurb": "This year's Call of Duty campaign and multiplayer.",
+   "note": "Call of Duty games are rated M (Mature 17+).",
+   "search": "Call of Duty: Modern Warfare 4",
+   "stores": [
+    "bestbuy",
+    "gamestop",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "dualsense",
+   "name": "DualSense wireless controller",
+   "brand": "Sony",
+   "emoji": "🎮",
+   "category": "consoles",
+   "interests": [
+    "playstation"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 74.99,
+   "range": [
+    69.99,
+    84.99
+   ],
+   "tags": [],
+   "blurb": "A second controller for co-op, or a fun color swap.",
+   "search": "DualSense controller",
+   "stores": [
+    "bestbuy",
+    "target",
+    "walmart",
+    "gamestop",
+    "amazon",
+    "playstation"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "ps-store-card",
+   "name": "PlayStation Store gift card",
+   "brand": "Sony",
+   "emoji": "💳",
+   "category": "giftcards",
+   "interests": [
+    "giftcards",
+    "playstation"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 50.0,
+   "range": [
+    10.0,
+    100.0
+   ],
+   "tags": [],
+   "blurb": "For games, add-ons or PlayStation Plus.",
+   "search": "PlayStation Store gift card",
+   "stores": [
+    "target",
+    "walmart",
+    "bestbuy",
+    "amazon",
+    "costco",
+    "samsclub"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "ps-portal",
+   "name": "PlayStation Portal remote player",
+   "brand": "Sony",
+   "emoji": "📺",
+   "category": "consoles",
+   "interests": [
+    "playstation",
+    "tech"
+   ],
+   "ages": [
+    12,
+    30
+   ],
+   "typical": 249.99,
+   "range": [
+    199.99,
+    249.99
+   ],
+   "tags": [],
+   "blurb": "Streams PS5 games to a handheld screen around the house. Needs a PS5 and good Wi-Fi.",
+   "search": "PlayStation Portal remote player",
+   "stores": [
+    "bestbuy",
+    "target",
+    "walmart",
+    "gamestop",
+    "amazon",
+    "playstation"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "xbox-series-s",
+   "name": "Xbox Series S (512GB)",
+   "brand": "Microsoft",
+   "emoji": "🟩",
+   "category": "consoles",
+   "interests": [
+    "xbox"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 499.99,
+   "tags": [],
+   "blurb": "The smallest Xbox, now $499.99 after August's price increase. Pairs well with Game Pass.",
+   "search": "Xbox Series S (512GB)",
+   "stores": [
+    "bestbuy",
+    "target",
+    "walmart",
+    "gamestop",
+    "amazon",
+    "costco"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "xbox-controller",
+   "name": "Xbox Wireless Controller",
+   "brand": "Microsoft",
+   "emoji": "🎮",
+   "category": "consoles",
+   "interests": [
+    "xbox",
+    "pc"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 64.99,
+   "range": [
+    59.99,
+    69.99
+   ],
+   "tags": [],
+   "blurb": "Works with Xbox and PC, in lots of colors.",
+   "search": "Xbox Wireless Controller",
+   "stores": [
+    "bestbuy",
+    "target",
+    "walmart",
+    "gamestop",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "xbox-gift-card",
+   "name": "Xbox gift card (games or Game Pass)",
+   "brand": "Microsoft",
+   "emoji": "💳",
+   "category": "giftcards",
+   "interests": [
+    "giftcards",
+    "xbox"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 50.0,
+   "range": [
+    10.0,
+    100.0
+   ],
+   "tags": [],
+   "blurb": "Covers new games or a few months of Game Pass.",
+   "search": "Xbox gift card (games or Game Pass)",
+   "stores": [
+    "target",
+    "walmart",
+    "bestbuy",
+    "amazon",
+    "costco",
+    "samsclub"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "meta-quest-3s",
+   "name": "Meta Quest 3S (128GB)",
+   "brand": "Meta",
+   "emoji": "🥽",
+   "category": "tech",
+   "interests": [
+    "tech",
+    "pc"
+   ],
+   "ages": [
+    13,
+    30
+   ],
+   "typical": 349.99,
+   "range": [
+    297.0,
+    349.99
+   ],
+   "tags": [],
+   "blurb": "Standalone VR headset. Its list price rose to $349.99 this year, so wait for a Black Friday deal.",
+   "search": "Meta Quest 3S (128GB)",
+   "stores": [
+    "bestbuy",
+    "target",
+    "amazon",
+    "walmart"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "steam-card",
+   "name": "Steam gift card",
+   "brand": "Valve",
+   "emoji": "💳",
+   "category": "giftcards",
+   "interests": [
+    "giftcards",
+    "pc"
+   ],
+   "ages": [
+    12,
+    30
+   ],
+   "typical": 50.0,
+   "range": [
+    20.0,
+    100.0
+   ],
+   "tags": [],
+   "blurb": "For PC gamers; it works on Steam Deck too.",
+   "search": "Steam gift card",
+   "stores": [
+    "target",
+    "walmart",
+    "bestbuy",
+    "amazon",
+    "costco",
+    "samsclub"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "roblox-card",
+   "name": "Roblox gift card",
+   "brand": "Roblox",
+   "emoji": "💳",
+   "category": "giftcards",
+   "interests": [
+    "giftcards",
+    "pc"
+   ],
+   "ages": [
+    7,
+    17
+   ],
+   "typical": 25.0,
+   "range": [
+    10.0,
+    100.0
+   ],
+   "tags": [],
+   "blurb": "Robux for avatar items and games; one of the most-asked-for gifts for 7 to 14-year-olds.",
+   "search": "Roblox gift card",
+   "stores": [
+    "target",
+    "walmart",
+    "bestbuy",
+    "amazon",
+    "costco",
+    "samsclub"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "gaming-headset",
+   "name": "Gaming headset (HyperX, SteelSeries, Turtle Beach)",
+   "brand": "Various",
+   "emoji": "🎧",
+   "category": "tech",
+   "interests": [
+    "playstation",
+    "xbox",
+    "switch",
+    "pc",
+    "music"
+   ],
+   "ages": [
+    10,
+    30
+   ],
+   "typical": 59.99,
+   "range": [
+    39.99,
+    99.99
+   ],
+   "tags": [],
+   "blurb": "Clear voice chat for online games. Check it supports their console.",
+   "search": "gaming headset",
+   "stores": [
+    "bestbuy",
+    "target",
+    "amazon",
+    "walmart"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "logitech-g305",
+   "name": "Logitech G305 Lightspeed wireless gaming mouse",
+   "brand": "Logitech",
+   "emoji": "🖱️",
+   "category": "tech",
+   "interests": [
+    "pc",
+    "tech"
+   ],
+   "ages": [
+    10,
+    30
+   ],
+   "typical": 39.99,
+   "range": [
+    29.99,
+    49.99
+   ],
+   "tags": [],
+   "blurb": "Light, accurate wireless mouse with long battery life.",
+   "search": "Logitech G305 Lightspeed wireless gaming mouse",
+   "stores": [
+    "bestbuy",
+    "target",
+    "amazon",
+    "walmart"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "airpods-4",
+   "name": "Apple AirPods 4",
+   "brand": "Apple",
+   "emoji": "🎧",
+   "category": "tech",
+   "interests": [
+    "tech",
+    "music"
+   ],
+   "ages": [
+    12,
+    30
+   ],
+   "typical": 129.0,
+   "range": [
+    99.0,
+    179.0
+   ],
+   "tags": [],
+   "blurb": "The most-requested teen gift in several 2026 guides. The noise-cancelling version is $179.",
+   "search": "Apple AirPods 4",
+   "stores": [
+    "apple",
+    "bestbuy",
+    "target",
+    "amazon",
+    "walmart"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "airpods-pro-3",
+   "name": "Apple AirPods Pro 3",
+   "brand": "Apple",
+   "emoji": "🎧",
+   "category": "tech",
+   "interests": [
+    "tech",
+    "music"
+   ],
+   "ages": [
+    14,
+    30
+   ],
+   "typical": 249.0,
+   "range": [
+    199.0,
+    249.0
+   ],
+   "tags": [],
+   "blurb": "Apple's best noise-cancelling earbuds.",
+   "search": "Apple AirPods Pro 3",
+   "stores": [
+    "apple",
+    "bestbuy",
+    "target",
+    "amazon",
+    "walmart"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "airtag",
+   "name": "Apple AirTag (2nd generation)",
+   "brand": "Apple",
+   "emoji": "📍",
+   "category": "tech",
+   "interests": [
+    "tech"
+   ],
+   "ages": [
+    12,
+    30
+   ],
+   "typical": 29.0,
+   "range": [
+    24.0,
+    29.0
+   ],
+   "tags": [],
+   "blurb": "Tracks keys, backpacks and luggage; a handy stocking stuffer for iPhone users.",
+   "search": "Apple AirTag (2nd generation)",
+   "stores": [
+    "apple",
+    "bestbuy",
+    "target",
+    "amazon",
+    "walmart"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "ipad-a16",
+   "name": "Apple iPad (11-inch, A16)",
+   "brand": "Apple",
+   "emoji": "📱",
+   "category": "tech",
+   "interests": [
+    "tech"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 349.0,
+   "range": [
+    299.0,
+    349.0
+   ],
+   "tags": [],
+   "blurb": "The everyday iPad for school, drawing and games.",
+   "search": "iPad 11-inch A16",
+   "stores": [
+    "apple",
+    "bestbuy",
+    "target",
+    "amazon",
+    "walmart"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "jbl-clip-5",
+   "name": "JBL Clip 5 Bluetooth speaker",
+   "brand": "JBL",
+   "emoji": "🔊",
+   "category": "tech",
+   "interests": [
+    "music",
+    "tech",
+    "outdoor"
+   ],
+   "ages": [
+    10,
+    30
+   ],
+   "typical": 79.99,
+   "range": [
+    59.99,
+    79.99
+   ],
+   "tags": [],
+   "blurb": "Small waterproof speaker that clips onto a backpack.",
+   "search": "JBL Clip 5 Bluetooth speaker",
+   "stores": [
+    "bestbuy",
+    "target",
+    "amazon",
+    "walmart"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "jbl-flip-7",
+   "name": "JBL Flip 7 Bluetooth speaker",
+   "brand": "JBL",
+   "emoji": "🔊",
+   "category": "tech",
+   "interests": [
+    "music",
+    "tech"
+   ],
+   "ages": [
+    12,
+    30
+   ],
+   "typical": 149.99,
+   "range": [
+    119.99,
+    149.99
+   ],
+   "tags": [],
+   "blurb": "Bigger sound for rooms and parties; waterproof and drop-resistant.",
+   "search": "JBL Flip 7 Bluetooth speaker",
+   "stores": [
+    "bestbuy",
+    "target",
+    "amazon",
+    "walmart"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "kids-headphones",
+   "name": "Volume-limited kids' headphones",
+   "brand": "JLab and others",
+   "emoji": "🎧",
+   "category": "tech",
+   "interests": [
+    "music",
+    "tech"
+   ],
+   "ages": [
+    4,
+    12
+   ],
+   "typical": 24.99,
+   "range": [
+    14.99,
+    34.99
+   ],
+   "tags": [],
+   "blurb": "Headphones capped at a safer volume for young ears.",
+   "search": "volume limited kids headphones",
+   "stores": [
+    "bestbuy",
+    "target",
+    "amazon",
+    "walmart"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "instax-mini-12",
+   "name": "Fujifilm Instax Mini 12 instant camera",
+   "brand": "Fujifilm",
+   "emoji": "📷",
+   "category": "tech",
+   "interests": [
+    "tech",
+    "arts"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 79.99,
+   "range": [
+    69.99,
+    79.99
+   ],
+   "tags": [],
+   "blurb": "Photos that print in your hand. Instant cameras are making a comeback.",
+   "search": "Fujifilm Instax Mini 12 instant camera",
+   "stores": [
+    "bestbuy",
+    "target",
+    "amazon",
+    "walmart"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "instax-film",
+   "name": "Instax Mini film (2-pack)",
+   "brand": "Fujifilm",
+   "emoji": "🎞️",
+   "category": "tech",
+   "interests": [
+    "tech",
+    "arts"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 14.99,
+   "range": [
+    12.99,
+    19.99
+   ],
+   "tags": [],
+   "blurb": "Pair it with the camera, or tuck it in the stocking of someone who already has one.",
+   "search": "Instax Mini film twin pack",
+   "stores": [
+    "bestbuy",
+    "target",
+    "amazon",
+    "walmart"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "fire-kids-tablet",
+   "name": "Amazon Fire Kids tablet",
+   "brand": "Amazon",
+   "emoji": "📱",
+   "category": "tech",
+   "interests": [
+    "tech"
+   ],
+   "ages": [
+    3,
+    12
+   ],
+   "typical": 129.99,
+   "range": [
+    109.99,
+    229.99
+   ],
+   "tags": [],
+   "blurb": "Kid-proof case, parental controls and a year of Amazon Kids+.",
+   "search": "Fire Kids tablet",
+   "stores": [
+    "bestbuy",
+    "target",
+    "amazon",
+    "walmart"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "led-strip-lights",
+   "name": "LED strip lights",
+   "brand": "Govee and others",
+   "emoji": "🌈",
+   "category": "room",
+   "interests": [
+    "room",
+    "tech"
+   ],
+   "ages": [
+    10,
+    30
+   ],
+   "typical": 29.99,
+   "range": [
+    19.99,
+    49.99
+   ],
+   "tags": [],
+   "blurb": "App-controlled color lights for a bedroom or desk setup.",
+   "search": "LED strip lights",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "galaxy-projector",
+   "name": "Star and galaxy projector night light",
+   "brand": "Various",
+   "emoji": "🌌",
+   "category": "room",
+   "interests": [
+    "room"
+   ],
+   "ages": [
+    4,
+    30
+   ],
+   "typical": 29.99,
+   "range": [
+    19.99,
+    59.99
+   ],
+   "tags": [],
+   "blurb": "Fills the ceiling with stars and doubles as a night light.",
+   "search": "galaxy projector",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "lava-lamp",
+   "name": "Lava lamp",
+   "brand": "Lava Lite and others",
+   "emoji": "🔮",
+   "category": "room",
+   "interests": [
+    "room"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 24.99,
+   "range": [
+    19.99,
+    34.99
+   ],
+   "tags": [],
+   "blurb": "Retro glow for a desk or shelf. It gets hot, so it's for older kids.",
+   "search": "Lava lamp",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "sherpa-throw",
+   "name": "Sherpa or fuzzy throw blanket",
+   "brand": "Various",
+   "emoji": "🛋️",
+   "category": "room",
+   "interests": [
+    "room"
+   ],
+   "ages": [
+    5,
+    30
+   ],
+   "typical": 29.99,
+   "range": [
+    19.99,
+    59.99
+   ],
+   "tags": [],
+   "blurb": "Cozy movie-night blanket, easy to match to a favorite color.",
+   "search": "sherpa throw blanket",
+   "stores": [
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "personalized-gifts",
+   "name": "Personalized gifts (name ornaments, custom portraits)",
+   "brand": "Etsy sellers",
+   "emoji": "🎄",
+   "category": "room",
+   "interests": [
+    "room",
+    "arts"
+   ],
+   "ages": [
+    1,
+    30
+   ],
+   "typical": 25.0,
+   "range": [
+    10.0,
+    75.0
+   ],
+   "tags": [],
+   "blurb": "Small shops make name ornaments, stockings and custom art. Order early for Christmas delivery.",
+   "search": "personalized christmas ornament",
+   "stores": [
+    "etsy",
+    "target",
+    "walmart",
+    "amazon",
+    "kohls"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "fuzzy-socks",
+   "name": "Fuzzy socks",
+   "brand": "Various",
+   "emoji": "🧦",
+   "category": "fashion",
+   "interests": [
+    "fashion",
+    "room"
+   ],
+   "ages": [
+    5,
+    30
+   ],
+   "typical": 9.99,
+   "range": [
+    5.0,
+    14.99
+   ],
+   "tags": [],
+   "blurb": "The classic stocking stuffer.",
+   "search": "Fuzzy socks",
+   "stores": [
+    "kohls",
+    "macys",
+    "target",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "crocs-classic",
+   "name": "Crocs Classic Clog",
+   "brand": "Crocs",
+   "emoji": "🐊",
+   "category": "fashion",
+   "interests": [
+    "fashion"
+   ],
+   "ages": [
+    4,
+    30
+   ],
+   "typical": 54.99,
+   "range": [
+    44.99,
+    59.99
+   ],
+   "tags": [],
+   "blurb": "Comfy clogs in every color. Add Jibbitz charms to personalize them.",
+   "search": "Crocs Classic Clog",
+   "stores": [
+    "kohls",
+    "macys",
+    "target",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "jibbitz",
+   "name": "Crocs Jibbitz charm packs",
+   "brand": "Crocs",
+   "emoji": "✨",
+   "category": "fashion",
+   "interests": [
+    "fashion"
+   ],
+   "ages": [
+    4,
+    30
+   ],
+   "typical": 14.99,
+   "range": [
+    4.99,
+    24.99
+   ],
+   "tags": [],
+   "blurb": "Little charms that click into Crocs; easy stocking stuffers.",
+   "search": "Jibbitz charms",
+   "stores": [
+    "kohls",
+    "macys",
+    "target",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "ugg-tasman",
+   "name": "UGG Tasman slippers",
+   "brand": "UGG",
+   "emoji": "🥿",
+   "category": "fashion",
+   "interests": [
+    "fashion"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 120.0,
+   "range": [
+    100.0,
+    130.0
+   ],
+   "tags": [],
+   "blurb": "Suede slip-ons that teens and adults wear everywhere.",
+   "search": "UGG Tasman slippers",
+   "stores": [
+    "kohls",
+    "macys",
+    "target",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "lululemon-belt-bag",
+   "name": "lululemon Everywhere Belt Bag",
+   "brand": "lululemon",
+   "emoji": "👜",
+   "category": "fashion",
+   "interests": [
+    "fashion"
+   ],
+   "ages": [
+    12,
+    30
+   ],
+   "typical": 38.0,
+   "range": [
+    38.0,
+    48.0
+   ],
+   "tags": [],
+   "blurb": "The crossbody belt bag that's been a teen staple for years.",
+   "search": "lululemon Everywhere Belt Bag",
+   "stores": [
+    "kohls",
+    "macys",
+    "target",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "carhartt-beanie",
+   "name": "Carhartt knit cuffed beanie",
+   "brand": "Carhartt",
+   "emoji": "🧢",
+   "category": "fashion",
+   "interests": [
+    "fashion",
+    "outdoor"
+   ],
+   "ages": [
+    10,
+    30
+   ],
+   "typical": 19.99,
+   "range": [
+    16.99,
+    24.99
+   ],
+   "tags": [],
+   "blurb": "Warm, simple beanie in lots of colors.",
+   "search": "Carhartt knit cuffed beanie",
+   "stores": [
+    "kohls",
+    "macys",
+    "target",
+    "amazon",
+    "dicks"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "owala-freesip",
+   "name": "Owala FreeSip 24 oz bottle",
+   "brand": "Owala",
+   "emoji": "🥤",
+   "category": "fashion",
+   "interests": [
+    "fashion",
+    "outdoor"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 27.99,
+   "range": [
+    24.99,
+    32.99
+   ],
+   "tags": [],
+   "blurb": "Leakproof bottle you can sip or swig from; huge with teens.",
+   "search": "Owala FreeSip 24 oz bottle",
+   "stores": [
+    "kohls",
+    "macys",
+    "target",
+    "amazon",
+    "dicks"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "stanley-quencher",
+   "name": "Stanley Quencher 40 oz tumbler",
+   "brand": "Stanley",
+   "emoji": "🥤",
+   "category": "kitchen",
+   "interests": [
+    "fashion",
+    "kitchen"
+   ],
+   "ages": [
+    12,
+    30
+   ],
+   "typical": 45.0,
+   "range": [
+    35.0,
+    50.0
+   ],
+   "tags": [],
+   "blurb": "Big insulated tumbler that still fits a car cup holder.",
+   "search": "Stanley Quencher 40 oz tumbler",
+   "stores": [
+    "target",
+    "kohls",
+    "walmart",
+    "amazon",
+    "bestbuy",
+    "dicks"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "laneige-lip-mask",
+   "name": "Laneige Lip Sleeping Mask",
+   "brand": "Laneige",
+   "emoji": "💋",
+   "category": "beauty",
+   "interests": [
+    "beauty"
+   ],
+   "ages": [
+    12,
+    30
+   ],
+   "typical": 24.0,
+   "range": [
+    19.0,
+    24.0
+   ],
+   "tags": [],
+   "blurb": "Overnight lip treatment that teens and adults both love.",
+   "search": "Laneige Lip Sleeping Mask",
+   "stores": [
+    "sephora",
+    "ulta",
+    "target",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "summer-fridays-lip",
+   "name": "Summer Fridays Lip Butter Balm",
+   "brand": "Summer Fridays",
+   "emoji": "💄",
+   "category": "beauty",
+   "interests": [
+    "beauty"
+   ],
+   "ages": [
+    13,
+    30
+   ],
+   "typical": 24.0,
+   "tags": [],
+   "blurb": "Glossy, cushiony lip balm in lots of flavors.",
+   "search": "Summer Fridays Lip Butter Balm",
+   "stores": [
+    "sephora",
+    "ulta",
+    "target",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "sol-de-janeiro-mist",
+   "name": "Sol de Janeiro body mist",
+   "brand": "Sol de Janeiro",
+   "emoji": "🌺",
+   "category": "beauty",
+   "interests": [
+    "beauty"
+   ],
+   "ages": [
+    13,
+    30
+   ],
+   "typical": 24.0,
+   "range": [
+    24.0,
+    38.0
+   ],
+   "tags": [],
+   "blurb": "Warm, sweet body fragrance mists. The travel size makes a great stocking stuffer.",
+   "search": "Sol de Janeiro body mist",
+   "stores": [
+    "sephora",
+    "ulta",
+    "target",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "elf-halo-glow",
+   "name": "e.l.f. Halo Glow Liquid Filter",
+   "brand": "e.l.f. Cosmetics",
+   "emoji": "🌟",
+   "category": "beauty",
+   "interests": [
+    "beauty"
+   ],
+   "ages": [
+    12,
+    30
+   ],
+   "typical": 14.0,
+   "range": [
+    12.0,
+    16.0
+   ],
+   "tags": [],
+   "blurb": "A popular glow-boosting base at a teen-friendly price.",
+   "search": "e.l.f. Halo Glow Liquid Filter",
+   "stores": [
+    "sephora",
+    "ulta",
+    "target",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "hair-accessories",
+   "name": "Claw clips, scrunchies and hair accessories",
+   "brand": "Various",
+   "emoji": "🎀",
+   "category": "fashion",
+   "interests": [
+    "fashion",
+    "beauty"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 12.0,
+   "range": [
+    5.0,
+    20.0
+   ],
+   "tags": [],
+   "blurb": "Cute, cheap and always used; perfect for stockings.",
+   "search": "claw clips set",
+   "stores": [
+    "kohls",
+    "macys",
+    "target",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "shark-flexstyle",
+   "name": "Shark FlexStyle hair styler",
+   "brand": "Shark",
+   "emoji": "💇",
+   "category": "beauty",
+   "interests": [
+    "beauty",
+    "tech"
+   ],
+   "ages": [
+    16,
+    30
+   ],
+   "typical": 299.99,
+   "range": [
+    229.99,
+    329.99
+   ],
+   "tags": [],
+   "blurb": "Dryer, curler and smoother in one; a lower-priced alternative to the Dyson Airwrap.",
+   "search": "Shark FlexStyle hair styler",
+   "stores": [
+    "sephora",
+    "ulta",
+    "target",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "sephora-card",
+   "name": "Sephora gift card",
+   "brand": "Sephora",
+   "emoji": "💳",
+   "category": "giftcards",
+   "interests": [
+    "giftcards",
+    "beauty"
+   ],
+   "ages": [
+    13,
+    30
+   ],
+   "typical": 50.0,
+   "range": [
+    25.0,
+    100.0
+   ],
+   "tags": [],
+   "blurb": "Lets them pick their own makeup and skincare.",
+   "search": "Sephora gift card",
+   "stores": [
+    "sephora",
+    "target",
+    "walmart",
+    "bestbuy",
+    "amazon",
+    "costco",
+    "samsclub"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "ninja-creami",
+   "name": "Ninja CREAMi ice cream maker",
+   "brand": "Ninja",
+   "emoji": "🍨",
+   "category": "kitchen",
+   "interests": [
+    "kitchen"
+   ],
+   "ages": [
+    16,
+    30
+   ],
+   "typical": 199.99,
+   "range": [
+    149.99,
+    249.99
+   ],
+   "tags": [],
+   "blurb": "Turns frozen bases into ice cream, sorbet or protein ice cream.",
+   "search": "Ninja CREAMi ice cream maker",
+   "stores": [
+    "target",
+    "kohls",
+    "walmart",
+    "amazon",
+    "bestbuy"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "ninja-air-fryer",
+   "name": "Ninja air fryer",
+   "brand": "Ninja",
+   "emoji": "🍟",
+   "category": "kitchen",
+   "interests": [
+    "kitchen"
+   ],
+   "ages": [
+    18,
+    30
+   ],
+   "typical": 99.99,
+   "range": [
+    79.99,
+    129.99
+   ],
+   "tags": [],
+   "blurb": "A practical first-apartment gift that gets used every day.",
+   "search": "Ninja air fryer",
+   "stores": [
+    "target",
+    "kohls",
+    "walmart",
+    "amazon",
+    "bestbuy"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "yeti-rambler",
+   "name": "YETI Rambler 20 oz tumbler",
+   "brand": "YETI",
+   "emoji": "☕",
+   "category": "kitchen",
+   "interests": [
+    "kitchen",
+    "outdoor"
+   ],
+   "ages": [
+    16,
+    30
+   ],
+   "typical": 35.0,
+   "range": [
+    30.0,
+    38.0
+   ],
+   "tags": [],
+   "blurb": "Keeps coffee hot for hours and survives anything.",
+   "search": "YETI Rambler 20 oz tumbler",
+   "stores": [
+    "target",
+    "kohls",
+    "walmart",
+    "amazon",
+    "bestbuy",
+    "dicks"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "razor-a5-lux",
+   "name": "Razor A5 Lux kick scooter",
+   "brand": "Razor",
+   "emoji": "🛴",
+   "category": "outdoor",
+   "interests": [
+    "outdoor"
+   ],
+   "ages": [
+    8,
+    14
+   ],
+   "typical": 99.99,
+   "range": [
+    79.99,
+    119.99
+   ],
+   "tags": [],
+   "blurb": "Big-wheel kick scooter that rolls smoothly on sidewalks. Add a helmet.",
+   "search": "Razor A5 Lux kick scooter",
+   "stores": [
+    "dicks",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "snow-sled",
+   "name": "Snow sled or saucer",
+   "brand": "Various",
+   "emoji": "🛷",
+   "category": "outdoor",
+   "interests": [
+    "outdoor"
+   ],
+   "ages": [
+    3,
+    14
+   ],
+   "typical": 29.99,
+   "range": [
+    14.99,
+    59.99
+   ],
+   "tags": [],
+   "blurb": "If there's snow where they live, this gets used the next morning.",
+   "search": "snow sled",
+   "stores": [
+    "dicks",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "basketball",
+   "name": "Indoor/outdoor basketball",
+   "brand": "Wilson, Spalding",
+   "emoji": "🏀",
+   "category": "outdoor",
+   "interests": [
+    "outdoor"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 29.99,
+   "range": [
+    19.99,
+    79.99
+   ],
+   "tags": [],
+   "blurb": "A good ball for the driveway or the gym.",
+   "search": "basketball",
+   "stores": [
+    "dicks",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "tosy-flying-disc",
+   "name": "TOSY LED flying disc",
+   "brand": "TOSY",
+   "emoji": "🥏",
+   "category": "outdoor",
+   "interests": [
+    "outdoor"
+   ],
+   "ages": [
+    8,
+    30
+   ],
+   "typical": 29.99,
+   "range": [
+    24.99,
+    39.99
+   ],
+   "tags": [],
+   "blurb": "Light-up flying disc for night games at the park or the beach.",
+   "search": "TOSY LED flying disc",
+   "stores": [
+    "dicks",
+    "target",
+    "walmart",
+    "amazon"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "store-gift-cards",
+   "name": "Store gift cards (Target, Amazon, Walmart)",
+   "brand": "Various",
+   "emoji": "💳",
+   "category": "giftcards",
+   "interests": [
+    "giftcards"
+   ],
+   "ages": [
+    13,
+    30
+   ],
+   "typical": 50.0,
+   "range": [
+    10.0,
+    200.0
+   ],
+   "tags": [],
+   "blurb": "The no-wrong-answer gift for older teens and adults.",
+   "search": "gift card",
+   "stores": [
+    "target",
+    "walmart",
+    "bestbuy",
+    "amazon",
+    "costco",
+    "samsclub"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  },
+  {
+   "id": "bn-gift-card",
+   "name": "Barnes & Noble gift card",
+   "brand": "Barnes & Noble",
+   "emoji": "💳",
+   "category": "giftcards",
+   "interests": [
+    "giftcards",
+    "books"
+   ],
+   "ages": [
+    6,
+    30
+   ],
+   "typical": 25.0,
+   "range": [
+    10.0,
+    100.0
+   ],
+   "tags": [],
+   "blurb": "For readers who'd rather pick their own books.",
+   "search": "Barnes & Noble gift card",
+   "stores": [
+    "target",
+    "walmart",
+    "bestbuy",
+    "amazon",
+    "costco",
+    "samsclub",
+    "barnesnoble"
+   ],
+   "offers": [],
+   "price_status": "typical",
+   "history": []
+  }
+ ]
+}

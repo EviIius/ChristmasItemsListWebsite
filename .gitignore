@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.DS_Store
+.venv/
+.env
+.env.*
+node_modules/
+# a self-hosted Actions runner keeps its credentials in its folder; install it outside this repo
+actions-runner*/

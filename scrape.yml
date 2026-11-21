@@ -1,0 +1,152 @@
+name: Check prices and publish site
+
+on:
+  schedule:
+    # 11:43 and 23:43 UTC = 6:43 AM and 6:43 PM Eastern in winter.
+    # Off the hour on purpose: GitHub delays runs scheduled at :00.
+    - cron: "43 11,23 * * *"
+  workflow_dispatch: # the site's Refresh prices button and the "Run workflow" button on GitHub
+    inputs:
+      probe:
+        description: "Only test which stores answer the price checker (writes scraper/probe-results.json)"
+        type: boolean
+        default: false
+      publish_only:
+        description: "Publish the current site without contacting stores"
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "scraper/**"
+      - ".github/workflows/scrape.yml"
+
+permissions:
+  contents: write # commit refreshed prices
+  pages: write # publish the site
+  id-token: write # required by deploy-pages
+
+concurrency:
+  group: scrape-and-publish
+  cancel-in-progress: false
+
+jobs:
+  # Read store prices and commit them. Skipped on code pushes.
+  # Runs on GitHub's servers unless the repo variable SCRAPER_RUNNER is set
+  # (Settings -> Secrets and variables -> Actions -> Variables), e.g. to "self-hosted"
+  # so the price check comes from a computer at home, which stores block far less often.
+  scrape:
+    if: github.event_name != 'push' && !inputs.probe && !inputs.publish_only
+    runs-on: ${{ vars.SCRAPER_RUNNER || 'ubuntu-latest' }}
+    timeout-minutes: 30
+    outputs:
+      refresh_outcome: ${{ steps.refresh.outcome }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Check the scraper
+        run: python3 -B scraper/test_scrape.py
+
+      # If every store refuses, the last known prices stay up and the site shows typical prices.
+      - name: Check prices
+        id: refresh
+        continue-on-error: true
+        env:
+          BESTBUY_API_KEY: ${{ secrets.BESTBUY_API_KEY }}
+          SCRAPER_RUNNER: ${{ vars.SCRAPER_RUNNER }}
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 scraper/scrape.py
+
+      - name: Commit new prices
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/data/gifts.json
+          if git diff --cached --quiet; then
+            echo "Nothing changed."
+            exit 0
+          fi
+          git commit -m "Prices: $(date -u +'%Y-%m-%d %H:%M') UTC"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main && git push && exit 0
+            sleep 5
+          done
+          exit 1
+
+  # One-off check of which stores answer a polite script (Run workflow -> tick "probe").
+  probe:
+    if: github.event_name == 'workflow_dispatch' && inputs.probe
+    runs-on: ${{ vars.SCRAPER_RUNNER || 'ubuntu-latest' }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - name: Probe stores
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 scraper/scrape.py --probe
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scraper/probe-results.json
+          git diff --cached --quiet || { git commit -m "Store probe results" && git pull --rebase origin main && git push; }
+
+  # Build the site from the latest main (including any prices just committed) on GitHub's servers.
+  publish:
+    needs: scrape
+    if: ${{ !cancelled() && needs.scrape.result != 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+
+      # Code or catalog pushes rebuild the data from the catalog (fast, no store requests).
+      - name: Rebuild data from the catalog
+        if: github.event_name == 'push'
+        run: |
+          python3 -B scraper/test_scrape.py
+          python3 -B scraper/scrape.py --offline
+          node site/test_app.cjs
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/data/gifts.json
+          git diff --cached --quiet || { git commit -m "Rebuild data from catalog" && git pull --rebase origin main && git push; }
+
+      - name: Check the site
+        if: github.event_name != 'push'
+        run: node site/test_app.cjs
+
+      - uses: actions/configure-pages@v6
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+
+  deploy:
+    needs: publish
+    if: ${{ !cancelled() && needs.publish.result == 'success' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
+
+  # Publish retained prices even after a blocked check, but don't report that refresh as successful.
+  verify-refresh:
+    needs: [scrape, deploy]
+    if: ${{ !cancelled() && needs.scrape.outputs.refresh_outcome == 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report unsuccessful refresh
+        run: |
+          echo "::error::No store gave the price checker a price this run. Retained prices were published; see the scrape log and the README section on running it from home."
+          exit 1
