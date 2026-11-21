@@ -1,0 +1,101 @@
+{
+ "checked_at": "2026-11-21T18:29:55Z",
+ "runner": "github-actions",
+ "user_agent": "Mozilla/5.0 (compatible; ChristmasGiftFinder/1.0; +https://github.com/EviIius/ChristmasItemsListWebsite)",
+ "results": [
+  {
+   "store": "tonies",
+   "url": "https://us.tonies.com/products/myfirsttonies-farmset-starter-set-toniebox2-pink",
+   "robots": "allowed",
+   "status": 200,
+   "seconds": 0.6,
+   "kb": 1324,
+   "bot_check": [],
+   "price": 169.99,
+   "in_stock": true,
+   "readable": true
+  },
+  {
+   "store": "amazon",
+   "url": "https://www.amazon.com/dp/B0BQZFVJTB",
+   "robots": "allowed",
+   "status": 200,
+   "seconds": 0.7,
+   "kb": 846,
+   "bot_check": [],
+   "price": 14.99,
+   "in_stock": true,
+   "readable": true
+  },
+  {
+   "store": "walmart",
+   "url": "https://www.walmart.com/ip/Nee-Doh-Nice-Cube-Squish-Toy-Ages-3-Blue-1ct/1107995384",
+   "robots": "allowed",
+   "status": 200,
+   "seconds": 0.3,
+   "kb": 14,
+   "bot_check": [
+    "px-captcha",
+    "robot or human",
+    "title: Robot or human?"
+   ],
+   "parse_error": "BlockedError: the store showed a bot check instead of the product (px-captcha, robot or human)",
+   "readable": false
+  },
+  {
+   "store": "target",
+   "url": "https://www.target.com/p/squishmallows-12-inch-plush-wanda-the-pink-watermelon/-/A-1006663864",
+   "robots": "allowed",
+   "status": 200,
+   "seconds": 0.5,
+   "kb": 336,
+   "bot_check": [],
+   "parse_error": "ValueError: no product price data found on the Target page",
+   "readable": false
+  },
+  {
+   "store": "lego",
+   "url": "https://www.lego.com/en-us/product/smart-play-training-house-with-pikachu-72164",
+   "robots": "allowed",
+   "status": 403,
+   "seconds": 0.0,
+   "kb": 5,
+   "bot_check": [
+    "challenge-platform",
+    "title: Just a moment..."
+   ],
+   "parse_error": "BlockedError: the store showed a bot check instead of the product (challenge-platform, title: Just a moment...)",
+   "readable": false
+  },
+  {
+   "store": "bestbuy",
+   "url": "https://www.bestbuy.com/product/pokemon-trading-card-game-30th-celebration-elite-trainer-box/JJG2TL8XCJ",
+   "robots": "unreachable: TimeoutError: The read operation timed out",
+   "readable": false
+  },
+  {
+   "store": "gamestop",
+   "url": "https://www.gamestop.com/video-games/nintendo-switch-2/products/the-legend-of-zelda-ocarina-of-time---nintendo-switch-2/20036066.html",
+   "robots": "allowed",
+   "status": 200,
+   "seconds": 0.2,
+   "kb": 444,
+   "bot_check": [],
+   "price": 59.99,
+   "in_stock": true,
+   "readable": true
+  },
+  {
+   "store": "playstation",
+   "url": "https://direct.playstation.com/en-us/buy-consoles/playstation5-digital-edition-console-825-gb",
+   "robots": "allowed",
+   "status": 200,
+   "seconds": 0.1,
+   "kb": 264,
+   "bot_check": [],
+   "price": 599.0,
+   "in_stock": null,
+   "readable": true
+  }
+ ]
+}
