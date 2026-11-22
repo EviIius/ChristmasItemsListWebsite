@@ -1,24 +1,24 @@
 {
- "generated_at": "2026-11-22T11:46:03Z",
- "prices_as_of": "2026-11-22T11:45:46Z",
- "live_prices": 5,
+ "generated_at": "2026-11-22T23:46:05Z",
+ "prices_as_of": "2026-11-22T23:45:54Z",
+ "live_prices": 7,
  "scrape": {
-  "started": "2026-11-22T11:45:21Z",
-  "finished": "2026-11-22T11:46:03Z",
+  "started": "2026-11-22T23:45:19Z",
+  "finished": "2026-11-22T23:46:05Z",
   "mode": "live",
   "runner": "github-actions",
-  "ok": 5,
-  "failed": 13,
+  "ok": 7,
+  "failed": 11,
   "tracked_links": 18,
   "by_retailer": {
+   "walmart": {
+    "ok": 0,
+    "failed": 3,
+    "blocked": 3
+   },
    "bestbuy": {
     "ok": 0,
     "failed": 5,
-    "blocked": 0
-   },
-   "amazon": {
-    "ok": 0,
-    "failed": 2,
     "blocked": 0
    },
    "gamestop": {
@@ -26,20 +26,20 @@
     "failed": 0,
     "blocked": 0
    },
-   "walmart": {
+   "lego": {
     "ok": 0,
-    "failed": 3,
-    "blocked": 3
+    "failed": 1,
+    "blocked": 1
    },
    "target": {
     "ok": 0,
     "failed": 2,
     "blocked": 0
    },
-   "lego": {
-    "ok": 0,
-    "failed": 1,
-    "blocked": 1
+   "amazon": {
+    "ok": 2,
+    "failed": 0,
+    "blocked": 0
    },
    "tonies": {
     "ok": 2,
@@ -53,11 +53,10 @@
    }
   },
   "notes": [
-   "Best Buy didn't give this machine any prices, most likely because it blocks automated traffic from cloud servers. Last known prices kept. Running the scraper on a home computer usually helps (see README).",
-   "Amazon: no prices read this run (parse). Last known prices kept.",
    "Walmart didn't give this machine any prices, most likely because it blocks automated traffic from cloud servers. Last known prices kept. Running the scraper on a home computer usually helps (see README).",
-   "Target: no prices read this run (parse). Last known prices kept.",
-   "LEGO.com didn't give this machine any prices, most likely because it blocks automated traffic from cloud servers. Last known prices kept. Running the scraper on a home computer usually helps (see README)."
+   "Best Buy didn't give this machine any prices, most likely because it blocks automated traffic from cloud servers. Last known prices kept. Running the scraper on a home computer usually helps (see README).",
+   "LEGO.com didn't give this machine any prices, most likely because it blocks automated traffic from cloud servers. Last known prices kept. Running the scraper on a home computer usually helps (see README).",
+   "Target: no prices read this run (parse). Last known prices kept."
   ],
   "api": false
  },
@@ -756,7 +755,7 @@
      "label": "Farm set, Cloud Pink",
      "price": 169.99,
      "in_stock": true,
-     "checked_at": "2026-11-22T11:45:58Z",
+     "checked_at": "2026-11-22T23:45:56Z",
      "source": "us.tonies.com product page",
      "verification_method": "retailer-html",
      "name": "My First Tonies Farm Set Toniebox 2 Starter Set - Cloud Pink",
@@ -767,7 +766,7 @@
    "price_retailer": "tonies",
    "price_url": "https://us.tonies.com/products/myfirsttonies-farmset-starter-set-toniebox2-pink",
    "price_status": "live",
-   "price_checked_at": "2026-11-22T11:45:58Z",
+   "price_checked_at": "2026-11-22T23:45:56Z",
    "history": [
     [
      "2026-11-21",
@@ -818,7 +817,7 @@
      "label": "Disney Frozen set, Sky Blue",
      "price": 149.99,
      "in_stock": true,
-     "checked_at": "2026-11-22T11:45:56Z",
+     "checked_at": "2026-11-22T23:46:04Z",
      "source": "us.tonies.com product page",
      "verification_method": "retailer-html",
      "name": "Disney Frozen Toniebox 2 Starter Set - Sky Blue",
@@ -829,7 +828,7 @@
    "price_retailer": "tonies",
    "price_url": "https://us.tonies.com/products/toniebox2-starter-set-disney-frozen-sky-blue",
    "price_status": "live",
-   "price_checked_at": "2026-11-22T11:45:56Z",
+   "price_checked_at": "2026-11-22T23:46:04Z",
    "history": [
     [
      "2026-11-21",
@@ -1858,10 +1857,12 @@
      "retailer_name": "Amazon",
      "url": "https://www.amazon.com/dp/B0BQZFVJTB",
      "sku": "B0BQZFVJTB",
-     "on_sale": false,
-     "stale": true,
-     "error": "Couldn't find the price: page doesn't mention this link's ASIN (it may redirect to another product)",
-     "last_attempt": "2026-11-22T11:45:52Z"
+     "price": 14.99,
+     "rating": 3.9,
+     "checked_at": "2026-11-22T23:45:55Z",
+     "source": "www.amazon.com product page",
+     "verification_method": "retailer-html",
+     "stale": false
     },
     {
      "retailer": "walmart",
@@ -1872,12 +1873,21 @@
      "on_sale": false,
      "stale": true,
      "error": "the store showed a bot check instead of the product (px-captcha, robot or human)",
-     "last_attempt": "2026-11-22T11:45:53Z",
+     "last_attempt": "2026-11-22T23:46:01Z",
      "blocked": true
     }
    ],
-   "price_status": "typical",
-   "history": []
+   "price": 14.99,
+   "price_retailer": "amazon",
+   "price_url": "https://www.amazon.com/dp/B0BQZFVJTB",
+   "price_status": "live",
+   "price_checked_at": "2026-11-22T23:45:55Z",
+   "history": [
+    [
+     "2026-11-22",
+     14.99
+    ]
+   ]
   },
   {
    "id": "needoh-shapes",
@@ -2083,7 +2093,7 @@
      "on_sale": false,
      "stale": true,
      "error": "Couldn't find the price: no product price data found on the Target page",
-     "last_attempt": "2026-11-22T11:45:53Z"
+     "last_attempt": "2026-11-22T23:45:57Z"
     },
     {
      "retailer": "target",
@@ -2094,7 +2104,7 @@
      "on_sale": false,
      "stale": true,
      "error": "Couldn't find the price: no product price data found on the Target page",
-     "last_attempt": "2026-11-22T11:45:57Z"
+     "last_attempt": "2026-11-22T23:45:55Z"
     }
    ],
    "price_status": "typical",
@@ -2366,7 +2376,7 @@
      "on_sale": false,
      "stale": true,
      "error": "HTTP 403 with a bot-check page",
-     "last_attempt": "2026-11-22T11:45:53Z",
+     "last_attempt": "2026-11-22T23:45:54Z",
      "blocked": true
     },
     {
@@ -2374,14 +2384,26 @@
      "retailer_name": "Amazon",
      "url": "https://www.amazon.com/dp/B0GHYFH499",
      "sku": "B0GHYFH499",
-     "on_sale": false,
-     "stale": true,
-     "error": "Couldn't find the price: page doesn't mention this link's ASIN (it may redirect to another product)",
-     "last_attempt": "2026-11-22T11:45:46Z"
+     "price": 69.96,
+     "in_stock": true,
+     "rating": 4.8,
+     "checked_at": "2026-11-22T23:46:02Z",
+     "source": "www.amazon.com product page",
+     "verification_method": "retailer-html",
+     "stale": false
     }
    ],
-   "price_status": "typical",
-   "history": []
+   "price": 69.96,
+   "price_retailer": "amazon",
+   "price_url": "https://www.amazon.com/dp/B0GHYFH499",
+   "price_status": "live",
+   "price_checked_at": "2026-11-22T23:46:02Z",
+   "history": [
+    [
+     "2026-11-22",
+     69.96
+    ]
+   ]
   },
   {
    "id": "lego-sw-throne-room",
@@ -2653,7 +2675,7 @@
      "on_sale": false,
      "stale": true,
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-22T11:45:57Z"
+     "last_attempt": "2026-11-22T23:46:02Z"
     }
    ],
    "price_status": "typical",
@@ -3407,7 +3429,7 @@
      "on_sale": false,
      "stale": true,
      "error": "the store showed a bot check instead of the product (px-captcha, robot or human)",
-     "last_attempt": "2026-11-22T11:45:52Z",
+     "last_attempt": "2026-11-22T23:45:19Z",
      "blocked": true
     }
    ],
@@ -3451,7 +3473,7 @@
      "on_sale": false,
      "stale": true,
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-22T11:46:03Z"
+     "last_attempt": "2026-11-22T23:45:55Z"
     }
    ],
    "price_status": "typical",
@@ -3536,7 +3558,7 @@
      "on_sale": false,
      "stale": true,
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-22T11:45:58Z"
+     "last_attempt": "2026-11-22T23:46:04Z"
     },
     {
      "retailer": "gamestop",
@@ -3546,7 +3568,7 @@
      "price": 59.99,
      "in_stock": true,
      "open_box": 64.99,
-     "checked_at": "2026-11-22T11:45:46Z",
+     "checked_at": "2026-11-22T23:45:54Z",
      "source": "www.gamestop.com product page",
      "verification_method": "retailer-html",
      "name": "The Legend of Zelda: Ocarina of Time - Nintendo Switch 2",
@@ -3557,7 +3579,7 @@
    "price_retailer": "gamestop",
    "price_url": "https://www.gamestop.com/video-games/nintendo-switch-2/products/the-legend-of-zelda-ocarina-of-time---nintendo-switch-2/20036066.html",
    "price_status": "live",
-   "price_checked_at": "2026-11-22T11:45:46Z",
+   "price_checked_at": "2026-11-22T23:45:54Z",
    "history": [
     [
      "2026-11-21",
@@ -4085,14 +4107,14 @@
      "on_sale": false,
      "stale": true,
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-22T11:45:46Z"
+     "last_attempt": "2026-11-22T23:46:04Z"
     },
     {
      "retailer": "playstation",
      "retailer_name": "PlayStation Direct",
      "url": "https://direct.playstation.com/en-us/buy-consoles/playstation5-digital-edition-console-825-gb",
      "price": 599.0,
-     "checked_at": "2026-11-22T11:45:58Z",
+     "checked_at": "2026-11-22T23:46:00Z",
      "source": "direct.playstation.com product page",
      "verification_method": "retailer-html",
      "stale": false
@@ -4102,7 +4124,7 @@
    "price_retailer": "playstation",
    "price_url": "https://direct.playstation.com/en-us/buy-consoles/playstation5-digital-edition-console-825-gb",
    "price_status": "live",
-   "price_checked_at": "2026-11-22T11:45:58Z",
+   "price_checked_at": "2026-11-22T23:46:00Z",
    "history": [
     [
      "2026-11-21",
@@ -4193,7 +4215,7 @@
      "on_sale": false,
      "stale": true,
      "error": "robots.txt unreachable (TimeoutError: The read operation timed out), so the site is skipped this run",
-     "last_attempt": "2026-11-22T11:45:21Z"
+     "last_attempt": "2026-11-22T23:45:26Z"
     },
     {
      "retailer": "walmart",
@@ -4204,7 +4226,7 @@
      "on_sale": false,
      "stale": true,
      "error": "the store showed a bot check instead of the product (px-captcha, robot or human)",
-     "last_attempt": "2026-11-22T11:45:46Z",
+     "last_attempt": "2026-11-22T23:45:52Z",
      "blocked": true
     },
     {
@@ -4215,7 +4237,7 @@
      "label": "PS5",
      "price": 79.99,
      "in_stock": true,
-     "checked_at": "2026-11-22T11:45:47Z",
+     "checked_at": "2026-11-22T23:46:04Z",
      "source": "www.gamestop.com product page",
      "verification_method": "retailer-html",
      "name": "Grand Theft Auto VI - PlayStation 5 (Code in Box)",
@@ -4226,7 +4248,7 @@
    "price_retailer": "gamestop",
    "price_url": "https://www.gamestop.com/video-games/playstation-5/products/grand-theft-auto-vi---playstation-5-code-in-box/448295.html",
    "price_status": "live",
-   "price_checked_at": "2026-11-22T11:45:47Z",
+   "price_checked_at": "2026-11-22T23:46:04Z",
    "history": [
     [
      "2026-11-21",
