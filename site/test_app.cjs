@@ -40,6 +40,7 @@ vm.runInContext(source.replace('  init();\n})();', `
     toggleShortlist, addCustom, totals, itemInfo, sharePayload, encodeShare, decodeShare, fromShare, listText, searchUrl, keyDates,
     christmasDate, daysUntil, interestNames, giftCard, renderFindPrefs, renderFind, renderLists, renderBrowse, renderFilters, renderDeals,
     renderStores, openDrawer, statusHtml, renderFreshness, profileOf, person, onLists,
+    prepPicks, pickRows, renderPicksPanel, renderPicks, renderStoreHot, togglePick, offerStatus, get picks() { return PICKS; },
     get items() { return ITEMS; }, get byId() { return BYID; },
   };
 })();`), context);
@@ -58,7 +59,7 @@ const withLive = (id, price, extra = {}) => Object.assign(app.byId[id], { price,
     for (const it of app.items) {
       assert(it.id && it.name && it.emoji && it.blurb && it.search, it.id);
       assert(it.ages[0] >= 1 && it.ages[1] <= 30 && it.ages[0] <= it.ages[1], it.id);
-      assert(it.typical > 0 && it.stores.length >= 2, it.id);
+      assert(it.typical > 0 && it.stores.length >= 1, it.id);
     }
   });
   await check('matching respects age, budget and interests', () => {
@@ -174,17 +175,162 @@ const withLive = (id, price, extra = {}) => Object.assign(app.byId[id], { price,
     app.state.listView = app.state.lists.people[0].id; app.renderLists();
     assert(element('#list-main').innerHTML.includes("Mia's list"));
     app.renderFilters(); app.renderBrowse(); assert(element('#browse-table tbody').innerHTML.includes('data-open'));
-    app.state.browse.q = 'needoh'; app.renderBrowse(); assert(element('#browse-sub').textContent.startsWith('3 of') && element('#browse-table tbody').innerHTML.includes('data-open="needoh-shapes"'));
+    const needoh = app.items.filter((it) => `${it.name} ${it.brand} ${it.blurb}`.toLowerCase().includes('needoh')).length;
+    app.state.browse.q = 'needoh'; app.renderBrowse(); assert(needoh >= 3 && element('#browse-sub').innerHTML.startsWith(`${needoh} of`) && element('#browse-table tbody').innerHTML.includes('data-open="needoh-shapes"'));
     app.state.browse.q = '';
     app.renderDeals(); assert(element('#dates').innerHTML.includes('Black Friday'));
     app.state.storeQ = 'squishmallow'; app.renderStores(); assert(element('#store-results').innerHTML.includes('searchTerm=squishmallow'));
     app.openDrawer('gta-vi'); assert(element('#drawer').innerHTML.includes('Rated M (Mature 17+)'));
-    app.renderFreshness(); assert(element('#freshness-text').textContent.includes('typical prices'));
+    app.renderFreshness(); assert(element('#freshness-text').textContent.includes(data.live_prices ? 'store price' : 'typical prices'));
     assert(app.statusHtml().includes('exact product pages'));
     app.state.lists = app.normalizeLists(null); app.state.listView = null; app.renderLists();
     assert(element('#list-main').innerHTML.includes('Start from an example'));
     app.sharedModal({ v: 1, n: 'Eve', items: [{ n: 'Prize', u: 'javascript:alert(1)' }] });
     assert(element('#modal').innerHTML.includes('Prize') && !element('#modal').innerHTML.includes('javascript:'), 'no script links in the shared-list preview');
+  });
+  await check('product types: every gift has one, and Browse filters by type, group and hot list', () => {
+    const types = data.types; const cats = data.categories;
+    assert(Object.keys(types).length >= 60, 'a real product-type taxonomy');
+    for (const it of app.items) assert(types[it.type] && types[it.type].category === it.category && cats[it.category], it.id);
+    app.state.browse = Object.assign(app.state.browse, { q: '', interest: '', age: '', max: '', store: '', hot: false, live: false, list: '', type: 'lego' });
+    app.renderFilters(); app.renderBrowse();
+    const lego = app.items.filter((it) => it.type === 'lego');
+    assert(lego.length >= 10 && element('#browse-sub').innerHTML.startsWith(`${lego.length} of`) && element('#browse-sub').innerHTML.includes('in LEGO sets'));
+    assert(element('#type-browser').innerHTML.includes('data-type="lego" aria-pressed="true"'), 'chosen type is pressed');
+    assert(element('#filters').innerHTML.includes('<optgroup label="Building sets">'), 'type select is grouped');
+    app.state.browse.type = 'cat:beauty'; app.renderBrowse();
+    const beauty = app.items.filter((it) => it.category === 'beauty').length;
+    assert(element('#browse-sub').innerHTML.startsWith(`${beauty} of`));
+    app.state.browse.type = ''; app.state.browse.list = 'amazon'; app.renderBrowse();
+    const onAmazon = app.items.filter((it) => it.lists.includes('amazon')).length;
+    assert(onAmazon >= 30 && element('#browse-sub').innerHTML.startsWith(`${onAmazon} of`));
+    app.state.browse.list = ''; app.state.typesOpen = false; app.renderBrowse();
+    assert(!element('#type-browser').innerHTML.includes('class="tchip"') && element('#type-browser').innerHTML.includes('Choose a type'), 'type browser folds away');
+    app.state.typesOpen = true; app.renderBrowse();
+  });
+  await check('hot seals come from 2026 store and expert lists; gift-guide picks are cited without a seal', () => {
+    assert(app.byId['target-toy-basket'].tags.includes('hot'), 'Target list item gets the seal');
+    assert(app.byId['little-live-pets-puppy'].tags.includes('hot'));
+    const guideOnly = app.items.find((it) => it.lists.length && it.lists.every((l) => data.hot_lists[l].kind === 'guide') && !(data.items.find((x) => x.id === it.id).tags || []).includes('hot'));
+    assert(guideOnly && !guideOnly.tags.includes('hot'), 'gift-guide-only pick has no seal');
+    app.openDrawer('little-live-pets-puppy');
+    assert(element('#drawer').innerHTML.includes('On these 2026 lists') && element('#drawer').innerHTML.includes('Top Toys 2026'));
+    assert(element('#drawer').innerHTML.includes('data-type="interactive"'), 'drawer links to its product type');
+    assert(element('#drawer').innerHTML.includes("link only; Target isn't price-checked automatically"), 'Target links are marked link-only');
+    app.renderDeals();
+    assert(element('#hot-sources').innerHTML.includes('data-show-list="target"') && element('#tracked-list').innerHTML.includes('<details class="store-links">'));
+  });
+  await check('estimated prices are labeled as estimates, confirmed ones as typical', () => {
+    const est = app.items.find((it) => it.price_est); const sure = app.byId['lego-upscaled-vader'];
+    assert(est && app.giftCard(est).includes('Estimated price') && !app.giftCard(est).includes('Typical price'));
+    assert(!sure.price_est && app.giftCard(sure).includes('Typical price'));
+  });
+  const picksData = JSON.parse(fs.readFileSync(path.join(site, 'data/store-picks.json'), 'utf8'));
+  app.prepPicks(JSON.parse(JSON.stringify(picksData)));
+  const pickReset = () => Object.assign(app.state.picks, { band: '', type: '', show: '', max: '', sort: 'rank', q: '', shown: 24 });
+  await check("store picks: every pick is typed, aged and links to the store's product page", () => {
+    const P = app.picks;
+    assert(P.items.length >= 300, `${P.items.length} picks`);
+    for (const x of P.items) {
+      assert(data.types[x.type] && data.types[x.type].category === x.category, x.id);
+      assert(x.ages[0] >= 1 && x.ages[1] <= 30 && x.ages[0] <= x.ages[1], x.id);
+      assert(x.url === `https://www.walmart.com/ip/${x.sku}` && x.id === `walmart-${x.sku}`, x.id);
+      assert(x.price == null || x.price > 0, x.id);
+      if (x.was) assert(x.was > x.price && x.pct === Math.round((x.was - x.price) / x.was * 100), x.id);
+      assert(x.lists.length && x.lists.every((l) => P.lists[l]) && Object.keys(x.rank).sort().join() === x.lists.slice().sort().join(), x.id);
+      assert(!/open box|christmas tree|freezer|refrigerator|smart tv/i.test(x.name), x.name);
+      if (x.gift) assert(app.byId[x.gift], x.gift);
+    }
+  });
+  await check('store picks filter by age group, type, sale, best sellers, store list, price and search', () => {
+    pickReset(); app.state.picks.band = '9-12';
+    assert(app.pickRows(app.state.picks).length > 20 && app.pickRows(app.state.picks).every((x) => x.ages[1] >= 9 && x.ages[0] <= 12));
+    const kidsGames = app.pickRows(app.state.picks).filter((x) => x.esrb);
+    assert(kidsGames.length && kidsGames.every((x) => !['M', 'RP-M', 'AO'].includes(x.esrb)), 'no Mature games for ages 9-12');
+    pickReset(); app.state.picks.type = 'lego';
+    assert(app.pickRows(app.state.picks).length >= 5 && app.pickRows(app.state.picks).every((x) => x.type === 'lego'));
+    pickReset(); app.state.picks.type = 'cat:beauty';
+    assert(app.pickRows(app.state.picks).every((x) => x.category === 'beauty'));
+    pickReset(); app.state.picks.show = 'sale';
+    assert(app.pickRows(app.state.picks).every((x) => x.was || x.flags.some((f) => ['deal', 'rollback', 'reduced', 'clearance'].includes(f))));
+    pickReset(); app.state.picks.show = 'flag:best-seller';
+    assert(app.pickRows(app.state.picks).length > 50 && app.pickRows(app.state.picks).every((x) => x.flags.includes('best-seller')));
+    pickReset(); app.state.picks.show = 'list:wm-top-toys';
+    assert(app.pickRows(app.state.picks).every((x) => x.lists.includes('wm-top-toys')));
+    pickReset(); app.state.picks.max = '25';
+    assert(app.pickRows(app.state.picks).every((x) => x.price != null && x.price <= 25));
+    pickReset(); app.state.picks.q = 'barbie';
+    assert(app.pickRows(app.state.picks).length >= 3 && app.pickRows(app.state.picks).every((x) => /barbie/i.test(x.name)));
+    pickReset(); app.state.picks.sort = 'pct';
+    const pcts = app.pickRows(app.state.picks).map((x) => x.pct || 0); assert(pcts.every((v, i) => i === 0 || pcts[i - 1] >= v));
+    pickReset(); app.state.picks.sort = 'low';
+    const lows = app.pickRows(app.state.picks).filter((x) => x.price != null).map((x) => x.price); assert(lows.every((v, i) => i === 0 || lows[i - 1] <= v));
+    pickReset();
+  });
+  await check("store picks show on Deals and Find, and go on a person's list", () => {
+    app.renderDeals();
+    assert.equal(element('#picks-panel').hidden, false);
+    assert(element('#picks-h').textContent.includes('Walmart'));
+    assert(element('#picks').innerHTML.includes('data-add-pick=') && element('#picks-filters').innerHTML.includes('data-pick-band="13-17"'));
+    app.state.picks.q = 'grand theft auto'; app.renderPicks();
+    assert(element('#picks').innerHTML.includes('rated M (Mature 17+)') && element('#picks').innerHTML.includes('ages 17+'));
+    app.state.picks.q = ''; app.renderPicks();
+    assert(element('#picks-more').innerHTML.includes('data-picks-more'));
+    app.renderStoreHot({ age: 9, budget: 50, interests: [] });
+    assert.equal(element('#store-hot').hidden, false);
+    assert(element('#store-hot').innerHTML.includes('9-year-olds') && element('#store-hot').innerHTML.includes('data-picks-goto="9-12"'));
+    const shown = [...element('#store-hot').innerHTML.matchAll(/data-add-pick="([^"]+)"/g)].map((m) => app.picks.items.find((x) => x.id === m[1]));
+    assert(shown.length && shown.every((x) => x.price <= 50 && x.ages[0] <= 9 && x.ages[1] >= 9));
+    const kid = app.addPerson({ name: 'Theo', age: 9, interests: [] });
+    const pk = shown[0];
+    app.togglePick(pk.id, kid.id);
+    const added = kid.items.find((i) => i.url === pk.url);
+    assert(added && added.gift === null && added.name === pk.name && added.store === 'walmart' && added.price === pk.price);
+    app.togglePick(pk.id, kid.id);
+    assert(!kid.items.some((i) => i.url === pk.url), 'a second click takes it back off the list');
+    app.openDrawer('paw-patrol-megasaurus');
+    assert(element('#drawer').innerHTML.includes("On Walmart's lists") && element('#drawer').innerHTML.includes('Walmart Top Toys'));
+    app.state.browse = Object.assign(app.state.browse, { type: 'lego', q: '', list: '' }); app.renderBrowse();
+    assert(element('#browse-sub').innerHTML.includes('data-picks-type="lego"'));
+    app.state.browse.type = '';
+  });
+  await check('browser-read and link-only store prices say where they came from', () => {
+    const wm = app.items.flatMap((it) => it.offers).find((o) => o.retailer === 'walmart' && o.price && !o.stale);
+    assert(wm && app.offerStatus(wm).includes('read in a browser'));
+    const amz = app.items.flatMap((it) => it.offers).find((o) => o.retailer === 'amazon' && !o.price);
+    assert(amz && app.offerStatus(amz).includes("isn't price-checked automatically"));
+    app.renderStores();
+    assert(element('#store-directory').innerHTML.includes('priced in a browser') && element('#store-directory').innerHTML.includes('no price check'));
+    app.renderDeals();
+    assert(element('#tracked-list').innerHTML.includes('read in a browser'));
+  });
+  await check('without a store picks file every page still works', () => {
+    app.prepPicks(null);
+    app.renderDeals(); assert.equal(element('#picks-panel').hidden, true);
+    app.renderStoreHot({ age: 9, budget: 100, interests: [] }); assert.equal(element('#store-hot').hidden, true);
+    app.renderFind(); app.renderBrowse();
+    app.prepPicks({ items: [] }); app.renderDeals(); assert.equal(element('#picks-panel').hidden, true);
+    app.prepPicks(JSON.parse(JSON.stringify(picksData)));
+  });
+  await check('the Walmart browser snippet writes lines store_picks.py can read', () => {
+    const snippet = fs.readFileSync(path.join(site, '../scraper/browser/walmart-capture.js'), 'utf8');
+    const ss = new Map();
+    const nd = { props: { pageProps: { initialData: { searchResult: { aggregatedCount: 3, paginationV2: { maxPage: 1 }, itemStacks: [{ items: [
+      { usItemId: '111', name: 'LEGO "Cozy" Plants | Ages 9+', sellerName: 'Walmart.com', priceInfo: { linePrice: '$22.96', wasPrice: '$29.99' }, badges: { flags: [{ key: 'BESTSELLER' }], groups: [{ members: [{ key: 'LOW_INVENTORY' }] }] }, annualEventV2: true, averageRating: 4.7, numberOfReviews: 150, category: { categoryPathId: '0:4171:4186:9' } },
+      { usItemId: '222', name: 'Sponsored Thing', isSponsoredFlag: true, priceInfo: { linePrice: '$5.00' } },
+      { usItemId: '333', name: 'Marketplace Doll', sellerName: 'Some Shop', priceInfo: { linePrice: '$1,049.00' } },
+      { usItemId: '444', name: 'Some Game - PlayStation 5', sellerName: 'Walmart.com', esrb: 'Mature 17+', priceInfo: { linePrice: '$29.00' } }] }] } } } } };
+    const ctx = vm.createContext({ document: { getElementById: () => ({ textContent: JSON.stringify(nd) }) }, location: { href: 'https://www.walmart.com/shop/toy-shop/toptoys?page=2' },
+      sessionStorage: { getItem: (k) => (ss.has(k) ? ss.get(k) : null), setItem: (k, v) => ss.set(k, String(v)) }, URL, JSON });
+    vm.runInContext(snippet, ctx);
+    const first = vm.runInContext("walmartCapture('wm-top-toys')", ctx).split('\n');
+    assert.equal(first[0], '#list wm-top-toys page=2 count=3 maxPage=1');
+    assert.equal(first.length, 5, 'sponsored listings are skipped');
+    assert.equal(first[4], '#esrb 444:M', 'video game ratings are written on their own line');
+    assert.equal(first[1], '111|22.96|29.99|W|4171:4186|BLE|4.7|150|LEGO ″Cozy″ Plants Ages 9+');
+    assert.equal(first[2], '333|1049.00||M|||||Marketplace Doll');
+    assert(first.slice(1, 4).every((l) => l.split('|').length === 9));
+    assert.deepEqual(vm.runInContext("walmartCapture('wm-deals-toys')", ctx).split('\n').slice(1), ['=111', '=333', '=444', '#esrb 444:M'], 'products are saved once, then repeated by id');
   });
   await check('names are escaped everywhere they are shown', () => {
     app.state.lists = app.normalizeLists(null);
@@ -193,6 +339,22 @@ const withLive = (id, price, extra = {}) => Object.assign(app.byId[id], { price,
     app.state.listView = p.id; app.renderLists();
     assert(!element('#list-main').innerHTML.includes('<img src=x'));
     assert(!app.giftCard(app.byId['needoh-nice-cube']).includes('<img src=x'));
+  });
+  await check('data from before product types and hot lists still renders every page', () => {
+    // A gifts.json written by the older scraper: no types, no hot lists, no estimates.
+    const old = JSON.parse(fs.readFileSync(path.join(site, 'data/gifts.json'), 'utf8'));
+    delete old.types; delete old.hot_lists;
+    old.items.forEach((it) => { delete it.type; delete it.lists; delete it.price_est; });
+    app.load(old);
+    app.state.browse = Object.assign(app.state.browse, { type: '', list: '', q: '' });
+    app.renderFindPrefs(); app.renderFind(); app.renderLists(); app.renderFilters(); app.renderBrowse(); app.renderDeals(); app.renderStores();
+    assert.equal(element('#type-browser').innerHTML, '');
+    assert.equal(element('#type-browser').hidden, true, 'no empty type panel');
+    assert(!element('#filters').innerHTML.includes('id="f-list"'), 'no hot-list filter without hot lists');
+    assert(element('#browse-table tbody').innerHTML.includes('data-open'));
+    app.openDrawer(old.items[0].id);
+    assert(!element('#drawer').innerHTML.includes('On these 2026 lists'));
+    app.load(JSON.parse(fs.readFileSync(path.join(site, 'data/gifts.json'), 'utf8')));
   });
   console.log(`\n${checks} checks passed.`);
 })().catch((e) => { console.error('FAIL', e); process.exit(1); });

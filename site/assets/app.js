@@ -5,6 +5,7 @@
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const money = (n) => (n == null || !Number.isFinite(+n) ? '—' : '$' + (Math.round(n * 100) % 100 === 0
     ? Math.round(n).toLocaleString('en-US') : (+n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })));
@@ -36,7 +37,7 @@
   const MARK_PATH = 'M 18 8 C 60 2 150 2 186 7 C 197 9 199 24 198 50 C 197 80 196 92 182 95 C 130 99 60 99 16 94 C 3 91 1 75 2 50 C 3 22 5 11 22 6 C 40 2 62 3 80 6';
   const QUICK = ['NeeDoh', 'Squishmallows', 'squishy dumpling', 'LEGO Pokémon', 'Switch 2 games', 'PS5 games', 'Pokémon cards', 'KPop Demon Hunters', 'stocking stuffers', 'gift cards'];
   const GROUPS = [['big', 'The big four'], ['games', 'Games and Pokémon'], ['toys', 'Toys, LEGO and squishies'], ['books', 'Books, crafts and handmade'],
-    ['style', 'Beauty, clothes, sports and Apple'], ['warehouse', 'Warehouse clubs']];
+    ['style', 'Beauty, clothes, shoes and sports'], ['warehouse', 'Warehouse clubs']];
   const EXAMPLE = { name: '', age: 10, budget: 150, interests: ['squishies', 'plush', 'lego', 'switch', 'playstation'], note: '' };
   const GUIDE = {
     '1-2': ['Big, chunky toys only. Anything small enough to fit through a toilet-paper tube is a choking risk.',
@@ -61,7 +62,8 @@
   };
 
   // ------------------------------------------------------------------ data and state
-  let DATA = null; let ITEMS = []; let BYID = {}; let RET = {}; let INT = {};
+  let DATA = null; let ITEMS = []; let BYID = {}; let RET = {}; let INT = {}; let TYPES = {}; let HOT = {}; let CATS = {};
+  let PICKS = null; let PICK_BY_ID = {}; let PICKS_BY_GIFT = {};
   function normalizeLists(raw) {
     const out = { version: 1, people: [], shortlist: [] };
     if (!raw || typeof raw !== 'object') return out;
@@ -85,8 +87,9 @@
     find: Object.assign({}, DEFAULT_FIND, store.get('find', {})),
     lists: normalizeLists(store.get('lists', null)),
     listView: store.get('listView', null),
-    browse: { q: '', interest: '', cat: '', age: '', max: '', store: '', hot: false, live: false, sort: 'name', dir: 1 },
+    browse: { q: '', interest: '', type: '', list: '', age: '', max: '', store: '', hot: false, live: false, sort: 'name', dir: 1 }, typesOpen: true,
     shown: 9,
+    picks: { band: '', type: '', show: '', max: '', sort: 'rank', q: '', shown: 24 },
     storeQ: '',
     lastAdded: null,
   };
@@ -316,6 +319,7 @@
     if (p.kind === 'live') note = `<div class="price-note live">${esc(retName(p.retailer))} price, ${esc(ago(p.at))}</div>`;
     else if (p.kind === 'stale') note = `<div class="price-note stale">${esc(retName(p.retailer))} price from ${esc(fmtDate(p.at, false))}. Check the store.</div>`;
     else if (p.kind === 'unavailable') note = `<div class="price-note stale">Sold out at ${esc(retName(p.retailer))} when last checked</div>`;
+    else if (it.price_est) note = `<div class="price-note est">Estimated price${it.range ? `, about ${money(it.range[0])} to ${money(it.range[1])}` : ''}. Check the store.</div>`;
     else note = `<div class="price-note">${it.range ? `Typical price; usually ${money(it.range[0])} to ${money(it.range[1])}` : 'Typical price'}</div>`;
     const was = deal ? `<span class="save">${money(deal.save)} below usual</span>` : '';
     return `<div><div class="price-row"><span class="price ${size}">${money(p.value)}</span>${was}</div>${note}</div>`;
@@ -400,6 +404,7 @@
     const stock = res.filter((it) => priceOf(it) <= 25 && !topIds.has(it.id)).slice(0, 8);
     $('#stocking-h').hidden = !stock.length;
     $('#stocking').innerHTML = stock.map((it) => giftCard(it, { compact: true })).join('');
+    renderStoreHot(f);
     $('#age-guide').innerHTML = guideHtml(f.age, f.interests);
     state.lastAdded = null;
   }
@@ -502,17 +507,42 @@
   // ------------------------------------------------------------------ BROWSE
   const BROWSE_COLS = [
     { key: 'name', label: 'Gift', sort: (it) => it.name.toLowerCase() },
+    { key: 'type', label: 'Type', sort: (it) => typeLabel(it).toLowerCase() },
     { key: 'age', label: 'Ages', sort: (it) => it.ages[0] * 100 + it.ages[1] },
     { key: 'interests', label: 'Into' },
     { key: 'price', label: 'Price', sort: (it) => priceOf(it), cls: 'r' },
     { key: 'where', label: 'Where' },
     { key: 'add', label: '' },
   ];
+  function typeOptions(cur) {
+    const used = new Set(ITEMS.map((it) => it.type));
+    return Object.entries(CATS).map(([ck, c]) => {
+      const ts = Object.entries(TYPES).filter(([k, t]) => t.category === ck && used.has(k));
+      if (!ts.length) return '';
+      return `<optgroup label="${esc(c.label)}"><option value="cat:${esc(ck)}" ${cur === 'cat:' + ck ? 'selected' : ''}>All ${esc(c.label)}</option>${ts.map(([k, t]) => `<option value="${esc(k)}" ${cur === k ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}</optgroup>`;
+    }).join('');
+  }
+  function typeBrowserHtml() {
+    const b = state.browse; const count = {}; const catCount = {};
+    ITEMS.forEach((it) => { if (!TYPES[it.type]) return; count[it.type] = (count[it.type] || 0) + 1; catCount[it.category] = (catCount[it.category] || 0) + 1; });
+    const nTypes = Object.keys(count).length; const nCats = Object.keys(catCount).length;
+    if (!nTypes) return '';
+    const cur = b.type.startsWith('cat:') ? (CATS[b.type.slice(4)] || {}).label : (TYPES[b.type] || {}).label;
+    const head = `<div class="tb-head"><h3>Product types</h3><span class="hint">${plural(nTypes, 'type')} in ${plural(nCats, 'group')}</span>${b.type ? `<button type="button" class="btn btn-sm" data-type="">Show every type</button>` : ''}<button type="button" class="btn btn-sm btn-ghost tb-toggle" data-types-toggle aria-expanded="${state.typesOpen}">${state.typesOpen ? 'Hide types' : 'Choose a type'}</button></div>`;
+    if (!state.typesOpen) return head + (cur ? `<p class="tb-current">Showing: <b>${esc(cur)}</b></p>` : '');
+    return head + `<div class="tb-grid">${Object.entries(CATS).filter(([ck]) => catCount[ck]).map(([ck, c]) => {
+      const ts = Object.entries(TYPES).filter(([k, t]) => t.category === ck && count[k]);
+      return `<div class="tb-cat" data-c="${TILE[ck] || 'pine'}"><button type="button" class="tb-cat-title" data-type="cat:${esc(ck)}" aria-pressed="${b.type === 'cat:' + ck}">${esc(c.label)} <span class="n">${catCount[ck]}</span></button>
+        <div class="tb-types">${ts.map(([k, t]) => `<button type="button" class="tchip" data-type="${esc(k)}" aria-pressed="${b.type === k}"><span aria-hidden="true">${esc(t.emoji)}</span>${esc(t.label)}<span class="n">${count[k]}</span></button>`).join('')}</div></div>`;
+    }).join('')}</div>`;
+  }
   function renderFilters() {
     const b = state.browse;
     const opts = (pairs, cur) => pairs.map(([v, l]) => `<option value="${esc(v)}" ${String(cur) === String(v) ? 'selected' : ''}>${esc(l)}</option>`).join('');
     $('#filters').innerHTML = `
       <div class="f"><label for="f-q">Search</label><input type="search" id="f-q" placeholder="NeeDoh, LEGO, Zelda…" value="${esc(b.q)}"></div>
+      <div class="f"><label for="f-type">Type</label><select id="f-type"><option value="">Any type</option>${typeOptions(b.type)}</select></div>
+      ${Object.keys(HOT).length ? `<div class="f"><label for="f-list">Hot list</label><select id="f-list"><option value="">Any gift</option>${opts([['hot', 'On any 2026 hot list']].concat(Object.entries(HOT).map(([k, h]) => [k, h.short])), b.list)}</select></div>` : ''}
       <div class="f"><label for="f-interest">Into</label><select id="f-interest"><option value="">Anything</option>${opts(Object.entries(INT).map(([k, v]) => [k, v.label]), b.interest)}</select></div>
       <div class="f"><label for="f-age">Age</label><input type="number" id="f-age" min="1" max="30" placeholder="Any" value="${esc(b.age)}"></div>
       <div class="f"><label for="f-max">Price</label><select id="f-max"><option value="">Any price</option>${opts([[10, 'Up to $10'], [25, 'Up to $25'], [50, 'Up to $50'], [100, 'Up to $100'], [250, 'Up to $250'], [500, 'Up to $500']], b.max)}</select></div>
@@ -523,7 +553,9 @@
   function browseRows() {
     const b = state.browse; const q = b.q.trim().toLowerCase();
     const rows = ITEMS.filter((it) => {
-      if (q && !`${it.name} ${it.brand} ${it.blurb} ${it.interests.map((i) => (INT[i] || {}).label).join(' ')}`.toLowerCase().includes(q)) return false;
+      if (q && !`${it.name} ${it.brand} ${it.blurb} ${typeLabel(it)} ${it.interests.map((i) => (INT[i] || {}).label).join(' ')}`.toLowerCase().includes(q)) return false;
+      if (b.type && (b.type.startsWith('cat:') ? it.category !== b.type.slice(4) : it.type !== b.type)) return false;
+      if (b.list && (b.list === 'hot' ? !it.tags.includes('hot') : !it.lists.includes(b.list))) return false;
       if (b.interest && !it.interests.includes(b.interest)) return false;
       if (b.age !== '' && Number.isFinite(+b.age) && !ageFit(it, +b.age)) return false;
       if (b.max && priceOf(it) > +b.max) return false;
@@ -538,20 +570,25 @@
   }
   function renderBrowse() {
     const rows = browseRows(); const b = state.browse;
-    $('#browse-sub').textContent = `${rows.length} of ${ITEMS.length} gift ideas. Select a row for details, prices and every store that sells it.`;
+    const tb = typeBrowserHtml(); $('#type-browser').innerHTML = tb; $('#type-browser').hidden = !tb;
+    const what = b.type ? (b.type.startsWith('cat:') ? (CATS[b.type.slice(4)] || {}).label : (TYPES[b.type] || {}).label) : '';
+    const inType = PICKS && b.type ? PICKS.items.filter((x) => (b.type.startsWith('cat:') ? x.category === b.type.slice(4) : x.type === b.type)).length : 0;
+    $('#browse-sub').innerHTML = `${rows.length} of ${ITEMS.length} gift ideas${what ? ` in ${esc(what)}` : ''}. Select a row for details, prices and every store that sells it.`
+      + (inType ? ` <button class="linkish" type="button" data-picks-type="${esc(b.type)}">${esc(andList(Object.values(PICKS.stores).map((x) => x.name)))} has ${inType} best seller${inType > 1 ? 's' : ''} and deal${inType > 1 ? 's' : ''} in this type</button>` : '');
     $('#browse-table thead').innerHTML = '<tr>' + BROWSE_COLS.map((c) => c.sort
       ? `<th class="${c.cls || ''}" aria-sort="${b.sort === c.key ? (b.dir > 0 ? 'ascending' : 'descending') : 'none'}"><button type="button" data-sort="${c.key}">${c.label}</button></th>`
       : `<th class="${c.cls || ''}">${c.label ? c.label : '<span class="visually-hidden">Add</span>'}</th>`).join('') + '</tr>';
     $('#browse-table tbody').innerHTML = rows.map((it) => {
       const p = priceInfo(it); const people = onLists(it.id);
       return `<tr class="is-clickable" data-open="${esc(it.id)}" tabindex="0" aria-label="${esc(it.name)}">
-        <td><div class="cell-title"><span aria-hidden="true">${esc(it.emoji)}</span>${esc(it.name)}${it.tags.includes('hot') ? ' <span class="chip gold">Hot</span>' : ''}${people.map((x) => ` <span class="initial" style="--mark:${x.color};font-size:.9rem">${esc(initial(x.name))}</span>`).join('')}</div><div class="cell-sub">${esc(it.brand)}</div></td>
+        <td><div class="cell-title"><span aria-hidden="true">${esc(it.emoji)}</span>${esc(it.name)}${it.tags.includes('hot') ? ` <span class="chip gold" title="${esc(it.lists.map((l) => HOT[l].short).join(', '))}">Hot</span>` : ''}${people.map((x) => ` <span class="initial" style="--mark:${x.color};font-size:.9rem">${esc(initial(x.name))}</span>`).join('')}</div><div class="cell-sub">${esc(it.brand)}</div></td>
+        <td class="cell-sub type-cell">${esc(typeLabel(it))}</td>
         <td class="num" style="white-space:nowrap">${esc(ageText(it))}</td>
         <td class="cell-sub">${esc(it.interests.slice(0, 2).map((i) => (INT[i] || {}).label || i).join(', '))}</td>
         <td class="r"><div class="num" style="font-weight:700">${money(p.value)}</div><div class="cell-sub">${p.kind === 'live' ? `${esc(retName(p.retailer))}, ${esc(ago(p.at))}` : p.kind === 'typical' ? 'typical' : 'check store'}</div></td>
         <td class="cell-sub">${esc(it.stores.slice(0, 3).map(retName).join(', '))}</td>
         <td><button class="btn btn-sm" type="button" data-add="${esc(it.id)}" aria-haspopup="menu">Add</button></td></tr>`;
-    }).join('') || '<tr><td colspan="6"><div class="empty">No gifts match. Clear a filter or two.</div></td></tr>';
+    }).join('') || '<tr><td colspan="7"><div class="empty">No gifts match. Clear a filter or two.</div></td></tr>';
     $('#browse-cards').innerHTML = rows.map((it) => giftCard(it, { compact: true })).join('');
   }
 
@@ -577,6 +614,7 @@
   }
   function whenText(n) { return n === 0 ? 'Today' : n === 1 ? 'Tomorrow' : n < 0 ? 'Passed' : `In ${n} days`; }
   function renderDeals() {
+    renderPicksPanel();
     const now = new Date();
     $('#dates').innerHTML = keyDates(now).map((d) => { const n = daysUntil(d.date, now);
       return `<div class="date-card ${d.big ? 'is-big' : ''} ${n >= 0 && n <= 7 && !d.big ? 'is-soon' : ''} ${n < 0 ? 'is-past' : ''}"><span class="when">${esc(d.label)}</span><span class="d">${esc(d.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }))}</span><span class="when">${whenText(n)}. ${esc(d.tip)}</span></div>`; }).join('');
@@ -589,14 +627,169 @@
     const big = ITEMS.filter((it) => it.typical >= 150).sort((a, b) => b.typical - a.typical);
     $('#big-list').innerHTML = `<div class="rows">${big.map((it) => { const p = priceInfo(it); return `<div class="row"><div><button class="gift-title" type="button" data-open="${esc(it.id)}">${esc(it.emoji)} ${esc(it.name)}</button><div class="cell-sub">${p.kind === 'live' ? `${esc(retName(p.retailer))} ${money(p.value)}, ${esc(ago(p.at))}; usually ${money(it.typical)}` : `Usually ${money(it.typical)}${it.range ? ` (${money(it.range[0])} to ${money(it.range[1])})` : ''}`}</div></div><span class="price sm">${money(p.value)}</span></div>`; }).join('')}</div>`;
     const tracked = ITEMS.flatMap((it) => it.offers.map((o) => ({ it, o })));
-    $('#tracked-list').innerHTML = `<p class="hint" style="margin:-6px 0 8px">${tracked.length} store links across ${new Set(tracked.map((t) => t.o.retailer)).size} stores. Add more with <code>scraper/add_link.py</code> (see README).</p><div class="rows">${tracked.map(({ it, o }) => `<div class="row"><div><button class="gift-title" type="button" data-open="${esc(it.id)}" style="font-size:.95rem">${esc(it.name)}</button><div class="cell-sub">${esc(o.retailer_name || retName(o.retailer))}${o.label ? `, ${esc(o.label)}` : ''}: ${offerStatus(o)}</div></div><a class="btn btn-sm" href="${esc(o.url)}" target="_blank" rel="noopener">Open</a></div>`).join('')}</div>`;
+    const byStore = {}; tracked.forEach((t) => { (byStore[t.o.retailer] = byStore[t.o.retailer] || []).push(t); });
+    const sc = (DATA.scrape || {}).by_retailer || {};
+    $('#tracked-list').innerHTML = `<p class="hint" style="margin:-6px 0 8px">${tracked.length} store links across ${Object.keys(byStore).length} stores. Add more with <code>scraper/add_link.py</code> or find them with <code>scraper/hotlists.py</code> (see README).</p>`
+      + Object.entries(byStore).sort((a, b) => b[1].length - a[1].length).map(([r, ts]) => {
+        const s = sc[r]; const linkOnly = RET[r] && RET[r].price_check === false; const byBrowser = RET[r] && RET[r].price_check === 'browser';
+        const read = ts.map((x) => x.o.checked_at).filter(Boolean).sort().pop();
+        const status = linkOnly ? 'links only, no price check' : byBrowser ? (read ? `read in a browser ${ago(read)}` : 'read in a browser, not yet') : s && s.ok ? `${s.ok} read last run` : s && s.blocked ? 'blocked last run' : s ? 'none read last run' : 'not checked yet';
+        return `<details class="store-links"><summary><b>${esc(retName(r))}</b> <span class="cell-sub">${ts.length} link${ts.length > 1 ? 's' : ''}, ${esc(status)}</span></summary><div class="rows">${ts.map(({ it, o }) => `<div class="row"><div><button class="gift-title" type="button" data-open="${esc(it.id)}" style="font-size:.95rem">${esc(it.name)}</button><div class="cell-sub">${o.label ? `${esc(o.label)}: ` : ''}${offerStatus(o)}</div></div><a class="btn btn-sm" href="${esc(o.url)}" target="_blank" rel="noopener">Open</a></div>`).join('')}</div></details>`;
+      }).join('');
+    const listCount = {}; ITEMS.forEach((it) => it.lists.forEach((l) => { listCount[l] = (listCount[l] || 0) + 1; }));
+    $('#hot-sources').innerHTML = `<div class="rows">${Object.entries(HOT).filter(([k]) => listCount[k]).map(([k, h]) => `<div class="row"><div><a href="${esc(h.url)}" target="_blank" rel="noopener"><b>${esc(h.name)}</b></a><div class="cell-sub">${listCount[k]} gift${listCount[k] > 1 ? 's' : ''} in this catalog${h.kind === 'guide' ? ', from a 2026 gift guide' : ''}</div></div><button class="btn btn-sm" type="button" data-show-list="${esc(k)}">Show them</button></div>`).join('')}</div>`;
   }
   function offerStatus(o) {
-    if (o.price && !o.stale) return `<span style="color:var(--good);font-weight:600">${money(o.price)}${o.in_stock === false ? ', sold out' : ''}</span>, ${esc(ago(o.checked_at))}${o.marketplace_only ? ' (outside seller)' : ''}`;
+    if (!o.price && RET[o.retailer] && RET[o.retailer].price_check === false) return `<span title="${esc(RET[o.retailer].price_note || '')}">link only; ${esc(RET[o.retailer].name)} isn't price-checked automatically</span>`;
+    if (o.price && !o.stale) return `<span style="color:var(--good);font-weight:600">${money(o.price)}${o.in_stock === false ? ', sold out' : ''}</span>, ${esc(ago(o.checked_at))}${o.verification_method === 'browser' ? ', read in a browser' : ''}${o.marketplace_only ? ' (outside seller only)' : ''}`;
     if (o.price) return `last read ${money(o.price)} on ${esc(fmtDate(o.checked_at, false))}${o.error ? `; latest try: ${esc(shortError(o))}` : ''}`;
     return esc(o.error === 'not checked yet' ? 'not checked yet' : shortError(o));
   }
   const shortError = (o) => (o.blocked ? 'the store showed a bot check' : String(o.error || 'not read').replace(/^\w+Error: /, '').slice(0, 90));
+
+  // ------------------------------------------------------------------ STORE PICKS (store lists read in a browser)
+  const PICK_FLAGS = { 'best-seller': ['Best seller', 'gold'], deal: ['Holiday deal', 'red'], rollback: ['Rollback', 'red'],
+    reduced: ['Reduced price', 'red'], clearance: ['Clearance', 'red'], 'low-stock': ['Low stock', 'warn'] };
+  const ESRB_TEXT = { E: 'rated E for Everyone', E10: 'rated E10+', T: 'rated T for Teen', M: 'rated M (Mature 17+)', 'RP-M': 'rating pending, likely M (17+)', RP: 'ESRB rating pending', AO: 'rated AO (18+)' };
+  const PICK_SORTS = [['rank', "Store's ranking"], ['pct', 'Biggest discount'], ['low', 'Lowest price'], ['reviews', 'Most reviews']];
+  const PICK_MAX = [['', 'Any price'], ['10', '$10 and under'], ['25', '$25 and under'], ['50', '$50 and under'], ['100', '$100 and under'], ['200', '$200 and under']];
+  const optionList = (pairs, cur) => pairs.map(([v, l]) => `<option value="${esc(v)}"${String(cur) === String(v) ? ' selected' : ''}>${esc(l)}</option>`).join('');
+  function prepPicks(data) {
+    PICKS = data && Array.isArray(data.items) && data.items.length ? data : null;
+    PICK_BY_ID = {}; PICKS_BY_GIFT = {};
+    if (!PICKS) return;
+    PICKS.lists = PICKS.lists || {}; PICKS.stores = PICKS.stores || {};
+    PICKS.items = PICKS.items.filter((x) => x && x.id && x.name && x.url && /^https:\/\//.test(x.url) && Array.isArray(x.ages));
+    PICKS.items.forEach((x) => {
+      const ranks = Object.values(x.rank || {});
+      x.score = (ranks.length ? Math.min(...ranks) : 999) - Math.min(4, (x.lists || []).length) * 2;
+      PICK_BY_ID[x.id] = x;
+      if (x.gift) (PICKS_BY_GIFT[x.gift] = PICKS_BY_GIFT[x.gift] || []).push(x);
+    });
+  }
+  const pickList = (k) => (PICKS && PICKS.lists[k]) || {};
+  const pickStore = (x) => ((PICKS && PICKS.stores[x.store]) || {}).name || retName(x.store);
+  const pickOnSale = (x) => !!x.was || (x.flags || []).some((f) => ['deal', 'rollback', 'reduced', 'clearance'].includes(f));
+  const pickAges = (x) => (x.ages[0] <= 1 && x.ages[1] >= 30 ? 'any age' : x.ages[1] >= 30 ? `ages ${x.ages[0]}+` : x.ages[0] === x.ages[1] ? `age ${x.ages[0]}` : `ages ${x.ages[0]}–${x.ages[1]}`);
+  const pickHolders = (x) => state.lists.people.filter((pp) => pp.items.some((i) => i.url === x.url));
+  function pickRows(f) {
+    if (!PICKS) return [];
+    const band = AGE_BANDS.find((b) => b.id === f.band);
+    const q = String(f.q || '').trim().toLowerCase();
+    const max = f.max ? +f.max : Infinity;
+    const rows = PICKS.items.filter((x) => {
+      if (band && (x.ages[1] < band.lo || x.ages[0] > band.hi)) return false;
+      if (f.type && (f.type.startsWith('cat:') ? x.category !== f.type.slice(4) : x.type !== f.type)) return false;
+      if (f.show === 'sale' && !pickOnSale(x)) return false;
+      if (f.show.startsWith('list:') && !(x.lists || []).includes(f.show.slice(5))) return false;
+      if (f.show.startsWith('flag:') && !(x.flags || []).includes(f.show.slice(5))) return false;
+      if (max < Infinity && !(x.price != null && x.price <= max)) return false;
+      if (q && !`${x.name} ${(TYPES[x.type] || {}).label || ''}`.toLowerCase().includes(q)) return false;
+      return true;
+    });
+    const by = { rank: (a, b) => a.score - b.score, pct: (a, b) => (b.pct || 0) - (a.pct || 0) || a.score - b.score,
+      low: (a, b) => (a.price ?? 1e9) - (b.price ?? 1e9), reviews: (a, b) => (b.reviews || 0) - (a.reviews || 0) };
+    return rows.sort(by[f.sort] || by.rank);
+  }
+  function pickCard(x) {
+    const t = TYPES[x.type] || {};
+    const top = Object.entries(x.rank || {}).filter(([k]) => pickList(k).short).sort((a, b) => a[1] - b[1])[0];
+    const flags = (x.flags || []).filter((f) => PICK_FLAGS[f]).map((f) => `<span class="chip ${PICK_FLAGS[f][1]}">${esc(PICK_FLAGS[f][0])}</span>`).join('');
+    const holders = pickHolders(x);
+    const meta = [pickAges(x)];
+    if (x.esrb) meta.push(ESRB_TEXT[x.esrb] || `ESRB ${x.esrb}`);
+    if (x.rating) meta.push(`${x.rating} stars${x.reviews ? ` from ${x.reviews.toLocaleString('en-US')} reviews` : ''}`);
+    if (x.seller === 'marketplace') meta.push('sold by a marketplace seller');
+    return `<article class="pick" data-c="${esc(TILE[x.category] || 'pine')}">
+      <div class="pick-top">${top ? `<span class="pick-rank" title="${esc(pickList(top[0]).name || '')}">#${esc(top[1])} ${esc(pickList(top[0]).short || '')}</span>` : ''}<span class="pick-type">${esc(t.emoji || '🎁')} ${esc(t.label || x.type)}</span></div>
+      <a class="pick-name" href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.name)}</a>
+      <div class="gift-meta">${esc(meta.join(', '))}</div>
+      <div class="price-row">${x.price != null ? `<span class="price sm">${money(x.price)}</span>` : '<span class="price-note">Price shown at the store</span>'}${x.was ? `<span class="was">${money(x.was)}</span><span class="save">${esc(x.pct)}% off</span>` : ''}</div>
+      ${flags ? `<div class="chips">${flags}</div>` : ''}
+      <div class="pick-actions">
+        <button class="btn btn-sm btn-accent" type="button" data-add-pick="${esc(x.id)}" aria-haspopup="menu">${holders.length ? `On ${esc(holders[0].name)}'s list` : 'Add to list'}</button>
+        ${x.gift && BYID[x.gift] ? `<button class="btn btn-sm" type="button" data-open="${esc(x.gift)}">Details</button>` : ''}
+        <a class="btn btn-sm btn-ghost" href="${esc(x.url)}" target="_blank" rel="noopener">${esc(pickStore(x))}</a>
+      </div>
+    </article>`;
+  }
+  function renderPicksPanel() {
+    const panel = $('#picks-panel'); if (!panel) return;
+    panel.hidden = !PICKS;
+    if (!PICKS) return;
+    const f = state.picks;
+    const when = PICKS.captured_at; const days = (Date.now() - new Date(when).getTime()) / 864e5;
+    const stores = Object.values(PICKS.stores).map((x) => x.name);
+    $('#picks-h').textContent = `${andList(stores)} best sellers and deals`;
+    $('#picks-sub').innerHTML = `${PICKS.items.length} gifts from ${esc(andList(stores))}'s own lists: its top gifts and top toys, best sellers for each age group and its deal pages. Read from the store ${esc(fmtDate(when))}${days > 3 ? `, <b class="stale-note">${Math.round(days)} days ago, so some of these deals have likely ended</b>` : ''}. Prices change fast this week, so check the store before you buy.`;
+    const types = {}; const cats = {};
+    PICKS.items.forEach((x) => { types[x.type] = (types[x.type] || 0) + 1; cats[x.category] = (cats[x.category] || 0) + 1; });
+    const typeOpts = Object.keys(CATS).filter((c) => cats[c]).map((c) => `<optgroup label="${esc(CATS[c].label)}"><option value="cat:${esc(c)}"${f.type === `cat:${c}` ? ' selected' : ''}>All ${esc(CATS[c].label.toLowerCase())} (${cats[c]})</option>${Object.entries(TYPES).filter(([k, t]) => t.category === c && types[k]).map(([k, t]) => `<option value="${esc(k)}"${f.type === k ? ' selected' : ''}>${esc(t.label)} (${types[k]})</option>`).join('')}</optgroup>`).join('');
+    const lists = Object.entries(PICKS.lists).filter(([, l]) => l.kind !== 'tracked' && l.short);
+    const show = [['', 'Everything'], ['sale', 'On sale'], ['flag:best-seller', 'Best sellers'], ['flag:deal', 'Holiday deals']]
+      .concat(lists.map(([k, l]) => [`list:${k}`, `${l.short} list`]));
+    $('#picks-filters').innerHTML = `
+      <div class="picks-who" role="group" aria-label="Who it's for">${[['', 'Every age']].concat(AGE_BANDS.map((b) => [b.id, `Ages ${b.label}`])).map(([v, l]) => `<button type="button" class="band ${f.band === v ? 'is-on' : ''}" data-pick-band="${esc(v)}" aria-pressed="${f.band === v}">${esc(l)}</button>`).join('')}</div>
+      <div class="filters picks-f">
+        <div class="f f-wide"><label for="pk-q">Search</label><input id="pk-q" type="search" value="${esc(f.q)}" placeholder="LEGO, Barbie, AirPods…" autocomplete="off"></div>
+        <div class="f"><label for="pk-type">Type</label><select id="pk-type"><option value="">Every type</option>${typeOpts}</select></div>
+        <div class="f"><label for="pk-show">Show</label><select id="pk-show">${optionList(show, f.show)}</select></div>
+        <div class="f"><label for="pk-max">Price</label><select id="pk-max">${optionList(PICK_MAX, f.max)}</select></div>
+        <div class="f"><label for="pk-sort">Sort</label><select id="pk-sort">${optionList(PICK_SORTS, f.sort)}</select></div>
+      </div>`;
+    renderPicks();
+  }
+  function renderPicks() {
+    if (!PICKS || !$('#picks')) return;
+    const rows = pickRows(state.picks);
+    const shown = rows.slice(0, state.picks.shown);
+    $('#picks-count').textContent = `${rows.length} of ${PICKS.items.length} shown`;
+    $('#picks').innerHTML = shown.length ? shown.map(pickCard).join('')
+      : '<div class="empty"><strong>Nothing here matches.</strong><span>Try another age group or type, or a higher price.</span><button class="btn btn-sm" type="button" data-picks-reset>Clear the filters</button></div>';
+    $('#picks-more').innerHTML = rows.length > shown.length ? `<button class="btn more-btn" type="button" data-picks-more>Show ${Math.min(24, rows.length - shown.length)} more (${rows.length - shown.length} left)</button>` : '';
+  }
+  function renderStoreHot(f) {
+    const box = $('#store-hot'); if (!box) return;
+    const budget = f.budget < BUDGET_ANY ? f.budget : Infinity;
+    const age = f.age;
+    const forAge = (x) => {
+      const r = Object.entries(x.rank || {}).filter(([k]) => { const l = pickList(k); return l.kind === 'age' && l.ages && age >= l.ages[0] && age <= l.ages[1]; }).map(([, n]) => n);
+      return r.length ? Math.min(...r) : 1000 + x.score;
+    };
+    const rows = PICKS ? PICKS.items.filter((x) => x.ages[0] <= age && x.ages[1] >= age && x.price != null && x.price <= budget)
+      .sort((a, b) => forAge(a) - forAge(b)).slice(0, 8) : [];
+    box.hidden = !rows.length;
+    if (!rows.length) { box.innerHTML = ''; return; }
+    const band = AGE_BANDS.find((b) => age >= b.lo && age <= b.hi);
+    const stores = andList(Object.values(PICKS.stores).map((x) => x.name));
+    box.innerHTML = `<div class="store-hot-head"><h3 class="section-h">${esc(stores)}'s best sellers for ${esc(String(age))}-year-olds <small>from ${esc(stores)}'s own lists${budget < Infinity ? `, up to ${money(budget)}` : ''}</small></h3>
+      <button class="btn btn-sm" type="button" data-picks-goto="${esc(band.id)}">See all for ages ${esc(band.label)}</button></div>
+      <div class="pick-grid compact">${rows.map(pickCard).join('')}</div>`;
+  }
+  function openPickMenu(pickId, anchor) {
+    const x = PICK_BY_ID[pickId]; if (!x) return;
+    const m = $('#menu');
+    menuTrigger = anchor;
+    const ps = state.lists.people;
+    m.innerHTML = `<div class="menu-title">Add ${esc(x.name.length > 34 ? x.name.slice(0, 32) + '…' : x.name)} to</div>
+      ${ps.map((pp) => { const on = pp.items.some((i) => i.url === x.url);
+        return `<button class="menu-item" role="menuitemcheckbox" aria-checked="${on}" type="button" data-pick-to="${esc(x.id)}|${esc(pp.id)}" style="--mark:${pp.color}">${avatar(pp)}${esc(pp.name)}${on ? '<span class="tick" aria-hidden="true">✓</span>' : ''}</button>`; }).join('')}
+      ${ps.length ? '<div class="sep"></div>' : ''}
+      <button class="menu-item" role="menuitem" type="button" data-new-person-pick="${esc(x.id)}"><span class="avatar ghost" aria-hidden="true">+</span>${ps.length ? 'New person…' : 'Add the first person…'}</button>`;
+    placeMenu(m, anchor);
+  }
+  function togglePick(pickId, personId) {
+    const x = PICK_BY_ID[pickId]; const pp = person(personId); if (!x || !pp) return;
+    const idx = pp.items.findIndex((i) => i.url === x.url);
+    if (idx >= 0) {
+      const [gone] = pp.items.splice(idx, 1); saveLists();
+      toast(`Removed from ${pp.name}'s list`, () => { pp.items.splice(idx, 0, gone); saveLists(); refresh(); });
+    } else {
+      addCustom(pp.id, { name: x.name, url: x.url, price: x.price ?? '', note: `${pickStore(x)} ${x.was ? `deal, usually ${money(x.was)}` : 'best seller'}` });
+      toast(`Added to ${pp.name}'s list`);
+    }
+    refresh();
+  }
 
   // ------------------------------------------------------------------ STORES
   function renderStores() {
@@ -614,7 +807,7 @@
       const rs = Object.entries(RET).filter(([, r]) => r.group === g);
       return `<div class="dir-group"><h3>${esc(label)}</h3><div class="dir-grid">${rs.map(([k, r]) => {
         const s = sc[k]; const n = counts[k] || 0;
-        const status = !n ? '<span class="chip">Search links</span>' : s && s.ok ? `<span class="chip good">${s.ok} price${s.ok > 1 ? 's' : ''} read last run</span>` : s && s.blocked ? '<span class="chip warn">Blocked the last price check</span>' : s ? '<span class="chip warn">No prices read last run</span>' : `<span class="chip frost">${n} link${n > 1 ? 's' : ''} tracked</span>`;
+        const status = !n ? '<span class="chip">Search links</span>' : r.price_check === false ? `<span class="chip" title="${esc(r.price_note || '')}">${n} product links, no price check</span>` : r.price_check === 'browser' ? `<span class="chip good" title="${esc(r.price_note || '')}">${n} links, priced in a browser</span>` : s && s.ok ? `<span class="chip good">${s.ok} price${s.ok > 1 ? 's' : ''} read last run</span>` : s && s.blocked ? '<span class="chip warn">Blocked the last price check</span>' : s ? '<span class="chip warn">No prices read last run</span>' : `<span class="chip frost">${n} link${n > 1 ? 's' : ''} tracked</span>`;
         return `<div class="store-card"><h4>${esc(r.name)}</h4><p>${esc(r.good_for)}</p><div class="foot">${status}<a class="btn btn-sm" href="${esc(q ? searchUrl(k, q) : r.home)}" target="_blank" rel="noopener">${q && r.search ? 'Search' : 'Visit'}</a></div></div>`;
       }).join('')}</div></div>`;
     }).join('');
@@ -648,15 +841,17 @@
       <div class="drawer-body">
         <div class="drawer-head"><h2 id="drawer-title">${esc(it.name)}</h2>
           <div class="gift-meta">${esc(it.brand)}, ${esc(ageText(it))}${it.platforms ? `, for ${esc(it.platforms.join(', '))}` : ''}</div>
-          <div class="chips" style="display:flex;gap:5px;flex-wrap:wrap">${it.rating ? `<span class="chip ${it.rating === 'M' ? 'bad' : 'frost'}">ESRB ${esc(it.rating)}</span>` : ''}${it.interests.map((i) => `<span class="chip">${esc((INT[i] || {}).label || i)}</span>`).join('')}</div>
+          <div class="chips" style="display:flex;gap:5px;flex-wrap:wrap">${it.type ? `<button type="button" class="chip frost" data-type="${esc(it.type)}" title="Browse every gift of this type">${esc((TYPES[it.type] || {}).emoji || '')} ${esc(typeLabel(it))}</button>` : ''}${it.rating ? `<span class="chip ${it.rating === 'M' ? 'bad' : 'frost'}">ESRB ${esc(it.rating)}</span>` : ''}${it.interests.map((i) => `<span class="chip">${esc((INT[i] || {}).label || i)}</span>`).join('')}</div>
         </div>
         ${priceBlock(it, 'lg')}
         <p>${esc(it.blurb)}</p>
         ${it.note ? `<div class="note-box">${esc(it.note)}</div>` : ''}
+        ${it.lists.length ? `<div class="panel"><h3>On these 2026 lists</h3><ul class="cites">${it.lists.map((l) => `<li><a href="${esc(HOT[l].url)}" target="_blank" rel="noopener">${esc(HOT[l].name)}</a>${HOT[l].kind === 'guide' ? ' <span class="cell-sub">(gift guide)</span>' : ''}</li>`).join('')}</ul></div>` : ''}
+        ${(PICKS_BY_GIFT[it.id] || []).map((x) => `<div class="panel"><h3>On ${esc(pickStore(x))}'s lists</h3><ul class="cites">${Object.entries(x.rank || {}).filter(([k]) => pickList(k).name).sort((a, b) => a[1] - b[1]).map(([k, n]) => `<li><a href="${esc(pickList(k).url || x.url)}" target="_blank" rel="noopener">${esc(pickList(k).name)}</a> <span class="cell-sub">#${esc(n)}</span></li>`).join('')}</ul>${(x.flags || []).filter((f) => PICK_FLAGS[f]).length ? `<div class="chips" style="margin-top:6px">${x.flags.filter((f) => PICK_FLAGS[f]).map((f) => `<span class="chip ${PICK_FLAGS[f][1]}">${esc(PICK_FLAGS[f][0])}</span>`).join('')}</div>` : ''}</div>`).join('')}
         <div class="panel"><h3>Put it on a list</h3>${personToggles(it)}</div>
         <div class="panel"><h3>Where to buy</h3>
           ${it.offers.length ? it.offers.map((o) => `<div class="offer"><div><b>${esc(o.retailer_name || retName(o.retailer))}</b>${o.label ? ` <span class="cell-sub">${esc(o.label)}</span>` : ''}<div class="cell-sub">${offerStatus(o)}</div>${o.marketplace ? `<div class="cell-sub">Outside seller ${esc(o.marketplace.seller)}: ${money(o.marketplace.price)}; returns can be harder</div>` : ''}${o.open_box ? `<div class="cell-sub">Open-box or used from ${money(o.open_box)}</div>` : ''}</div>
-            <div class="right">${o.price ? `<span class="price sm">${money(o.price)}</span>` : ''}<a class="btn btn-sm" href="${esc(o.url)}" target="_blank" rel="noopener">Open</a></div></div>`).join('') : '<p class="hint">No exact product link is tracked yet, so the price above is the typical price.</p>'}
+            <div class="right">${o.price ? `<span class="price sm">${money(o.price)}</span>` : ''}<a class="btn btn-sm" href="${esc(o.url)}" target="_blank" rel="noopener">Open</a></div></div>`).join('') : `<p class="hint">No exact product link is tracked yet, so the price above is the ${it.price_est ? 'estimated' : 'typical'} price.</p>`}
           ${others.length ? `<h4 style="margin:14px 0 6px">Search ${it.offers.length ? 'other stores' : 'the stores'}</h4><div class="store-buttons">${others.map((s) => `<a class="store-btn" href="${esc(searchUrl(s, it.search))}" target="_blank" rel="noopener">${esc(retName(s))}</a>`).join('')}</div>` : ''}
           <details style="margin-top:12px"><summary class="hint" style="cursor:pointer">Track this gift's price at another store</summary><p class="hint" style="margin-top:6px">Copy the product page link, then run <code>python3 scraper/add_link.py ${esc(it.id)} "LINK"</code> in the repository and push. The next price check reads it.</p></details>
         </div>
@@ -684,6 +879,9 @@
       ${ps.length ? '<div class="sep"></div>' : ''}
       <button class="menu-item" role="menuitem" type="button" data-new-person-for="${esc(giftId)}"><span class="avatar ghost" aria-hidden="true">+</span>${ps.length ? 'New person…' : 'Add the first person…'}</button>
       <button class="menu-item" role="menuitemcheckbox" aria-checked="${inShortlist(giftId)}" type="button" data-star="${esc(giftId)}"><span class="avatar ghost" aria-hidden="true">${inShortlist(giftId) ? '★' : '☆'}</span>${inShortlist(giftId) ? 'On the shortlist' : 'Shortlist, decide later'}</button>`;
+    placeMenu(m, anchor);
+  }
+  function placeMenu(m, anchor) {
     m.hidden = false;
     const r = anchor.getBoundingClientRect(); const mw = m.offsetWidth || 240; const mh = m.offsetHeight || 200;
     let top = r.bottom + 6; if (top + mh > innerHeight - 8) top = Math.max(8, r.top - mh - 6);
@@ -721,7 +919,7 @@
     const used = new Set(state.lists.people.map((x) => x.color));
     const color = d.color || MARKS.find((c) => !used.has(c)) || MARKS[0];
     modal(`<h3 id="modal-title">${p ? `Edit ${esc(p.name)}` : 'Add a person'}</h3>
-      <form id="person-form" data-id="${p ? esc(p.id) : ''}" data-for-gift="${esc(opts.forGift || '')}" style="display:grid;gap:14px">
+      <form id="person-form" data-id="${p ? esc(p.id) : ''}" data-for-gift="${esc(opts.forGift || '')}" data-for-pick="${esc(opts.forPick || '')}" style="display:grid;gap:14px">
         <div class="field"><label for="pf-name">Name</label><input type="text" id="pf-name" maxlength="40" required value="${esc(d.name || '')}" placeholder="Who's this list for?" autofocus></div>
         <div class="grid2"><div class="field"><label for="pf-age">Age</label><input type="number" id="pf-age" min="1" max="30" value="${esc(d.age ?? '')}" placeholder="1 to 30"></div>
           <div class="field"><label for="pf-budget">Budget ($)</label><input type="number" id="pf-budget" min="0" step="5" value="${esc(d.budget ?? '')}" placeholder="Optional"></div></div>
@@ -986,10 +1184,23 @@
     document.addEventListener('click', (e) => {
       const m = $('#menu');
       if (!m.hidden && !e.target.closest('#menu') && !e.target.closest('[data-add]')) closeMenu(false);
-      const t = e.target.closest('[data-open],[data-add],[data-star],[data-toggle-gift],[data-new-person],[data-new-person-for],[data-example],[data-view-list],[data-edit-person],[data-delete-person],[data-share],[data-print],[data-find-for],[data-custom],[data-status],[data-remove],[data-band],[data-interest],[data-pick-interest],[data-swatch],[data-more],[data-more-interests],[data-reset-find],[data-sort],[data-quick],[data-close-drawer],[data-close-modal],[data-copy],[data-copy-text],[data-save-share],[data-backup],[data-restore],[data-download-backup],[data-undo],[data-rescrape],#rescrape-btn,#freshness,#theme-btn,#snow-btn,#reset-find,#prefs-toggle,#go-scrape,#save-go,#forget-token,#reload-data');
+      const t = e.target.closest('[data-open],[data-add],[data-star],[data-toggle-gift],[data-new-person],[data-new-person-for],[data-example],[data-view-list],[data-edit-person],[data-delete-person],[data-share],[data-print],[data-find-for],[data-custom],[data-status],[data-remove],[data-band],[data-interest],[data-pick-interest],[data-swatch],[data-more],[data-more-interests],[data-reset-find],[data-sort],[data-quick],[data-type],[data-types-toggle],[data-show-list],[data-add-pick],[data-pick-to],[data-new-person-pick],[data-pick-band],[data-picks-more],[data-picks-reset],[data-picks-goto],[data-picks-type],[data-close-drawer],[data-close-modal],[data-copy],[data-copy-text],[data-save-share],[data-backup],[data-restore],[data-download-backup],[data-undo],[data-rescrape],#rescrape-btn,#freshness,#theme-btn,#snow-btn,#reset-find,#prefs-toggle,#go-scrape,#save-go,#forget-token,#reload-data');
       if (!t) return;
       const d = t.dataset;
       if (d.add !== undefined) { e.preventDefault(); e.stopPropagation(); const m2 = $('#menu'); if (!m2.hidden && menuTrigger === t) closeMenu(); else openAddMenu(d.add, t); return; }
+      if (d.addPick !== undefined) { e.preventDefault(); e.stopPropagation(); const m2 = $('#menu'); if (!m2.hidden && menuTrigger === t) closeMenu(); else openPickMenu(d.addPick, t); return; }
+      if (d.pickTo !== undefined) { const [pk, pid] = d.pickTo.split('|'); closeMenu(false); togglePick(pk, pid); return; }
+      if (d.newPersonPick !== undefined) { closeMenu(false); personModal(null, { forPick: d.newPersonPick }); return; }
+      if (d.pickBand !== undefined) { state.picks.band = d.pickBand; state.picks.shown = 24; $$('[data-pick-band]').forEach((b) => { const on = b.dataset.pickBand === d.pickBand; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', String(on)); }); renderPicks(); return; }
+      if (d.picksMore !== undefined) { state.picks.shown += 24; renderPicks(); return; }
+      if (d.picksReset !== undefined) { state.picks = Object.assign(state.picks, { band: '', type: '', show: '', max: '', q: '', shown: 24 }); renderPicksPanel(); return; }
+      if (d.picksGoto !== undefined || d.picksType !== undefined) {
+        closeDrawer();
+        Object.assign(state.picks, { band: d.picksGoto || '', type: d.picksType || '', show: '', max: '', q: '', shown: 24 });
+        if (currentView() !== 'deals') location.hash = '#deals'; else renderPicksPanel();
+        setTimeout(() => { const pnl = $('#picks-panel'); if (pnl && pnl.scrollIntoView) pnl.scrollIntoView({ block: 'start' }); }, 60);
+        return;
+      }
       if (d.toggleGift !== undefined) { const fromMenu = !!t.closest('#menu'); toggleGift(d.toggleGift, d.person); if (fromMenu) closeMenu(false); return; }
       if (d.star !== undefined) { const on = toggleShortlist(d.star); toast(on ? 'Saved to your shortlist' : 'Removed from your shortlist'); closeMenu(false); refresh(); return; }
       if (d.newPersonFor !== undefined) { closeMenu(false); personModal(null, { forGift: d.newPersonFor }); return; }
@@ -997,6 +1208,9 @@
       if (d.example !== undefined) { personModal(null, { prefill: EXAMPLE }); return; }
       if (d.open !== undefined) { if (t.closest('#modal')) closeModal(); drawerGift = d.open; openDrawer(d.open); return; }
       if (d.viewList !== undefined) { state.listView = d.viewList; store.set('listView', d.viewList); renderLists(); return; }
+      if (d.type !== undefined) { closeDrawer(); state.browse.type = d.type; if (currentView() !== 'browse') { location.hash = '#browse'; return; } renderFilters(); renderBrowse(); if (d.type && innerWidth <= 760) { const f = $('#filters'); if (f && f.scrollIntoView) f.scrollIntoView({ block: 'start' }); } return; }
+      if (d.typesToggle !== undefined) { state.typesOpen = !state.typesOpen; renderBrowse(); return; }
+      if (d.showList !== undefined) { state.browse = Object.assign({}, state.browse, { list: d.showList, type: '', q: '' }); location.hash = '#browse'; if (currentView() === 'browse') { renderFilters(); renderBrowse(); } return; }
       if (d.editPerson !== undefined) { personModal(person(d.editPerson)); return; }
       if (d.deletePerson !== undefined) {
         const p = person(d.deletePerson); if (!p) return;
@@ -1056,7 +1270,7 @@
           color: ($$('[data-swatch]').find((b) => b.getAttribute('aria-pressed') === 'true') || {}).dataset?.swatch, note: $('#pf-note').value.trim() };
         let p;
         if (f.dataset.id) { p = person(f.dataset.id); Object.assign(p, normalizeLists({ people: [Object.assign({}, p, data)] }).people[0], { id: p.id, items: p.items }); saveLists(); toast(`Saved ${p.name}`); }
-        else { p = addPerson(data); toast(`Added ${p.name}`); if (f.dataset.forGift) addGift(p.id, f.dataset.forGift); }
+        else { p = addPerson(data); toast(`Added ${p.name}`); if (f.dataset.forGift) addGift(p.id, f.dataset.forGift); if (f.dataset.forPick) togglePick(f.dataset.forPick, p.id); }
         closeModal();
         if (!f.dataset.id && currentView() === 'lists') { state.listView = p.id; store.set('listView', p.id); }
         refresh(); return;
@@ -1075,6 +1289,7 @@
       if (t.id === 'budget') { state.find.budget = +t.value; $('#budget-out').textContent = +t.value >= BUDGET_ANY ? 'Any amount' : money(+t.value); state.shown = 9; saveFind(); renderFind(); return; }
       if (t.id === 'f-q') { state.browse.q = t.value; renderBrowse(); return; }
       if (t.id === 'f-age') { state.browse.age = t.value; renderBrowse(); return; }
+      if (t.id === 'pk-q') { state.picks.q = t.value; state.picks.shown = 24; renderPicks(); return; }
     });
     document.addEventListener('change', (e) => {
       const t = e.target;
@@ -1083,8 +1298,10 @@
         state.find = p ? profileOf(p) : Object.assign({}, state.find, { who: '' }); state.shown = 9; saveFind(); renderFindPrefs(); renderFind(); return;
       }
       if (t.dataset.toggle) { setFind({ [t.dataset.toggle]: t.checked }); return; }
-      const map = { 'f-interest': 'interest', 'f-max': 'max', 'f-store': 'store' };
+      const map = { 'f-interest': 'interest', 'f-max': 'max', 'f-store': 'store', 'f-type': 'type', 'f-list': 'list' };
       if (map[t.id]) { state.browse[map[t.id]] = t.value; renderBrowse(); return; }
+      const pmap = { 'pk-type': 'type', 'pk-show': 'show', 'pk-max': 'max', 'pk-sort': 'sort' };
+      if (pmap[t.id]) { state.picks[pmap[t.id]] = t.value; state.picks.shown = 24; renderPicks(); return; }
       if (t.id === 'f-hot' || t.id === 'f-live') { state.browse[t.id.slice(2)] = t.checked; renderBrowse(); return; }
       if (t.dataset.paid) {
         const [pid, u] = t.dataset.paid.split('|'); const p = person(pid); const x = p && p.items.find((y) => y.uid === u); if (!x) return;
@@ -1125,15 +1342,28 @@
     try { sharedModal(await decodeShare(code)); } catch (e) { toast(`That share link couldn't be read (${e.message}).`); }
   }
   async function reloadData() {
-    try { DATA = await (await fetch(`data/gifts.json?ts=${Date.now()}`, { cache: 'no-store' })).json(); boot(true); closeModal(); }
+    try {
+      const picksReq = fetch(`data/store-picks.json?ts=${Date.now()}`, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+      DATA = await (await fetch(`data/gifts.json?ts=${Date.now()}`, { cache: 'no-store' })).json(); prepPicks(await picksReq); boot(true); closeModal();
+    }
     catch (e) { const el = $('#run-status'); if (el) el.insertAdjacentHTML('beforeend', `<div class="status-step fail"><span class="s"></span>Couldn't load data: ${esc(e.message)}</div>`); }
   }
+  // Gifts on a store's or expert's 2026 list get the "Hot this year" seal; gift-guide picks are cited but not sealed.
+  function prepItem(it) {
+    it.lists = Array.isArray(it.lists) ? it.lists.filter((l) => HOT[l]) : [];
+    it.tags = Array.isArray(it.tags) ? it.tags.slice() : [];
+    if (!it.tags.includes('hot') && it.lists.some((l) => HOT[l].kind !== 'guide')) it.tags.push('hot');
+  }
+  const typeLabel = (it) => (TYPES[it.type] || {}).label || '';
   function boot(isReload) {
     ITEMS = DATA.items; BYID = Object.fromEntries(ITEMS.map((it) => [it.id, it])); RET = DATA.retailers || {}; INT = DATA.interests || {};
+    TYPES = DATA.types || {}; HOT = DATA.hot_lists || {}; CATS = DATA.categories || {};
+    ITEMS.forEach(prepItem);
+    if (state.browse.type && !TYPES[state.browse.type] && !CATS[state.browse.type.replace(/^cat:/, '')]) state.browse.type = '';
     state.find.interests = state.find.interests.filter((i) => INT[i]);
     if (state.find.who && !person(state.find.who)) state.find.who = '';
     renderFreshness(); renderCountdown(); updateListCount();
-    $('#footer').innerHTML = `<p>Prices marked "typical" are usual list prices; store prices show which store and when they were read. Prices change quickly around Black Friday, so check the store before you buy. Not affiliated with any store.</p>
+    $('#footer').innerHTML = `<p>Prices marked "typical" are usual list prices and "estimated" ones are our best guess until a store price is read; store prices show which store and when they were read. Prices change quickly around Black Friday, so check the store before you buy. Not affiliated with any store.</p>
       <p>Your lists are saved only in this browser. Source and data: <a href="https://github.com/${esc(CFG.repo)}" target="_blank" rel="noopener">github.com/${esc(CFG.repo)}</a>.</p>`;
     if (!isReload) route(); else refresh();
   }
@@ -1141,8 +1371,11 @@
     const th = store.get('theme', null); if (th) document.documentElement.dataset.theme = th;
     bind(); startSnow();
     if (window.matchMedia && matchMedia('(max-width: 1000px)').matches) setPrefsCollapsed(true);
+    if (window.matchMedia && matchMedia('(max-width: 760px)').matches) state.typesOpen = false;
     try {
+      const picksReq = fetch(`data/store-picks.json?ts=${Date.now()}`, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
       DATA = await (await fetch(`data/gifts.json?ts=${Date.now()}`, { cache: 'no-store' })).json();
+      prepPicks(await picksReq);
     } catch (e) {
       const b = $('#banner'); b.hidden = false;
       b.textContent = `Couldn't load the gift list (${e.message}). If you opened index.html straight from disk, serve the folder instead, for example "python3 -m http.server" inside site/.`;

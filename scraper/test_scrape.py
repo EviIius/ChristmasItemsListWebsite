@@ -186,7 +186,22 @@ check(len(ids) == len(set(ids)), f"catalog: {len(ids)} unique gift ids")
 check(all(i["interests"] and set(i["interests"]) <= set(catalog["interests"]) for i in items), "catalog: every interest is defined")
 check(all(1 <= i["ages"][0] <= i["ages"][1] <= 30 for i in items), "catalog: ages within 1-30")
 check(all(i["typical"] > 0 and (not i.get("range") or i["range"][0] <= i["typical"] <= i["range"][1]) for i in items), "catalog: typical price inside its range")
-check(all(len(i["stores"]) >= 2 and set(i["stores"]) <= set(catalog["retailers"]) for i in items), "catalog: every gift links to 2+ known stores")
+check(all(i["stores"] and set(i["stores"]) <= set(catalog["retailers"]) for i in items), "catalog: every gift links to known stores")
+single = [i["id"] for i in items if len(i["stores"]) == 1]
+check(len(single) <= len(items) // 4, f"catalog: single-store gifts stay the exception ({len(single)}, mostly store exclusives)")
+T = catalog.get("types", {})
+check(T and all(i.get("type") in T and T[i["type"]]["category"] == i["category"] for i in items), f"catalog: every gift has a product type in its category ({len(T)} types)")
+check(all(t["category"] in catalog["categories"] and t["label"] and t["emoji"] for t in T.values()), "catalog: product types are labeled and grouped")
+used = {i["type"] for i in items}
+check(not (set(T) - used), "catalog: every product type has at least one gift" + (f" (empty: {sorted(set(T) - used)})" if set(T) - used else ""))
+H = catalog.get("hot_lists", {})
+check(H and all(set(i.get("lists", [])) <= set(H) for i in items), f"catalog: every hot list a gift cites is defined ({len(H)} lists)")
+check(all(h["name"] and h["short"] and h["kind"] in ("retailer", "expert", "trend", "guide") and h["url"].startswith("https://") for h in H.values()),
+      "catalog: hot lists have a name, kind and source link")
+check(all(isinstance(i.get("price_est", False), bool) for i in items), "catalog: estimated-price flags are true/false")
+dups = [(i["id"], o["retailer"], o.get("sku")) for i in items for n, o in enumerate(i["offers"])
+        if any((o["retailer"], o.get("sku")) == (p["retailer"], p.get("sku")) for p in i["offers"][:n])]
+check(not dups, "catalog: no store link listed twice on a gift" + (f" {dups}" if dups else ""))
 check(all(i["category"] in catalog["categories"] for i in items), "catalog: every category is defined")
 bad = [o["url"] for i in items for o in i["offers"]
        if not any(urlparse(o["url"]).netloc.endswith(h) for h in catalog["retailers"][o["retailer"]]["hosts"])]
@@ -204,6 +219,199 @@ check(sku_for("https://www.walmart.com/ip/Nee-Doh-Nice-Cube/1107995384?athbdg=L1
 check(sku_for("https://www.bestbuy.com/product/x/J7GSL57WWG/sku/6689812", "bestbuy") == "6689812", "add_link: Best Buy SKU")
 check(store_for("https://us.tonies.com/products/x", R) == "tonies" and store_for("https://example.com/x", R) is None, "add_link: store from host")
 check(clean("https://www.walmart.com/ip/x/1?athbdg=L1600&from=/search", "walmart") == "https://www.walmart.com/ip/x/1", "add_link: tracking parameters removed")
+
+check(clean("https://www.macys.com/shop/product/x?ID=26970766&cm_mmc=aff", "macys") == "https://www.macys.com/shop/product/x?ID=26970766"
+      and sku_for("https://www.macys.com/shop/product/x?ID=26970766", "macys") == "26970766", "add_link: Macy's product id kept")
+
+# --------------------------------------------------------------- Target pages without prices, probe hints, link-only stores
+from scrape import page_hints, run_live  # noqa: E402
+NO_PRICE_TGT = '<html><script id="__NEXT_DATA__">{"props":{"pageProps":{"isProductDetailServerSideRenderPriceEnabled":false}}}</script></html>'
+try:
+    parse_product_page(NO_PRICE_TGT, "target", "target", "1006663864")
+    msg = ""
+except ValueError as e:
+    msg = str(e)
+check("no longer puts prices" in msg, "Target: a page with server-side prices turned off says so plainly")
+h = page_hints('<script type="application/ld+json">{}</script><span class="a-offscreen">$19.99</span>')
+check(h["json_ld"] and h["dollar_amounts"] == 1 and "a-offscreen" in h["price_keys"], "probe: hints describe what a page holds")
+lo_cat = {"retailers": {"target": {"name": "Target", "price_check": False, "price_note": "prices load in the browser"}},
+          "items": [{"id": "x", "offers": [{"retailer": "target", "url": "https://www.target.com/p/-/A-1", "sku": "1"}]}]}
+obs, extra = run_live(lo_cat, None, None)
+check(obs == [] and any("aren't price-checked" in n for n in extra["notes"]), "live run: link-only stores are skipped with a note, no requests made")
+mcat = {"retailers": {}, "interests": {}, "categories": {}, "types": {"lego": {"label": "LEGO sets"}}, "hot_lists": {"amazon": {"name": "A"}},
+        "items": [{"id": "g", "typical": 10, "offers": []}]}
+md = merge(mcat, None, [], {"finished": "2026-11-21T00:00:00Z"})
+check(md["types"] == mcat["types"] and md["hot_lists"] == mcat["hot_lists"], "merge: product types and hot lists reach gifts.json")
+
+# --------------------------------------------------------------- hotlists.py: product links out of gift guides
+from hotlists import best_match, extract, real_url  # noqa: E402
+check(real_url("https://goto.target.com/c/1/2/3?subId1=x&u=https%3A%2F%2Fwww.target.com%2Fp%2Fgui-gui%2F-%2FA-94991898") ==
+      "https://www.target.com/p/gui-gui/-/A-94991898", "hotlists: Target affiliate redirect decoded")
+check(real_url("https://www.anrdoezrs.net/links/9260995/type/dlg/sid/x/https://www.macys.com/shop/product/elmo?ID=27355097") ==
+      "https://www.macys.com/shop/product/elmo?ID=27355097", "hotlists: path-style redirect decoded")
+check(real_url("https://go.skimresources.com?id=1&url=https%3A%2F%2Fwww.walmart.com%2Fip%2FX%2F19555206231&xcust=y") ==
+      "https://www.walmart.com/ip/X/19555206231", "hotlists: skimlinks redirect decoded")
+GUIDE = """<p><a href="https://www.amazon.com/Klutz-Lego/dp/1338137204?tag=abc-20">Lego Make Your Own Movie</a>
+<a href="https://www.amazon.com/dp/1338137204?tag=abc-20"><img alt=""></a>
+<a href="https://goto.walmart.com/c/1/2/3?u=https%3A%2F%2Fwww.walmart.com%2Fip%2FCRUNCH%2F18879462675">The Crunchinator</a>
+<a href="https://bestbuy.7tiv.net/c/1/2/3?u=https%3A%2F%2Fwww.bestbuy.com%2Fproduct%2Fps-portal%2FJXHQ3C2CHX%2Fsku%2F6562576">Shop at Best Buy</a>
+<a href="https://www.amazon.com/s?k=lego">Amazon search (not a product)</a>
+<a href="https://example.com/p/123">Some other shop</a></p>"""
+links = {(r["store"], r["sku"]): r for r in extract(GUIDE, R)}
+check(set(links) == {("amazon", "1338137204"), ("walmart", "18879462675"), ("bestbuy", "6562576")}, "hotlists: product links found, searches and unknown shops ignored")
+check(links[("amazon", "1338137204")]["name"] == "Lego Make Your Own Movie" and links[("amazon", "1338137204")]["url"] == "https://www.amazon.com/dp/1338137204",
+      "hotlists: link text kept as the name, tracking removed")
+check(links[("bestbuy", "6562576")]["name"] == "", "hotlists: 'Shop at Best Buy' isn't mistaken for a product name")
+m, score = best_match("CrunchLabs by Mark Rober The Crunchinator", items)
+check(m and m["id"] == "crunchlabs-crunchinator" and score >= 0.45, "hotlists: guide names match catalog gifts")
+real = extract((Path(__file__).parent / "fixtures" / "amazon-toys-2026-links.html").read_text(), R)
+owner = {(o["retailer"], str(o.get("sku"))): i["id"] for i in items for o in i["offers"]}
+right = [r for r in real if best_match(r["name"], items)[0]["id"] == owner.get((r["store"], r["sku"]))]
+check(len(real) == 10 and len(right) == len(real), f"hotlists: real Amazon list markup -> 10 products, each matched to the right gift ({len(right)}/{len(real)})")
+m, score = best_match("Completely unrelated garden hose", items)
+check(score < 0.45, "hotlists: unrelated names don't match")
+
+# --------------------------------------------------------------- store_picks.py: store lists read in a browser
+import datetime as dt  # noqa: E402
+import tempfile  # noqa: E402
+import store_picks as sp  # noqa: E402
+from scrape import capture_observations  # noqa: E402
+
+TYPE_CASES = {
+    "LEGO Botanicals Cozy Plants - Building Toy for Girls & Boys, Ages 9+": "lego",
+    "LEGO DUPLO Disney Frozen Creative Box with Elsa and Olaf": "blocks",
+    "Joyspun Women's Plush Robe, Sizes S to 3X": "clothing",
+    "Taste Beauty Dumpling Squishy Lip Gloss Keychain, Strawberry, 0.14 oz": "lip",
+    "Barbie Dream Camper Playset with Roof Tent, BBQ Grill with Color-Change Feature": "playsets",
+    "Ninja Creami Scoop & Swirl Ice Cream Maker, Scoopable & Soft Serve": "appliances",
+    "STANLEY Classic Vacuum Bottle, Green/Silver": "drinkware",
+    "Pinkfong Baby Shark Inflatable Arm Ring Floats, Pair, Ages 2-4 Years": "outdoor-play",
+    "Sweet Like Candy by Ariana Grande, 3.4 oz EDP Spray for Women": "fragrance",
+    "Funko POP TV: Power Rangers Z - Zeo Ranger Yellow Collectible Vinyl Figure": "figures",
+    "Nintendo Switch 2 System": "consoles",
+    "Mario Kart 8 Deluxe racing video game (Nintendo Switch)": "switch-games",
+    "PS5 DualSense® Wireless Controller - Gran Turismo Limited Edition": "controllers",
+    "Grand Theft Auto VI, PlayStation 5 Game, (Code in Box)": "ps-xbox-games",
+    "HALO Rise Above Jr Lil' Switch 2-in-1 Rider - Scooter for Ages 1+ - Red": "bikes-scooters",
+    "Star Wars Imperial Remnant AT-RT RC Walker with Mandalorian and Grogu": "vehicles",
+    "Barbie Chemistry Activity Lab Science Kit for Kids Age 5 and Up by Blue Marble": "science-kits",
+    "The French Illusion: A Novel (Hardcover)": "adult-books",
+    "Apple AirPods Max Over-Ear Headphones with USB-C, Blue": "headphones",
+    "Apple AirPods Pro 3": "earbuds",
+    "Carhartt Adult Acrylic Watch Hat (Carhartt Brown)": "accessories",
+}
+wrong = {n: (sp.classify(n), t) for n, t in TYPE_CASES.items() if sp.classify(n) != t}
+check(not wrong, "store picks: product names land in the right product type" + (f" {wrong}" if wrong else ""))
+DROPS = ["Best Choice Products 6ft Pre-Lit Flocked Artificial Aspen Noble Fir Christmas Tr", "(Open Box) Apple AirPods Max Over-Ear Headphones",
+         "Samsung 55 Class U8000H Series Crystal UHD 4K UHD Smart TV", "Frigidaire 5.0 Cu. ft. Garage Ready Chest Freezer",
+         "Verizon iPhone 18 Pro 256GB Burgundy", "Greenworks Pro PowerAll 24V Drill, Driver Bundle", "Restored Premium Dyson Supersonic Hair Dryer",
+         "Hickory Farms $9.97 Meat & Cheese Gift Box Gourmet Charcuterie Set", "Haribo Holiday Filled Tube Goldbears 2.53oz Gummy Candy"]
+check(all(sp.classify(n) == "drop" for n in DROPS), "store picks: groceries, TVs, appliances, tools, phones and open-box items are left out")
+check(sp.classify("Bluey: Little Library 4-Book Box Set (Hardcover)", "3920:582053", [1, 3]) == "picture-books"
+      and sp.classify("Some Novel Title (Hardcover)", "3920:1233541", [13, 17]) == "ya-books", "store picks: books are sorted by the ages they're for")
+check(sp.ages_from_name("LeapFrog LeapMove, Ages 4-7 Years Old") == (4, 7) and sp.ages_from_name("LEGO set, Ages 9+") == (9, None)
+      and sp.ages_from_name("Squishy Cheese for Kids 5 and up") == (5, None) and sp.ages_from_name("Advent Calendar for Kids, Ages 6") == (6, None)
+      and sp.ages_from_name("Apple AirPods Pro 3") is None, "store picks: ages printed in product names are read")
+spans = {"clothing": [1, 30], "vehicles": [2, 30]}
+check(sp.age_range("No Boundaries Icon Sweater, Women's and Women's Plus", {"wm-gifts-teens": 1}, "clothing", spans)[0] == [13, 17]
+      and sp.age_range("No Boundaries Icon Sweater, Women's and Women's Plus", {"wm-top100": 1}, "clothing", spans)[0] == [18, 30],
+      "store picks: the store's age-group list beats words like Women's; words beat the product type")
+check(sp.age_range("PAW Patrol Megasaurus Dino Vehicle, Ages 3+", {"wm-top-toys": 3}, "vehicles", spans)[0] == [3, 15],
+      "store picks: 'Ages 3+' on a toy doesn't stretch to age 30")
+check(sp.clean_name("Pokmon " + "x" * 74 + " tail") == "Pokémon " + "x" * 74 + "…" and sp.clean_name("Short name") == "Short name",
+      "store picks: names cut at 80 characters end on a whole word, and dropped accents come back")
+
+now = dt.datetime(2026, 11, 22, 20, 0, tzinfo=dt.timezone.utc)
+CAP = """#run walmart 2026-11-22T19:20:23Z
+#list wm-top-toys page=1 count=4 maxPage=1
+111|19.97|29.99|W|4171:4186|BH|4.7|150|LEGO Botanicals Cozy Plants - Building Toy, Ages 9+
+222|89.99||M|4171:4187|B|4.7|717|KPop Demon Hunters Mira Singing Doll
+333|4.97||M|4171:4187||4.0|3|Mystery Doll From A Marketplace Shop
+444|149.00||W|3944:1060825|B|4.4|7617|VIZIO 55 Class Mini LED 4K QLED Smart TV
+#list wm-deals-toys page=1 count=2 maxPage=1
+=111
+555|5.00||M|4171:4187|R|4.0|3|Tiny Doll Sold By A Marketplace Shop
+#list wm-tracked page=1 count=2 maxPage=1
+666|300.00||W|||4.6|58|Magical Birthday Surprises Winnie the Pooh Doll
+777|24.88||W||O|4.5|70|Barbie Chemistry Activity Lab Science Kit
+"""
+with tempfile.TemporaryDirectory() as td:
+    f = Path(td) / "walmart.txt"
+    f.write_text(CAP)
+    cap = sp.parse_capture(f)
+    check(cap["store"] == "walmart" and cap["lists"]["wm-deals-toys"]["rows"] == [(1, "111"), (2, "555")] and len(cap["products"]) == 7,
+          "store picks: capture files are read, repeats point back to the first listing")
+    bad = Path(td) / "bad.txt"
+    bad.write_text("#run walmart 2026-11-22T19:20:23Z\n#list wm-top-toys page=1\n=999\n")
+    check(raises(ValueError, lambda: sp.parse_capture(bad)), "store picks: a repeat of a product that wasn't listed is an error")
+    bad.write_text("#run walmart 2026-11-22T19:20:23Z\n#list wm-top-toys page=1\n111|1|2|W\n")
+    check(raises(ValueError, lambda: sp.parse_capture(bad)), "store picks: a line with the wrong number of fields is an error")
+    mini = {"types": {"lego": {"category": "building"}, "dolls": {"category": "toys"}, "science-kits": {"category": "stem"}},
+            "items": [{"id": "lego-cozy", "type": "lego", "ages": [9, 30], "typical": 29.99,
+                       "offers": [{"retailer": "walmart", "url": "https://www.walmart.com/ip/111", "sku": "111"}]},
+                      {"id": "kpdh-mira", "type": "dolls", "ages": [4, 12], "typical": 24.99,
+                       "offers": [{"retailer": "walmart", "url": "https://www.walmart.com/ip/222", "sku": "222"}]},
+                      {"id": "pooh", "type": "dolls", "ages": [2, 6], "typical": 49.97,
+                       "offers": [{"retailer": "walmart", "url": "https://www.walmart.com/ip/666", "sku": "666"}]},
+                      {"id": "barbie-lab", "type": "science-kits", "ages": [5, 10], "typical": 24.88,
+                       "offers": [{"retailer": "walmart", "url": "https://www.walmart.com/ip/777", "sku": "777"}]}]}
+    out, obs, st = sp.build(mini, [cap], now)
+    by = {x["sku"]: x for x in out["items"]}
+    check(set(by) == {"111", "222", "333"}, "store picks: TVs and few-review marketplace listings on deal pages are left out; the store's own top lists keep theirs")
+    lego = by["111"]
+    check(lego["gift"] == "lego-cozy" and lego["type"] == "lego" and lego["was"] == 29.99 and lego["pct"] == 33
+          and lego["flags"] == ["best-seller", "deal"] and lego["lists"] == ["wm-top-toys", "wm-deals-toys"]
+          and lego["ages"] == [9, 30] and lego["ages_from"] == "catalog",
+          "store picks: a pick keeps the store's badges, lists, discount and the catalog gift it matches")
+    check(by["222"]["seller"] == "marketplace" and "was" not in by["222"], "store picks: marketplace sellers are labeled")
+    o = {x["item_id"]: x for x in obs["walmart"]}
+    check(o["lego-cozy"]["ok"] and o["lego-cozy"]["price"] == 19.97 and o["lego-cozy"]["regular"] == 29.99 and o["lego-cozy"]["on_sale"]
+          and o["lego-cozy"]["verification_method"] == "browser" and o["lego-cozy"]["checked_at"] == "2026-11-22T19:20:23Z",
+          "store picks: prices for gifts the catalog tracks become price-checker observations")
+    check(o["kpdh-mira"]["marketplace_only"] and o["barbie-lab"]["in_stock"] is False,
+          "store picks: marketplace-only and sold-out readings are marked as such")
+    check(o["pooh"]["ok"] is False and o["pooh"]["reason"] == "sanity", "store picks: a price far from the usual one is rejected like any other reading")
+    old, _, st2 = sp.build(mini, [cap], now + dt.timedelta(days=sp.MAX_AGE_DAYS + 1))
+    check(old["items"] == [] and st2["old_captures"] == 1, f"store picks: captures older than {sp.MAX_AGE_DAYS} days are skipped")
+    ob = Path(td) / "walmart-observations.json"
+    ob.write_text(json.dumps({"observations": obs["walmart"]}))
+    cat2 = {"retailers": {"walmart": {"name": "Walmart"}}, "items": mini["items"]}
+    fresh = capture_observations(cat2, None, Path(td))
+    prev = {"items": [{"id": "lego-cozy", "offers": [{"url": "https://www.walmart.com/ip/111", "checked_at": "2026-11-22T19:20:23Z"}]}]}
+    again = capture_observations(cat2, prev, Path(td))
+    check(len(fresh) == 4 and {x["item_id"] for x in again} == {"kpdh-mira", "pooh", "barbie-lab"},
+          "price checker: browser-read prices are merged once, then gifts.json carries them")
+
+real = [sp.parse_capture(p) for p in sorted(sp.CAPTURES.glob("*.txt"))]
+if real:
+    rout, robs, rst = sp.build(json.loads(CATALOG.read_text()), real, dt.datetime.fromisoformat(max(c["captured_at"] for c in real).replace("Z", "+00:00")))
+    shipped = json.loads((sp.OUT).read_text()) if sp.OUT.exists() else {"items": []}
+    check(len(rout["items"]) >= 300 and {x["id"] for x in rout["items"]} == {x["id"] for x in shipped["items"]},
+          f"store picks: site/data/store-picks.json is up to date with scraper/captures ({len(rout['items'])} picks)")
+    tps = json.loads(CATALOG.read_text())["types"]
+    check(all(x["type"] in tps and tps[x["type"]]["category"] == x["category"] and 1 <= x["ages"][0] <= x["ages"][1] <= 30 for x in rout["items"]),
+          "store picks: every pick has a known product type and an age range within 1-30")
+check(sp.esrb_ages([6, 30], "M", "Some Game") == ([17, 30], "M") and sp.esrb_ages([8, 12], "T", "x") == ([13, 30], "T")
+      and sp.esrb_ages([6, 30], "E", "x") == ([6, 30], "E") and sp.esrb_ages([13, 17], "RP", "Grand Theft Auto VI") == ([17, 30], "RP-M")
+      and sp.esrb_ages([7, 30], "RP", "Madden NFL 27") == ([13, 30], "RP"), "store picks: ESRB ratings set the youngest age for video games")
+if real:
+    rated = [x for x in rout["items"] if x["type"] in sp.GAME_TYPES]
+    check(rated and all(x["ages"][0] >= 17 for x in rated if x.get("esrb") in ("M", "RP-M"))
+          and any(x.get("esrb") == "M" for x in rated) and all(x.get("esrb") for x in rated),
+          f"store picks: every video game has an ESRB rating, and Mature ones are 17 and up ({len(rated)} games)")
+rcat = {"retailers": {"walmart": {"name": "Walmart"}, "amazon": {"name": "Amazon"}}, "items": [{"id": "g", "typical": 30, "offers": [
+    {"retailer": "walmart", "url": "https://www.walmart.com/ip/1", "sku": "1"}, {"retailer": "amazon", "url": "https://www.amazon.com/dp/B0X", "sku": "B0X"}]}]}
+run1 = merge(rcat, None, [{"item_id": "g", "retailer": "walmart", "url": "https://www.walmart.com/ip/1", "ok": True, "price": 20.0,
+                           "checked_at": "2026-11-22T19:20:23Z"}], {"finished": "2026-11-22T20:00:00Z"})
+run2 = merge(rcat, run1, [], {"finished": "2026-11-22T20:00:00Z"})
+check(json.dumps(run1["items"]) == json.dumps(run2["items"]), "merge: rebuilding unchanged data gives the same file, byte for byte")
+bcat = {"retailers": {"walmart": {"name": "Walmart", "price_check": "browser", "price_note": "read at home"}},
+        "items": [{"id": "x", "offers": [{"retailer": "walmart", "url": "https://www.walmart.com/ip/1", "sku": "1"}]}]}
+obs3, extra3 = run_live(bcat, None, None)
+check(obs3 == [] and any("priced from a browser" in n for n in extra3["notes"]), "live run: stores priced in a browser are skipped on GitHub, no requests made")
+rets = json.loads(CATALOG.read_text())["retailers"]
+check(rets["walmart"].get("price_check") == "browser" and rets["amazon"].get("price_check") is False and rets["target"].get("price_check") is False,
+      "catalog: Walmart is priced in a browser; Amazon and Target links aren't price-checked")
 
 print(f"\n{'All checks passed.' if not failures else f'{failures} check(s) failed.'}")
 sys.exit(1 if failures else 0)

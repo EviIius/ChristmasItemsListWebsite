@@ -39,6 +39,7 @@ DATA = ROOT / "site" / "data"
 CATALOG = DATA / "catalog.json"
 OUTPUT = DATA / "gifts.json"
 PROBE_OUT = ROOT / "scraper" / "probe-results.json"
+CAPTURES = ROOT / "scraper" / "captures"  # browser-read store prices saved by store_picks.py
 HISTORY_DAYS = 120
 DEFAULT_UA = "Mozilla/5.0 (compatible; ChristmasGiftFinder/1.0; +https://github.com/EviIius/ChristmasItemsListWebsite)"
 UA = os.environ.get("SCRAPER_USER_AGENT", DEFAULT_UA)
@@ -476,6 +477,8 @@ def parse_target(html: str, retailer: str | None = "target", sku: str | None = N
         fmt = grab("formatted_current_price", seg, Q + r'\$([0-9,]+(?:\.[0-9]{2})?)') or grab("formatted_current_price", html, Q + r'\$([0-9,]+(?:\.[0-9]{2})?)')
         price = money(fmt)
     if price is None:
+        if re.search(Q + "isProductDetailServerSideRenderPriceEnabled" + Q + r"\s*:\s*false", html):
+            raise ValueError("Target no longer puts prices in its product pages (they load separately in the browser)")
         raise ValueError("no product price data found on the Target page")
     out: dict = {"price": price}
     reg = money(grab("reg_retail", seg))
@@ -578,6 +581,15 @@ KEEP = ("price", "regular", "in_stock", "open_box", "marketplace", "rating", "re
         "marketplace_only", "verification_method", "on_sale", "availability_checked_at", "note", "name")
 
 
+OFFER_HEAD = ("retailer", "retailer_name", "url", "sku", "label")
+
+
+def ordered(o: dict) -> dict:
+    """An offer's fields in one fixed order, so rebuilding unchanged data gives the same file byte for byte."""
+    head = {k: o[k] for k in OFFER_HEAD if k in o}
+    return {**head, **{k: o[k] for k in sorted(o) if k not in head}}
+
+
 def merge(catalog: dict, previous: dict | None, observations: list[dict], run_meta: dict) -> dict:
     """Combine the catalog, this run's observations and the previous output into gifts.json."""
     previous = previous or {}
@@ -618,7 +630,7 @@ def merge(catalog: dict, previous: dict | None, observations: list[dict], run_me
                 o["error"] = "not checked yet"
             if o.get("stale"):
                 o["on_sale"] = False
-            offers.append({k: v for k, v in o.items() if v is not None})
+            offers.append(ordered({k: v for k, v in o.items() if v is not None}))
         priced = [o for o in offers if o.get("price") and not o.get("marketplace_only")]
         best = min(priced, key=lambda o: (bool(o.get("stale")), o.get("in_stock") is False, o["price"])) if priced else None
         history = [list(h) for h in prev.get("history", []) if h[0] >= cutoff]
@@ -657,7 +669,26 @@ def merge(catalog: dict, previous: dict | None, observations: list[dict], run_me
            "retailers": retailers,
            "interests": catalog.get("interests", {}),
            "categories": catalog.get("categories", {}),
+           "types": catalog.get("types", {}),
+           "hot_lists": catalog.get("hot_lists", {}),
            "items": items}
+    return out
+
+
+def capture_observations(catalog: dict, previous: dict | None, folder: Path = CAPTURES) -> list[dict]:
+    """Store prices read in a browser (scraper/captures/*-observations.json, written by store_picks.py) that are newer
+    than what gifts.json already shows. Applied once: after that, gifts.json carries them like any other price."""
+    prev = {(i["id"], o.get("url")): o for i in (previous or {}).get("items", []) for o in i.get("offers", [])}
+    valid = {(it["id"], o["url"]) for it, o in offer_list(catalog)}
+    out = []
+    for f in sorted(folder.glob("*-observations.json")):
+        for o in load_json(f, {}).get("observations", []):
+            key = (o.get("item_id"), o.get("url"))
+            if key not in valid or not o.get("checked_at"):
+                continue
+            po = prev.get(key, {})
+            if o["checked_at"] > max(po.get("checked_at") or "", po.get("last_attempt") or "", po.get("availability_checked_at") or ""):
+                out.append(o)
     return out
 
 
@@ -708,6 +739,20 @@ def run_live(catalog: dict, limit: int | None, only: str | None) -> tuple[list[d
     observations: list[dict] = []
     notes: list[str] = []
     todo = offer_list(catalog, only)
+    link_only = {k for k, v in catalog["retailers"].items() if v.get("price_check") is False}
+    by_browser = {k for k, v in catalog["retailers"].items() if v.get("price_check") == "browser"}
+    skipped = [o for _, o in todo if o["retailer"] in link_only | by_browser]
+    if skipped:
+        for r in sorted({o["retailer"] for o in skipped}):
+            ret = catalog["retailers"][r]
+            n = sum(1 for o in skipped if o["retailer"] == r)
+            if r in by_browser:
+                notes.append(f"{ret.get('name', r)} links ({n}) are priced from a browser on a home computer, not here: "
+                             f"{ret.get('price_note') or 'see scraper/store_picks.py'}")
+            else:
+                notes.append(f"{ret.get('name', r)} links ({n}) open the product but aren't "
+                             f"price-checked: {ret.get('price_note') or 'this store is marked link-only in the catalog'}")
+        todo = [(it, o) for it, o in todo if o["retailer"] not in link_only | by_browser]
     random.shuffle(todo)
     if limit:
         todo = todo[:limit]
@@ -759,6 +804,15 @@ def run_live(catalog: dict, limit: int | None, only: str | None) -> tuple[list[d
     return observations, {"by_retailer": per, "notes": notes}
 
 
+def page_hints(html: str) -> dict:
+    """What a product page contains, so a failed read can be diagnosed from the probe report alone."""
+    low = html.lower()
+    return {"json_ld": "application/ld+json" in low, "next_data": "__next_data__" in low,
+            "dollar_amounts": len(re.findall(r"\$\d{1,4}(?:,\d{3})*\.\d{2}", html)),
+            "price_keys": sorted({k for k in ("current_retail", "formatted_current_price", "pricecurrency", "priceamount", "saleprice",
+                                              "a-offscreen") if k in low})}
+
+
 def probe(catalog: dict) -> dict:
     """Try one product page per store and report what answers. Nothing is bypassed; blocked is a valid answer."""
     fetcher = PoliteFetcher(delay=(1.0, 2.0), max_host_failures=99)
@@ -781,6 +835,7 @@ def probe(catalog: dict) -> dict:
                     row["in_stock"] = parsed.get("in_stock")
                 except Exception as e:
                     row["parse_error"] = f"{e.__class__.__name__}: {str(e)[:140]}"
+                    row["hints"] = page_hints(html)
             except Exception as e:
                 row["error"] = f"{e.__class__.__name__}: {str(e)[:140]}"
         row["readable"] = bool(row.get("price"))
@@ -823,6 +878,13 @@ def main():
                 ap.error("successful observations need their actual checked_at timestamp")
         observations = obs_file["observations"]
         extra["notes"].append(obs_file.get("note") or f"Merged observations from {Path(args.observations).name}.")
+    captured = capture_observations(catalog, previous)
+    if captured:
+        seen = {(o["item_id"], o["url"]) for o in observations}
+        observations = [o for o in captured if (o["item_id"], o["url"]) not in seen] + observations
+        when = max(o["checked_at"] for o in captured)[:10]
+        stores = sorted({catalog["retailers"].get(o["retailer"], {}).get("name", o["retailer"]) for o in captured})
+        extra["notes"].append(f"Merged {len(captured)} {' and '.join(stores)} price(s) read in a browser on {when} (scraper/captures/).")
     if not args.offline:
         live_obs, live_extra = run_live(catalog, args.limit, args.only)
         seen = {(o["item_id"], o["url"]) for o in live_obs}
@@ -840,7 +902,7 @@ def main():
             "runner": os.environ.get("SCRAPER_RUNNER") or ("github-actions" if os.environ.get("GITHUB_ACTIONS") else "local"),
             "ok": ok, "failed": failed, "tracked_links": len(offer_list(catalog)), "by_retailer": by_retailer,
             "notes": extra.get("notes", []), "api": bool(os.environ.get("BESTBUY_API_KEY"))}
-    if args.offline and args.observations:
+    if args.offline and (args.observations or captured):
         meta["mode"] = "manual"
     elif args.offline and previous.get("scrape"):
         # A plain rebuild (e.g. after editing catalog.json) isn't a scrape: keep the last run's details and timestamp.
@@ -864,7 +926,7 @@ def main():
         print(f"dry run: {ok} prices read, {failed} failed; gifts.json not written")
     else:
         OUTPUT.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n")
-        what = "rebuilt from the catalog, no scraping" if args.offline and not args.observations else f"{ok} store links read, {failed} failed"
+        what = "rebuilt from the catalog, no scraping" if args.offline and not args.observations and not captured else f"{ok} store links read, {failed} failed"
         print(f"wrote {OUTPUT.relative_to(ROOT)}: {len(data['items'])} gifts, {data['live_prices']} with live prices, {what}")
     # Non-zero exit only when a live run read nothing at all, so the workflow can flag it.
     if not args.offline and observations and ok == 0:

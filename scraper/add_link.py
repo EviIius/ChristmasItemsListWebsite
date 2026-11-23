@@ -27,6 +27,7 @@ SKU_PATTERNS = {
     "bestbuy": [r"/sku/(\d+)", r"/(\d{7})\.p"],
     "lego": [r"-(\d{4,6})(?:$|[/?])"],
     "gamestop": [r"/(\d+)(?:-[0-9a-f]+)?\.html"],
+    "macys": [r"[?&]ID=(\d+)"],
 }
 
 
@@ -50,9 +51,11 @@ def sku_for(url: str, retailer: str) -> str | None:
 
 
 def clean(url: str, retailer: str) -> str:
-    """Drop tracking parameters; keep the ones that pick a product variant."""
+    """Drop tracking parameters; keep the ones that pick a product variant. Amazon links become amazon.com/dp/ASIN."""
     u = urlparse(url)
-    keep = {"variant", "skuId", "preselect"}
+    if retailer == "amazon" and sku_for(url, "amazon"):
+        return f"https://www.amazon.com/dp/{sku_for(url, 'amazon')}"
+    keep = {"variant", "skuId", "preselect", "ID"}
     query = "&".join(f"{k}={v[0]}" for k, v in parse_qs(u.query).items() if k in keep)
     return f"{u.scheme}://{u.netloc}{u.path}" + (f"?{query}" if query else "")
 
@@ -70,7 +73,8 @@ def main():
         q = args.find.lower()
         for it in catalog["items"]:
             if q in it["id"] or q in it["name"].lower():
-                print(f"{it['id']:<36} {it['name']}  ({len(it.get('offers', []))} store links)")
+                n = len(it.get("offers", []))
+                print(f"{it['id']:<36} {it['name']}  ({n} store link{'' if n == 1 else 's'})")
         return
     if not args.item_id or not args.url:
         ap.error("give an item id and a product link (or use --find)")
