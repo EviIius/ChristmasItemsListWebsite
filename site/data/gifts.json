@@ -1,24 +1,29 @@
 {
- "generated_at": "2026-11-23T07:15:14Z",
+ "generated_at": "2026-11-23T07:36:44Z",
  "prices_as_of": "2026-11-22T19:20:23Z",
  "live_prices": 32,
  "scrape": {
-  "started": "2026-11-23T07:15:14Z",
-  "finished": "2026-11-23T07:15:14Z",
+  "started": "2026-11-23T07:36:44Z",
+  "finished": "2026-11-23T07:36:44Z",
   "mode": "manual",
   "runner": "github-actions",
-  "ok": 34,
+  "ok": 6,
   "failed": 0,
   "tracked_links": 199,
   "by_retailer": {
+   "gamestop": {
+    "ok": 1,
+    "failed": 0,
+    "blocked": 0
+   },
    "walmart": {
-    "ok": 34,
+    "ok": 5,
     "failed": 0,
     "blocked": 0
    }
   },
   "notes": [
-   "Merged 34 Walmart price(s) read in a browser on 2026-11-22 (scraper/captures/)."
+   "Merged 6 GameStop and Walmart price(s) read in a browser on 2026-11-23 (scraper/captures/)."
   ],
   "api": false
  },
@@ -1908,7 +1913,7 @@
      "retailer_name": "Walmart",
      "url": "https://www.walmart.com/ip/18657315988",
      "sku": "18657315988",
-     "checked_at": "2026-11-22T19:20:23Z",
+     "checked_at": "2026-11-23T07:18:20Z",
      "in_stock": true,
      "name": "PAW Patrol: The Dino Movie Megasaurus Dino Vehicle, Ages 3+",
      "on_sale": true,
@@ -1916,7 +1921,7 @@
      "rating": 4.6,
      "regular": 64.99,
      "reviews": 209,
-     "source": "Walmart.com, read in a browser",
+     "source": "walmart.com, read in a browser",
      "stale": false,
      "verification_method": "browser"
     },
@@ -1941,11 +1946,15 @@
    "price_retailer": "walmart",
    "price_url": "https://www.walmart.com/ip/18657315988",
    "price_status": "live",
-   "price_checked_at": "2026-11-22T19:20:23Z",
+   "price_checked_at": "2026-11-23T07:18:20Z",
    "regular": 64.99,
    "history": [
     [
      "2026-11-22",
+     49.97
+    ],
+    [
+     "2026-11-23",
      49.97
     ]
    ]
@@ -2621,13 +2630,13 @@
      "url": "https://www.walmart.com/ip/19351951484",
      "sku": "19351951484",
      "label": "Zoey",
-     "checked_at": "2026-11-22T19:20:23Z",
+     "checked_at": "2026-11-23T07:18:20Z",
      "in_stock": true,
-     "name": "KPop Demon Hunters HUNTR/X Zoey “Golden” Singing Doll in Removable Outfit & 5…",
+     "name": "KPop Demon Hunters HUNTR/X Zoey Golden Singing Doll in Removable Outfit & 5…",
      "price": 31.98,
      "rating": 4.7,
      "reviews": 692,
-     "source": "Walmart.com, read in a browser",
+     "source": "walmart.com, read in a browser",
      "stale": false,
      "verification_method": "browser"
     },
@@ -2669,10 +2678,14 @@
    "price_retailer": "walmart",
    "price_url": "https://www.walmart.com/ip/19351951484",
    "price_status": "live",
-   "price_checked_at": "2026-11-22T19:20:23Z",
+   "price_checked_at": "2026-11-23T07:18:20Z",
    "history": [
     [
      "2026-11-22",
+     31.98
+    ],
+    [
+     "2026-11-23",
      31.98
     ]
    ]
@@ -4999,13 +5012,13 @@
      "retailer_name": "Walmart",
      "url": "https://www.walmart.com/ip/Nintendo-Switch-2-System/15949610846",
      "sku": "15949610846",
-     "checked_at": "2026-11-22T19:20:23Z",
+     "checked_at": "2026-11-23T07:18:20Z",
      "in_stock": true,
      "name": "Nintendo Switch 2 System",
      "price": 499.0,
      "rating": 4.6,
      "reviews": 12988,
-     "source": "Walmart.com, read in a browser",
+     "source": "walmart.com, read in a browser",
      "stale": false,
      "verification_method": "browser"
     },
@@ -5028,10 +5041,14 @@
    "price_retailer": "walmart",
    "price_url": "https://www.walmart.com/ip/Nintendo-Switch-2-System/15949610846",
    "price_status": "live",
-   "price_checked_at": "2026-11-22T19:20:23Z",
+   "price_checked_at": "2026-11-23T07:18:20Z",
    "history": [
     [
      "2026-11-22",
+     499.0
+    ],
+    [
+     "2026-11-23",
      499.0
     ]
    ]
@@ -5842,13 +5859,13 @@
      "url": "https://www.walmart.com/ip/Grand-Theft-Auto-VI-PlayStation-5-Game/20482917228",
      "sku": "20482917228",
      "label": "PS5",
-     "checked_at": "2026-11-22T19:20:23Z",
+     "checked_at": "2026-11-23T07:18:20Z",
      "in_stock": true,
      "name": "Grand Theft Auto VI, PlayStation 5 Game, (Code in Box)",
      "price": 79.99,
      "rating": 4.5,
      "reviews": 2338,
-     "source": "Walmart.com, read in a browser",
+     "source": "walmart.com, read in a browser",
      "stale": false,
      "verification_method": "browser"
     },
@@ -5858,13 +5875,13 @@
      "url": "https://www.gamestop.com/video-games/playstation-5/products/grand-theft-auto-vi---playstation-5-code-in-box/448295.html",
      "sku": "448295",
      "label": "PS5",
-     "checked_at": "2026-11-22T23:46:04Z",
+     "checked_at": "2026-11-23T07:29:38Z",
      "in_stock": true,
      "name": "Grand Theft Auto VI - PlayStation 5 (Code in Box)",
      "price": 79.99,
-     "source": "www.gamestop.com product page",
+     "source": "gamestop.com, read in a browser",
      "stale": false,
-     "verification_method": "retailer-html"
+     "verification_method": "browser"
     }
    ],
    "type": "ps-xbox-games",
@@ -5875,7 +5892,7 @@
    "price_retailer": "walmart",
    "price_url": "https://www.walmart.com/ip/Grand-Theft-Auto-VI-PlayStation-5-Game/20482917228",
    "price_status": "live",
-   "price_checked_at": "2026-11-22T19:20:23Z",
+   "price_checked_at": "2026-11-23T07:18:20Z",
    "history": [
     [
      "2026-11-21",
@@ -5883,6 +5900,10 @@
     ],
     [
      "2026-11-22",
+     79.99
+    ],
+    [
+     "2026-11-23",
      79.99
     ]
    ]
@@ -9234,13 +9255,13 @@
      "retailer_name": "Walmart",
      "url": "https://www.walmart.com/ip/4029710",
      "sku": "4029710",
-     "checked_at": "2026-11-22T19:20:23Z",
+     "checked_at": "2026-11-23T07:18:20Z",
      "in_stock": true,
      "name": "Hot Wheels Set of 20 Toy Sports & Race Cars in 1:64 Scale, Collectible…",
      "price": 23.94,
      "rating": 4.7,
      "reviews": 4633,
-     "source": "Walmart.com, read in a browser",
+     "source": "walmart.com, read in a browser",
      "stale": false,
      "verification_method": "browser"
     }
@@ -9249,10 +9270,14 @@
    "price_retailer": "walmart",
    "price_url": "https://www.walmart.com/ip/4029710",
    "price_status": "live",
-   "price_checked_at": "2026-11-22T19:20:23Z",
+   "price_checked_at": "2026-11-23T07:18:20Z",
    "history": [
     [
      "2026-11-22",
+     23.94
+    ],
+    [
+     "2026-11-23",
      23.94
     ]
    ]
