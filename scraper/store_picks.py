@@ -42,8 +42,23 @@ MAX_AGE_DAYS = 10  # captures older than this are left out of store-picks.json (
 STORES = {
     "walmart": {
         "name": "Walmart",
+        "site": "walmart.com",
         "url": lambda sku: f"https://www.walmart.com/ip/{sku}",
         "own_seller": "Walmart.com",
+    },
+    # GameStop draws its product grid in the browser; /products/<id>.html redirects to the full product page.
+    "gamestop": {
+        "name": "GameStop",
+        "site": "gamestop.com",
+        "url": lambda sku: f"https://www.gamestop.com/products/{sku}.html",
+        "own_seller": "GameStop",
+    },
+    # LEGO.com: /en-us/product/<set number> redirects to the set's page.
+    "lego": {
+        "name": "LEGO.com",
+        "site": "lego.com",
+        "url": lambda sku: f"https://www.lego.com/en-us/product/{sku}",
+        "own_seller": "LEGO",
     },
 }
 
@@ -65,6 +80,10 @@ LISTS = {
     "wm-deals-toys": ("Walmart toy deals", "Toy deals", "https://www.walmart.com/shop/deals?catId=4171&sort=best_seller", "deals", None),
     "wm-deals-video-games": ("Walmart video game deals", "Video game deals", "https://www.walmart.com/shop/deals?catId=2636&sort=best_seller", "deals", None),
     "wm-deals-electronics": ("Walmart electronics deals", "Electronics deals", "https://www.walmart.com/shop/deals?catId=3944&sort=best_seller", "deals", None),
+    "wm-deals-sports": ("Walmart sports & outdoors deals", "Sports deals", "https://www.walmart.com/shop/deals?catId=4125&sort=best_seller", "deals", None),
+    "gs-best-sellers": ("GameStop Best Sellers", "GameStop best sellers", "https://www.gamestop.com/best-sellers", "hot", None),
+    "gs-deals": ("GameStop Black Friday deals", "GameStop deals", "https://www.gamestop.com/deals", "deals", None),
+    "lego-bestsellers": ("LEGO.com Best Sellers", "LEGO best sellers", "https://www.lego.com/en-us/categories/bestsellers", "hot", None),
     "wm-tracked": ("Gifts this site tracks at Walmart", None, None, "tracked", None),
 }
 
@@ -92,6 +111,9 @@ DROP_TERMS = [
     r"stocking with", r"phone case", r"wired earbuds", r"over ear headphones with microphone", r"baby monitor",
     r"video monitor", r"essential oil", r"dj controller", r"acoustic electric guitar", r"acoustic guitar",
     r"electric guitar", r"pre-?lit", r"\(open box\)", r"open box", r"restored", r"refurbished", r"renewed",
+    r"chocolate candy", r"baby food", r"electrolyte", r"flavor cartridge", r"whitestrips", r"baking kit", r"soda crafter",
+    r"syrups?\b", r"hex key", r"tool pad", r"shop-vac", r"wet/dry vac", r"folding table", r"power station", r"seatpost",
+    r"garden statue", r"slumberpod", r"sleep tent",
 ]
 DROP = re.compile(r"\b(?:" + "|".join(DROP_TERMS) + r")", re.I)
 
@@ -138,10 +160,12 @@ RULES = [
     ("card-games", r"card game|\buno\b|monopoly deal|word game"),
     ("puzzles", r"puzzle|jigsaw"),
     ("pc-gaming", r"gaming keyboard|gaming mouse|gaming chair|gaming monitor|gaming pc|gaming laptop|stream deck|quadcast|usb microphone|curved gaming|tuf gaming|\bomen\b|monitor"),
+    ("consoles", r"(?:playstation [45]|xbox (?:series [xs]|one)|nintendo switch)\b[^|]*\bconsole\b(?![^|]*(?:charging|stand|skin|case|cover|controller))|playstation portal|switch oled"),
     ("consoles", r"switch 2 system|switch 2 \+|switch 2 bundle|mario kart world bundle|playstation 5 console|xbox series [xs] console|game system"),
     ("controllers", r"controller|dualsense"),
     ("vr", r"meta quest|vr headset|virtual reality"),
     ("switch-games", r"nintendo switch"),
+    ("headphones", r"gaming headsets?\b|\bheadset\b(?![^|]*\bvr\b)"),
     ("ps-xbox-games", r"playstation 5|playstation 4|\bps5\b|xbox series x game|\bps4\b"),
     ("headphones", r"headphones|headset|kraken|barracuda|arctis|airpods max|beats solo"),
     ("earbuds", r"airpods|earbuds|linkbuds"),
@@ -212,6 +236,10 @@ BOOK_PATHS = ("3920", "5440")  # Walmart's Books departments
 def classify(name: str, path: str = "", ages: list | None = None) -> str | None:
     if DROP.search(name):
         return "drop"
+    if re.match(r"[a-z-]+:", path or ""):
+        for rx, t in GAMESTOP_PATHS:
+            if re.match(rx, path):
+                return t
     for t, rx in RULES:
         if rx.search(name):
             return t
@@ -250,6 +278,52 @@ def ages_from_words(name: str) -> tuple[int, int] | None:
     return None
 
 
+RULES += [(t, re.compile(rx, re.I)) for t, rx in [
+    ("ps-xbox-games", r"xbox series x(?:/s)?\b(?![^|]*(?:console|controller|headset|batter|charg|storage|card))|xbox one\b(?![^|]*(?:console|controller))"),
+    ("tcg", r"\btopps\b|hobby box|mega box|value box"),
+    ("bath-body", r"advent calendar[^|]*(?:adults|beauty|bath|body|spa)|grooming set"),
+    ("figures", r"advent calendar"),
+    ("action-figures", r"marvel legends|mcfarlane|\d-in(?:ch)? (?:action )?figure"),
+    ("blind-boxes", r"blind (?:pack|bag)|mystery capsule"),
+    ("squishies", r"squeeze ball|squishy"),
+    ("kids-makeup", r"beauty set[^|]*age"),
+    ("craft-kits", r"arts? (?:&|and) crafts|making kit|bird ?house kit"),
+    ("science-kits", r"steam kit|terrarium"),
+    ("ride-ons", r"\btrike\b|tricycle"),
+    ("bikes-scooters", r"hoverboard|hovertrax|dirt rocket"),
+    ("sports-gear", r"pickleball|\bskates?\b"),
+    ("fitness", r"power cage|squat rack"),
+    ("baby-activity", r"activity cube|play gym|soother|rattle|jingle & shake"),
+    ("kids-tech", r"walkie talkies?|learn & go|learning toy"),
+    ("musical-toys", r"sing-along microphone"),
+    ("pretend-play", r"tea set|teapot|glam vanity|get ready with me"),
+    ("playsets", r"headquarters|\bplayset\b"),
+    ("board-games", r"party game"),
+    ("cameras", r"fujifilm mini|instax"),
+    ("wearables", r"\bmeta (?:adventurer|wayfarer|skyler)|smart glasses"),
+    ("controllers", r"motionplus|controller grip"),
+    ("chargers", r"rechargeable batter|ac adapter"),
+    ("vr", r"head strap for (?:oculus|meta) quest|quest 2|quest 3"),
+    ("hair-tools", r"detangling brush"),
+    ("accessories", r"hair clips?|claw clip|headband|ponytail|scrunchie"),
+    ("bags", r"cosmetic (?:travel )?case|beauty bag|\bwallet\b"),
+    ("drinkware", r"water jug|tumbler"),
+    ("decor", r"floor mirror|foam chair|wooden block"),
+    ("journals", r"memory book|baby books?\b"),
+    ("shoes", r"sneakers?\b|\bclogs?\b"),
+    ("clothing", r"pullover|quarter zip|half zip|sweatshirt|\bshorts\b|crew neck|sleep 'n play|romper|outfit|onesie|sleep pants|fleece"),
+]]
+
+# GameStop's department and aisle (the first two parts of its product address) say what a product is.
+GAMESTOP_PATHS = [
+    (r"^video-games:nintendo-switch", "switch-games"), (r"^video-games:", "ps-xbox-games"),
+    (r"^consoles-hardware:", "consoles"), (r"^gaming-accessories:gaming-headsets", "headphones"),
+    (r"^gaming-accessories:chargers", "chargers"), (r"^gaming-accessories:", "controllers"),
+    (r"^toys-games:trading-cards", "tcg"), (r"^toys-games:blind", "blind-boxes"), (r"^collectibles:funko", "figures"),
+    (r"^collectibles:", "action-figures"), (r"^gift-cards:", "gift-cards"), (r"^clothing:t-shirts", "clothing"),
+    (r"^clothing:", "accessories"),
+]
+
 GAME_TYPES = {"switch-games", "ps-xbox-games", "any-console-games"}
 ESRB_MIN = {"E": 1, "E10": 10, "T": 13, "M": 17, "RP-M": 17, "AO": 18}
 # Series that are rated Mature, for new games whose rating is still pending.
@@ -284,8 +358,9 @@ def type_ages(catalog: dict) -> dict:
 
 
 def parse_capture(path: Path) -> dict:
-    """Read one capture file: {store, captured_at, lists: {key: {"pages": [...], "rows": [(rank, id)]}}, products: {id: row}}."""
-    store, captured_at, cur = None, None, None
+    """Read one capture file: {store, captured_at, lists: {key: {"pages": [...], "rows": [(rank, id)], "by_page": {page: [id]}}},
+    products: {id: row}}."""
+    store, captured_at, cur, page = None, None, None, 1
     lists: dict = {}
     products: dict = {}
     problems: list = []
@@ -309,7 +384,8 @@ def parse_capture(path: Path) -> dict:
             parts = line.split()
             cur = parts[1]
             meta = dict(p.split("=", 1) for p in parts[2:] if "=" in p)
-            lists.setdefault(cur, {"rows": [], "pages": []})["pages"].append(meta)
+            lists.setdefault(cur, {"rows": [], "pages": [], "by_page": {}})["pages"].append(meta)
+            page = int(meta["page"]) if str(meta.get("page", "")).isdigit() else 1
             continue
         if line.startswith("!") or line.startswith("#"):
             problems.append(f"{path.name}:{n}: {line[:80]}")
@@ -333,6 +409,7 @@ def parse_capture(path: Path) -> dict:
                 products[pid]["note"] = "the store answered with a different product number"
         rows = lists[cur]["rows"]
         rows.append((len(rows) + 1, pid))
+        lists[cur]["by_page"].setdefault(page, []).append(pid)
     if not store or not captured_at:
         raise ValueError(f"{path.name}: missing the '#run <store> <time>' line")
     for pid, code in esrb.items():
@@ -364,78 +441,90 @@ def build(catalog: dict, captures: list[dict], now: dt.datetime | None = None) -
                 tracked.setdefault((o["retailer"], str(o["sku"])), []).append((it, o))
     picks, lists_out, obs_by_store = [], {}, {}
     stats = {"products": 0, "kept": 0, "dropped": 0, "unsorted": [], "marketplace_dropped": 0, "observations": 0, "old_captures": 0}
+    # Several capture files can hold pages of the same list (a later visit reads more pages, or reads a page again).
+    # Combine them page by page, the newest reading of each page and of each product winning.
+    fresh = []
     for cap in captures:
-        store = cap["store"]
         when = dt.datetime.fromisoformat(cap["captured_at"].replace("Z", "+00:00"))
         if (now - when).days > MAX_AGE_DAYS:
             stats["old_captures"] += 1
-            continue
-        member: dict = {}
+        else:
+            fresh.append(cap)
+    pages: dict = {}     # (store, list) -> {page: (captured_at, [product ids])}
+    products: dict = {}  # (store, product id) -> (captured_at, row)
+    for cap in sorted(fresh, key=lambda c: c["captured_at"]):
         for key, lst in cap["lists"].items():
             if key not in LISTS:
                 raise ValueError(f"unknown list {key!r}; add it to LISTS in store_picks.py")
-            name, short, url, kind, ages = LISTS[key]
-            if kind != "tracked":
-                lists_out[key] = {k: v for k, v in {"store": store, "name": name, "short": short, "url": url, "kind": kind,
-                                                    "ages": list(ages) if ages else None, "count": len(lst["rows"]),
-                                                    "captured_at": cap["captured_at"]}.items() if v is not None}
-            for rank, pid in lst["rows"]:
-                member.setdefault(pid, {})
-                member[pid].setdefault(key, rank)
-        obs = []
+            for page, pids in (lst.get("by_page") or {1: [pid for _, pid in lst["rows"]]}).items():
+                pages.setdefault((cap["store"], key), {})[page] = (cap["captured_at"], pids)
         for pid, p in cap["products"].items():
-            stats["products"] += 1
-            raw = fix_name(p["name"])  # the full captured name: classify on this, show the tidied one
-            name = clean_name(p["name"])
-            in_lists = {k: r for k, r in member.get(pid, {}).items() if LISTS[k][3] != "tracked"}
-            for it, off in tracked.get((store, pid), []):
-                obs.append(observation(it, off, p, cap["captured_at"], STORES[store]))
-            if not in_lists:
-                continue
-            gift_items = [it for it, _ in tracked.get((store, pid), [])]
-            hint = age_hint(raw, in_lists)
-            t = gift_items[0]["type"] if gift_items else classify(raw, p["path"], hint)
-            if t == "drop":
+            products[(cap["store"], pid)] = (cap["captured_at"], p)
+    member: dict = {}  # (store, product id) -> {list: rank}
+    for (store, key), by_page in pages.items():
+        name, short, url, kind, ages = LISTS[key]
+        rank = 0
+        for page in sorted(by_page):
+            for pid in by_page[page][1]:
+                rank += 1
+                member.setdefault((store, pid), {}).setdefault(key, rank)
+        if kind != "tracked":
+            lists_out[key] = {k: v for k, v in {"store": store, "name": name, "short": short, "url": url, "kind": kind,
+                                                "ages": list(ages) if ages else None, "count": rank,
+                                                "captured_at": max(v[0] for v in by_page.values())}.items() if v is not None}
+    for (store, pid), (captured_at, p) in products.items():
+        obs = obs_by_store.setdefault(store, [])
+        stats["products"] += 1
+        raw = fix_name(p["name"])  # the full captured name: classify on this, show the tidied one
+        name = clean_name(p["name"])
+        in_lists = {k: r for k, r in member.get((store, pid), {}).items() if LISTS[k][3] != "tracked"}
+        for it, off in tracked.get((store, pid), []):
+            obs.append(observation(it, off, p, captured_at, STORES[store]))
+            stats["observations"] += 1
+        if not in_lists:
+            continue
+        gift_items = [it for it, _ in tracked.get((store, pid), [])]
+        hint = age_hint(raw, in_lists)
+        t = gift_items[0]["type"] if gift_items else classify(raw, p["path"], hint)
+        if t == "drop":
+            stats["dropped"] += 1
+            continue
+        if t is None:
+            stats["unsorted"].append(name)
+            continue
+        curated = any(LISTS[k][3] == "hot" for k in in_lists)
+        if p["seller"] == "M" and (p["reviews"] or 0) < 25 and not curated:
+            stats["marketplace_dropped"] += 1
+            continue
+        if not p["price"] and not p["was"]:
+            stats["dropped"] += 1
+            continue
+        lo_hi, ages_from = age_range(raw, in_lists, t, spans)
+        if gift_items:  # a gift the catalog already describes: use its curated ages
+            lo_hi, ages_from = list(gift_items[0]["ages"]), "catalog"
+        rating = None
+        if t in GAME_TYPES:
+            if p.get("esrb") == "AO":
                 stats["dropped"] += 1
                 continue
-            if t is None:
-                stats["unsorted"].append(name)
-                continue
-            curated = any(LISTS[k][3] == "hot" for k in in_lists)
-            if p["seller"] == "M" and (p["reviews"] or 0) < 25 and not curated:
-                stats["marketplace_dropped"] += 1
-                continue
-            if not p["price"] and not p["was"]:
-                stats["dropped"] += 1
-                continue
-            lo_hi, ages_from = age_range(raw, in_lists, t, spans)
-            if gift_items:  # a gift the catalog already describes: use its curated ages
-                lo_hi, ages_from = list(gift_items[0]["ages"]), "catalog"
-            rating = None
-            if t in GAME_TYPES:
-                if p.get("esrb") == "AO":
-                    stats["dropped"] += 1
-                    continue
-                lo_hi, rating = esrb_ages(lo_hi, p.get("esrb"), raw)
-            gift = gift_items[0]["id"] if gift_items else None
-            was = p["was"] if p["was"] and p["price"] and p["was"] > p["price"] else None
-            flags = [FLAGS[c] for c in p["flags"] if c in FLAGS]
-            if was and not set(flags) & {"deal", "rollback", "reduced", "clearance"}:
-                flags.append("reduced")
-            pick = {"id": f"{store}-{pid}", "store": store, "sku": pid, "name": name, "url": STORES[store]["url"](pid),
-                    "price": p["price"], "was": was, "pct": round((was - p["price"]) / was * 100) if was else None,
-                    "seller": "store" if p["seller"] == "W" else "marketplace", "rating": p["rating"], "reviews": p["reviews"],
-                    "flags": flags, "lists": sorted(in_lists, key=lambda k: list(LISTS).index(k)), "rank": in_lists,
-                    "type": t, "category": types[t]["category"], "ages": lo_hi, "ages_from": ages_from, "esrb": rating, "gift": gift,
-                    "checked_at": cap["captured_at"]}
-            picks.append({k: v for k, v in pick.items() if v not in (None, [], {})})
-            stats["kept"] += 1
-        obs_by_store.setdefault(store, []).extend(obs)
-        stats["observations"] += len(obs)
+            lo_hi, rating = esrb_ages(lo_hi, p.get("esrb"), raw)
+        gift = gift_items[0]["id"] if gift_items else None
+        was = p["was"] if p["was"] and p["price"] and p["was"] > p["price"] else None
+        flags = [FLAGS[c] for c in p["flags"] if c in FLAGS]
+        if was and not set(flags) & {"deal", "rollback", "reduced", "clearance"}:
+            flags.append("reduced")
+        pick = {"id": f"{store}-{pid}", "store": store, "sku": pid, "name": name, "url": STORES[store]["url"](pid),
+                "price": p["price"], "was": was, "pct": round((was - p["price"]) / was * 100) if was else None,
+                "seller": "store" if p["seller"] == "W" else "marketplace", "rating": p["rating"], "reviews": p["reviews"],
+                "flags": flags, "lists": sorted(in_lists, key=lambda k: list(LISTS).index(k)), "rank": in_lists,
+                "type": t, "category": types[t]["category"], "ages": lo_hi, "ages_from": ages_from, "esrb": rating, "gift": gift,
+                "checked_at": captured_at}
+        picks.append({k: v for k, v in pick.items() if v not in (None, [], {})})
+        stats["kept"] += 1
     picks.sort(key=lambda x: (min(x["rank"].values()), x["name"]))
-    newest = max((c["captured_at"] for c in captures), default=None)
+    newest = max((c["captured_at"] for c in fresh), default=None)
     out = {"generated_at": now.strftime("%Y-%m-%dT%H:%M:%SZ"), "captured_at": newest,
-           "stores": {s: {"name": STORES[s]["name"]} for s in {c["store"] for c in captures}},
+           "stores": {s: {"name": STORES[s]["name"]} for s in sorted({c["store"] for c in fresh}, key=lambda s: (-sum(x["store"] == s for x in picks), s))},
            "lists": lists_out, "items": picks}
     return out, obs_by_store, stats
 
@@ -476,7 +565,7 @@ def age_range(name: str, in_lists: dict, t: str, spans: dict) -> tuple[list, str
 
 def observation(it: dict, off: dict, p: dict, checked_at: str, store: dict) -> dict:
     rec = {"item_id": it["id"], "retailer": off["retailer"], "url": off["url"], "sku": off.get("sku"), "checked_at": checked_at,
-           "source": f"{store['name']}.com, read in a browser", "verification_method": "browser"}
+           "source": f"{store['site']}, read in a browser", "verification_method": "browser"}
     if not p["price"]:
         rec.update(ok=False, reason="parse", error=f"{store['name']} didn't show a price (it may need a size or color picked first)")
         return rec

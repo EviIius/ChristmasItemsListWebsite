@@ -239,13 +239,14 @@ const asTypical = (id) => {
   const picksData = JSON.parse(fs.readFileSync(path.join(site, 'data/store-picks.json'), 'utf8'));
   app.prepPicks(JSON.parse(JSON.stringify(picksData)));
   const pickReset = () => Object.assign(app.state.picks, { band: '', type: '', show: '', max: '', sort: 'rank', q: '', shown: 24 });
+  const PICK_URL = { walmart: (s) => `https://www.walmart.com/ip/${s}`, gamestop: (s) => `https://www.gamestop.com/products/${s}.html`, lego: (s) => `https://www.lego.com/en-us/product/${s}` };
   await check("store picks: every pick is typed, aged and links to the store's product page", () => {
     const P = app.picks;
     assert(P.items.length >= 300, `${P.items.length} picks`);
     for (const x of P.items) {
       assert(data.types[x.type] && data.types[x.type].category === x.category, x.id);
       assert(x.ages[0] >= 1 && x.ages[1] <= 30 && x.ages[0] <= x.ages[1], x.id);
-      assert(x.url === `https://www.walmart.com/ip/${x.sku}` && x.id === `walmart-${x.sku}`, x.id);
+      assert(x.url === PICK_URL[x.store](x.sku) && x.id === `${x.store}-${x.sku}` && P.stores[x.store], x.id);
       assert(x.price == null || x.price > 0, x.id);
       if (x.was) assert(x.was > x.price && x.pct === Math.round((x.was - x.price) / x.was * 100), x.id);
       assert(x.lists.length && x.lists.every((l) => P.lists[l]) && Object.keys(x.rank).sort().join() === x.lists.slice().sort().join(), x.id);

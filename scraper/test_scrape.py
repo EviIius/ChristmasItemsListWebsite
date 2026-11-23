@@ -440,5 +440,26 @@ with tempfile.TemporaryDirectory() as td2:
     check(len(got) == 1 and wout["price"] == 449.0 and wout["price_status"] == "live" and wout["history"] == [["2026-11-22", 449.0]],
           "price checker: a later failed attempt doesn't hold back a browser reading; history is dated by the reading")
 
+# Capture files combine page by page: a later visit can add pages, and the newer reading of a page or product wins.
+with tempfile.TemporaryDirectory() as td3:
+    a, b = Path(td3) / "walmart.txt", Path(td3) / "walmart-2.txt"
+    a.write_text("#run walmart 2026-11-22T19:00:00Z\n#list wm-top-toys page=1\n101|10.00||W|4171:4186|B|4.8|900|LEGO Classic Bricks Ages 4+\n"
+                 "102|20.00||W|4171:4187|B|4.7|500|Barbie Doll Ages 3+\n#list wm-top-toys page=2\n103|30.00||W|4171:4186|B|4.6|300|LEGO City Fire Truck Ages 5+\n")
+    b.write_text("#run walmart 2026-11-23T07:00:00Z\n#list wm-top-toys page=2\n104|15.00||W|4171:4187|B|4.5|200|Polly Pocket Playset Ages 4+\n"
+                 "=104\n#list wm-trending-toys page=1\n101|8.00|10.00|W|4171:4186|BR|4.8|950|LEGO Classic Bricks Ages 4+\n")
+    tcat = {"types": json.loads(CATALOG.read_text())["types"], "items": []}
+    two, _, _ = sp.build(tcat, [sp.parse_capture(a), sp.parse_capture(b)], dt.datetime(2026, 11, 23, 8, tzinfo=dt.timezone.utc))
+    tb = {x["sku"]: x for x in two["items"]}
+    check(set(tb) == {"101", "102", "104"} and tb["104"]["rank"] == {"wm-top-toys": 3} and tb["101"]["price"] == 8.0
+          and tb["101"]["rank"] == {"wm-top-toys": 1, "wm-trending-toys": 1} and two["lists"]["wm-top-toys"]["captured_at"] == "2026-11-23T07:00:00Z",
+          "store picks: capture files combine page by page, and the newer reading of a page or product wins")
+check(sp.classify("Grand Theft Auto VI - PlayStation 5 (Code in Box)", "video-games:playstation-5") == "ps-xbox-games"
+      and sp.classify("Nintendo Switch 2", "consoles-hardware:nintendo-switch-2") == "consoles"
+      and sp.classify("Pokemon Trading Card Game: 30th Celebration Booster Bundle", "toys-games:trading-cards") == "tcg"
+      and sp.classify("FIFINE H18V Gaming Headset with Microphone for PC Computer, PS5, Xbox") == "headphones"
+      and sp.STORES["gamestop"]["url"]("426037") == "https://www.gamestop.com/products/426037.html"
+      and sp.STORES["lego"]["url"]("76476") == "https://www.lego.com/en-us/product/76476",
+      "store picks: GameStop's aisles sort its products; GameStop and LEGO links are built from the product number")
+
 print(f"\n{'All checks passed.' if not failures else f'{failures} check(s) failed.'}")
 sys.exit(1 if failures else 0)

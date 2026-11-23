@@ -1,6 +1,6 @@
 # Christmas Gift Finder
 
-A small website for Christmas shopping: gift ideas for ages 1 to 30, a Christmas list for each person you're buying for, and every big store's search one click away. It has 361 gift ideas in 80 product types (LEGO sets, Switch 2 games, squishies, stuffed animals, PlayStation, earbuds, beauty and more), 266 of them picked from this year's store top-toys lists, toy experts' lists and gift guides, and links to 28 stores, from Target, Walmart, Amazon and Best Buy to GameStop, LEGO.com, Pokémon Center, Five Below, Build-A-Bear, Sephora and Nike. On top of that it shows 510 of Walmart's own best sellers and holiday deals, read from Walmart's lists in a browser and sorted into the same product types and age groups.
+A small website for Christmas shopping: gift ideas for ages 1 to 30, a Christmas list for each person you're buying for, and every big store's search one click away. It has 361 gift ideas in 80 product types (LEGO sets, Switch 2 games, squishies, stuffed animals, PlayStation, earbuds, beauty and more), 266 of them picked from this year's store top-toys lists, toy experts' lists and gift guides, and links to 28 stores, from Target, Walmart, Amazon and Best Buy to GameStop, LEGO.com, Pokémon Center, Five Below, Build-A-Bear, Sephora and Nike. On top of that it shows 922 of the stores' own best sellers and holiday deals (772 from Walmart, 95 from GameStop, 55 from LEGO.com), read from their lists in a browser and sorted into the same product types and age groups.
 
 **Live site:** https://eviiius.github.io/ChristmasItemsListWebsite/
 
@@ -48,12 +48,13 @@ What each store gave the price checker on GitHub's servers (the November 21 prob
 
 | Store | From GitHub | From a browser on your Mac | Result |
 | --- | --- | --- | --- |
-| Walmart | A bot check (PerimeterX) | Lists, best sellers, deals and product pages, no bot check; no rule against AI assistants in its robots.txt | **Read in a browser:** 510 best sellers and deals, and prices for its 34 links |
-| GameStop, PlayStation Direct, tonies | The product page | Not needed | Prices read on GitHub |
+| Walmart | A bot check (PerimeterX) | Lists, best sellers, deals and product pages, no bot check; no rule against AI assistants in its robots.txt | **Read in a browser:** 772 best sellers and deals, and prices for its 34 links |
+| GameStop | The product page (prices for the catalog's links) | Best Sellers and Black Friday deals; its product grid is drawn in the browser, so only a browser sees it. No rule against AI assistants in its robots.txt | Prices read on GitHub; **95 best sellers and deals read in a browser** |
+| PlayStation Direct, tonies | The product page | Not needed | Prices read on GitHub |
 | Target | A product page with no price in it | Its bot defense refuses the prices and product lists (HTTP 435), even on a home connection | **Link only.** Target links open the right product |
 | Amazon | Pages without the product on them | An "Access restricted" page saying continued access by an unauthorized AI agent breaks Amazon's Conditions of Use | **Link only.** Amazon links open the right product |
 | Best Buy | No answer at all | Its robots.txt disallows `Claude-User`, the name Claude uses when it browses for someone | Not read. The Best Buy API key or a self-hosted runner (below) are the ways in |
-| LEGO.com | A Cloudflare challenge | Not tried | Try the self-hosted runner |
+| LEGO.com | A Cloudflare challenge | Best Sellers pages, no challenge; no rule against AI assistants in its robots.txt | **55 best sellers read in a browser** |
 
 **What the checker won't do:** solve CAPTCHAs, disguise itself as a person's browser, rotate through proxy addresses, or call a store's private price service with borrowed keys. Those are the ways botnets get around bot checks. They break the stores' terms and turn into an arms race, and they get your address blocked. The browser reading follows the same rules: it doesn't click past Amazon's "access restricted" page, ignore Best Buy's robots.txt, or switch to another browser to slip past Target's bot defense. A bot-check page is detected and reported, and that store is skipped. The site falls back to the last known price or the typical price and says so.
 
@@ -64,13 +65,15 @@ What to do instead:
 3. **Best Buy API key:** sign up at [developer.bestbuy.com](https://developer.bestbuy.com/) (Best Buy asks for a work email, not a personal one) and add the key as a repo secret named `BESTBUY_API_KEY`. Best Buy prices then come from Best Buy's own API, which is meant for this.
 4. **Run it by hand:** `python3 scraper/scrape.py`, then commit and push `site/data/gifts.json`.
 
-## Walmart best sellers and deals
+## Store best sellers and deals (Walmart, GameStop, LEGO.com)
 
-Walmart publishes its own hot lists, and its pages carry clean product data, so a browser on a home computer can read them. The Deals page shows them (filter by age group, product type, price, "on sale" or "best seller"), the Find page shows Walmart's best sellers for the chosen age, and Browse by type links to Walmart's picks in the chosen type. Anything can go on a person's list. The November 22 reading covers:
+The stores publish their own hot lists, and their pages carry clean product data, so a browser on a home computer can read them. The Deals page shows them (filter by age group, product type, price, "on sale" or "best seller"), the Find page shows the stores' best sellers for the chosen age, and Browse by type links to the picks in the chosen type. Anything can go on a person's list. The November 22 and 23 readings cover:
 
 - **Hot lists:** Walmart's Top 100 Gifts, Top Toys, Trending Toys and best-selling stocking stuffers
 - **Best sellers for each age group:** baby, toddlers, little kids, big kids, teens, her and him
-- **Deals:** Walmart's toy, video game and electronics deal pages, sorted by best sellers
+- **Deals:** Walmart's toy, video game, electronics and sports deal pages, sorted by best sellers
+- **GameStop:** its Best Sellers and Black Friday deals (new items only; each game's ESRB rating comes from its product page)
+- **LEGO.com:** its Best Sellers, with LEGO's age rating for each set
 - **Prices** for the 34 Walmart links in the catalog, which feed the gifts' prices and the "Below the usual price" deals
 
 Each product keeps Walmart's badges (Best seller, Deal, Rollback, Reduced price, Clearance, Low stock), its rating and its place on each list. Sponsored placements are skipped. Marketplace sellers are labeled, and only Walmart's own price counts for the catalog's gifts. Things this site doesn't cover are left out: groceries, TVs, big appliances, tools, phones on carrier plans, decorations, bedding, and open-box or refurbished items. `scraper/store_picks.py` sorts each product into the site's product types and works out who it's for, in this order: ages printed in the name ("Ages 9+"), the Walmart age-group list it's on, words like "Toddler" or "Women's", then the usual ages for its product type. Gifts the catalog already has keep the catalog's ages. Video games carry Walmart's ESRB rating: Mature games show for 17 and up, Teen games for 13 and up, and a game whose rating is still pending counts as Teen, or Mature if it's in a Mature series like Grand Theft Auto or Call of Duty.
@@ -81,8 +84,8 @@ The site says when the reading happened. After three days it warns that some dea
 
 Deals change daily this week, so refresh before Black Friday and again before Cyber Monday:
 
-1. **Ask Claude** in the Claude desktop app on your Mac: "Refresh the Walmart best sellers and deals for the Christmas site." It reads the pages in its built-in browser, one at a time, and writes `scraper/captures/walmart.txt`. Or **do it by hand** in Chrome or Safari: the steps are at the top of `scraper/browser/walmart-capture.js`.
-2. Run `python3 scraper/store_picks.py`. It writes `site/data/store-picks.json` and `scraper/captures/walmart-observations.json` (prices for the gifts the catalog links to), and rebuilds `gifts.json` with those prices.
+1. **Ask Claude** in the Claude desktop app on your Mac: "Refresh the store best sellers and deals for the Christmas site." It reads the pages in its built-in browser, one at a time, and writes capture files in `scraper/captures/` (one or more per store, such as `walmart.txt`, `walmart-2026-11-23.txt`, `gamestop.txt`, `lego.txt`). When two files have the same page of a list, the newer reading counts, so a later visit can add pages without reading everything again. Or **do it by hand** in Chrome or Safari: the steps are at the top of `scraper/browser/walmart-capture.js`.
+2. Run `python3 scraper/store_picks.py`. It writes `site/data/store-picks.json` and `scraper/captures/<store>-observations.json` (prices for the gifts the catalog links to), and rebuilds `gifts.json` with those prices.
 3. Commit and push. The rebuild after the push merges the new Walmart prices on GitHub too, so it doesn't matter if `gifts.json` changed there in the meantime.
 
 If Walmart ever shows a "press and hold" check or a captcha, the reading stops there; it never tries to get past one. `python3 scraper/store_picks.py --unsorted` lists products no product-type rule matched, so the rules in `store_picks.py` can be improved.
@@ -178,7 +181,7 @@ scraper/
   hotlists.py               pulls product links out of a top-toys list or gift guide
   store_picks.py            imports store pages read in a browser: picks, product types, ages and prices
   browser/walmart-capture.js  the snippet that reads Walmart's pages in a browser
-  captures/                 what the browser read (walmart.txt) and the prices it found
+  captures/                 what the browser read (walmart*.txt, gamestop.txt, lego.txt) and the prices it found
   test_scrape.py            offline parser, merge, hot list, store picks and catalog checks
   fixtures/                 saved page snippets the checks read
   probe-results.json        which stores answered the last probe (written by the workflow)

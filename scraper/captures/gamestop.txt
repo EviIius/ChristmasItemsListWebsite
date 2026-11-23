@@ -1,0 +1,118 @@
+#run gamestop 2026-11-23T07:29:38Z
+#note GameStop's Best Sellers and Black Friday deals, read in the Claude app's browser on Jake's Mac (GameStop draws its product grid in the browser, so GitHub's checker can't read these lists). New items only; ESRB ratings come from each game's product page.
+#list gs-best-sellers page=1
+438438|589.99||W|consoles-hardware:playstation-5||4.6|45|Sony PlayStation 5 Slim Console Digital Edition 825GB SSD
+402677|639.99||W|consoles-hardware:playstation-5||4.5|5793|Sony PlayStation 5 Slim Console 1TB Disc Edition
+229049|779.99||W|consoles-hardware:xbox-series-x%7Cs||4.6|7842|Microsoft Xbox Series X Console 1TB SSD - 4K Gaming - 120FPS - Carbon Black
+415653|739.99||W|consoles-hardware:xbox-series-x%7Cs||4.3|72|Microsoft Xbox Series X All Digital Console 1TB SSD - 4K Gaming - 120FPS - Robot
+229025|599.99||W|consoles-hardware:playstation-5||4.5|5793|Sony PlayStation 5 Console 1TB
+229054|449.99||W|consoles-hardware:xbox-series-x%7Cs||||Microsoft Xbox Series S All Digital Console 512GB SSD - 120FPS - Robot White
+416576|1399.99||W|consoles-hardware:playstation-5||4.6|344|Sony PlayStation 5 Pro Console 2TB
+229026|589.99||W|consoles-hardware:playstation-5||4.3|1710|Sony PlayStation 5 Digital Edition Console 1TB
+402378|599.99||W|consoles-hardware:playstation-5|O|4.3|1710|Sony PlayStation 5 Slim Console Digital Edition 1TB SSD
+426037|494.99||W|consoles-hardware:nintendo-switch-2||4.7|1156|Nintendo Switch 2
+434669|599.99||W|consoles-hardware:playstation-5||4.6|45|Sony PlayStation 5 Slim Console Digital Edition 825GB SSD
+402379|649.99||W|consoles-hardware:playstation-5|O|4.5|5793|Sony PlayStation 5 Slim Console 1TB Disc Edition
+224744|799.99||W|consoles-hardware:xbox-series-x%7Cs|O|4.6|7842|Microsoft Xbox Series X Console 1TB SSD - 4K Gaming - 120FPS - Carbon Black
+415038|749.99||W|consoles-hardware:xbox-series-x%7Cs|O|4.3|72|Microsoft Xbox Series X All Digital Console 1TB SSD - 4K Gaming - 120FPS - Robot
+224746|499.99||W|consoles-hardware:xbox-series-x%7Cs||||Microsoft Xbox Series S All Digital Console 512GB SSD - 120FPS - Robot White
+448295|79.99||W|video-games:playstation-5||||Grand Theft Auto VI - PlayStation 5 (Code in Box)
+450768|399.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: 30th Celebration Ultra-Premium Collection (Styles May
+424543|499.99||W|consoles-hardware:nintendo-switch-2||4.7|1156|Nintendo Switch 2
+448297|79.99||W|video-games:xbox-series-x%7Cs||||Grand Theft Auto VI - Xbox Series X/S (Code in Box)
+454799|99.99||W|video-games:xbox-series-x%7Cs||||Grand Theft Auto VI Ultimate Edition - Xbox Series X/S (Digital)
+448918|34.99|69.99|W|video-games:xbox-series-x%7Cs|P|||EA SPORTS FC 27 - Xbox Series X
+415000|599.99||W|consoles-hardware:xbox-series-x%7Cs||4.2|55|Microsoft Xbox Series S All Digital Console 1TB SSD - 120FPS - Robot White
+154533|100.00||W|gift-cards:gaming-gift-cards||1.0|1|PlayStation Store Gift Card $100
+454725|89.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Mega Evolution Flowing Fists Elite Trainer Box
+131069|164.99|189.99|W|consoles-hardware:xbox-one|P|4.1|4003|Microsoft Xbox One S Console 1TB - White
+446840|59.49|69.99|W|video-games:xbox-series-x%7Cs|P|||Call of Duty: Modern Warfare 4 - Xbox Series X
+447546|59.99||W|video-games:nintendo-switch-2||||The Legend of Zelda: Ocarina of Time - Nintendo Switch 2
+454797|79.99||W|video-games:xbox-series-x%7Cs||||Grand Theft Auto VI - Xbox Series X/S (Digital)
+450924|499.99|549.99|W|consoles-hardware:nintendo-switch-2|P|||Nintendo Switch 2 and Mario Kart World Bundle
+452105|79.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: 30th Celebration Booster Bundle
+401639|249.99||W|consoles-hardware:playstation-5||3.7|209|Sony PlayStation Portal Remote Player for PlayStation 5
+532050|50.00||W|gift-cards:gaming-gift-cards||||Xbox $50 Gift Card (Digital)
+197217|174.99|199.99|W|consoles-hardware:xbox-one|P|3.7|564|Microsoft Xbox One S All-Digital Edition Console 1TB
+453094|44.99||W|toys-games:trading-cards||||2026 Topps Chrome NFL Football Value Box
+131061|144.99|169.99|W|consoles-hardware:xbox-one|P|4.1|4003|Microsoft Xbox One S 500GB Console - White
+453744|499.99||W|toys-games:trading-cards||||Pokémon TCG: 30th Celebration Bundle with 1 Ultra Premium Collection (Style May 
+341251|14.99|19.99|W|video-games:xbox-series-x%7Cs|P|4.5|3082|Grand Theft Auto V - Xbox Series X
+143259|174.99|199.99|W|consoles-hardware:nintendo-switch|P|4.6|6627|Nintendo Switch with Neon Blue/Red Joy-Con Controller (Previous Model)
+299009|399.99||W|consoles-hardware:nintendo-switch||4.7|5858|Nintendo Switch OLED Console with White Joy-Con
+158465|204.99|249.99|W|consoles-hardware:xbox-one|P|3.7|2321|Microsoft Xbox One X Console 1TB - Black
+446097|749.99||W|toys-games:trading-cards||||2025 Topps Star Wars Masterwork Hobby Box
+450871|1995.00||W|consoles-hardware:xbox-series-x%7Cs||||Microsoft Xbox Series X Console 1TB SSD - 4K Gaming - 120FPS - X25 Limited Editi
+453096|74.99||W|toys-games:trading-cards||||2026 Topps Chrome NFL Football Mega Box
+428791|34.99|49.99|W|video-games:xbox-series-x%7Cs|P|3.0|11|Battlefield 6 - Xbox Series X
+450654|50.00|99.99|W|video-games:xbox-series-x%7Cs|P|||EA SPORTS FC 27: Ultimate Edition - Xbox Series X/S
+453567|99.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Mega Rayquaza ex Premium Tournament Box
+416188|899.99||W|consoles-hardware:playstation-5|O|4.6|344|Sony PlayStation 5 Pro Console
+451607|519.99||W|consoles-hardware:nintendo-switch-2||||Nintendo Switch 2 The Legend of Zelda 40th Anniversary Edition
+451594|84.99||W|gaming-accessories:controllers||||Sony DualSense Wireless Controller for PlayStation 5 - Grand Theft Auto VI White
+402616|199.99||W|consoles-hardware:playstation-5||3.7|209|Sony PlayStation Portal Remote Player for PS5 Console
+453195|64.99||W|video-games:nintendo-switch-2|O|||The Legend of Zelda: Ocarina of Time - Nintendo Switch 2
+415652|589.99||W|consoles-hardware:xbox-series-x%7Cs||4.2|55|Microsoft Xbox Series S All Digital Console 1TB SSD - 120FPS - Robot White
+444253|249.99||W|gaming-accessories:memory|O|||Seagate Storage Expansion Card 1TB for Xbox Series X/S
+#list gs-deals page=1
+=341251
+323288|18.99||W|video-games:nintendo-switch||4.1|389|Grand Theft Auto: Trilogy - The Definitive Edition - Nintendo Switch
+342264|13.99||W|video-games:playstation-5||4.5|3082|Grand Theft Auto V - PlayStation 5
+181957|12.99||W|video-games:playstation-4||||Red Dead Redemption 2 - PlayStation 4
+=402379
+319309|19.99|29.99|W|video-games:nintendo-switch|P|4.1|389|Grand Theft Auto: Trilogy - The Definitive Edition - Nintendo Switch
+328284|54.99|74.99|W|gaming-accessories:controllers|P|4.4|12114|Sony DualSense Wireless Controller for PlayStation 5 - Starlight Blue
+447197|49.99|69.99|W|video-games:playstation-5|P|4.5|107|Marvel's Wolverine - PlayStation 5
+222332|29.99||W|gaming-accessories:chargers-cables||4.7|2198|Sony PlayStation 5 DualSense Charging Station
+153379|6.99||W|video-games:nintendo-switch||4.0|1694|Mario Plus Rabbids Kingdom Battle - Nintendo Switch
+399170|19.99|29.99|W|video-games:nintendo-switch|P|4.7|124|Red Dead Redemption (with Undead Nightmare DLC) - Nintendo Switch
+399114|41.99|69.99|W|video-games:playstation-5|P|3.1|146|Call of Duty: Modern Warfare III - PlayStation 5
+421226|36.98|44.99|W|collectibles:figures|P|5.0|1|Jazwares Pokemon Holiday Calendar (2025) Battle Figures (Styles May Vary)
+409635|12.99|19.99|W|gaming-accessories:controllers|P|4.4|210|Nintendo Wii MotionPlus Adapter (Styles May Vary)
+445643|19.99|29.99|W|video-games:playstation-5|P|4.7|124|Red Dead Redemption (with Undead Nightmare DLC) - PlayStation 5
+432083|26.99|59.99|W|gaming-accessories:controllers|P|4.7|38|Turtle Beach Rematch Wireless Gaming Controller for Nintendo Switch, Nintendo Sw
+446459|34.99||W|collectibles:figures||||McFarlane Toys DC Multiverse Harley Quinn (Gold Label) 7-in Action Figure
+406331|94.99|109.99|W|gaming-accessories:gaming-headsets|P|4.4|107|Turtle Beach Stealth 600 Wireless Amplified Gaming Headset for PlayStation 5, Pl
+344750|41.99|49.99|W|video-games:playstation-5|P|4.1|1123|Call of Duty: Modern Warfare II - PlayStation 5
+359027|19.99|29.99|W|video-games:playstation-5|P|4.0|1|The Walking Dead: Saints and Sinners - Chapter 2: Retribution Payback Edition - 
+435498|39.99|69.99|W|video-games:playstation-5|P|4.5|4|Resident Evil Requiem - PlayStation 5
+402644|59.99|69.99|W|gaming-accessories:controllers|P|1.0|1|Microsoft Xbox Series X/S Wireless Controller - Sunkissed Pink
+402375|120.98|199.99|W|gaming-accessories:controllers|P|||Nacon Revolution 5 Pro Wireless Controller for PlayStation 5 and PC with Hall Ef
+399330|19.99|29.99|W|video-games:playstation-4|P|4.7|124|Red Dead Redemption (with Undead Nightmare DLC) - PlayStation 4
+158460|134.99|179.99|W|consoles-hardware:playstation-4|P|4.4|10376|Sony PlayStation 4 Slim 1TB Console Green Camouflage
+423522|39.99|49.99|W|video-games:playstation-5|P|5.0|1|SILENT HILL f - PlayStation 5
+440837|24.99|34.99|W|video-games:xbox-series-x%7Cs|P|3.0|6|WWE 2K26 - Xbox Series X
+425781|19.99|39.99|W|video-games:playstation-5|P|3.4|5|Mafia: The Old Country - PlayStation 5
+445155|10.00|19.99|W|clothing:t-shirts|P|5.0|1|Dungeon Crawler Carl Princess Donut Royal Court Unisex Graphic T-Shirt GameStop 
+435501|39.99|69.99|W|video-games:xbox-series-x%7Cs|P|4.5|4|Resident Evil Requiem - Xbox Series X
+424733|54.99||W|gaming-accessories:controllers||3.7|15|Nintendo Switch 2 Joy-Con 2 (L) Light Blue
+448544|61.99||W|collectibles:figures||||Hasbro Marvel Legends Maximum Series Spider-Man Comics Symbiote 6-in Action Figu
+403907|32.97|51.99|W|collectibles:statues|P|5.0|1|McFarlane Toys DC Direct The Flash 80 Years of The Fastest Man Alive: The Deluxe
+401987|6.97|11.99|W|collectibles:figures|P|4.4|23|Jakks Pacific Super Mario Green Koopa Troopa 4-in Figure
+440835|24.99|34.99|W|video-games:playstation-5|P|3.0|6|WWE 2K26 - PlayStation 5
+344752|41.99|49.99|W|video-games:xbox-series-x%7Cs|P|4.1|1123|Call of Duty: Modern Warfare II Cross-Gen Bundle - Xbox One and Xbox Series X/S
+421138|7.98|10.99|W|clothing:accessories|P|4.3|8|Loungefly Sonic the Hedgehog Popsicle Blind Box Enamel Pin GameStop Exclusive
+406637|9.97|16.99|W|clothing:t-shirts|P|5.0|1|Sanrio Hello Kitty Tokyo Speed Unisex Short Sleeve T-Shirt
+424288|26.98|34.99|W|collectibles:funko|P|4.0|3|Funko Bitty POP! Disney Lilo and Stitch Set 24-Pieces (Styles May Vary)
+900580|7.99|8.99|W|gaming-accessories:chargers-cables|P|3.4|59|PDP AC Adapter for Nintendo DS Lite (Styles May Vary)
+420498|7.99|8.99|W|toys-games:blind-bags|P|5.0|1|Bandai Godzilla HG D Plus 3-in Figure Blind Pack (Styles May Vary)
+409626|9.99|14.99|W|gaming-accessories:thumb-grips|P|4.0|1|GameStop Performance Controller Grip Pads for PlayStation 5
+156243|14.99||W|video-games:nintendo-switch||4.1|261|Monopoly for Nintendo Switch - Nintendo Switch
+440839|24.99|34.99|W|video-games:nintendo-switch-2|P|3.0|6|WWE 2K26 - Nintendo Switch 2
+=416188
+=451607
+=450871
+=451594
+=415653
+=402616
+=143259
+=197217
+=453195
+=454725
+=415652
+=444253
+=402677
+=229025
+=229049
+#esrb 448295:M 448297:M 454799:M 448918:E 446840:M 447546:E10 454797:M 341251:M 428791:M 450654:E 453195:E10 323288:M 342264:M 181957:M
+#esrb 319309:M 447197:M 153379:E10 399170:M 399114:M 445643:M 344750:M 359027:M 435498:M 399330:M 423522:M 440837:T 425781:M 435501:M 440835:T 344752:M 156243:E 440839:T

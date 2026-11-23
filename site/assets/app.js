@@ -574,7 +574,7 @@
     const what = b.type ? (b.type.startsWith('cat:') ? (CATS[b.type.slice(4)] || {}).label : (TYPES[b.type] || {}).label) : '';
     const inType = PICKS && b.type ? PICKS.items.filter((x) => (b.type.startsWith('cat:') ? x.category === b.type.slice(4) : x.type === b.type)).length : 0;
     $('#browse-sub').innerHTML = `${rows.length} of ${ITEMS.length} gift ideas${what ? ` in ${esc(what)}` : ''}. Select a row for details, prices and every store that sells it.`
-      + (inType ? ` <button class="linkish" type="button" data-picks-type="${esc(b.type)}">${esc(andList(Object.values(PICKS.stores).map((x) => x.name)))} has ${inType} best seller${inType > 1 ? 's' : ''} and deal${inType > 1 ? 's' : ''} in this type</button>` : '');
+      + (inType ? ` <button class="linkish" type="button" data-picks-type="${esc(b.type)}">See ${inType} best seller${inType > 1 ? 's' : ''} and deal${inType > 1 ? 's' : ''} from ${esc(andList(Object.values(PICKS.stores).map((x) => x.name)))} in this type</button>` : '');
     $('#browse-table thead').innerHTML = '<tr>' + BROWSE_COLS.map((c) => c.sort
       ? `<th class="${c.cls || ''}" aria-sort="${b.sort === c.key ? (b.dir > 0 ? 'ascending' : 'descending') : 'none'}"><button type="button" data-sort="${c.key}">${c.label}</button></th>`
       : `<th class="${c.cls || ''}">${c.label ? c.label : '<span class="visually-hidden">Add</span>'}</th>`).join('') + '</tr>';
@@ -718,10 +718,12 @@
     panel.hidden = !PICKS;
     if (!PICKS) return;
     const f = state.picks;
-    const when = PICKS.captured_at; const days = (Date.now() - new Date(when).getTime()) / 864e5;
+    const reads = Object.values(PICKS.lists).map((l) => l.captured_at).filter(Boolean).sort();
+    const when = reads[0] || PICKS.captured_at; const days = (Date.now() - new Date(when).getTime()) / 864e5;
     const stores = Object.values(PICKS.stores).map((x) => x.name);
+    const readOn = fmtDate(when) === fmtDate(PICKS.captured_at) ? fmtDate(when) : `${fmtDate(when)} to ${fmtDate(PICKS.captured_at)}`;
     $('#picks-h').textContent = `${andList(stores)} best sellers and deals`;
-    $('#picks-sub').innerHTML = `${PICKS.items.length} gifts from ${esc(andList(stores))}'s own lists: its top gifts and top toys, best sellers for each age group and its deal pages. Read from the store ${esc(fmtDate(when))}${days > 3 ? `, <b class="stale-note">${Math.round(days)} days ago, so some of these deals have likely ended</b>` : ''}. Prices change fast this week, so check the store before you buy.`;
+    $('#picks-sub').innerHTML = `${PICKS.items.length} gifts from ${stores.length > 1 ? `the stores' own lists: ${esc(andList(stores))} best sellers, top gifts and toys, best sellers for each age group, and deal pages. Read from the stores ${esc(readOn)}` : `${esc(stores[0])}'s own lists: its top gifts and top toys, best sellers for each age group and its deal pages. Read from the store ${esc(readOn)}`}${days > 3 ? `, <b class="stale-note">${Math.round(days)} days ago, so some of these deals have likely ended</b>` : ''}. Prices change fast this week, so check the store before you buy.`;
     const types = {}; const cats = {};
     PICKS.items.forEach((x) => { types[x.type] = (types[x.type] || 0) + 1; cats[x.category] = (cats[x.category] || 0) + 1; });
     const typeOpts = Object.keys(CATS).filter((c) => cats[c]).map((c) => `<optgroup label="${esc(CATS[c].label)}"><option value="cat:${esc(c)}"${f.type === `cat:${c}` ? ' selected' : ''}>All ${esc(CATS[c].label.toLowerCase())} (${cats[c]})</option>${Object.entries(TYPES).filter(([k, t]) => t.category === c && types[k]).map(([k, t]) => `<option value="${esc(k)}"${f.type === k ? ' selected' : ''}>${esc(t.label)} (${types[k]})</option>`).join('')}</optgroup>`).join('');
