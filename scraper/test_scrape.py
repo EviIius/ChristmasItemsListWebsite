@@ -413,5 +413,32 @@ rets = json.loads(CATALOG.read_text())["retailers"]
 check(rets["walmart"].get("price_check") == "browser" and rets["amazon"].get("price_check") is False and rets["target"].get("price_check") is False,
       "catalog: Walmart is priced in a browser; Amazon and Target links aren't price-checked")
 
+# A price an older version of the checker read from a store that is now links only doesn't stay up.
+lcat = {"retailers": {"amazon": {"name": "Amazon", "price_check": False}, "gamestop": {"name": "GameStop"}},
+        "items": [{"id": "cube", "typical": 9.99, "offers": [{"retailer": "amazon", "url": "https://www.amazon.com/dp/B0Q", "sku": "B0Q"}]},
+                  {"id": "game", "typical": 70, "offers": [{"retailer": "gamestop", "url": "https://www.gamestop.com/x/1.html", "sku": "1"}]}]}
+lprev = {"items": [{"id": "cube", "price": 14.99, "price_retailer": "amazon", "price_status": "live", "history": [["2026-11-22", 14.99]],
+                    "offers": [{"retailer": "amazon", "url": "https://www.amazon.com/dp/B0Q", "price": 14.99, "checked_at": "2026-11-22T23:45:55Z", "stale": False}]},
+                   {"id": "game", "price": 69.99, "price_retailer": "gamestop", "price_status": "live", "history": [["2026-11-22", 69.99]],
+                    "offers": [{"retailer": "gamestop", "url": "https://www.gamestop.com/x/1.html", "price": 69.99, "checked_at": "2026-11-22T23:45:00Z", "stale": False}]}]}
+lout = {i["id"]: i for i in merge(lcat, lprev, [], {"finished": "2026-11-23T06:20:00Z"})["items"]}
+check("price" not in lout["cube"]["offers"][0] and lout["cube"]["price_status"] == "typical" and lout["cube"]["history"] == []
+      and lout["game"]["offers"][0]["price"] == 69.99 and lout["game"]["history"] == [["2026-11-22", 69.99]],
+      "merge: link-only stores never show a price, even one an older checker read; other stores keep theirs")
+
+# A failed attempt on GitHub after a browser reading doesn't hold that reading back, and history uses the reading's day.
+with tempfile.TemporaryDirectory() as td2:
+    wurl = "https://www.walmart.com/ip/9"
+    wcat = {"retailers": {"walmart": {"name": "Walmart", "price_check": "browser"}},
+            "items": [{"id": "sw", "typical": 499, "offers": [{"retailer": "walmart", "url": wurl, "sku": "9"}]}]}
+    wob = {"item_id": "sw", "retailer": "walmart", "url": wurl, "ok": True, "price": 449.0, "checked_at": "2026-11-22T19:20:23Z"}
+    (Path(td2) / "walmart-observations.json").write_text(json.dumps({"observations": [wob]}))
+    wprev = {"items": [{"id": "sw", "offers": [{"retailer": "walmart", "url": wurl, "blocked": True, "error": "bot check",
+                                                 "last_attempt": "2026-11-22T23:46:01Z", "stale": True}]}]}
+    got = capture_observations(wcat, wprev, Path(td2))
+    wout = merge(wcat, wprev, got, {"finished": "2026-11-23T06:20:00Z"})["items"][0]
+    check(len(got) == 1 and wout["price"] == 449.0 and wout["price_status"] == "live" and wout["history"] == [["2026-11-22", 449.0]],
+          "price checker: a later failed attempt doesn't hold back a browser reading; history is dated by the reading")
+
 print(f"\n{'All checks passed.' if not failures else f'{failures} check(s) failed.'}")
 sys.exit(1 if failures else 0)

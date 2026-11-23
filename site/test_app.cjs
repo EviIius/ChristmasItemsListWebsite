@@ -53,6 +53,15 @@ let checks = 0;
 async function check(label, fn) { await fn(); console.log('PASS ' + label); checks += 1; }
 const base = { who: '', age: 10, budget: 100, interests: [], hot: false, deals: false, live: false };
 const withLive = (id, price, extra = {}) => Object.assign(app.byId[id], { price, price_status: 'live', price_retailer: 'target', price_url: 'https://www.target.com/p/x/-/A-1', price_checked_at: new Date().toISOString() }, extra);
+// Checks that need a gift at its typical price clear whatever store price the data has, then put it back,
+// so they pass whichever prices the price checker found.
+const PRICE_KEYS = ['price', 'price_status', 'price_retailer', 'price_url', 'price_checked_at', 'regular'];
+const asTypical = (id) => {
+  const it = app.byId[id]; const saved = {};
+  for (const k of PRICE_KEYS) { saved[k] = it[k]; delete it[k]; }
+  it.price_status = 'typical';
+  return () => { for (const k of PRICE_KEYS) { if (saved[k] === undefined) delete it[k]; else it[k] = saved[k]; } };
+};
 
 (async () => {
   await check('every gift has the fields the site needs', () => {
@@ -83,7 +92,7 @@ const withLive = (id, price, extra = {}) => Object.assign(app.byId[id], { price,
     assert(app.findResults(Object.assign({}, base, { age: 16, budget: 25 })).every((it) => app.priceInfo(it).value <= 25));
   });
   await check('store prices replace typical prices, and deals need a fresh price well below typical', () => {
-    const it = app.byId['needoh-nice-cube'];
+    const it = app.byId['needoh-nice-cube']; const restore = asTypical(it.id);
     assert.equal(app.priceInfo(it).kind, 'typical');
     withLive('needoh-nice-cube', 7.49);
     assert.equal(app.priceInfo(it).kind, 'live');
@@ -93,7 +102,7 @@ const withLive = (id, price, extra = {}) => Object.assign(app.byId[id], { price,
     withLive('needoh-nice-cube', 7.49, { price_checked_at: new Date(Date.now() - 5 * 864e5).toISOString() });
     assert.equal(app.dealInfo(it), null, 'old prices are not deals');
     assert(app.findResults(Object.assign({}, base, { deals: true })).every((x) => app.dealInfo(x)));
-    delete it.price; it.price_status = 'typical';
+    restore();
   });
   await check('lists: add people, circle gifts once, shortlist, custom items and totals', () => {
     app.state.lists = app.normalizeLists(null);
@@ -221,9 +230,11 @@ const withLive = (id, price, extra = {}) => Object.assign(app.byId[id], { price,
     assert(element('#hot-sources').innerHTML.includes('data-show-list="target"') && element('#tracked-list').innerHTML.includes('<details class="store-links">'));
   });
   await check('estimated prices are labeled as estimates, confirmed ones as typical', () => {
-    const est = app.items.find((it) => it.price_est); const sure = app.byId['lego-upscaled-vader'];
+    const est = app.items.find((it) => it.price_est && app.priceInfo(it).kind === 'typical'); const sure = app.byId['lego-upscaled-vader'];
     assert(est && app.giftCard(est).includes('Estimated price') && !app.giftCard(est).includes('Typical price'));
+    const restore = asTypical(sure.id);
     assert(!sure.price_est && app.giftCard(sure).includes('Typical price'));
+    restore();
   });
   const picksData = JSON.parse(fs.readFileSync(path.join(site, 'data/store-picks.json'), 'utf8'));
   app.prepPicks(JSON.parse(JSON.stringify(picksData)));

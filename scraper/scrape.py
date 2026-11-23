@@ -596,6 +596,7 @@ def merge(catalog: dict, previous: dict | None, observations: list[dict], run_me
     prev_items = {i["id"]: i for i in previous.get("items", [])}
     obs = {(o["item_id"], o["url"]): o for o in observations}
     retailers = catalog.get("retailers", {})
+    link_only = {k for k, v in retailers.items() if v.get("price_check") is False}
     today = run_meta["finished"][:10]
     cutoff = (dt.date.fromisoformat(today) - dt.timedelta(days=HISTORY_DAYS - 1)).isoformat()
     items, shown = [], []
@@ -608,7 +609,9 @@ def merge(catalog: dict, previous: dict | None, observations: list[dict], run_me
             po = prev_offers.get(off["url"], {})
             o = {"retailer": off["retailer"], "retailer_name": retailers.get(off["retailer"], {}).get("name", off["retailer"]),
                  "url": off["url"], "sku": off.get("sku"), "label": off.get("label")}
-            if ob and ob.get("ok"):  # read this run
+            if off["retailer"] in link_only:  # a plain link: no price, even one an older version of the checker read
+                o["stale"] = True
+            elif ob and ob.get("ok"):  # read this run
                 o.update({k: ob[k] for k in KEEP if ob.get(k) is not None})
                 o["stale"], o["_fresh"] = False, True
                 if ob.get("price") is None and po.get("price") is not None:  # stock-only check: keep the old price, flagged
@@ -634,11 +637,16 @@ def merge(catalog: dict, previous: dict | None, observations: list[dict], run_me
         priced = [o for o in offers if o.get("price") and not o.get("marketplace_only")]
         best = min(priced, key=lambda o: (bool(o.get("stale")), o.get("in_stock") is False, o["price"])) if priced else None
         history = [list(h) for h in prev.get("history", []) if h[0] >= cutoff]
+        if prev.get("price_retailer") in link_only:  # its last prices came from a store that's now links only
+            history = []
         if best and best.get("_fresh") and best.get("in_stock") is not False:
-            if history and history[-1][0] == today:
-                history[-1][1] = min(history[-1][1], best["price"])
-            else:
-                history.append([today, best["price"]])
+            day = (best.get("checked_at") or today)[:10]  # the day it was read, which for a browser reading can be before this run
+            same = [h for h in history if h[0] == day]
+            if same:
+                same[0][1] = min(same[0][1], best["price"])
+            elif day >= cutoff:
+                history.append([day, best["price"]])
+                history.sort(key=lambda h: h[0])
         if not best:
             status = "typical"
         elif best.get("in_stock") is False:
@@ -677,7 +685,8 @@ def merge(catalog: dict, previous: dict | None, observations: list[dict], run_me
 
 def capture_observations(catalog: dict, previous: dict | None, folder: Path = CAPTURES) -> list[dict]:
     """Store prices read in a browser (scraper/captures/*-observations.json, written by store_picks.py) that are newer
-    than what gifts.json already shows. Applied once: after that, gifts.json carries them like any other price."""
+    than the last reading gifts.json shows. Applied once: after that, gifts.json carries them like any other price.
+    A later failed attempt (a bot check on GitHub, say) doesn't count as a reading, so it doesn't hold them back."""
     prev = {(i["id"], o.get("url")): o for i in (previous or {}).get("items", []) for o in i.get("offers", [])}
     valid = {(it["id"], o["url"]) for it, o in offer_list(catalog)}
     out = []
@@ -687,7 +696,7 @@ def capture_observations(catalog: dict, previous: dict | None, folder: Path = CA
             if key not in valid or not o.get("checked_at"):
                 continue
             po = prev.get(key, {})
-            if o["checked_at"] > max(po.get("checked_at") or "", po.get("last_attempt") or "", po.get("availability_checked_at") or ""):
+            if o["checked_at"] > max(po.get("checked_at") or "", po.get("availability_checked_at") or ""):
                 out.append(o)
     return out
 
