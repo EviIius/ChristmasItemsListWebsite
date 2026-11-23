@@ -324,6 +324,32 @@ const asTypical = (id) => {
     app.prepPicks({ items: [] }); app.renderDeals(); assert.equal(element('#picks-panel').hidden, true);
     app.prepPicks(JSON.parse(JSON.stringify(picksData)));
   });
+  await check('store best sellers count as gift ideas: one idea per product, linked to every store that has it', () => {
+    app.prepPicks(JSON.parse(JSON.stringify(picksData)));
+    app.load(JSON.parse(JSON.stringify(data)));
+    const picks = app.items.filter((it) => it.pick);
+    const linked = new Set(app.picks.items.filter((x) => x.gift).map((x) => x.id));
+    assert(picks.length >= 300 && app.items.length === data.items.length + picks.length, `${picks.length} store ideas`);
+    assert(new Set(app.items.map((it) => it.id)).size === app.items.length, 'ids are unique');
+    for (const it of picks) {
+      assert(!linked.has(it.pick) && app.picks.items.some((x) => x.id === it.pick), it.id);
+      assert(data.types[it.type] && data.types[it.type].category === it.category && it.ages[0] <= it.ages[1], it.id);
+      assert(it.offers.length && it.offers.every((o) => /^https:\/\//.test(o.url) && app.picks.stores[o.retailer]), it.id);
+      assert(/^#\d+ on |^On /.test(it.blurb), it.id);
+    }
+    app.state.browse.type = ''; app.renderBrowse();
+    assert(element('#browse-sub').innerHTML.includes(` of ${app.items.length} gift ideas`));
+    const one = picks.find((it) => it.offers.length === 1);
+    const kid = app.addPerson({ name: 'Pick Test', age: 9, interests: [] });
+    assert(app.addGift(kid.id, one.id));
+    const entry = app.person(kid.id).items.find((x) => x.gift === one.id);
+    assert(entry.name === one.name && entry.url === one.offers[0].url, 'a store idea on a list keeps its name and link');
+    app.openDrawer(one.id);
+    app.prepPicks(null); app.load(JSON.parse(JSON.stringify(data)));
+    assert(app.items.length === data.items.length);
+    app.prepPicks(JSON.parse(JSON.stringify(picksData)));
+  });
+
   await check('the Walmart browser snippet writes lines store_picks.py can read', () => {
     const snippet = fs.readFileSync(path.join(site, '../scraper/browser/walmart-capture.js'), 'utf8');
     const ss = new Map();

@@ -1,0 +1,211 @@
+#run gamestop 2026-11-23T12:40:00Z
+#note More GameStop pages (Best Sellers 2-4, top-selling toys & games, collectibles), read in the Claude app's browser on Jake's Mac. "~N" = N products gamestop.txt already has.
+#list gs-best-sellers page=2
+424546|49.99|69.99|W|video-games:nintendo-switch-2|P|4.6|199|Donkey Kong Bananza - Nintendo Switch 2
+450740|49.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Delta Reign Booster Bundle
+~1
+294963|54.99|74.99|W|gaming-accessories:controllers|P|4.4|12114|Sony DualSense Wireless Controller for PlayStation 5 - Midnight Black
+446838|59.49|69.99|W|video-games:playstation-5|P|||Call of Duty: Modern Warfare 4 - PlayStation 5
+449428|29.99|69.99|W|video-games:xbox-series-x%7Cs|P|||NBA 2K27 - Xbox Series X
+454735|299.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Mega Evolution Flowing Fists Booster Box - 36
+119149|94.99|119.99|W|consoles-hardware:xbox-one|P|3.7|3662|Microsoft Xbox One 500GB Console Black with 3.5mm Jack Controller
+~1
+450739|99.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Delta Reign Elite Trainer Box
+277649|229.99||W|consoles-hardware:nintendo-switch||4.4|3558|Nintendo Switch Lite Handheld Console - Blue
+420414|249.99||W|consoles-hardware:playstation-5||3.9|165|Sony PlayStation Portal Remote Player for PlayStation 5 - Midnight Black
+154537|75.00||W|gift-cards:gaming-gift-cards||1.0|1|PlayStation Store Gift Card $75
+405799|150.00||W|gift-cards:gaming-gift-cards||1.0|1|PlayStation Store Gift Card $150
+447540|79.99||W|video-games:nintendo-switch-2||||Fire Emblem: Fortune's Weave - Nintendo Switch 2
+454724|49.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Mega Evolution Flowing Fists Booster Bundle
+~1
+417018|1499.99||W|consoles-hardware:playstation-5||3.5|14|Sony PlayStation 5 Pro Console 2TB with Disc Drive Installed
+436173|69.99||W|video-games:nintendo-switch-2||4.5|74|Pokemon Pokopia - Nintendo Switch 2
+451655|529.99||W|consoles-hardware:nintendo-switch-2||||Nintendo Switch 2 and Nintendo Switch Sports Resort Bundle
+419891|29.99|49.99|W|video-games:xbox-series-x%7Cs|P|4.0|1|Split Fiction - Xbox Series X
+~1
+154535|50.00||W|gift-cards:gaming-gift-cards||1.0|1|PlayStation Store Gift Card $50
+452296|499.99|699.99|W|toys-games:trading-cards|P|||Magic: The Gathering Star Trek Collector Booster Box
+452301|99.99|159.99|W|toys-games:trading-cards|P|||Magic: The Gathering Star Trek Beam Me Up Bundle Box
+450696|59.99||W|toys-games:trading-cards||||2026 Panini Absolute Football Countdown Calendar
+446207|59.99||W|video-games:nintendo-switch-2||4.6|434|Star Fox - Nintendo Switch 2
+424544|79.99||W|video-games:nintendo-switch-2||4.2|181|Mario Kart World - Nintendo Switch 2
+106429|119.99||W|consoles-hardware:retro-consoles||4.2|654|Nintendo Wii Original Console with Wii Remote - Super Mario Bros. 25th A
+439001|99.99||W|collectibles:replicas||5.0|2|Jazwares Five Nights at Freddy's Classic Freddy Deluxe Collector Helmet
+448638|99.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: 30th Celebration Ditto Premium Collection
+909275|104.99|129.99|W|products:sony-playstation-4-console-500gb---black|P|4.0|5685|Sony PlayStation 4 Console 500GB - Black
+451952|29.99||W|toys-games:trading-cards||||2026 Topps Holiday MLB Baseball Mega Box
+424549|89.99||W|gaming-accessories:controllers||4.7|256|Nintendo Switch 2 Pro Wireless Controller
+~1
+425395|34.99|54.99|W|video-games:playstation-5|P|4.5|218|Ghost of Yotei - PlayStation 5
+417631|149.99||W|toys-games:trading-cards||||Pokemon Trading Card Game Prismatic Evolutions Elite Trainer Box
+445446|59.99||W|video-games:nintendo-switch-2||4.7|268|Splatoon Raiders - Nintendo Switch 2
+206007|174.99|199.99|W|consoles-hardware:nintendo-switch|P|4.6|13716|Nintendo Switch Console with Gray Joy-Con Controller
+141784|59.99||W|video-games:nintendo-switch||4.7|9564|Mario Kart 8 Deluxe - Nintendo Switch
+~15
+#list gs-best-sellers page=3
+454610|399.99||W|toys-games:trading-cards||||Magic The Gathering Nauctis The Sunken Realm Collector Booster Omega Box
+334744|54.99|74.99|W|gaming-accessories:controllers|P|4.4|12114|Sony DualSense Wireless Controller for PlayStation 5 - Galactic Purple
+447657|59.99|74.99|W|video-games:nintendo-switch-2|P|||KINGDOM HEARTS Collection I-III - Nintendo Switch 2 (Game Key Card)
+440808|69.99||W|video-games:nintendo-switch-2||4.3|186|Yoshi and The Mysterious Book - Nintendo Switch 2
+438516|49.99||W|collectibles:figures||||Jazwares Pokemon Battle Figure 2026 Holiday Calendar Multipack Set 24-Pa
+452199|139.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Unova Heavy Hitters Premium Collection Box
+431300|49.99|69.99|W|video-games:nintendo-switch-2|P|4.4|91|Kirby Air Riders - Nintendo Switch 2
+248395|59.99||W|video-games:nintendo-switch||4.4|1208|The Legend of Zelda: Skyward Sword HD - Nintendo Switch
+415531|299.99|349.99|W|consoles-hardware:virtual-reality|P|4.0|4|Meta Quest 3S 128GB VR Headset - Access to Over 40 Games with a 3-Month 
+453587|59.99||W|toys-games:trading-cards||||2025/26 Topps Stadium Club Basketball Mega Box
+178308|25.00||W|gift-cards:gaming-gift-cards||1.0|1|$25 PlayStation Store Gift Card (Digital Code)
+447263|69.99||W|video-games:playstation-5||||Onimusha Way of the Sword - PlayStation 5
+450927|129.99||W|video-games:playstation-5||||Stage Tour Game and Kramer Wireless Guitar Controller Bundle - PlayStati
+297407|39.99||W|video-games:xbox-series-x%7Cs||3.0|467|Battlefield 2042 - Xbox Series X
+~1
+424591|79.99||W|video-games:nintendo-switch-2||4.6|38|The Legend of Zelda: Tears of the Kingdom - Nintendo Switch 2 Edition
+432061|59.99|69.99|W|video-games:playstation-5|P|3.5|2|007: First Light - PlayStation 5
+405730|200.00||W|gift-cards:gaming-gift-cards||1.0|1|PlayStation Store Gift Card $200
+441936|34.99|69.99|W|video-games:playstation-5|P|||EA SPORTS Madden NFL 27 - PlayStation 5
+431537|49.99|69.99|W|video-games:nintendo-switch|P|4.7|144|Super Mario Galaxy Plus Super Mario Galaxy 2 - Nintendo Switch
+424583|59.99|79.99|W|video-games:nintendo-switch-2|P|4.6|31|Super Mario Party Jamboree - Nintendo Switch 2 Edition and Jamboree TV
+164255|59.99||W|video-games:nintendo-switch||4.7|11576|Super Smash Bros. Ultimate - Nintendo Switch
+206014|174.99|199.99|W|consoles-hardware:nintendo-switch|P|4.6|13716|Nintendo Switch with Assorted Color Joy-Con Controller (Styles May Vary)
+450757|299.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Delta Reign Booster Box
+440809|69.99||W|video-games:nintendo-switch-2||4.1|15|Xenoblade Chronicles Definitive Edition - Nintendo Switch 2
+448636|89.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: 30th Celebration Figure Collection (Styles Ma
+~1
+401317|79.99||W|gift-cards:digital-subscriptions||4.2|116|Xbox Game Pass Essential - 12 Month Membership
+416350|119.99||W|collectibles:replicas||4.7|25|Hasbro Marvel Legends Series Doctor Doom Premium Roleplay Helmet
+141686|59.99||W|video-games:nintendo-switch||4.8|8130|The Legend of Zelda: Breath of the Wild - Nintendo Switch
+532020|20.00||W|gift-cards:gaming-gift-cards||||Xbox $20 Gift Card (Digital)
+432655|69.99||W|video-games:nintendo-switch-2||4.5|86|Hyrule Warriors: Age of Imprisonment - Nintendo Switch 2
+143487|50.00||W|gift-cards:gaming-gift-cards||||Nintendo eShop Gift Card $50
+306473|204.99|229.99|W|consoles-hardware:nintendo-switch|P|4.7|5858|Nintendo Switch OLED Console with Assorted Color Joy-Cons (Styles May Va
+175852|149.99||W|consoles-hardware:retro-consoles||4.0|11|Sony PlayStation 2 Slim Console - Black
+440814|59.99||W|video-games:nintendo-switch||4.7|992|Tomodachi Life: Living the Dream - Nintendo Switch
+453530|29.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: 30th Celebration Mini Tin (Styles May Vary)
+445633|49.99|69.99|W|video-games:playstation-5|P|||The Blood of Dawnwalker - PlayStation 5
+137156|100.00||W|gift-cards:gaming-gift-cards||||Nexon Game Card $100
+168886|59.99||W|video-games:nintendo-switch||4.7|6331|New Super Mario Bros U Deluxe - Nintendo Switch
+~15
+#list gs-best-sellers page=4
+421027|69.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Charizard ex Special Collection
+424586|69.99||W|video-games:nintendo-switch-2||4.7|59|The Legend of Zelda: Breath of the Wild - Nintendo Switch 2 Edition
+428147|54.99||W|collectibles:figures||4.7|61|Jakks Pacific Sonic the Hedgehog Modern Metal Sonic (35th Anniversary) 6
+452271|59.99||W|toys-games:trading-cards||||2026-27 Topps Flagship NBA Basketball Mega Box
+192035|59.99||W|video-games:nintendo-switch||4.6|3367|Super Mario Maker 2 - Nintendo Switch
+444113|29.99||W|collectibles:figures||||Jazwares Five Nights at Freddy's Core Figure Pack Dark Freddy and Dark F
+~1
+445745|44.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Pitch Black Booster Bundle
+450548|549.99||W|toys-games:trading-cards||||2026 Topps Mint Marvel Hobby Box
+~1
+442608|29.99|49.99|W|video-games:xbox-series-x%7Cs|P|5.0|2|Metal Gear Solid: Master Collection Vol.2 - Xbox Series X
+438207|54.99|69.99|W|video-games:playstation-5|P|5.0|1|Ace Combat 8: Wings of Theve - PlayStation 5
+415512|599.99||W|consoles-hardware:virtual-reality||4.6|893|Meta Quest 3 512GB - The Most Powerful Quest - Ultimate Mixed Reality Ex
+405729|250.00||W|gift-cards:gaming-gift-cards||1.0|1|PlayStation Store Gift Card $250
+445089|59.99|79.99|W|video-games:nintendo-switch-2|P|4.9|29|Elden Ring Tarnished Edition - Nintendo Switch 2
+454507|29.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Pokemon Day 2027 Collection
+445744|89.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Pitch Black Elite Trainer Box
+123658|159.99||W|consoles-hardware:retro-consoles||4.3|1144|Nintendo Wii U Console 32GB - Black
+136142|14.99|19.99|W|video-games:playstation-4|P|||Red Dead Redemption 2 - PlayStation 4
+454722|24.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Mega Evolution Flowing Fists Three-Booster Bl
+141694|59.99||W|video-games:nintendo-switch||4.7|4893|Super Mario Odyssey - Nintendo Switch
+450929|129.99||W|video-games:xbox-series-x%7Cs||||Stage Tour Game and Kramer Wireless Guitar Controller Bundle for Xbox Se
+438494|44.99||W|collectibles:figures||||Jazwares Five Nights at Freddy’s Classic Freddy 16-In Scale Action Figur
+424575|79.99||W|video-games:nintendo-switch-2||4.4|29|Kirby and the Forgotten Land - Nintendo Switch 2 Edition and Star-Crosse
+179366|59.99||W|video-games:nintendo-switch||4.7|4874|Animal Crossing: New Horizons - Nintendo Switch
+~1
+249435|59.99||W|video-games:nintendo-switch||4.7|10056|Pokemon Legends: Arceus - Nintendo Switch
+198534|68.99||W|gift-cards:digital-subscriptions||4.5|452|Xbox Game Pass Ultimate - 3 Month Membership
+~1
+447411|49.99||W|video-games:playstation-5||2.6|5|Halo: Campaign Evolved - PlayStation 5
+402758|39.99|59.99|W|video-games:playstation-5|P|3.6|2481|Cyberpunk 2077: Ultimate Edition - PlayStation 5
+450886|100.00||W|gift-cards:virtual-currency||5.0|1|Razer Gift Card $100
+156184|149.99||W|consoles-hardware:retro-consoles||4.6|1878|Super NES Classic Edition
+118827|14.99||W|video-games:playstation-4||||Call of Duty: Black Ops III - PlayStation 4
+~1
+452270|29.99||W|toys-games:trading-cards||||2026-27 Topps Flagship NBA Basketball Value Box
+448217|399.99||W|toys-games:trading-cards||||2025-26 Upper Deck Premier NHL Hockey Hobby Box
+154536|10.00||W|gift-cards:gaming-gift-cards||1.0|1|PlayStation Store Gift Card $10
+425191|69.99||W|video-games:nintendo-switch-2||4.4|62|Cyberpunk 2077: Ultimate Edition - Nintendo Switch 2
+~15
+#list gs-toys page=2
+=454507
+=448217
+=421027
+451947|29.99||W|toys-games:trading-cards|O|||2026 Topps Holiday NFL Football Mega Box
+430336|54.99||W|toys-games:stuffed-animals-plush||4.9|79|Jazwares Five Nights at Freddy's Golden Freddy 20-in Plush GameStop Excl
+444436|479.99||W|toys-games:trading-cards||||Magic: The Gathering Marvel Super Heroes Collector Booster Box
+=452270
+446288|274.99||W|toys-games:trading-cards||||GameStop Power Pack 2026 Sapphire Series 01 (Styles May Vary)
+443858|89.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Chaos Rising Elite Trainer Box
+425731|99.99||W|toys-games:trading-cards||||Cardsmiths Currency Series 5 Mega Box GameStop Exclusive
+454308|89.99||W|toys-games:trading-cards||||Pokemon Trading Card Game 30th Celebration Binder Collection and Squishm
+454737|7.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Mega Evolution Flowing Fists Sleeved Booster 
+452278|39.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: 30th Celebration Poster Collection Box
+453566|29.99||W|toys-games:trading-cards||||2025-26 Topps Stadium Club Basketball Value Box
+443852|44.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Chaos Rising Booster Bundle Box
+438428|44.99||W|toys-games:building-construction-sets||5.0|1|BLDR Five Nights At Freddy's Freddy Fazbear Building Set with 11-in Buil
+452095|39.99||W|toys-games:trading-cards||||2026 Topps Update Series MLB Baseball Super Box
+454721|39.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Mega Evolution Flowing Fists Build and Battle
+447160|899.99||W|toys-games:trading-cards||||2026 Topps Marvel Comics Chrome Hobby Box
+421782|39.99||W|toys-games:stuffed-animals-plush||4.8|32|Jakks Pacific Sonic The Hedgehog Tails Doll 16-in Plush GameStop Exclusi
+~1
+454323|119.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: 30th Celebration Ditto Premium Collection and
+438351|16.99||W|toys-games:stuffed-animals-plush||5.0|2|Jazwares KPop Demon Hunters Mira 8-in Plush
+438493|39.99||W|toys-games:playsets|O|3.4|20|Jazwares Five Nights at Freddy's Endo-Series Glamrock 6-in Action Figure
+451950|349.99||W|toys-games:trading-cards||||2026 Topps Marvel Neon Hobby Box
+450119|24.99||W|toys-games:trading-cards||||2026 Panini Donruss Football Blaster Box
+453748|79.99||W|toys-games:trading-cards||||Pokémon TCG: 30th Celebration Bundle with 1 Tin (Style May Vary) + 10-In
+452094|24.99||W|toys-games:trading-cards||||2026 Topps Update Series MLB Baseball Value Box
+443861|249.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Chaos Rising Booster Box
+444584|109.99||W|toys-games:building-construction-sets||||LEGO Marvel Doomsday New Avengers Tower Building Set 76352 (Ages 12+)
+453118|39.99||W|toys-games:trading-cards||||Michael Jackson Keepsake Album Spotlight Series Box
+454683|249.99||W|toys-games:trading-cards||||Riftbound: League of Legends Gift of the Rift Bundle
+425204|44.99||W|toys-games:board-games||5.0|4|The Legend of Zelda Chess Set
+453350|59.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: 30th Celebration Tin (Styles May Vary)
+415553|39.99||W|toys-games:stuffed-animals-plush||4.3|18|Jazwares Pokemon Flareon 18-in Sleeping Plush
+421279|39.99||W|toys-games:stuffed-animals-plush||5.0|16|Jazwares Five Nights at Freddy's Classic Freddy Glow in The Dark Eyes 14
+453374|14.99||W|toys-games:trading-cards||||Star Wars: Unlimited: Icons 2027 Edition: Booster 4-Pack
+450719|9.99||W|toys-games:trading-cards||||Pokemon Trading Card Game: Delta Reign Sleeved Booster Pack (Styles May 
+424852|129.99||W|toys-games:trading-cards||||GameStop Power Pack 2026 Gold Series 2 (Styles May Vary)
+404546|54.99|59.99|W|toys-games:stuffed-animals-plush|P|4.8|46|Jazwares Pokemon Charizard 24-in Plush
+#list gs-collectibles page=1
+=438516
+=439001
+=416350
+=428147
+436167|39.99||W|collectibles:funko|O|||Funko Bitty POP! Pokemon Countdown Calendar 0.9-in Vinyl Figure Set
+451847|44.99||W|collectibles:figures||||Hasbro Marvel Legends Series Spider-Man (Marvel Holiday Special) Comics 
+443736|39.99||W|collectibles:figures||||NECA Scream Ultimate Ghost Face Returns 7-In Scale Action Figure
+=444113
+=438494
+~1
+453695|269.99||W|collectibles:replicas||||Tamashii Nations The Legend of Zelda Proplica Master 41.33-in Sword (Rei
+421290|49.99||W|toys-games:playsets||||Jazwares Five Nights at Freddy's Endo-1 Classic Foxy and Withered Foxy E
+452599|119.99||W|collectibles:figures||||Bandai Godzilla Minus Zero (2026) S.H.MonsterArts Godzilla 6.3-in Action
+445333|99.99||W|collectibles:figures||5.0|1|Tamashii Nations S.H.Figuarts My Hero Academia All Might 7.67-in Action 
+423500|129.99||W|toys-games:playsets||5.0|4|Jazwares Halo Reach The Spartan Collection Noble Team 6-Pack Figure Set
+431441|69.99||W|collectibles:replicas||4.5|28|The Legend of Zelda: Majora's Mask Standard Edition 10-in Replica
+447478|27.99||W|collectibles:figures||||McFarlane Toys DC Multiverse Bruce Wayne (Batman) 7-in Action Figure
+431583|124.99||W|collectibles:figures||5.0|5|HIYA Toys Series Godzilla vs. King Ghidorah Exquisite Basic King Ghidora
+447930|39.99||W|collectibles:figures||||NECA Terrifier 3 Ultimate Santa Suit Art the Clown (Bloody Version) 7-in
+430342|39.99||W|toys-games:playsets||4.4|35|Jazwares Five Nights at Freddy's Endo-Series 6-in Figure with Toy Freddy
+=438493
+446462|34.99||W|collectibles:figures||||McFarlane DC Theatrical Deluxe Mr. Freeze (Batman and Robin) Gold Label 
+436495|99.99||W|collectibles:replicas||||Jazwares Halo Master Chief MKV Deluxe Feature Roleplay Helmet Replica Ga
+446810|29.99||W|collectibles:figures||||Playmates Dungeon Crawler Carl Collectible Crawlers Prepotente 6-in Acti
+447454|49.99||W|collectibles:figures||||McFarlane Toys Elite Edition DC Clark Kent (Superman 1978) 7-in Action F
+444880|29.99||W|collectibles:funko||||Funko POP! Deluxe: My Hero Academia Katsuki Bakugo (or Chase) 6.2-in Glo
+430895|34.99||W|collectibles:funko||||Funko POP! Animation: Jujutsu Kaisen 0 Rika and Yuta Okkotsu 6-in Vinyl 
+421307|49.99||W|toys-games:playsets||||Jazwares Five Nights at Freddy's Bonnie 6-in Action Figure
+447455|34.99||W|collectibles:figures||||McFarlane Toys Gaming Edition Fallout NCR Ranger (Red Platinum) 7-in Act
+438481|14.99||W|collectibles:figures||4.3|20|Jazwares Five Nights at Freddy's Funtime Foxy Core 5-in Figure Set Pack
+447184|119.99||W|collectibles:replicas||||Hasbro Star Wars The Black Series Jango Fett Electronic Roleplay Helmet 
+443807|109.99||W|collectibles:figures||||Tamashii Nations Godzilla (1975) S.H.MonsterArts Godzilla 6.3-in Action
+400506|99.99||W|collectibles:replicas||5.0|1|Hasbro Star Wars: The Black Series Star Wars: Ahsoka Sabine Wren Premium
+437529|15.99||W|collectibles:funko||4.8|14|Funko POP! Premium: Death Note L 4.4-in Vinyl Figure
+446809|29.99||W|collectibles:figures||||Playmates Dungeon Crawler Carl Collectible Crawlers Mordecai 6-in Action
+421308|49.99||W|toys-games:playsets||||Jazwares Five Nights at Freddy's - Freddy 6-in Action Figure
+403250|29.99||W|collectibles:funko||||Funko POP! Animation: Jujutsu Kaisen Gojo (Hollow Purple) 4.8-in Vinyl F
+436169|54.99||W|collectibles:funko||||Funko Pocket POP! Marvel: Countdown Calendar 2-in Vinyl Figure
+448546|46.99||W|collectibles:figures|O|||Hasbro G.I. Joe Classified Series Lara Croft Tomb Raider Retro 6-in Acti
+446458|27.99||W|collectibles:figures||||McFarlane DC Theatrical Deluxe Poison Ivy (Batman and Robin) Gold Label 
+~15
+#esrb 424546:E10 446838:M 449428:E 447540:T 436173:E 419891:T 446207:E10 424544:E 425395:M 445446:E10 141784:E 447657:E10 440808:E 431300:E10 248395:E10 447263:M 450927:T 297407:M 424591:E10 432061:T 441936:E 431537:E 424583:E 164255:E10 440809:T 141686:E10 432655:T 440814:E 445633:M 168886:E 424586:E10 192035:E 442608:M 438207:T 445089:M 136142:M 141694:E10 450929:T 424575:E10 179366:E 249435:E 447411:M 402758:M 118827:M 425191:M

@@ -382,7 +382,7 @@ with tempfile.TemporaryDirectory() as td:
     check(len(fresh) == 4 and {x["item_id"] for x in again} == {"kpdh-mira", "pooh", "barbie-lab"},
           "price checker: browser-read prices are merged once, then gifts.json carries them")
 
-real = [sp.parse_capture(p) for p in sorted(sp.CAPTURES.glob("*.txt"))]
+real = [sp.parse_capture(p, later_files=True) for p in sorted(sp.CAPTURES.glob("*.txt"))]
 if real:
     rout, robs, rst = sp.build(json.loads(CATALOG.read_text()), real, dt.datetime.fromisoformat(max(c["captured_at"] for c in real).replace("Z", "+00:00")))
     shipped = json.loads((sp.OUT).read_text()) if sp.OUT.exists() else {"items": []}
@@ -453,6 +453,13 @@ with tempfile.TemporaryDirectory() as td3:
     check(set(tb) == {"101", "102", "104"} and tb["104"]["rank"] == {"wm-top-toys": 3} and tb["101"]["price"] == 8.0
           and tb["101"]["rank"] == {"wm-top-toys": 1, "wm-trending-toys": 1} and two["lists"]["wm-top-toys"]["captured_at"] == "2026-11-23T07:00:00Z",
           "store picks: capture files combine page by page, and the newer reading of a page or product wins")
+    c = Path(td3) / "walmart-3.txt"
+    c.write_text("#run walmart 2026-11-23T09:00:00Z\n#list wm-gifts-teens page=3\n~2\n105|12.00||W|4171:4187|B|4.5|80|Polly Pocket Compact Ages 4+\n=102\n")
+    three, _, _ = sp.build(tcat, [sp.parse_capture(a), sp.parse_capture(b), sp.parse_capture(c, later_files=True)], dt.datetime(2026, 11, 23, 10, tzinfo=dt.timezone.utc))
+    tc = {x["sku"]: x for x in three["items"]}
+    check(tc["105"]["rank"] == {"wm-gifts-teens": 3} and tc["102"]["rank"].get("wm-gifts-teens") == 4 and three["lists"]["wm-gifts-teens"]["count"] == 4
+          and raises(ValueError, lambda: sp.parse_capture(c)),
+          "store picks: \"~N\" keeps the places of products an earlier file has, and a later file can repeat an earlier file's product")
 check(sp.classify("Grand Theft Auto VI - PlayStation 5 (Code in Box)", "video-games:playstation-5") == "ps-xbox-games"
       and sp.classify("Nintendo Switch 2", "consoles-hardware:nintendo-switch-2") == "consoles"
       and sp.classify("Pokemon Trading Card Game: 30th Celebration Booster Bundle", "toys-games:trading-cards") == "tcg"

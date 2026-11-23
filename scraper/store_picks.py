@@ -84,6 +84,10 @@ LISTS = {
     "gs-best-sellers": ("GameStop Best Sellers", "GameStop best sellers", "https://www.gamestop.com/best-sellers", "hot", None),
     "gs-deals": ("GameStop Black Friday deals", "GameStop deals", "https://www.gamestop.com/deals", "deals", None),
     "lego-bestsellers": ("LEGO.com Best Sellers", "LEGO best sellers", "https://www.lego.com/en-us/categories/bestsellers", "hot", None),
+    "lego-new": ("LEGO.com new sets", "New LEGO sets", "https://www.lego.com/en-us/categories/new-sets-and-products", "new", None),
+    "lego-deals": ("LEGO.com sales & deals", "LEGO deals", "https://www.lego.com/en-us/categories/sales-and-deals", "deals", None),
+    "gs-toys": ("GameStop top-selling toys & games", "GameStop toys", "https://www.gamestop.com/toys-games?srule=top-sellers", "hot", None),
+    "gs-collectibles": ("GameStop top-selling collectibles", "GameStop collectibles", "https://www.gamestop.com/collectibles?srule=top-sellers", "hot", None),
     "wm-tracked": ("Gifts this site tracks at Walmart", None, None, "tracked", None),
 }
 
@@ -114,6 +118,13 @@ DROP_TERMS = [
     r"chocolate candy", r"baby food", r"electrolyte", r"flavor cartridge", r"whitestrips", r"baking kit", r"soda crafter",
     r"syrups?\b", r"hex key", r"tool pad", r"shop-vac", r"wet/dry vac", r"folding table", r"power station", r"seatpost",
     r"garden statue", r"slumberpod", r"sleep tent",
+    r"halloween", r"\bcostume\b(?! accessory)", r"terrifier", r"bloody", r"ghost ?face", r"reading sunglasses", r"deodorant", r"antiperspirant",
+    r"period underwear", r"diaper", r"stroller", r"\bjuice\b", r"cookies", r"crackers", r"spices", r"^(?!.*gift set).*\b(?:body wash|shampoo)\b",
+    r"washcloths?", r"humidifier", r"hdmi cable", r"\btights\b", r"pajama shorts", r"area rug", r"christmas tree", r"wreath",
+    r"tool set", r"toolbox", r"tool cabinet", r"spotlight", r"flashlight", r"storage (?:organizer|cabinet)", r"air purifier",
+    r"robot vacuum", r"tea kettle", r"corkscrew", r"milk frother", r"treadmill", r"sauna", r"playpen", r"play yard", r"swaddle",
+    r"wash cloths", r"gummies", r"mini jars", r"popcorn", r"hershey", r"cocoa set", r"bottles of", r"fish ?finder|humminbird",
+    r"luggage|carry on|checked\)", r"gps\b",
 ]
 DROP = re.compile(r"\b(?:" + "|".join(DROP_TERMS) + r")", re.I)
 
@@ -312,6 +323,33 @@ RULES += [(t, re.compile(rx, re.I)) for t, rx in [
     ("journals", r"memory book|baby books?\b"),
     ("shoes", r"sneakers?\b|\bclogs?\b"),
     ("clothing", r"pullover|quarter zip|half zip|sweatshirt|\bshorts\b|crew neck|sleep 'n play|romper|outfit|onesie|sleep pants|fleece"),
+    ("action-figures", r"jurassic world|imaginext|ghidorah|spartan collection|\bfigures?\b|freddy's|slap bands|web slinger"),
+    ("plush", r"flopsie|plush|deddy bear"),
+    ("blind-boxes", r"surprise eggs|bitty pop|l\.o\.l\. surprise|blind pdq"),
+    ("puzzles", r"rubik"),
+    ("card-games", r"playing cards"),
+    ("vehicles", r"go kart|race to celebrate|rescue cruiser"),
+    ("blocks", r"\bbldr\b"),
+    ("baby-activity", r"baby einstein|melissa & doug multi-sensory|montessori|pikler|sit n spin|spin along|rubber ducks|bright starts"),
+    ("kids-tech", r"claw game|learning systems"),
+    ("pretend-play", r"play coin"),
+    ("outdoor-play", r"soccer goal|axe throwing|lawn darts|balance beam|gymnastics bar"),
+    ("bikes-scooters", r"mountain bicycle|\bbicycle\b"),
+    ("musical-toys", r"drum,|drum set"),
+    ("art-supplies", r"gel pens|diamond (?:dotz|painting)|cozy stickers|easy-doodle|crochet"),
+    ("craft-kits", r"water pets|footprint kit"),
+    ("journals", r"letters to my"),
+    ("hair-tools", r"thermal brush|detangler"),
+    ("accessories", r"hair pin|pin set|earmuff|mittens|caps with ears"),
+    ("skincare", r"medicube|ice roller|depuffi"),
+    ("speakers", r"homepod|cd player|boombox"),
+    ("headphones", r"\bheadphones?\b"),
+    ("pc-gaming", r"huntsman|keyboard"),
+    ("lighting", r"light projector|led strip|selfie light"),
+    ("decor", r"saucer chair|flip-out chair|table lamp|velvet fringe|cell phone stand|desk mirror|vanity desk"),
+    ("fragrance", r"collector's edition christmas holiday gift|every man jack"),
+    ("shoes", r"slippers?\b|\bboots?\b|\bshoes?\b"),
+    ("clothing", r"pants|shirt|dress|jogger|sleep top|footed sleep|crew &"),
 ]]
 
 # GameStop's department and aisle (the first two parts of its product address) say what a product is.
@@ -357,7 +395,7 @@ def type_ages(catalog: dict) -> dict:
     return spans
 
 
-def parse_capture(path: Path) -> dict:
+def parse_capture(path: Path, later_files: bool = False) -> dict:
     """Read one capture file: {store, captured_at, lists: {key: {"pages": [...], "rows": [(rank, id)], "by_page": {page: [id]}}},
     products: {id: row}}."""
     store, captured_at, cur, page = None, None, None, 1
@@ -392,9 +430,16 @@ def parse_capture(path: Path) -> dict:
             continue
         if cur is None:
             raise ValueError(f"{path.name}:{n}: product line before any #list line")
+        if line.startswith("~"):  # "~N": N products already captured in an earlier file; they keep their places
+            if cur is None or not line[1:].strip().isdigit():
+                raise ValueError(f"{path.name}:{n}: bad skip line {line!r}")
+            for _ in range(int(line[1:])):
+                lists[cur]["rows"].append((len(lists[cur]["rows"]) + 1, None))
+                lists[cur]["by_page"].setdefault(page, []).append(None)
+            continue
         if line.startswith("="):
             pid = line[1:].split()[0]
-            if pid not in products:
+            if pid not in products and not later_files:
                 raise ValueError(f"{path.name}:{n}: repeat of {pid}, which wasn't listed before")
         else:
             f = line.split("|")
@@ -467,6 +512,11 @@ def build(catalog: dict, captures: list[dict], now: dt.datetime | None = None) -
         for page in sorted(by_page):
             for pid in by_page[page][1]:
                 rank += 1
+                if pid is None:  # a "~N" skip: a product another capture file already has
+                    continue
+                if (store, pid) not in products:  # a repeat of a product only an expired capture had
+                    stats["missing"] = stats.get("missing", 0) + 1
+                    continue
                 member.setdefault((store, pid), {}).setdefault(key, rank)
         if kind != "tracked":
             lists_out[key] = {k: v for k, v in {"store": store, "name": name, "short": short, "url": url, "kind": kind,
@@ -514,7 +564,7 @@ def build(catalog: dict, captures: list[dict], now: dt.datetime | None = None) -
         if was and not set(flags) & {"deal", "rollback", "reduced", "clearance"}:
             flags.append("reduced")
         pick = {"id": f"{store}-{pid}", "store": store, "sku": pid, "name": name, "url": STORES[store]["url"](pid),
-                "price": p["price"], "was": was, "pct": round((was - p["price"]) / was * 100) if was else None,
+                "price": p["price"], "was": was, "pct": int((was - p["price"]) / was * 100 + 0.5) if was else None,  # half up, like the site
                 "seller": "store" if p["seller"] == "W" else "marketplace", "rating": p["rating"], "reviews": p["reviews"],
                 "flags": flags, "lists": sorted(in_lists, key=lambda k: list(LISTS).index(k)), "rank": in_lists,
                 "type": t, "category": types[t]["category"], "ages": lo_hi, "ages_from": ages_from, "esrb": rating, "gift": gift,
@@ -596,7 +646,7 @@ def main() -> int:
     if not files:
         print("No capture files in scraper/captures/. See 'Reading Walmart in your browser' in the README.")
         return 1
-    captures = [parse_capture(p) for p in files]
+    captures = [parse_capture(p, later_files=True) for p in files]
     out, obs_by_store, stats = build(catalog, captures)
     for c in captures:
         for p in c["problems"]:

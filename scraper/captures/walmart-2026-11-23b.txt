@@ -1,0 +1,790 @@
+#run walmart 2026-11-23T12:35:15Z
+#note Deeper pages read in the Claude app's browser on Jake's Mac, Nov 23 morning. "~N" stands for N products an earlier Walmart file already has (they keep their places on the list).
+#list wm-gifts-baby page=3 count=1170 maxPage=25
+378143|4.87||W|3920:582053|B|4.7|664|Dr. Seuss's ABC: . (Board Book)
+19637266708|39.97||W|1072864:133032|B|4.6|321|Vicks Baby 0.6 gal Cool Mist Humidifier, Color Changing Night Light & 1 
+18683124200|3.97||W|5427:491351|B|4.5|69|Spark.Create.Imagine Bath Time Basketball Set, 4 Pieces
+19103563185|23.97|26.97|W|5427:491351|R|4.7|62|Fisher-Price 2-in-1 Musical Penguin Activity Walker, Pink, Baby to Toddl
+~1
+5184645058|13.98||M|5438:7712430||4.6|29|My First Christmas Outfits Baby Boy Girl 3 6 9 12 18 Months Long Sleeve 
+19533955355|9.98||W|3920:582053|B|4.3|11|Merry Christmas, Friends! (Ms. Rachel) (Board Book)
+~1
+20267814136|5.98||W|5438:7712430|B|4.8|6868|Wonder Nation Baby Gender Neutral Zip Front Footed Sleep N Play Pajamas,
+518332016|10.97||W|5427:491351|B|4.3|568|Nuby Wacky Waterworks Pipes Bath Toy for Babies
+17734869006|33.64|64.78|M|5427:86323|HE|4.7|226|Teler Baby Play Mat for Floor, 1.3″ Thick Foam 50″×50″ Playmat, Ultra-So
+17745354502|8.58||W|5427:4549164|B|4.7|291|Parent's Choice Bear Lovey Security Blanket, Brown, 13 in x 13 in
+19908071859|8.97||W|4044:2634414|B|4.7|32|Holiday Time My First Christmas Stocking with Teddy Bear, Pink
+392403|4.68||W|3920:582053|B|4.7|753|The Going to Bed Book (Board Book)
+470483906|10.63||M|4171:2724815||4.1|33|Aurora - Mini Brown Palm Pals - 4.5″ Leno Lion - Adorable Stuffed Animal
+354244002|34.92|40.38|W|976760:2915579|R|4.5|2560|Baby Einstein Sea Dreams Crib Soother Baby Sound Machine with White Nois
+234825825|13.84||W|4044:1154295|B|4.7|1678|Bluey Kids Cotton Hooded Towel
+14115674063|13.84|32.99|W|4171:1077545|B|4.6|458|Ms. Rachel Spin Along Learning Wheel with 3 Learning Play Modes For Kids
+18097403301|24.94||W|5427:491351|B|4.6|485|Baby Einstein On-the-Go Sea Dreams Soothing Ocean Travel Soother with Li
+260130215|25.99||M|3891:8709006||4.6|113|Newborn Baby/Childrens Boys/Girls Gold Filled Baby Bracelet Valentino Li
+5478324|5.43|6.99|W|3920:582053|B|4.8|129|Dear Zoo: A Lift-The-Flap Book (Edition 25) (Board Book)
+767902088|19.39||M|5967908:8640284|B|4.5|88|The Elf on The Shelf Plushee Pals Snuggler Girl - Light Tone - Small Plu
+14687419441|44.97||W|5427:132943|B|4.4|1704|3-in-1 Humidifier, Diffuser, + Nightlight 2.0
+815509367|8.99||M|4044:539095|B|4.4|2615|Hawmam Linen Luxury White Wash Cloths - Set of 4 Thick 13' x 13' Hotel Q
+1918456916|5.98||W|5438:1045799|B|4.5|1553|Gerber Baby Boy or Girl Neutral White Cotton Caps with Ears, 3-Pack, Siz
+20031364707|17.48||W|4044:2634414|B|4.8|5|Hallmark Ornament (Baby First Cmas Rattle Pink Ribbon 2026, Metal), 1 Co
+1573107|4.52||W|3920:582053|B|4.8|106|Put Me in the Zoo (Board Book)
+239543946|8.99|14.99|M|5427:414099|HE|4.7|568|CREVENT Lovey Security Blanket, for Newborn Boys Girls, Unisex, Blue Bea
+5113125639|15.99|24.97|W|5427:414099|B|4.6|743|SwaddleMe by Ingenuity Original 100% Cotton Baby Swaddle Wrap, 0-3 Month
+18033557156|10.06|17.99|M|5427:1097005|HE|4.5|138|RIVERSIDE 12 Pack Luxury Washcloths 12x12 with Soft Cotton 400 GSM Quick
+5102841389|9.97||W|5427:7195565|B|4.5|398|Baby Einstein Ocean Explorers Sensory Splash Water Baby Play Mat for Tum
+5144555505|7.98||W|5438:7712430|BL|4.4|1204|Wonder Nation Infant and Toddler Microfiber Tights, 4-Pair Pack, Sizes 0
+16791021255|15.19|18.99|M|1334134:6172404|HE|3.7|25|Baby Hand and Footprint Kit - Clay Handprint Keepsake Frame, Newborn Nur
+49743120|5.49||W|3920:582053|B|4.6|69|Baby Touch and Feel First Words: An Interactive Language Development Boa
+351794298|11.89|13.99|M|5967908:8640284|HE|4.6|320|OUOZZZ 10″ Soft Baby Doll for Kids, First Black Baby Doll for 1 2 Year O
+14762269983|9.98||W|5427:1097005|B|4.7|292|Parent's Choice Bunny Hooded Towels, 30 in x 30 in, 2 Pack
+223735454|69.98||W|5427:86323||4.4|536|Bright Starts Disney Baby Finding Nemo Mr. Ray Ocean Lights & Music Acti
+765567970|15.00|19.98|W|5438:1045804|HE|4.6|2311|Wonder Nation Baby, Toddler, Little & Big Boy's Tucker Boots
+18262563693|15.99||M|5427:491351||4.6|98|Tub Works Emergency Cars Light Up Bath Toys, 6 Pack, Water-Activated Lig
+18152561102|2.60||W|5438:7712430|B|4.8|3372|Modern Moments by Gerber Baby Neutral Super Soft Viscose Two-Way Zip Cov
+#list wm-gifts-baby page=4 count=1170 maxPage=25
+198012191|7.09||W|3920:1233541||4.4|47|Letters To My Daughter: As I Watch You Grow - Pink Memory Keepsake For A
+32634552|4.28||W|3920:582053|B|4.8|59|DR SEUSS: Mr. Brown Can Moo! Can You? (Board Book)
+~1
+14802755461|12.97||W|1005862:1071969|B|4.8|1009|Johnson's Baby Sleepy Time Gift Set, 3 Items
+699992929|8.18|13.33|W|5427:491351|B|4.7|439|Munchkin Wild Animal Baby and Toddler Bath Toy Squirts, 8 Pack, Unisex
+15015555393|22.79|39.99|M|4171:56125|HE|4.7|83|Montessori Toys for 1 Year Old, Musical Instruments for Kid, Unicorn Bab
+5144655651|9.98||W|5438:7712430|B|4.7|1357|Character Toddler Ankle Socks, 10-pack, Sizes 12M- 5T
+~1
+378977|4.99||W|3920:582053||4.1|26|Richard Scarry's Cars and Trucks from a to Z (Board Book)
+435051125|14.97||W|5427:491351|B|4.7|704|Spark Create Imagine Peek-a-Boo Pink Elephant Plush Toy
+19588703416|2.51|10.00|W|5438:7712430|CL|4.7|1846|Carter's Child of Mine Baby ComfySoft Sleep 'N Play, Sizes Preemie-6/9 M
+5450766658|14.24|26.99|M|5427:491351|HE|4.7|854|Joyfy 30 Pcs Rubber Ducks, Random Assortment Mini Rubber Duckie Toys for
+26845774|9.99|11.69|W|5427:491351||4.7|1545|Baby Einstein Take Along Tunes Musical Infant Toy with Volume Control
+185484053|12.94||W|4171:1096069|B|4.3|480|Disney Frozen Sing Along Microphone, Includes Built-in Music and Lights,
+44979439|12.40|14.95|W|2637:8304047||5.0|12|LETTERS TO MY GRANDCHILD: WRITE NOW. READ LATER.
+19895444|13.98||W|3920:582053|B|4.7|234|The Little Blue Boxed Set of 4 Bright and Early Board Books: Hop on Pop;
+14150120580|6.88||W|4171:1096069|B|4.5|4375|Kid Connection Mini Cow Electronic Pet Plush
+879209068|17.98|24.99|W|5427:491351|B|4.6|1147|Yogasleep Nod Sound Machine and Night Light Sound Machine for Travel, Of
+17491772649|10.99||M|5438:7712430||4.8|25|Hessimy Girls Soft Fleece Robes Plush Hooded Bathrobes Sleepwear For Kid
+17278121420|9.97||W|4171:3318550|B|4.6|84|Playskool Spin 'N Rock Stacker - Baby Learning Toy for Sorting & Spinnin
+2410256667|4.98||W|5438:7712430|B|4.7|3622|Gerber Baby Neutral White Terry Bootie Wiggle Proof Socks, 4-Pack, Sizes
+19917920621|7.44||W|4044:2634414|B|4.3|10|My First Christmas Santa Hat and Stocking Set, Red and White, 2 Pieces, 
+33940813|9.04||W|3920:582053|B|4.4|90|The Grinch's Great Big Flap Book: Over 60 Lift-The-Flaps Inside! (Board 
+19551016121|10.48||W|5438:7712430|B|4.8|1406|Disney Baby Wishes + Dreams Winnie the Pooh Footed Sleep N Play, Sizes P
+1486921548|31.98|69.99|M|5427:7195565|HE|4.2|6798|Babyeap Baby Playpen Large Play Yard Fence for Toddlers, 50″x50″ Gray
+15561811813|6.98||W|5438:7712430|B|4.6|449|Wonder Nation Infant Girls Bobby Socks, 10-Pack, Size 18-36M
+~1
+368184|14.10||W|3920:582053|B|4.9|24|Boynton's Greatest Hits: Volume 1/Blue Hat, Green Hat; A to Z; Moo, Baa,
+~1
+8374358636|9.00||W|5438:2669909|B|4.7|1458|Carter's Child of Mine Baby and Toddler Pajama, One-Piece, Sizes 12M-5T
+19643472246|23.68|45.99|M|4044:1154295|HE|4.8|49|16 Pcs Baby Towels, 4 Pcs Soft Hooded Towels & 12 Pcs Washcloths, Baby B
+1818728206|14.99||W|4171:56125||4.6|75|Melissa & Doug Multi-Sensory Pineapple Soft Stacker Infant Toy
+20527660106|7.00|12.98|W|5438:1045804|HE|4.7|206|Mickey Mouse Baby Faux Fur Slippers
+~1
+255459367|5.05|7.00|W|3920:582053|B|4.8|268|My First I See You: A Mirror Book (Board Book)
+572410834|11.25||M|4171:2724815|B|4.7|122|Aurora - Small Black Mini Flopsie - 8″ Twilight Cat - Adorable Stuffed A
+1619385908|23.99|38.99|M|5427:1097005|P|4.1|75|Cotton Bath Towel Set, 6 Pack, Multi-Color, 27 x 54 Inches for Bathroom,
+28829844|19.97||W|6163033:2795380|B|4.6|3466|VTech KidiBeats Drum Set with Accessories, Baby and Toddler Toys
+~2
+#list wm-gifts-toddlers page=3 count=1769 maxPage=25
+284760432|14.99||W|5427:978579|B|4.8|1579|CoComelon Coral Plush Toddler Blanket, 40″x50″, Character Print in Blue
+208376255|8.03||W|3920:582053|B|4.7|508|Noisy Farm: Includes 6 Sounds and an on/off Switch on the Back Cover! (B
+19224566663|37.49|49.97|W|4171:56125|B|4.3|104|emotoBOT COR-A Interactive Robot Kids Toy, Pink, Touch-and Sound-Respons
+19599865014|14.98||W|5438:1045804|B|4.2|41|Spidey Toddler Boys Slipper
+~1
+19723818399|6.30|16.00|W|5438:7712430|B|4.5|106|Modern Moments by Gerber Gender Neutral Long Sleeve Coat Pajama Set, 2-P
+5682663593|99.87||W|4044:103150|B|4.2|502|Mainstays Kids Toy Storage Cabinet with Three Rolling Bins, White Finish
+~3
+22394128|20.69|39.99|W|4171:14521|B|4.6|9830|Little Tikes First Slide, Easy Set Up Playset, Indoor Outdoor Backyard S
+20296953462|18.00||W|5438:7712430||4.2|5|Modern Moments by Gerber Toddler Girl Sibling Matching Sweater, Sizes 12
+16550211149|49.99|64.97|W|1229749:3462603|R|4.5|1736|Humble Crew Storage Organizer with 16 Plastic Bins for Kids & Toddlers, 
+~3
+50378796|27.97|34.99|W|4171:3438149|R|4.7|3340|Melissa & Doug Dust! Sweep! Mop! 6-Pc Wood Pretend Play Preschool Cleani
+~1
+5152138721|19.88||W|6163033:2795380|B|4.5|2084|Merkury Innovations Astronaut Galaxy Light Projector with Remote, 10-inc
+~4
+19529001454|12.98||W|5438:1045799|B|4.6|42|Bluey Girls 10″ Mini Quilted Backpack, Blue
+18269414799|29.72|34.74|W|4044:539103|R|4.7|888|Mainstays Kids Daisy Reversible Comforter Set with Sheets, Twin, 5 Piece
+769042058|9.98||W|3920:582053|B|4.9|157|Guess How Much I Love You: (an Ideal Baby Shower Gift and Bedtime Story 
+18613824866|148.00||W|3944:1078524|B|4.5|1022|onn 11″ Kids Tablet, 64 GB, Android 16, Blue (2026 Model)
+139945817|3.27||W|976759:976782||4.5|802|good2grow Marvel's Spider-Man 6oz 100% Fruit Punch Juice Single Serve (C
+~2
+639449722|16.80|18.90|W|3920:1733466|B|4.4|185|My First Library: Boxset of 10 Board Books for Kids (Board Book)
+19099455505|19.88||W|1229749:1070964|B|4.6|492|Kiddos Video Walkie Talkies for Kids Rechargeable Walkie Talkie 2-Pack w
+19208814095|9.97||W|4171:56125|B|4.7|22|Pets Alive Swimming Penguin by ZURU - Robotic Interactive Bath Toy for K
+~1
+19464319053|15.00|25.00|W|5438:7712430|HE|4.9|16|Reebok Toddlers’ Game Day Play Day Crew & Jogger Set, Sizes 12M - 5T
+5020133568|33.97||W|5427:978579|B|4.7|2772|Bluey 3pc Toddler Bed Set w/Print Tote Bag - Bluey and Family
+~1
+18555463299|69.00||W|2636:7899038|B|4.8|1043|Pokmon Pokopia - Nintendo Switch 2
+20374063945|19.99||W|5438:1045804||4.3|13|Toy Story Toddler & Little Boys Buzz And Woody 3D Slipper
+242295350|19.98||W|4171:4186|B|4.7|1079|LEGO DUPLO My First Number Train 10954 Fine Motor Skills Toy with Bricks
+#esrb 18555463299:E
+#list wm-gifts-toddlers page=4 count=1769 maxPage=25
+~2
+5667787629|6.10||W|3920:6726310|B|4.8|217|100 First Words (Ms. Rachel) (Board Book)
+18782474877|9.88||W|3944:133251|B|4.3|1146|onn Mini Sticks Pink Wireless Earbuds
+820851699|2.00||W|976759:1096070||4.8|10232|OREO Chocolate Sandwich Cookies, Holiday Cookies, 4 oz Stocking Stuffer 
+19622213171|19.97||W|4171:4187||4.5|64|Disney Darlings Snuggly Stars Feature Baby Doll Inspired By 101 Dalmatia
+20278158208|10.00||W|5438:7712430|B|4.8|942|Carter's Child of Mine Baby Boy Outfit Set, 2-Piece, Sizes 0/3-24 Months
+17254458877|24.16||W|4044:133012|B|4.5|334|Monster Galaxy Projector Light with Bluetooth Speaker & Sound Machine 15
+15160402931|5.12||W|3920:582053|B|5.0|32|Merry Christmas, My Little Cuddle Bug (Board Book for Babies and Toddler
+829750319|49.00||W|3944:1089430|BL|4.2|2328|SteelSeries Arctis Nova 1 Over-Ear Wired 3.5mm Multi System Gaming Heads
+17442353317|7.97||W|3920:582361|B|4.9|57|Melissa & Doug Ms. Rachel Water WOW! Color-Reveal Pad Early Learning Toy
+17442150|111.99|139.99|M|4171:1081404|HE|4.5|695|Schwinn Roadster Classic Tricycle for Toddlers, 12 Inch Front Wheel, Age
+19926472913|15.30|26.98|W|5438:7712430|B|4.5|181|Licensed Character Toddler Boys Heavyweight Puffer Jacket, Sizes 2T-5T
+2918917596|14.88||W|4044:133012|B|4.3|3695|Merkury Innovations Jellyfish Night Light Lamp Motion & Multicolor Leds 
+155693143|7.04||W|3920:582053|B|4.8|590|See, Touch, Feel: A First Sensory Book (Board Book)
+18850121988|19.97||W|4171:1096069|B|4.6|121|Little Live Pets Mama Surprise Kittens, Interactive Mama with 15+ Sounds
+20287410828|11.98||W|5438:1045799||5.0|1|Ms. Rachel Toddler Girls Ski Mittens, One Size
+5132429043|18.89|26.99|W|4171:4173||4.7|358|Fisher-Price Wooden Kitchen Pots & Pans Set, 19 Wood Pieces for Preschoo
+20485707767|8.00|12.98|W|5438:1045804|HE|4.7|495|Spidey and Friends Toddler Boys' 3D Character Slippers with Back Strap
+19641402244|19.97||W|4044:1154295|B|4.6|116|Hello Kitty Kids Glow in the Dark Plush Cuddle Pillow Buddy
+~2
+10292721|2.98||W|976759:976787|B|4.7|1946|BARNUM'S Original Animal Crackers, Kids Snacks, Snak-Saks, 8 oz
+18628369172|14.44||W|4171:3438149|B|4.6|78|PAW Patrol: The Dino Movie Chase Dino Rescue Cruiser, Ages 3+
+19952311154|11.00||W|5438:7712430|BL|4.7|135|Carter's Child of Mine Baby Girl Outfit Set, 2-Piece, Sizes 0/3-24 Month
+15209900155|39.84||W|4044:103150|B|4.4|2242|Hello Kitty Friends Kuromi Kids Compressed Foam Bean Bag Chair
+899388369|7.56||W|3920:582053|B|4.5|332|Big Book of Search & Find (Hardcover)
+19445168439|52.98|59.88|M|2636:7899038|HE|4.8|2533|Tomodachi Life: Living the Dream - Nintendo Switch
+~2
+20457813238|9.00||W|5438:7712430|B|4.7|581|Carter's Child of Mine Baby and Toddler Pajama Set, 2-Piece, Sizes 12M-5
+5310933899|41.99||M|4044:103150|B|4.2|1517|Spidey and His Amazing Friends Cozee Buddy Flip-Out Chair
+44881492|7.57||W|3920:582053|B|4.7|132|Write and Wipe ABC 123: Scholastic Early Learners (Write and Wipe) (Boar
+14414814536|17.99|21.99|W|3944:133251|B|4.6|428|JLab JBuddies Pop Wireless Kids Headphones, 2 in 1 Wireless + Wired, Vol
+5144555645|9.98||W|5438:7712430|B|4.7|1357|Character Toddler Ankle Socks, 10-pack, Sizes 12M- 5T
+14129067607|44.98||W|4171:1077545|B|4.5|1082|VTech, Bluey Road Trip Electronic Playset, Includes Heeler 4WD Car and a
+19582074285|15.98||W|5438:1045799|B|4.7|76|Sanrio Hello Kitty Girls Mini Faux Fur Backpack, Pink
+1003022202|39.48||W|5427:978579|B|4.7|439|Disney Mickey Mouse 4pc Toddler Bedding Set, ″Mickey Fun House″, Blue, G
+~2
+#esrb 829750319:RP 19445168439:E
+#list wm-gifts-little-kids page=3 count=1931 maxPage=25
+~2
+5461909448|27.96|39.99|W|6163033:2795380|B|4.4|1591|Over-the-Door Basketball Hoop, Indoor Sports Game, Battery-powered, for 
+20136254573|9.00|12.00|W|5438:1045799|HE|4.7|19|Ozark Trail Boys Technical Ski Gloves, Sizes S-XL
+5326661410|10.44|24.99|M|1334134:6172404|HE|4.6|705|Joyfy DIY 3D Moon Lamp Painting Kit, Paint Your Own Moon light Arts and 
+5300825784|16.97||W|4044:1154295|B|4.8|413|Hello Kitty Kids Plush Bedding Cuddle and Decorative Pillow Buddy, Sanri
+~1
+18838573500|54.99||M|4171:9636319|BL|4.7|282|LEGO City Advent Calendar 2026 - Christmas Advent Calendar for Kids, Age
+18372524046|10.84||W|3920:582053|B|4.9|32|Rowley Jefferson's Awesome Friendly Spooky Stories 2: From the Creator o
+~2
+17565115485|20.97|29.96|W|4044:623679|C|4.8|91|Aqua Pals 14oz Purple Water Bottle with Interchangeable Cat, Axolotl & U
+~3
+18620252625|9.97|11.99|W|4171:3438149|B|4.5|88|Marvel Spidey and His Amazing Friends Symbie Supersized Action Figure, A
+20856174159|21.59|23.99|M|4044:2634414|C|4.2|38|CQHVKQ 2026 Christmas Mystery Dumpling Advent Calendar 24 Days, Christma
+~1
+19931204120|169.99|369.99|M||HE|4.4|96|Entina 3D Printer Tina2C, Auto Leveling App Control Quiet for Kids Begin
+~1
+524454449|29.99||W|4125:4161||4.3|100|Franklin Sports Kids 24 x 16 Soccer Goal with Ball and Pump
+19545916063|15.98||W|5438:7712430|B|4.4|10|Weekend Academy Boys Hooded Cotton Flannel Shirt, Sizes 4-18
+~1
+9763055893|34.94||W|4044:1154295||4.5|134|Hello Kitty 23″ Kids' Saucer Chair, White/Pink
+19386422834|22.18|26.97|W|3920:582053|BL|5.0|45|Little Golden Books Advent Calendar: Countdown to Christmas: With 24 Win
+55740893|6.99||W|3920:582053|B|4.6|147|Jumbo Book of Hidden Pictures: Puzzle Activity Book for Kids Packed with
+650803535|16.79|26.38|W|1334134:6172404|BL|4.3|3139|Crayola Ultimate Light Board, White, LED Tracing & Drawing Board, Light 
+=19224566663
+~3
+2116013194|13.97||W|4044:1154295|B|4.9|3285|Lilo and Stitch Kids Throw Blanket, 46 x 60, Microfiber, Blue, Disney
+~1
+16721300206|29.95||M|1085666:4100952|B|4.1|28|Frozen Snowball Twist & Release Advent Gift Calendar
+18447510529|8.48|10.00|M|1229749:1086045|HE|4.6|1670|24 Metallic Colors Acrylic Paint Markers, Dual Tip with Fine Tip and Bru
+~1
+685901684|19.82||W|4171:4191||4.4|985|Goliath Gator Golf - Putt The Ball Into The Gator's Mouth To Score Game
+1451942190|16.99|22.75|M|3891:3906|B|4.0|269|Kids Digital Watch for Boys Girls Sport Watch with Stopwatch,Alarm Clock
+#list wm-gifts-little-kids page=4 count=1931 maxPage=25
+20256006906|3.98||W|5438:1045799||5.0|4|Wonder Nation Girls Hair Scrunchies, 7 Piece, Red
+18358851825|12.88||W|4044:1154295|B|4.9|34|Mainstays Kids Monster Throw Pillow, Gray, 13 in x 13 in
+206284954|10.88|14.99|W|4171:14521|B|4.6|1189|Nerf Elite 2.0 Commander RD-6 Dart Blaster, For Kids Ages 8 and up
+~1
+19997710765|7.98||W|3920:582053|B|4.7|46|Cozy Capybara: Coloring Book for Adults and Kids, 96 pages (Paperback)
+15046273610|1.00||W|3920:582361|B|4.7|2941|Bluey Jumbo Coloring Book, 64 Pages by Bendon, Paperback ISBN: 097816902
+~1
+18577617203|59.95||W|4125:4161||4.8|5|Wilson 2026 Savannah Bananas™ A200® 10” Glove, Ball & Bat Kit - Right Ha
+~2
+5298196423|59.97|68.00|W|5427:978579|B|4.5|9716|Bluey Sleep and Play Toddler Bed with Built-In Guardrails by Delta Child
+~3
+14941674070|7.97|8.97|W|4044:133012|R|4.6|521|Crayola Light Ups, Unicorn, Light Up Toy, Stocking Stuffers, DIY Room De
+~1
+15517257190|28.00|34.97|W|4044:623679|BL|4.5|5129|Owala FreeSip Stainless Steel Water Bottle, 32oz, Shy Marshmallow
+~1
+17782206596|3.44||W|4171:4172|B|4.3|70|Bitty POP Singles: Sanrio
+=5310933899
+~3
+15321812650|29.96||W|1334134:6172404|B|4.6|1517|The Woobles Beginner Crochet Amigurumi Kits - Narwhal the Whale
+=18613824866
+2638500220|44.99||W|4044:103150||4.1|312|Big Joe Sports Ball Child-Sized Bean Bag Chair, Basketball Plush, Soft P
+20121463741|10.00|13.98|W|5438:7712430|R|4.8|41|Weekend Academy Girls Long Sleeve Boatneck Dress, Sizes 4-18
+19626415526|4.98||W|1085632:6078924|BL|4.9|40|Wonder Nation Girls Bear Keychain
+~2
+19724364519|19.97||W|4171:9636319|BL|4.4|472|My Mini Baby Advent Calendar by ZURU - 2 Exclusive Dolls & 20+ Collectib
+5376024932|8.49|12.99|M|3920:582361|HE|4.5|220|Kalysky 20Pack Bulk Small Coloring Books for Kids Ages 4-8 (5.1 x 7 inch
+16929631|8.77||W|6163033:2795380|B|4.7|5278|Crayola Super Tips Washable Markers for Kids, 50 Ct, Kids Stocking Stuff
+=19099455505
+18852451224|6.34||W|4044:623679|B|4.7|96|Mainstays Kids 14 oz Multicolor Fairy Garden Tritan Double-Wall Insulate
+5989581459|16.00|22.98|W|5438:1045804|HE|4.6|1881|Wonder Nation Baby, Toddler, Little & Big Boys Western Boot
+~1
+17270906511|84.99|149.99|M|5427:491351|C|4.3|173|BlueWood Pikler Triangle Set Foldable Wooden Indoor 8-in-1 for Ages 6 Mo
+~2
+#list wm-gifts-big-kids page=3 count=1943 maxPage=25
+~1
+19585201654|10.98||W|5438:1045799|B|4.8|44|Wonder Nation Girl's Earmuff Set
+20202904447|32.98|209.96|M|3944:1089430|HE|4.4|1440|Gaming Headset with Microphone for PS4, PS5, Xbox Headset, 7.1 Surround 
+~1
+20103073323|10.00||W|1085632:6078924|B|4.3|57|Holler Mist Moment Body And Hair Fragrance Mist Set, 3 Piece Set
+17676901044|37.97|69.99|M|1085666:7787101|HE|4.2|727|Wavytalk 1.5 inch Thermal Brush, Negative Ion Heated Round Brush, Create
+=19931204120
+16022367415|14.98||W|3891:3906||4.8|16|George Men's Silver Case with Silver Matte Bracelet Watch
+13960273432|51.99|64.99|W|4171:4186|B|4.7|670|LEGO Technic Ferrari FXX K Toy Car - Building Toy for Boys & Girls, Ages
+~1
+17816601985|909.99||M|2636:5170403|BL|4.6|13220|PlayStation 5 Disc Console Slim -1TB
+~1
+20155712347|14.88||W|976759:1096070|BL|4.8|61|Grinch and Cindy Mini Figural Cocoa Set by Ten Acre Gifts
+20075900192|4.97||W|1085666:133225||4.6|204|Holler Mango Medley Mango Scented Body and Hair Fragrance Mist, 1.69 fl 
+=650803535
+5246596627|59.99|74.99|M|5438:1045804|HE|4.4|125|BEARPAW Women's Martis Iced Coffee Solid Size 5 Women's Shoe Lightweight
+19158174390|34.84||W|4171:1111647|B|4.5|72|McLaren MCL39 RC Formula 1 Car 1:16 Scale Remote Control Vehicle with US
+18836574486|10.49|14.97|W|4171:56125|B|4.6|46|CrunchLabs by Mark Rober, Experience Mind Blowing Fun with The Egg Drop 
+20054074481|1249.00|1899.00|W|3944:1089430|B|4.5|30|HyperX OMEN 15″ Gaming Laptop PC 2K IPS 165Hz, Intel Core Ultra 7 255H, 
+18089905174|199.00|269.00|W|3944:1078524|RL|4.6|3776|Samsung Galaxy Tab A11+ Widescreen Tablet, 128GB, Android 16, Silver
+20083924978|5.00||W|1005862:1071969|B|4.6|82|Bodycology Strawberry Cheesecake Scent 3-Piece Body Care Gift Set
+~2
+20254864691|23.00||W|5438:7712430|B|5.0|3|Justice Girls Cozy Half-Zip Sweatshirt, Sizes XS - XLP
+=5300825784
+~1
+1782810299|57.99|99.99|W|3944:1089430|B|4.4|1337|HyperX Cloud III – Wired Gaming Headset, PC, PS5, Xbox Series X S, Angle
+~1
+478552438|5.97||W|1005862:1071969||4.6|1604|Mr. Bubble Ultimate Pack of Bath Time Fun
+19479071876|8.97||W|1085666:133225||4.6|258|Fine'ry Mini Body Mist, Pistachio Please, 2.5 fl oz.
+=18447510529
+20053474273|21.00|31.98|W|5438:1045804|HE|4.8|110|Ozark Trail Little Girls Water Resistant Winter Boots
+~1
+14727461434|6.38||M|1085666:4820682||4.6|241|Bubble Skincare Tell All Mint Message Lip Balm 0.15 oz / 4.4 g
+16762764816|39.88|59.88|W|6163033:2795380|BL|4.6|1624|Pokmon Legends: Z-A - Nintendo Switch
+~1
+17786958231|7.32||W|1085666:7787101||4.4|25|Holler Lip Gloss Holder Phone Attachment, Guava Colored, 1 Count
+=15046273610
+20197251571|23.00||W|5438:7712430|B|4.7|28|Justice Girls Velour Zip-Up Sweatshirt, Sizes XS - XLP
+~1
+#esrb 17816601985:E 16762764816:E10
+#list wm-gifts-big-kids page=4 count=1943 maxPage=25
+~2
+15592822851|39.95|64.95|W|3944:133251|B|4.2|1572|JBL Vibe Beam 2 - True Wireless Noise Cancelling Earbuds - Black
+1787771751|16.43||W|976759:1096070|B|4.5|764|Movie Night for Two Microwave Popcorn and Candy Assortment Gift with Reu
+14400453717|27.97||W|1085666:4427759|B|4.1|1888|Olive & June Gel Nail Polish Starter Kit with LED Lamp, 7 Piece Set
+=14941674070
+~1
+=206284954
+~1
+20071300256|899.00||W|3944:1089430|BL|4.1|99|MSI Cyborg 15.6″ 144Hz Gaming Laptop, Intel Core i5-13420H, NVIDIA GeFor
+19970611110|5.00||W|1005862:1071969|BL|4.8|58|Diamond Life Glitz and Glow Nourishing Body Trio with Plush Bag, Pink Su
+~1
+=15321812650
+19462271586|17.98||W|5438:7712430|B|4.5|125|Weekend Academy Boys Cargo Pants, Sizes 4-18
+~2
+1462448997|39.98|49.98|W|3944:1089430|R|4.3|1578|RAZER KRAKEN V3 X - Wired USB Gaming Headset
+~2
+17085209134|6.87|8.94|W|1085666:6273541|B|4.8|119|Wet Brush Original Detangler Hair Brush, Tutti Frutti Collection, Cherry
+=16929631
+~1
+17358072841|37.17|45.12|M|4171:5178010||4.6|49|Mini Brands Fill the Fridge Playset (Assorted) Collectible Blind Novelty
+20109020149|6.75|9.00|W|5438:1045799|HLE|4.7|78|Ozark Trail Boys Outdoor Snow Ski Gloves, Sizes S-XL
+2290023466|47.98|59.00|M|2636:7899038|HE|4.8|2656|Super Mario Bros. Wonder - Nintendo Switch - U.S. Edition
+~1
+120694965|12.97|15.97|W|976759:1096070|R|4.8|5997|Ferrero Collection Gourmet Gift Box, 24 Assorted Treats with Dark Chocol
+16379762237|4.37||W|1085666:1007039|B|4.5|94|Avatara Collagen Moisturizing Hydrogel Face Mask for All Skin Types, 1 S
+19409269579|9.97||W|4171:645779|BL|4.4|171|Slime Mart Shopping Bag Mozzarella Sticks by ZURU - Play Food Themed DIY
+=19545916063
+~1
+16970573987|10.97||W|1085666:7787101|B|4.7|189|Starface Hydro-Star Pink Pimple Patches - 32 Count
+778856955|69.00|119.00|W|3944:1089430|R|4.6|681|Razer Huntsman Mini Special Edition, 60% Form Factor, Linear Optical PC 
+~1
+20493706411|15.00||W|1085666:133225|B|4.8|37|Pacifica Vanilla Whip, Strawberry Cream, and Amber Cocoa Mini Body Mists
+376722358|5.98||W|1085666:3592123|B|4.4|16540|Sally Hansen Insta-Dri Nail Polish, Quick-Drying, Long-Lasting Shine, Si
+2484409144|13.89|27.99|M|1334134:5899871|HE|4.1|1376|Alcohol Markers, ANUNU 80 Colors Dual Brush Tip Art Markers, Coloring Ma
+20118119573|7.88||W|3891:8709006|B|3.3|22|No Boundaries Womens Gold Plated Bow and Heart Locket Earrings, One Size
+5268782378|2.64|2.98|W|4171:3438149|R|4.1|762|Monster Jam, Mini 1:87 Scale Mystery Collectible Monster Truck Vehicle B
+~1
+#esrb 2290023466:E
+#list wm-gifts-teens page=3 count=1891 maxPage=25
+20166558342|34.50||W|5438:133201|B|4.5|189|Celebrity Pink Women's and Women's Plus Faux Fur Jacket, Sizes XS-4X
+764540602|19.99||M|976759:1089004||4.3|38|Thoughtfully Gourmet, 12 Days of Christmas Hot Chocolate Gift Set, Perfe
+~2
+5998999198|15.00||W|1005862:1071969||4.7|78|Old Spice x NFL Collector's Edition Holiday Gift Pack for Men, Jaxon Smi
+19000910215|24.96||W|4044:133012|BL|4.7|6622|Better Homes & Gardens Brown Basket Bubble Faux Fur Throw, 50 in x 72 in
+=20054074481
+~1
+5528854496|10.00||W|1094765:96894|B|4.4|1760|Sony PlayStation Store (Bow) $10 Gift Card [Digital]
+11975370|10.22||W|3920:7046572|B|4.9|74|The Summer I Turned Pretty (Paperback)
+=20118119573
+5764879530|35.49|45.99|M|1005862:3938933||4.4|52|Advent Calendar 2026 with 24pcs Countdown to Christmas Day Gift Sets for
+19495565920|11.59|12.88|M|1085666:1007040|HE|3.8|110|Weymikeze Portable Desk Mirror, Small Mirror For Desk With 3-Color Dimma
+19584424890|3.00||W|3920:582361|B|4.9|37|Official Gilmore Girls 32-Page Advanced Coloring Book
+~1
+789645906|9.48|15.99|M|4044:133012|HE|4.2|14961|DAYBETTER Led Strip Lights, 100ft Light Strips with App Control Remote, 
+~1
+15245101600|49.59|61.99|M|7796869:1097690|HE|4.5|121|TANLANIN Green Bluetooth Record Player, 3-Speed Turntable with USB Recor
+~2
+19838273764|9.99|17.99|M|5438:133162||3.8|27|Dakimoe Women's Pajama Shorts with Ruffle Hem, Gingham Plaid Boxer Sleep
+~2
+5119394748|9.99||M|1105910:133161|B|4.5|140|Tomorotec Iridescent Acrylic Cell Phone Stand, Portable Phone Holder for
+20199474098|16.20|20.00|W|1085666:3147628|B|3.8|21|Nexxus Keraphix Holiday Gift Set: Shampoo, Conditioner & Leave-In Treatm
+19697257218|106.99|209.99|M|4044:103150|HE|4.0|2055|Satifur Modern LED Vanity Desk with Charging Station & Storage, White Ma
+~1
+5258440302|89.99|109.99|M|6163033:2795380|P|4.2|350|Polaroid Hi-Print 2x3 Pocket Photo Printer Gen 2
+~3
+18046212701|33.98||M|4044:2634414|B|4.4|28|Bonne Maman 12 Mini Jars of Beloved Flavors in Gift Boxes
+~2
+5971272756|24.84||W|976759:1089004|B|4.4|875|Hickory Farms $24.86 Meat & Cheese Holiday Gift Box Gourmet Charcuterie 
+2241681335|24.99|48.99|M|4044:133012|HE|4.4|10616|Nefoso Shag Area Rug, 5ft x 8ft Soft Fluffy Area Rugs for Living Room Be
+5220294593|69.89|129.99|M|4044:103150|HE|4.1|4704|Gaming Chair, Seenda Video Game Chair with Footrest and Lumbar Support, 
+~1
+20414524759|16.98||W|3920:3490696|B|5.0|3|Brain Games - Sticker by Number: Cozy Christmas (24 Images): Includes Fo
+=16022367415
+#esrb 5528854496:E
+#list wm-gifts-teens page=4 count=1891 maxPage=25
+20141317544|35.97||W|1085666:1007040||4.0|4|Nude by Nature The Mini Bar 12 Day Holiday Makeup Advent Calendar, 12 Pi
+18733712450|6.00||W|1085666:6273541|B|4.5|6047|e.l.f. Sheer For It Blush Tint, Buildable Stain For Lips + Cheek. So Pet
+~3
+18200354479|298.00|378.00|W|3944:1060825|RL|4.4|9040|Samsung 65 Class U8000H Series Crystal UHD 4K UHD Samsung Vision AI Comp
+~2
+=5246596627
+~1
+19679512529|149.99||W|1085666:1007039||4.7|65|Shark Depuffi, Instant Hot + Cold Contrast Therapy Device, InstaChill Te
+11609461276|3.00||W|1085666:1729914|B|4.7|2242|Scent Theory Hand Sanitizer Spray, Brazilian Coconut, 1 fl oz
+~2
+13606001665|98.00|119.00|W|6163033:2795380|R|4.4|3015|Samsung 27″ Essential S3 (S36GD) FHD 100Hz Curved Monitor - LS27D36DGANX
+18656507313|199.00|379.00|W|3944:1089430|RL|4.2|3344|HP 14 inch HD Windows Laptop Intel Processor N150 4GB 128GB UFS Waterfal
+5325577951|29.00||W|3920:1068785|B|4.6|30|The Folk of the Air Complete Paperback Boxed Set (Paperback)
+20449471988|19.98||W|5438:133197|B|4.8|18|George Men's Novelty Stripe Crewneck Sweater with Long Sleeves, Midweigh
+5532879406|23.12||W|976759:1096070||4.8|140|Lindt Teddy Christmas Advent Calendar Assorted Chocolate Candy Box, 7.2 
+~1
+19507467577|8.87||W|1229749:8843226|B|4.6|25|Pen+Gear Retractable Gel Pens, Black Ink, 0.7 mm, Medium Point, Assorted
+1730736808|39.98|62.00|M|1085666:133225|B|4.5|846|Billie Eilish Perfume Gift Set for Women, 2 Pieces
+5451764347|85.48|159.99|M|4044:103150|HE|4.1|792|Bigzzia Gaming Chair with LED Lights, Computer Chair with Lumbar Support
+18070174751|19.88||W|3944:1089430|B|4.7|1074|Monster 10 ft 8K Ultra High Speed HDMI Cable with LED Connectors for PS5
+~1
+689457688|65.15||M|3920:1068785|BL|5.0|136|The Twilight Saga White Collection, (Paperback)
+20251513391|14.98||W|5438:133162|B|4.5|103|No Boundaries Zip Hoodie with Wide Hem, Women’s XXS-XXL
+20959417632|19.98||W|||||Vaseline Lip Therapy Advent Calendar with Assorted Flavors
+20238723838|29.98||W|6048744:8747893||5.0|6|CHERRY BABY 2 PIECE SET
+~1
+20173014704|12.74||W|976759:1096070|BL|4.6|56|Frankford Dunkin Mini Hot Chocolate BOMBs Collectible Tin Gift Set, 6 Co
+5814382949|99.00|159.00|W|3944:133251|B|4.7|5340|Bose SoundLink Flex II Wireless Waterproof Portable Bluetooth Speaker, B
+443574645|1239.00||M|2636:1819308|BL|4.6|20347|XBOX Series X - Gaming Console - 1TB SSD - Includes XBOX Wireless Contro
+~1
+5531005399|75.00||W|1094765:96894|B|4.5|1011|Sony PlayStation Store (Gifting) $75 Gift Card [Digital]
+1666460350|6.96||W|3920:7046572|B|4.5|79|Lightlark (the Lightlark Saga Book 1) (Paperback)
+20172952760|16.98||W|5438:133162|B|4.5|18|No Boundaries Hooded Cable Knit Pullover, Women's & Women's Plus XXS-4X
+~1
+5138361610|6.42|13.99|M|6048744:8747893|HE|4.8|478|Huauoo 6 Pcs Makeup Sponges Set, Makeup Sponges for Foundation, Latex Fr
+20143605323|12.60|18.00|W|3891:8709006|HE|4.3|21|Free Assembly Women's Crystal Cup Chain Necklace, 16″ + 3″, Goldtone
+#esrb 443574645:E 5531005399:E
+#list wm-gifts-her page=3 count=1858 maxPage=25
+19317365687|29.97||W|4044:133012|B|4.5|287|Home Decor Collection Sterling & Noble Home Brown Velvet Fringe Victoria
+20295552956|13.98||W|1085632:6078924|BL|4.5|4297|No Boundaries Cropped Faux Shearling Plush Pullover, Women's & Women’s P
+~1
+20315815112|32.00||W|5438:133162|B|4.4|112|Madden NYC Women's Faux Fur Jacket, Sizes XXS-1X
+19474503522|19.97||W|4044:133012|B|4.8|257|Better Homes & Gardens Luxe Heavyweight Plush Reversible Throw Blanket, 
+~1
+17721353889|9.97||W|1085666:3592123||4.7|47|DIGI by Glamnetic Le Rouge Short Almond Artificial Press On Nails, 24 Pi
+~1
+7742656050|17.99|31.99|M|5438:1045799|B|4.8|287|COOPLUS Beanie Hat Scarf Gloves Set for Women,Winter Hat with Pom Pom Wa
+1227197794|58.44||W|7796869:1097690|B|4.4|4645|Crosley Cruiser Premier Vinyl Record Player with Speakers and Wireless B
+20060454818|14.98||W|5438:133162|BL|4.8|491|Women's Christmas Merry Camo Graphic Fleece Top from Holiday Time, Sizes
+899391275|39.98|62.99|M|976760:36290|P|4.3|3128|MaxKare Foot Soak Spa Bath Massager with Heat, Bubbles, and Vibration, D
+~1
+20100912190|10.00||W|1005862:1071969||3.8|6|Pickleball Body Care Kit, Mandarin Peach Scent, 6 Pieces
+=19584424890
+20140766663|12.73|14.98|W|5438:133162|HE|4.6|4150|Joyspun Women's Dreamy Soft Collection Sleep Top and Pants, 2-Piece Set,
+20283218053|104.00|119.99|W|3891:3906|R|4.2|767|Google Fitbit Air Active Bundle: Screenless Fitness and Health Tracker -
+19736656128|13.52|19.96|W|5438:1045799|HE|4.3|281|Scenario Women's Crossbody Handbag, Merlot Wine
+~1
+19837769537|199.99||W|1072864:133032||4.8|120|Shark BreatheClear Air Purifier with NeverChange, Dove
+~2
+19990811099|29.00|41.98|W|5438:1045804|HE|4.4|29|Ozark Trail Women's Cozy Hiker Boots
+~1
+7857824016|228.00||W|3891:8709006||4.4|7|Brilliance Fine Jewelry Women's Lab Grown Diamond Stacking Ring Set, 3 R
+16581506240|15.54|19.42|M|4125:5151478||4.5|2341|RTIC Essential 20 oz Leak-Resistant Lid Ceramic Lined Tumbler for Christ
+~1
+20269110214|15.00||W|1005862:1071969|B|4.7|136|Dove Limited Edition Snickerdoodle Delight Gift Set For women, 3 Pack
+16062311231|12.47||W|1229749:1086045||4.9|33|Papier To Go B5 Spiral Lined Notebook, 7.1 x 10″, Pink Swans
+20247914675|7.98||W|5438:9055522|B|4.7|82|No Boundaries Faux Shearling Plush Shorts, 2.5'' Inseam, Women's XXS-XXL
+18638703162|229.00||W|3944:1089430|BL|4.1|2410|HP 15.6 inch HD Windows Laptop Intel Processor N250 4GB 128GB UFS Moonli
+20312455145|16.98||W|5438:133162|B|4.6|720|No Boundaries Oversized Mock Neck Sweatshirt, Lightweight, Women's and W
+17951150541|249.00|349.00|W|3944:1229723|R|4.2|683|Oura Ring 4, Silver, Size 9, Smart Wearable, Sleep, Fitness & Heart Rate
+~1
+20131867571|10.50|15.00|W|3891:8709006|HE|4.8|20|Free Assembly Women's Embellished Mixed Symbol Face Pin Set, 4-Piece, Go
+14652967688|148.00|183.00|W|4044:90548|B|4.3|949|Shark Navigator Robot Vacuum, Smart Path Navigation, Row-by-Row Mapping,
+20298113159|15.28|18.98|W|5438:3317124|HE|4.0|66|Joyspun Women's Flannel Pajama Pants, Sizes XS-3X
+10272973287|22.49|29.97|M|976760:1005863|HE|4.6|713|Lemme Glow Hair, Skin & Nails Gummies, Peach Flavor, 60 Count
+~1
+#list wm-gifts-her page=4 count=1858 maxPage=25
+20109318590|5.00||W|1005862:1071969||4.7|11|Foot Care Set with Strawberry-Pattern Socks, Mandarin and Peach Scent, 3
+5512930436|7.97||W|1334134:6172404|B|4.9|73|DIAMOND DOTZ Daisies Bookmark Diamond Painting Kit
+19657453017|15.00|28.00|W|5438:3317124|HE|4.7|253|Reebok Women's Game Day Fleece Cinched Hem Jogger, Sizes: XS-4X
+~1
+20077862602|14.69|19.88|W|5438:1045799|HE|4.7|1066|No Boundaries Women's Quilted Tote Bag, Olive Bandana
+18904373919|29.98||W|4044:623679||4.4|27|Thyme & Table 2.5L Stainless Steel Ribbed Tea Kettle, Moss
+20284713868|429.00||W|3944:1089430|B|4.3|59|ASUS Vivobook 15 15.6 FHD Laptop with Intel Core Ultra 5 315 Processor, 
+~1
+19853451800|7.96||W|4044:133012|B|4.6|56|DesignOvation – 4x6 Picture Frame – Beaded Gold Tabletop Photo Frame
+~1
+17809711342||699.00|W|3944:1229723|B|4.5|421|Apple Watch Series 11 [GPS + Cellular 42mm] Smartwatch with Gold Titaniu
+470355103|17.98||W|3891:8709006|B|4.2|60|Time and Tru Ladies' Analog Quartz Watch and Bracelet Set, 30 mm Round G
+~1
+21185907854|149.00||W|3944:133251||3.8|16|HomePod mini 2 - White
+20154117423|7.03||W|5438:1045799||||Pearl 6-Piece Hair Accessory Set with Hair Clips and Bobby Pin
+~1
+17400121244|9.98|12.99|M|5438:1045804|B|4.4|218|Comwarm Women's Fuzzy Slippers Open Toe Cross Band Slippers Memory Foam 
+20263801913|38.00||W|5438:133162|B|4.5|295|Scoop Women's Pleated Maxi Dress, Sizes XS-XXL
+5102841302|59.00||W|4044:539095|B|4.6|3965|SLF Luxury Towel Warmer, 20L Electric Hot Towel Warmer Bucket, Fits Up t
+107208712|39.95||M|3944:133251||4.3|838|JBL Clip 3 Fiesta Red Portable Bluetooth Speaker
+19993901340|11.24|16.97|W|1085666:3828790|L|4.7|122|Medicube Zero Pore Clearing Capsule Cleansing Foam, 4.23 oz.
+20655268432|10.24||W|1334134:6172404||||Cozy Stickers Cozy Stickers: Santa's Little Workshop: 5 Scenes to Create
+20062718554|14.98||W|5438:133162|B|4.7|243|Women's Christmas Sugar Plum Graphic Fleece Bottom from Holiday Time, Si
+~2
+=20141317544
+24920763|5.39|9.84|W|4171:4191|B|4.8|2457|Bicycle Playing Cards, 2 Pack, Standard Index (Red & Blue)
+19649302662|20.00||W|5438:133162|BL|4.5|5140|Avia Women's and Women's Plus ScubaKnit Joggers, Full Length, Size XS-4X
+~1
+16788603631|16.89|28.99|M|5438:1045799|B|4.7|136|KOITHOT 2 Pairs Winter Gloves for Women Chenille, Winter Warm Thick Line
+20087608457|19.96||W|4044:133012|BL|4.6|87|Better Homes & Gardens 13 in Green Velvet Pleated Shade Portable Table L
+=20054074481
+5216421750|10.98||W|1085666:7876574|B|4.5|5006|L'Oreal Paris Infallible 3-Second Setting Spray, Waterproof Makeup Face 
+~1
+19335672403|28.48||W|5438:1045804|B|4.5|119|No Boundaries Women's Pointy Toe Heels
+5635611118|74.99|99.99|M|3944:133251|HE|4.4|348|Soundcore by Anker, Space One, Active Noise Cancelling Headphones, 2X St
+~1
+17601165500|7.19|8.99|M|1085632:6078924||4.1|31|IcyGlow Facial Roller Reusable Ice Roller For Face and Eye Ice Facial Ro
+#list wm-gifts-him page=3 count=1849 maxPage=25
+~1
+9262424769|17.95||M|1085666:133225|B|4.6|247|Kenneth Cole Travel Spray Cologne Gift Set for Men, 3 Pieces
+16333572781|129.00||W|4044:7333633||4.4|239|American Tourister Kontour 2-Piece Set (Carry On/Medium Checked) - Black
+~1
+16483104470|20.00|26.44|W|1072864:1031899|R|4.6|940|Hyper Tough Mini Tool Cabinet, 11.6 in, Steel, Red, Double Doors, Non-Sl
+~1
+5279801850|119.99|159.99|M|976760:6120851|HE|4.6|200|TheraGun Relief Massage Gun by Therabody Deep Tissue Muscle Massage Gun 
+47666927|170.80|244.00|M|5438:1045799||4.5|196|Ray-Ban Unisex RB3025 Classic Aviator Sunglasses, 58mm
+430806882|32.88|42.00|W|5438:1045799|B|4.7|818|Outdoor Products Vortex 30 L Backpack, Unisex, Blue, Adult, with Bottle
+~1
+=19474503522
+2632609222|12.88||W|1085666:1007039||4.6|1270|Starface Hydro-Star Black Pimple Patches - 32 Count
+5820166131|16.43||W|976759:1096070||4.6|272|Frankford Mars Assorted Flavor Coffee Variety Gift Set, 5 Pack
+15542913116|12.50|19.99|W|4171:4191|B|4.4|247|Exploding Kittens: The Board Game - The Action Packed Party Game to Cele
+=20959417632
+20152658051|20.00||W|1005862:1071969||4.6|9|Dr. Squatch Bath and Body Gift Set for Men, Natural Bar Soap & Aluminum-
+~2
+16472965932|20.00|23.88|W|1072864:1031899|B|4.6|746|Hyper Tough Mini 10-Inch 2-Drawer Steel Toolbox, Red
+~1
+17885873188|74.97|94.94|W|4125:4161||||Wilson x Gatorade Pickleball Performance Kit - Includes Wilson XP1 Team 
+17579312589|20.98||W|5438:3317124|B|4.7|81|Dearfoams Cozy Comfort Men's Piece Clog Slippers
+6705365258|110.00|139.97|W|4125:546956|R|4.2|719|PENN 7' Battle Spinning Fishing Rod and Reel Combo Kit, Size 5000 Reel w
+5203677632|6.88||W|4044:623679|B|4.2|60|Thyme & Table Wing Corkscrew, TT0849R
+~1
+20198955756|9.87||W|976759:1096070||4.7|3|Star Wars Coffee Syrups, Assorted Flavors, 4 Shaped Jars, 6.1 fl oz , Ma
+19676650571|24.50||W|3920:582053|B|4.4|7|Oversharing: Anytime Snacks, Everyday Dinners, and Cooking for Company (
+=764540602
+18044873942|29.99|42.00|M|1005862:1071969|HE|4.6|30|Every Man Jack Game of Thrones Collector's Edition Christmas Holiday Gif
+~2
+17790510154|19.97||W|91083:1212910|B|4.7|1117|Armor All 8-Piece Car Cleaning Kit Gift Set for Men, Dad & Car Enthusias
+~1
+12588123819|449.00|599.00|M|4125:4134|HE|4.2|268|NordicTrack T Series T 5 S Electric Exercise Treadmill
+20584461132|66.98|74.98|W|5438:133197|HE|5.0|1|Baltimore Ravens Reebok Mens Heavyweight Colorblocked Hooded Sweatshirt
+20103760455|499.00||M|5428:7662964||4.3|49|EZLIFE 6 Person Inflatable Hot Tub Portable Outdoor Spa with 130 Hydro M
+20592062771|9.72||W|3920:3719627||||True Facts That Sound Like Bull$#*t - Walmart Exclusive (Paperback)
+3762972534|112.85||M|7924299:7576835|L|4.5|96|Prada Prada Luna Rossa Ocean , 1.6 oz EDP Spray
+20194869037|5.56||W|976759:1096070|B|4.6|74|Hershey's Kisses Grinch Strawberry Sugar Cookie Flavored, Christmas Cand
+#list wm-gifts-him page=4 count=1849 maxPage=25
+~2
+20598119412|5.00||W|1085666:133225|B|4.2|14|BETTER FRAGRANCE MOUNTAIN OZONE 2 PC SET
+20034607090|109.00|199.00|M|3944:133251|HE|4.7|28|Nothing Headphone (a) 2026 New, Adaptive Active Noise Cancelling Headpho
+=5528854496
+18861017662|98.00|149.00|W|1072864:1031899|R|4.6|482|Hyper Tough 262-Piece Mechanics Tool Set, SAE and Metric
+~1
+7324967031|29.97||W|4044:623679||4.8|432|Gatorade Overtime 22 oz Graphite Twist Cap Stainless Steel Water Bottle
+~1
+285042039|342.09||W|4125:546956||4.1|356|Humminbird HELIX 5 CHIRP GPS G3
+=15592822851
+=18904373919
+~1
+5466923266|39.95||M|976759:976787||4.5|1309|David's Cookies Butter Pecan Meltaway Cookies Gift Tin 2-Pack 32 oz
+~1
+20144256930|20.00||W|1005862:1071969||4.9|28|Dr. Bronner's Pure-Castile Soap 7 Day Holiday Gift Set, 2 oz, 7 Count
+=20269110214
+15919967887|129.99|189.99|M|4044:7333633|B|4.5|348|Checked Luggage Aluminum Frame Suitcase with Wheels PC ABS Hardside Zipp
+~1
+18950312535|64.97||W|1072864:1031899|B|4.2|685|Shop-Vac 6 Gallon Wet/Dry Vacuum, 5.0 Peak HP, Stainless Steel Tank
+~1
+119552363|72.00|80.00|M|5438:1045799||4.6|69|Nike Elite Hoops Pro Basketball BA5554 (One_Size, Black/Metallic Cool Gr
+20200158174|49.00|58.00|W|5438:133197|HE|4.7|207|Free Assembly Men’s Cashmere Crewneck Sweater with Long Sleeves, Midweig
+19567666202|35.98||W|5438:133197|B|4.6|777|Wrangler® Men's Outdoor Fleece Lined All Terrain Cargo Pant
+806882183|107.00|200.00|M|3891:3906|HE|4.6|608|Michael Kors Men's Slim Runway Black Watch MK8507
+=5102841302
+13666604416|11.31|23.97|W|1085666:6521388|B|4.8|55|Medicube Zero Exosome Shot 2000, 1.01 fl oz.
+20943873243|23.97||W|976759:1089004||5.0|12|McCormick Holiday Essentials Spices and Herbs 10 Count Variety Pack, 8.8
+438554|9.99||W|3920:582105|B|4.8|29|1984: 75th Anniversary (Paperback)
+17663209601|16.99|20.99|M|1085666:3316357|R|4.9|28|ChapStick Lip Balm Advent Calendar, Cozy Countdown 12-Pack, 0.15 Oz Ea
+10311201|12.97|14.47|W|976759:1096070|R|4.8|6231|Ferrero Rocher Gourmet Hazelnut Milk Chocolate Gift Box, 24 Individually
+5324598043|149.99|279.99|M|3944:133277|B|4.2|141|Campark 5K Video Camera Camcorder Dual Lens 3”Touch Screen 56MP Digital 
+~1
+12014123348|12.62||W|4125:546956|BL|4.6|863|Hyper Tough Rechargeable LED Spotlight with 2000mAh Battery and Pivoting
+~1
+20079669574|17.50|25.00|W|5438:133197|HE|4.6|5609|Reebok Men's and Big Men's Game Day Fleece Jogger Sweatpants, Sizes XS-5
+20861068899|76.00|94.99|M|5438:1045799|P|4.8|6037|Ridge Wallet for Men - Slim Minimalist Compact Wallet and Card Holder, R
+20322257051|87.99|179.99|M|5428:2867750|HE|3.8|28|CalFancy Portable Sauna Box, 1500W Steam Sauna Box for Home Spa with 3L 
+5022970176|28.84||W|4044:623679|B|4.4|3167|Mainstays 12 oz Warming Coffee Mug, Stainless Steel Mug with Warmer Coas
+=20087608457
+#list wm-trending-toys page=3 count=558 maxPage=14
+5303508331|149.99|328.99|M|4171:3318550|P|4.0|776|Best Choice Products Pretend Play Corner Kitchen, Interactive Wooden Kid
+6327908998|29.88||W|4171:4187|B|4.7|1176|My Life As Clara 18-Inch Posable Fashion Doll with Medium Blonde Hair, B
+~2
+17330310377|48.00|99.99|W|4171:1081404|B|4.7|260|Ozark Trail 12″ M.1 Timber Kids' Balance Bike, Blue, Unisex
+~1
+17067869480|51.99|64.99|W|4171:4186|B|4.8|264|LEGO Technic Jeep Wrangler Rubicon SUV - Building Toy for Boys & Girls, 
+18850423756|24.97||W|4171:56125|BL|4.4|106|CrunchLabs Elephant Toothpaste Blast Inspired by Mark Rober's iconic Vir
+18920672041|53.00||W|4171:4172|B|4.7|99|Jurassic World Ultimate Damage Indominus Rex Dinosaur Figure, Lights & S
+17048173586|55.95|69.99|W|5920738:1229472|B|4.4|344|LEGO Star Wars SMART Play: Darth Vaders TIE Fighter Interactive Building
+=18836574486
+~1
+17956363849|19.97||W|4171:4173|B|4.2|354|Marvel Spider-Man: Brand New Day Super Web Slinger, 2-in1 Water or Web B
+=19224566663
+15519050337|18.99|29.99|M|1334134:6172404|HE|4.5|639|Water Pets for Kids - Aqua Fairy Gel Kit - DIY Easter Fun Craft for Kids
+~1
+=14129067607
+~3
+14865174567|24.97|29.99|W|4171:6331649|RL|4.4|674|Playskool Sit n Spin Activity Toy, Spinning Seat, Kids Ages 18 Months an
+17764054145|29.97||W|4171:4172|B|4.4|182|Minecraft My Pet Creeper Interactive Toy Action Figure with Lights, Soun
+~1
+18640451171|17.97|19.98|W|4171:14521|R|4.5|125|Nerf Elite Rebel Ops Deadeye Blaster, 2 Attachments, 24 Nerf Elite Foam 
+14868217343|34.97||W|5427:491351|B|4.4|353|Playskool Busy Ball Popper Interactive Toy with Music and Sound Effects 
+6339801411|29.88||W|4171:4187|B|4.6|551|My Life As Kinley 18-Inch Posable Fashion Doll with Brunette Hair, Blue 
+19910170597|9.49||W|4171:56125|B|4.7|128|Rubik's Cube, The Official 3x3 Rubiks Cube, Ages 8 and up
+5366204314|11.82||W|4171:4173|B|4.8|2044|Battat Sparkle Time Pink Purse Set with Phone Keys Card Makeup, Toddler 
+18548562571|23.99|39.99|W|4171:1111647|BL|4.7|141|Disney and Pixar Cars Race to Celebrate Lightning McQueen Celebration Ra
+17382611668|2.97|4.97|W|5967908:2860494|R|4.6|26|WWE Championship Title Slap Bands - Series 3 Adrenaline Collection Blind
+15411310631|284.05|498.00|M|4171:14521|HE|4.1|286|DOLPHIN PLAYGROUND Wooden Outdoor Playset with Dual Swings, Slide, and P
+~1
+19229520956|69.97||W|4171:4173|B|4.4|149|Little Tikes Sweet Spaces Kitchen Refrigerator Sea Foam, Play Kitchen, A
+17951767831|17.99|29.49|W|4171:4172|B|4.6|323|Disney and Pixar Toy Story 5 Running Woody 12 Inch Action Figure, 50 Plu
+19210859223|12.97||W|4171:4187|B|4.6|341|Nook Nooks Series 1 Blind Box Figurines by STARBOX - Surprise Mini Colle
+19434906588|14.97||W|3734780:6920835|BL|4.4|239|Nerf Rumi's Four Tiger Sword KPop Demon Hunters Foam Blade 24 inches, Ho
+~2
+16195213305|11.97||W|4171:4172|B|4.7|84|Unspeakable 6″ Mini Mystery Plush - Series 2
+#list wm-trending-toys page=4 count=558 maxPage=14
+14726862353|34.97||W|4171:6290243|B|4.0|2329|Easy Bake Freezy Bake Ice Cream Maker Toy, Plastic Kitchen Playset for K
+238447840|23.97|29.99|W|4171:3438149|R|4.7|3555|Melissa & Doug Super Smile Dentist Kit With Pretend Play Set of Teeth An
+~2
+19976314482|169.99|329.99|M|4171:133073|HE|4.6|19|Mercedes-Benz F1 W16 Electric Go Kart, iYofe 12V Go Kart for Kids with R
+~2
+5346981275|14.88|19.82|W|4171:6290243|R|4.6|464|Hitster - The Music Party Card Game, Fun Music Card Game, 2-10 Players
+5332778095|7.88||W|4171:1077545|B|4.6|2600|Bluey 8 inch Single Plush, Toys for Kids 3-6 Years
+19392303648|88.99||M|4171:4187|B|4.7|717|KPop Demon Hunters HUNTR/X Mira Golden Singing Doll in Removable Outfit 
+19555206231|24.88||W|4171:6290243|B|4.5|73|Barbie Chemistry Activity Lab Science Kit for Kids Age 5 and Up by Blue 
+~2
+18343004018|24.97||W|4171:6290243||4.6|9|Guess Who? Pokmon Edition Kids Game, Travel Friendly Family Board Games,
+~2
+401876125|19.98||W|4171:6290243|B|4.6|2225|Tapple Word Game By USAopoly, Fast-Paced Family Board Game, 2 - 8 Player
+18865866132|39.99||W|4171:4173|B|4.8|159|LeapFrog Scoop & Learn Ice Cream Parlor Play Food for Toddlers
+18896656330|29.88||W|4171:4187|BL|4.6|296|My Life As Peyton 18-inch Posable Fashion Doll with Red Hair, Green Eyes
+~2
+5452707797|49.97||W|6163033:2795380|B|4.4|1091|EastPoint Sports Axe Throwing & Lawn Darts Target Game Set, Includes 3 A
+~1
+18711714663|27.97|34.99|W|2637:2924695|R|4.7|174|LEGO Pokmon SMART Play: Sprigatito, Fuecoco and Quaxly Battle - Compatib
+18976607778|21.37|29.97|W|4171:3438149|B|4.8|196|Star Wars The Mandalorian & Grogu Bounty Blaster, Star Wars Toys (11″), 
+19284114274|13.99|19.97|W|4171:5178010|B|4.8|44|Kinetic Sand, Sweet Station with 1lb Play Sand, Tools & Candy Machine fo
+~2
+36250757|22.29|29.96|W|4171:133073|B|4.7|1310|Marvel Spider-Man Bike Helmet, Child, 5+ (50-54cm)
+19352016878|9.98||W|3734780:6920835|B|4.7|94|Nerf KPop Demon Hunters Zoey's Spirit Blades, 3 Foam Blades, Holiday Rol
+780568056|79.99|199.99|M|4171:4173|HE|4.1|2790|Best Choice Products Wooden Play Kitchen for Kids, Pretend Play Cooking 
+~2
+20021974887|11.97||W|4171:645779||4.9|23|Slime Mart Disney Shopping Bag Winnie the Pooh Donuts by ZURU - Play Foo
+19569359687|20.00|40.00|W|5967908:8640284||4.7|219|Ms. Rachel Jumbo 24-Inch Stuffed Plush Doll for Kids and Collectors
+17048123040|23.96|29.99|W|4171:4186|R|4.8|636|LEGO Creator 3 in1 Wild Animals: Colorful Hummingbird Building Toy for G
+2770483513|44.98|69.99|W|4125:4161||4.2|266|Justice Gymnastics 8ft Folding Balance Beam with Carry Bag, Vegan Suede,
+17550108313|24.97|29.97|W|4171:3438149|R|4.7|276|Beyblade X Deluxe String Launcher Battling Top with Custom Grip & Right-
+18933812995|14.97||W|5967908:8640284|B|4.8|167|Moonmeadow 14 inch Weighted Armadillo Plush, Super Soft Stuffed Animal
+475241031|9.97|11.99|W|4171:7357538|R|4.7|1015|Disney Junior Minnie Mouse Fab Food Bucket, 25-Pieces, Pretend Kitchen P
+#list wm-trending-toys page=5 count=558 maxPage=14
+=50378796
+19016961586|12.99|16.97|W|4171:4187|B|4.8|288|Sad Baby Care Bears Series 1 Blind Box Surprise Collectible Keychain Toy
+51709625|478.00||W|4171:133073||4.1|878|Razor Dirt Quad - 24V Electric Powered Ride-on for Kids 8+, up to 8 mph,
+17347550451|37.49|49.97|W|4171:4172|B|4.7|89|Disney and Pixar Toy Story 5 Hi-Tech Space Ranger Jetpack, Kids Role Pla
+613373462|24.97||W|4171:6290243|B|4.5|819|Hues and Cues Board Game, Word Association with Colors, Use Clues to Mat
+18959404507|19.97||W|4171:1077545|B|4.8|104|VTech Bluey Claw Game & Go Electronic Learning Systems for Toddlers
+18677920904|56.00|69.96|W|4171:4186|R|4.9|87|LEGO ONE PIECE Gum-Gum Fruit Building Set, 482 Pieces, Ages 9+, 75647
+9173221817|478.00||W|6163033:2795380|B|4.1|538|Concord 20 in Urbanfold Electric Folding Bike 36V 350W, Class 2, Blue, F
+19246612958|2.97||W|4171:4172|B|4.8|55|Blokees Jurassic World Surprise Eggs-03
+~1
+17398950516|29.97||W|5427:491351|B|4.6|655|Fisher-Price Little People Disney & Pixar Toy Story Andys Room Toddler P
+14808201928|75.00||W|4171:6331649|B|4.5|233|My Life As Horse Stable Playset for 18 in Dolls
+17947022395|49.97||W|4171:4172|B|4.6|274|Jurassic World Colossal Chomp Giganotosaurus Figure with Big Bite, Multi
+19195023641|49.97||W|4171:4173||4.5|86|Little Tikes Sweet Spaces Kitchen Oven Sea Foam, Pretend Play Kitchen, A
+18677920896|51.99||W|4171:4186|B|4.6|186|LEGO Technic Fast and Furious Mitsubishi Eclipse Car - Building Set for 
+17234360830|12.97|14.97|W|4171:4172|R|4.5|184|The Super Mario Galaxy Movie 2.5 inch Action Figure with Pull Back Motor
+~1
+7788252756|116.00||W|4171:1081404|B|4.5|905|Dynacraft Bluey Kids 12-inch BMX Bike with Training Wheels, Plush Bag, S
+19958712554|99.97||W|4171:4187||4.8|15|Disney Princess Dance With Me Belle Feature Doll
+5364517391|14.82||W|4171:645779|B|4.7|1460|Battat Easy-Doodle Magnetic Drawing Plastic Board with Color Reveal, Tod
+5878447486|19.94||W|4171:1828790|B|4.6|623|My Sweet Love Bedtime Baby 14-Inch Soft Body Doll Play Set with Plush Ho
+17977665514|18.49|24.99|W|4171:4172|B|4.8|196|Disney and Pixar Toy Story Lil Partner Bullseye Posing Horse Figure with
+18651662331|29.97||W|4171:3438149|B|4.9|123|PAW Patrol: The Dino Movie Hear Me Roar Rhubarb, Ages 3+ (Walmart Exclus
+~1
+18897566124|42.94||W|4171:4172|B|4.8|105|Jurassic World Ultimate Damage Tylosaurus Dinosaur Figure, Lights & Soun
+5337897673|68.00|79.99|W|4125:4161||4.1|384|CAP Adjustable Height Horizontal Gymnastics Bar for Kids, Pink
+~1
+45791249|19.97||W|4171:4187|B|4.7|153|Jada Sanrio Hello Kitty and Friends Hello Kitty Food Truck Toy Vehicle a
+~1
+19021268252|26.99||W|4171:56125|B|4.5|73|furReal Snuggles the Smiling Sloth, Interactive Plush Toy with 50+ Sound
+18039809163|19.97||W|4171:4172|B|4.7|223|Disney and Pixar Toy Story Imaginext Figures, Includes 7 3-inch Tall Fig
+18929813817|42.84||W|4171:4187|B|4.8|461|Monster High x Universal Monsters The Mummy Collector Doll with Wrap Dre
+18502751568|55.00||W|4171:4172|B|4.6|346|Star Wars The Black Series Clone Troopers Dogma & Hardcase Action Figure
+18792750137|29.97||W|5427:491351|B|4.7|103|Fisher-Price Little People DISNEY Princess Shimmer & Glow Dress Shop Tod
+18910566634|10.00|21.59|W|4171:4187|HE|4.8|62|Barbie Family & Friends Limitless Adventure Malibu Fashion Doll with 10+
+6621554069|10.97||W|4171:3438149|B|4.8|551|PAW Patrol Police Cruiser Vehicle with Collectible Chase Figure, Sustain
+~1
+19968169692|19.97||W|4171:4187||4.9|69|Ms. Rachel Playtime for Littles Toy Bundle with Learning Phone, Vehicle,
+843770007|9.97||W|4171:3318550|B|4.7|577|Kinetic Sand Purple 2lbs Moldable Sensory Toys for Kids in Resealable Ba
+7574762753|148.00|178.00|W|4171:1081404||4.0|1218|Ozark Trail 20 in Mountain Bicycle, 7-Speed, Small frame, Fits Riders 3 
+#list wm-stocking-stuffers page=2 count=1864 maxPage=25
+~2
+=19853451800
+~1
+=19585201654
+=19584424890
+~2
+=20655268432
+=5203677632
+~1
+=5119394748
+=5326661410
+~2
+=20592062771
+~4
+20449421375|14.00|20.00|W|5438:1045799|HE|4.8|18|Free Assembly Women's Embellished Beanie Hat and Mittens Set, 2-Piece, G
+=15592822851
+=18836574486
+~2
+5629666978|27.67||W|4044:133012||4.7|1788|Allswell Glow Vanilla + Pear + Coconut Scented 4-Wick Spa Jar Candle, 40
+=806882183
+=14727461434
+=11609461276
+~2
+15036204063|6.97||W|1229749:1086045|BL|4.9|164|Pen+Gear Toile Hardcover College-Ruled Journal, 6 x 8 in, 240 Pages with
+=9262424769
+~1
+=19507467577
+=20256006906
+~1
+19349914537|16.97||W|1085666:6521388||4.8|53|Medicube PDRN Pink Niacinamide Whip Cleanser, 4.23 oz.
+=5022970176
+#list wm-stocking-stuffers page=3 count=1864 maxPage=25
+=20109020149
+256983253|13.95||M|4044:133012||5.0|3|Selfie Light Ring Led Circle Clip-on Selfie Fill Light with 36 Led Bubbl
+~2
+=20143605323
+824441864|8.97||W|1229749:2509573|B|4.5|217|Piccadilly Story of My Life Journal 12+ Blue Paperback 204 Pages
+=16970573987
+~1
+=17782206596
+14769668232|7.88||W|1105910:133161|BL|4.5|1403|onn 5000 mAh Portable Power Bank with USB-C and USB-A Ports, Black
+652746258|16.99||M|5438:1045799|BL|4.6|687|Genuine Leather Slim Bifold Wallets For Men - Mens Wallet RFID Blocking 
+~1
+5413345445|12.88||W|1085632:4032565|B|4.7|964|Starface Hydro-Star® Clear Pimple Patches - 32 Count
+=19626415526
+~1
+20062167933|12.97||W|4044:623679|B|5.0|10|Stainless Steel Gingerbread Man Christmas Tumbler and Phone Grip Ring Gi
+=2632609222
+32803180|1.28||W|6163033:2795380|B|4.6|3072|Hot Wheels Mystery Models Surprise Toy Car or Truck in 1:64 Scale (Style
+18206211829|14.47||W|1229749:1431586||4.8|24|Papier To Go, Guided Wellness Journal Undated, Spiral, Hardcover, B5 Siz
+~2
+7988056534|7.94|10.00|W|1085666:3316357|B|4.7|377|Kitsch Metal French Hair Pin - Gold for Elegant Hairstyles
+5022970177|6.88||W|4044:90548|B|4.0|6011|Mainstays Milk Frother, Battery-Powered Handheld Milk Frother Wand
+~1
+2372663936|39.99||M|1105910:133161||4.3|106|Belkin BoostCharge Wireless Power Bank 5K w/MagSafe Compatible 7.5W Char
+19603019864|1.47||W|3920:582361|B|4.8|67|Disney Pixar Toy Story 5 64-Page Coloring and Activity Book with Sticker
+~2
+20040562791|12.98||W|3920:1233541|B|5.0|22|Carl's Doomsday Scenario (Paperback)
+~1
+20109070149|8.25|12.00|W|5438:1045799|HLE|4.3|7|Ozark Trail Boys Performance Gloves, Sizes S-XL
+19489114193|3.48||W|5438:1045799|BL|4.7|182|Wonder Nation Boys Knit Gloves, 3 Pack
+~1
+1646341275|1.97||W|4125:546956|B|4.5|3857|Ozark Trail Mini Handheld LED Flashlight, 50 Lumens, 3 AAA Batteries Inc
+14801453418|8.49||W|1105910:133161||4.0|910|PopSockets Self-Adhesive Plant-Based Phone Grip with Kickstand and Swapp
+~3
+17332903310|49.92||W|3891:3906||4.6|23|Casio Men's Tan Solar Powered Analog-Digital 100mm Casual Watch AQS820W-
+#list wm-deals-toys page=4 count=326 maxPage=9
+~1
+16784602069|8.99|12.99|W|4171:1077545|C|4.8|21|Peppa Pig Siblings Beach Day Playset, Creative Summer Activities for Kid
+5152138759|17.84|25.49|W|4171:1096069|C|4.7|211|Baby Garfield Feature Plush
+12926911998|26.99|39.99|M|4044:2634414|HLE|4.2|157|Makeatree 4 ft Blue Artificial Small Christmas Tree with 50 Lights，Mini 
+~1
+17956515773|21.31|30.44|W|4171:3438149|C|4.9|29|VTech Baby Explore & Move with Puppy Electronic Learning Toy for Ages 6+
+10946372665|4.54|6.48|W|5967908:8640284|CL|4.5|29|Deddy Bear Blind PDQ
+~5
+19663906664|11.40|19.00|W|5438:133162|C|4.3|16|Avia Women's Hybrid Bike Shorts, 7″ Inseam, Sizes XS-XXXL
+12769810612|79.00|95.00|W|4171:4187|R|4.6|224|My Life As Harry Potter Herbology Classroom Playset, 41-Piece, for 18 in
+~1
+15690352722|33.99|42.99|M|4171:4187|P|3.8|36|Adorable 18-Inch Reborn Baby Doll - Realistic Details, Handmade Look, Cu
+17905223571|11.81|16.87|W|4171:3438149|C|5.0|27|VTech Baby Bark & Bop Dance Party, Electronic Learning Toy for Kids Ages
+544869071|94.99|171.99|M|4044:2634414|HE|4.4|1861|Best Choice Products 6ft Pre-Lit Christmas Pine Tree w/ Flocked Branches
+982522845|9.09|12.99|M|4171:1077545|R|5.0|26|Pack of 250 Play Coin Set - Includes 10 Half-Dollars, 40 Quarters, 50 Di
+3072072787|15.75|22.50|W|4171:14521|C|4.9|23|Justice 62″ Inflatable Mesh Lounger Pool Float, Ages 6+, Retro Beach Des
+891270204|99.97|119.99|W|4171:56125|RL|4.1|1785|LeapFrog LeapPad Academy Learning Tablet Green Plastic Silicone 3-8 Year
+5369411480|98.00|112.00|W|4171:133073|R|4.4|1666|6V Barbie Motorcycle Ride on, Max 1 mph, for Kids Ages 3+ Years, by Flyb
+~1
+5350496249|24.97|44.99|W|4171:3438149|R|4.3|236|Little Tikes 2-in-1 Pop 'n Pitch Trainer, Outdoor Sports Experience, Boy
+13909916390|85.49|157.99|M|4044:2634414|P|4.2|77|Best Choice Products 6ft Pre-Lit Purple Christmas Tree, Artificial Holid
+14679503173|9.94|14.97|W|4171:5178010|R|4.7|97|L.O.L. Surprise! Loves Minions Tots
+130008263|94.99|185.99|M|7796869:2250639|HE|4.3|474|Best Choice Products Kids Beginner 3-Piece Drum, Musical Instrument Set 
+~2
+20994259886|108.00|139.50|M|4044:2634414|C|4.4|32|OasisCraft 7FT Pre-Lit Christmas Tree with Remote & Bluetooth 300 LED Li
+~1
+15563418830|14.00|20.00|W|4171:2724815|C|4.6|110|Fuggler Fart Face 9 inch (Wide eyed Weirdo) Plush, Funny Ugly Monster St
+~1
+8619513588|3.82|5.99|W|1085632:1102349|R|4.6|50|Yummiland Num Nom Doll Characters Body Scents, Ages 4+
+20119756305||99.99|M|3944:1078524|HE|4.3|29|Alldocube Kids Tablet 8 Inch with Parental Controls, Pink Kid- Proof Cas
+20187750176|21.83|49.98|M|3944:133251|HE|4.3|234|Portable Bluetooth Speaker, Wireless Speaker, IPX7 Waterproof Outdoor Sp
+~2
+3605236426|88.00|129.99|W|4171:1081404|R|4.2|778|Huffy 12″ Paw Patrol Kids' Bike, Fits Riders 37″ - 42″, Pink, Youth, Gir
+17671012735|139.99|287.99|M|4125:5151478|C|4.6|66|UBesGoo Wagon Stroller for 2 Kids, High Seat & 5 Point Harness, Foldable
+#list wm-deals-toys page=5 count=326 maxPage=9
+17102505176|24.00|47.99|W|2637:615760|B|4.7|82|Star Wars Power Crystal Lightsaber, Costume Accessory, Lights up to 7 Co
+13585702937|76.29|95.39|M|3944:1229875|HE|4.2|107|NiceBuy Outdoor Waterproof Solar Powered Bluetooth Rock Speakers with TW
+19900759631|52.99|74.99|M|4044:103150|HE|4.0|273|LaoGeoRon 3ft Bean Bag Chair for Adults with Filling,Memory Foam Lazy Be
+7985450695|67.99|80.00|M|4044:2634414|C|4.3|81|Dextrus 6ft Snow Flocked Artificial Christmas Tree with 250 Lights, Pre-
+19717017776|9.00|15.00|W|5438:133162|C|4.2|53|Avia Women's Shine Bike Shorts, 5″ Inseam, Sizes XS-XXXL
+~2
+17284767015|138.00|228.00|W|4171:1081404|R|4.1|80|Concord Bikes Alaris Road Bike, 2x7 Speed, Pink, Small
+20804013103|44.99|49.99|M|4044:2634414|C|4.1|49|2PK 30 Inch Prelit Outdoor Christmas Trees Christmas Urn Pot Filler Snow
+459451530|79.99|157.99|M|4044:2634414|HE|4.2|163|Best Choice Products 6ft Pre-Lit Spruce Pencil Christmas Tree PreDecorat
+~1
+303509389|14.07|15.99|M|5438:1045799|R|4.4|131|Prosport Semi Rimless Sport Frame Bifocal Reading Sunglasses
+~1
+14331554749|40.27|49.99|M|3944:133251|HE|4.2|610|Portable CD Player Boombox with FM Radio, Bluetooth, and USB Port ,Stere
+~1
+1587640557|69.98|99.97|M|4044:2634414|C|4.2|32|Jostyle 4.5FT Pre-Lit Christmas Tree, Decorated with 300 Clear Lights an
+~1
+2957772008|4.97|6.44|W|4171:6331649|R|4.7|1275|Kid Connection Radio Control Fire Truck with Firefighter Figure
+55315152|49.99|93.99|M|4044:2634414|HE|4.0|1659|Best Choice Products 6ft Premium Hinged Artificial Christmas Pine Tree w
+~1
+17512912109|28.90|35.99|M|2637:615760|HLE|4.3|25|Funny Inflatable Capybara Costume Mascot Blow up Suits for Party Cosplay
+~1
+18129102369|15.19|17.99|M|3944:133251|R|4.2|53|Jierben Bluetooth Speaker with Subwoofer, Bluetooth 5.4 Portable Speaker
+19104358322|23.97|26.99|W|5427:491351|R|4.7|74|Fisher-Price 2-in-1 Musical Penguin Activity Walker, Baby to Toddler Pus
+5649673079|12.69|20.99|M|2637:1042319|C|4.6|243|Joyfy 18 Pcs Halloween Rubber Ducks,Halloween Toys Rubber Ducks in Bulk 
+5471884448|19.77|24.99|M|4044:2634414|B|4.4|497|Ayieyill 5ft Halloween Tree Prelit, Pencil Pop up Tree with Light Hallow
+16100214982|14.99|19.99|M|3944:133251|C|4.2|55|Charlore AI Language Translator Earbuds, 144 Languages Real-Time Transla
+~1
+3990730332|88.00|129.99|W|4171:1081404|R|4.2|1099|Huffy 12″ Paw Patrol Kids' Bike, Fits Riders 37″ - 42″, Blue, Youth, Boy
+386534941|85.72|142.84|M|4044:2634414|CL|3.8|28|Jostyle UL Certified 280 Clear Prelit Incandescent White Holiday Fraser 
+~1
+13331264813|17.99|19.99|M|3944:133251|H|4.1|285|Mini Karaoke Machine for Kids, Colorful LED Portable Bluetooth Singing S
+14580114593|29.97|34.97|W|5967908:8640284|R|4.7|185|Sanrio Hello Kitty and Friends - 18 inch Sleeping Plush Classic Hello Ki
+566331731|99.99|171.99|M|4044:2634414|P|4.2|110|Best Choice Products 6ft Artificial Tinsel Christmas Tree with Viral Twi
+5347507242|7.97|9.50|W|4171:4187|R|4.9|37|Wizarding World Harry Potter, 8-inch Ron Weasley Collectible Fashion Dol
+~3
+17113359588|7.67|10.97|W|4171:4187|R|4.5|65|L.O.L. Surprise! Mermaids Makeover Magic Tots Doll Playset
+~1
+#list wm-deals-video-games page=3 count=86 maxPage=3
+5298246066|29.97|53.30|W|2636:5170403|R|4.8|538|Stellar Blade - PlayStation 5
+796607846|19.97|24.99|W|2636:7899038|R|4.6|342|Grand Theft Auto: The Trilogy - The Definitive Edition - PlayStation 4
+17370057346|22.89|59.98|M|3944:1089430|HE|4.0|100|AYEDLOE Wireless Gaming Headset for PC, PS5, Switch, Mac with Bluetooth 
+565430989|13.66|18.21|M|2636:1229019|R|4.1|28|Gaming Headset with Mic - Wired Over-Ear Headphones with Microphone for 
+3467384063|19.67|24.88|W|3944:1089430|R|4.5|226|onn Wired Gaming Headset Compatible with Nintendo Switch/Switch OLED/Swi
+150805682|29.97|69.99|W|2636:5170403|R|4.6|204|Ratchet and Clank: A Rift Apart - Playstation 5
+#esrb 5298246066:M 796607846:M 150805682:E10

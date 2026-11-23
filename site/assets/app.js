@@ -165,6 +165,7 @@
       s += 18 + 8 * Math.min(n, 3);
     } else if (it.category === 'giftcards') s -= 8;
     if (it.tags.includes('hot')) s += 9;
+    if (it.pick) s -= 10; // store best sellers come after the hand-picked gifts that fit as well
     if (it.tags.includes('new')) s += 4;
     if (deal) s += 6 + Math.min(10, deal.pct * 40);
     if (Number.isFinite(budget)) s += 6 * Math.min(1, price / Math.max(budget, 1));
@@ -192,7 +193,9 @@
   function addGift(personId, giftId) {
     const p = person(personId);
     if (!p || !BYID[giftId] || p.items.some((x) => x.gift === giftId)) return false;
-    p.items.push({ uid: uid(), gift: giftId, paid: null, status: 'idea', note: '', added: new Date().toISOString() });
+    const g = BYID[giftId];
+    p.items.push(Object.assign({ uid: uid(), gift: giftId, paid: null, status: 'idea', note: '', added: new Date().toISOString() },
+      g.pick ? { name: g.name, url: g.price_url || (g.offers[0] || {}).url || '' } : {}));
     state.lastAdded = { gift: giftId, person: personId };
     state.lists.shortlist = state.lists.shortlist.filter((g) => g !== giftId);
     saveLists();
@@ -344,7 +347,7 @@
           ${mark ? markerSvg(draw) : ''}
           ${people.length ? `<div class="on-list" aria-hidden="true">${people.slice(0, 4).map((p) => `<span class="initial" style="--mark:${p.color}">${esc(initial(p.name))}</span>`).join('')}</div>` : ''}
           <button class="gift-title" type="button" data-open="${esc(it.id)}">${esc(it.name)}</button>
-          <div class="gift-meta">${who ? `<span class="visually-hidden">${esc(who)}</span>` : ''}${esc(it.brand)}, ${esc(ageText(it))}${it.rating ? `, rated ${esc(it.rating)}` : ''}</div>
+          <div class="gift-meta">${who ? `<span class="visually-hidden">${esc(who)}</span>` : ''}${esc(brandAges(it))}${it.rating ? `, rated ${esc(it.rating)}` : ''}</div>
           ${priceBlock(it, opts.compact ? 'sm' : '')}
         </div>
         ${opts.compact ? '' : `<p class="gift-blurb">${esc(it.blurb)}</p>`}
@@ -618,15 +621,15 @@
     const now = new Date();
     $('#dates').innerHTML = keyDates(now).map((d) => { const n = daysUntil(d.date, now);
       return `<div class="date-card ${d.big ? 'is-big' : ''} ${n >= 0 && n <= 7 && !d.big ? 'is-soon' : ''} ${n < 0 ? 'is-past' : ''}"><span class="when">${esc(d.label)}</span><span class="d">${esc(d.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }))}</span><span class="when">${whenText(n)}. ${esc(d.tip)}</span></div>`; }).join('');
-    const deals = ITEMS.map((it) => ({ it, d: dealInfo(it) })).filter((x) => x.d).sort((a, b) => b.d.pct - a.d.pct);
+    const deals = ITEMS.filter((it) => !isPick(it)).map((it) => ({ it, d: dealInfo(it) })).filter((x) => x.d).sort((a, b) => b.d.pct - a.d.pct);
     const live = DATA.live_prices || 0;
     const bf = daysUntil(keyDates(now)[0].date, now);
     const bfNote = bf === 0 ? ' Black Friday is today.' : bf === 1 ? ' Black Friday is tomorrow.' : bf > 1 && bf <= 21 ? ` Black Friday is in ${bf} days.` : '';
     $('#deal-list').innerHTML = deals.length ? `<div class="rows">${deals.map(({ it, d }) => `<div class="row"><div><button class="gift-title" type="button" data-open="${esc(it.id)}">${esc(it.emoji)} ${esc(it.name)}</button><div class="cell-sub">${esc(retName(it.price_retailer))} has it for ${money(it.price)}, ${money(d.save)} (${Math.round(d.pct * 100)}%) below the usual ${money(it.typical)}${it.regular ? `; the store lists it as was ${money(it.regular)}` : ''}.</div></div><button class="btn btn-sm btn-accent" type="button" data-add="${esc(it.id)}" aria-haspopup="menu">Add to list</button></div>`).join('')}</div>`
       : `<div class="empty"><strong>${live ? 'No tracked gift is below its usual price right now.' : 'No store prices have been read yet.'}</strong><span>${live ? `The price checker read ${live} store price${live > 1 ? 's' : ''}; none are at least 8% under the usual price.${bfNote}` : 'Every price on the site is a typical price until the price checker runs. It runs on its own twice a day; you can also start it now.'}</span>${live ? '' : '<button class="btn btn-sm btn-accent" type="button" data-rescrape>Refresh prices</button>'}</div>`;
-    const big = ITEMS.filter((it) => it.typical >= 150).sort((a, b) => b.typical - a.typical);
+    const big = ITEMS.filter((it) => !isPick(it) && it.typical >= 150).sort((a, b) => b.typical - a.typical);
     $('#big-list').innerHTML = `<div class="rows">${big.map((it) => { const p = priceInfo(it); return `<div class="row"><div><button class="gift-title" type="button" data-open="${esc(it.id)}">${esc(it.emoji)} ${esc(it.name)}</button><div class="cell-sub">${p.kind === 'live' ? `${esc(retName(p.retailer))} ${money(p.value)}, ${esc(ago(p.at))}; usually ${money(it.typical)}` : `Usually ${money(it.typical)}${it.range ? ` (${money(it.range[0])} to ${money(it.range[1])})` : ''}`}</div></div><span class="price sm">${money(p.value)}</span></div>`; }).join('')}</div>`;
-    const tracked = ITEMS.flatMap((it) => it.offers.map((o) => ({ it, o })));
+    const tracked = ITEMS.filter((it) => !isPick(it)).flatMap((it) => it.offers.map((o) => ({ it, o })));
     const byStore = {}; tracked.forEach((t) => { (byStore[t.o.retailer] = byStore[t.o.retailer] || []).push(t); });
     const sc = (DATA.scrape || {}).by_retailer || {};
     $('#tracked-list').innerHTML = `<p class="hint" style="margin:-6px 0 8px">${tracked.length} store links across ${Object.keys(byStore).length} stores. Add more with <code>scraper/add_link.py</code> or find them with <code>scraper/hotlists.py</code> (see README).</p>`
@@ -668,6 +671,39 @@
     });
   }
   const pickList = (k) => (PICKS && PICKS.lists[k]) || {};
+  // Store best sellers count as gift ideas too. A pick that is already one of the catalog's gifts stays with that gift;
+  // the rest become gift ideas of their own, and the same product at several stores becomes one idea with each store's link.
+  function pickItems() {
+    if (!PICKS) return [];
+    const typeInt = {};
+    DATA.items.forEach((it) => (it.interests || []).forEach((i) => { const m = (typeInt[it.type] = typeInt[it.type] || {}); m[i] = (m[i] || 0) + 1; }));
+    const groups = new Map();
+    PICKS.items.forEach((x) => {
+      if (x.gift || !TYPES[x.type]) return;
+      const key = x.name.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+      if (groups.has(key)) groups.get(key).push(x); else groups.set(key, [x]);
+    });
+    return [...groups.values()].map((xs) => {
+      xs.sort((a, b) => (a.price ?? 1e9) - (b.price ?? 1e9));
+      const x = xs[0]; const t = TYPES[x.type];
+      const best = xs.flatMap((q) => Object.entries(q.rank || {}).map(([k, n]) => ({ q, k, n }))).sort((a, b) => a.n - b.n)[0];
+      const where = best ? `#${best.n} on ${pickStore(best.q)}'s ${pickList(best.k).short || pickList(best.k).name || 'list'}` : `On ${pickStore(x)}'s lists`;
+      const stars = x.rating ? ` ${x.rating} stars${x.reviews ? ` from ${Number(x.reviews).toLocaleString('en-US')} reviews` : ''}.` : '';
+      const id = 'pick:' + x.id;
+      PICKS_BY_GIFT[id] = xs;
+      return {
+        id, pick: x.id, name: x.name, emoji: t.emoji || '🎁', category: x.category, type: x.type,
+        interests: Object.entries(typeInt[x.type] || {}).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([i]) => i),
+        ages: x.ages.slice(), typical: x.was || x.price || 0, tags: ['store'], blurb: `${where}.${stars}`, search: x.name,
+        stores: [...new Set(xs.map((q) => q.store))],
+        offers: xs.map((q) => ({ retailer: q.store, retailer_name: pickStore(q), url: q.url, sku: q.sku, price: q.price, checked_at: q.checked_at, label: 'Store best seller' })),
+        price: x.price, price_retailer: x.store, price_url: x.url, price_status: x.price ? 'live' : 'typical', price_checked_at: x.checked_at,
+        regular: x.was || undefined, history: [], lists: [],
+      };
+    });
+  }
+  const isPick = (it) => !!it.pick;
+  const brandAges = (it) => (it.brand ? `${it.brand}, ${ageText(it)}` : ageText(it).replace(/^./, (c) => c.toUpperCase()));
   const pickStore = (x) => ((PICKS && PICKS.stores[x.store]) || {}).name || retName(x.store);
   const pickOnSale = (x) => !!x.was || (x.flags || []).some((f) => ['deal', 'rollback', 'reduced', 'clearance'].includes(f));
   const pickAges = (x) => (x.ages[0] <= 1 && x.ages[1] >= 30 ? 'any age' : x.ages[1] >= 30 ? `ages ${x.ages[0]}+` : x.ages[0] === x.ages[1] ? `age ${x.ages[0]}` : `ages ${x.ages[0]}–${x.ages[1]}`);
@@ -804,7 +840,7 @@
     }).join('') : '';
     const sc = (DATA.scrape || {}).by_retailer || {};
     const counts = {};
-    ITEMS.forEach((it) => it.offers.forEach((o) => { counts[o.retailer] = (counts[o.retailer] || 0) + 1; }));
+    ITEMS.forEach((it) => { if (!isPick(it)) it.offers.forEach((o) => { counts[o.retailer] = (counts[o.retailer] || 0) + 1; }); });
     $('#store-directory').innerHTML = GROUPS.map(([g, label]) => {
       const rs = Object.entries(RET).filter(([, r]) => r.group === g);
       return `<div class="dir-group"><h3>${esc(label)}</h3><div class="dir-grid">${rs.map(([k, r]) => {
@@ -842,7 +878,7 @@
       ${tile(it, 'drawer-tile')}
       <div class="drawer-body">
         <div class="drawer-head"><h2 id="drawer-title">${esc(it.name)}</h2>
-          <div class="gift-meta">${esc(it.brand)}, ${esc(ageText(it))}${it.platforms ? `, for ${esc(it.platforms.join(', '))}` : ''}</div>
+          <div class="gift-meta">${esc(brandAges(it))}${it.platforms ? `, for ${esc(it.platforms.join(', '))}` : ''}</div>
           <div class="chips" style="display:flex;gap:5px;flex-wrap:wrap">${it.type ? `<button type="button" class="chip frost" data-type="${esc(it.type)}" title="Browse every gift of this type">${esc((TYPES[it.type] || {}).emoji || '')} ${esc(typeLabel(it))}</button>` : ''}${it.rating ? `<span class="chip ${it.rating === 'M' ? 'bad' : 'frost'}">ESRB ${esc(it.rating)}</span>` : ''}${it.interests.map((i) => `<span class="chip">${esc((INT[i] || {}).label || i)}</span>`).join('')}</div>
         </div>
         ${priceBlock(it, 'lg')}
@@ -1012,7 +1048,7 @@
     const runner = { 'github-actions': "GitHub's servers", 'self-hosted': 'the home computer', local: 'a computer (run by hand)' }[sc.runner] || sc.runner || '—';
     return `<dl class="kv"><dt>Store prices</dt><dd>${DATA.live_prices ? `${DATA.live_prices} gifts have a current store price (oldest ${esc(ago(DATA.prices_as_of))})` : 'None read yet; every price shown is a typical price'}</dd>
       <dt>Last check</dt><dd>${sc.mode === 'offline' && !sc.ok && !sc.failed ? 'Not run yet' : `${esc(fmtDate(DATA.generated_at))} on ${esc(runner)}`}</dd>
-      <dt>Links tracked</dt><dd>${sc.tracked_links ?? ITEMS.reduce((n, it) => n + it.offers.length, 0)} exact product pages</dd>
+      <dt>Links tracked</dt><dd>${sc.tracked_links ?? ITEMS.reduce((n, it) => n + (isPick(it) ? 0 : it.offers.length), 0)} exact product pages</dd>
       ${per ? `<dt>By store</dt><dd>${per}</dd>` : ''}
       <dt>Automatic</dt><dd>${esc(CFG.schedule || 'daily')}</dd>
       ${(sc.notes || []).length ? `<dt>Notes</dt><dd>${sc.notes.map(esc).join('<br>')}</dd>` : ''}</dl>`;
@@ -1358,8 +1394,9 @@
   }
   const typeLabel = (it) => (TYPES[it.type] || {}).label || '';
   function boot(isReload) {
-    ITEMS = DATA.items; BYID = Object.fromEntries(ITEMS.map((it) => [it.id, it])); RET = DATA.retailers || {}; INT = DATA.interests || {};
+    RET = DATA.retailers || {}; INT = DATA.interests || {};
     TYPES = DATA.types || {}; HOT = DATA.hot_lists || {}; CATS = DATA.categories || {};
+    ITEMS = DATA.items.concat(pickItems()); BYID = Object.fromEntries(ITEMS.map((it) => [it.id, it]));
     ITEMS.forEach(prepItem);
     if (state.browse.type && !TYPES[state.browse.type] && !CATS[state.browse.type.replace(/^cat:/, '')]) state.browse.type = '';
     state.find.interests = state.find.interests.filter((i) => INT[i]);
