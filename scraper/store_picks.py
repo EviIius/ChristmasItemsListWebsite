@@ -60,7 +60,24 @@ STORES = {
         "url": lambda sku: f"https://www.lego.com/en-us/product/{sku}",
         "own_seller": "LEGO",
     },
+    # Five Below: /products/<slug>; the slug ends in Five Below's style number.
+    "fivebelow": {
+        "name": "Five Below",
+        "site": "fivebelow.com",
+        "url": lambda sku: f"https://www.fivebelow.com/products/{sku}",
+        "own_seller": "Five Below",
+    },
+    # Barnes & Noble: the id is "<work id>-<EAN>"; /w/<work id>?ean=<EAN> redirects to the product page.
+    "barnesnoble": {
+        "name": "Barnes & Noble",
+        "site": "barnesandnoble.com",
+        "url": lambda sku: "https://www.barnesandnoble.com/w/{}?ean={}".format(*sku.split("-", 1)),
+        "own_seller": "Barnes & Noble",
+    },
 }
+
+# Product ids are numbers, except Five Below's (the product's URL slug) and Barnes & Noble's ("<work id>-<EAN>").
+SKU_FORMS = {"fivebelow": r"[a-z0-9][a-z0-9-]*", "barnesnoble": r"\d+-\d{13}"}
 
 # key: (name, short name, url, kind, ages). kind: "hot" (the store's own best-seller and top lists),
 # "age" (the store's best sellers for an age group), "deals" (the store's deal pages), "tracked" (gifts the
@@ -88,6 +105,59 @@ LISTS = {
     "lego-deals": ("LEGO.com sales & deals", "LEGO deals", "https://www.lego.com/en-us/categories/sales-and-deals", "deals", None),
     "gs-toys": ("GameStop top-selling toys & games", "GameStop toys", "https://www.gamestop.com/toys-games?srule=top-sellers", "hot", None),
     "gs-collectibles": ("GameStop top-selling collectibles", "GameStop collectibles", "https://www.gamestop.com/collectibles?srule=top-sellers", "hot", None),
+    "fb-top-toys": ("Five Below Top Toy Gifts", "Five Below top toys", "https://www.fivebelow.com/categories/holiday/top-toy-gifts", "hot", None),
+    "fb-best-toys": ("Five Below best-selling games & toys", "Five Below best-selling toys", "https://www.fivebelow.com/categories/toys-and-games/best-selling-games-and-toys", "hot", None),
+    "fb-best-tech": ("Five Below best-selling tech", "Five Below best-selling tech", "https://www.fivebelow.com/categories/tech/best-selling-electronics-and-accessories", "hot", None),
+    "fb-best-beauty": ("Five Below best-selling beauty", "Five Below best-selling beauty", "https://www.fivebelow.com/categories/beauty/best-selling-beauty-products", "hot", None),
+    "fb-gifts-kids": ("Five Below gift finder: gifts for kids", None, "https://www.fivebelow.com/categories/holiday/gift-finder/for-kids", "age", (4, 12)),
+    "fb-gifts-her": ("Five Below gift finder: gifts for her", None, "https://www.fivebelow.com/categories/holiday/gift-finder/for-her", "age", (13, 30)),
+    "fb-gifts-him": ("Five Below gift finder: gifts for him", None, "https://www.fivebelow.com/categories/holiday/gift-finder/for-him", "age", (13, 30)),
+    "fb-under-5": ("Five Below gifts under $5", "Five Below gifts under $5", "https://www.fivebelow.com/categories/holiday/gift-finder/gifts-under-5-dollars", "hot", None),
+    "fb-stocking-stuffers": ("Five Below stocking stuffers", "Five Below stocking stuffers", "https://www.fivebelow.com/categories/holiday/stocking-stuffers", "hot", None),
+    "fb-gamer-gifts": ("Five Below top gamer gifts", None, "https://www.fivebelow.com/categories/gift-guide/top-gamer-gifts", "hot", None),
+    "fb-beauty-gifts": ("Five Below beauty gift sets", None, "https://www.fivebelow.com/categories/beauty/beauty-gift-sets", "hot", None),
+    "fb-squishies": ("Five Below squishy & fidget toys", "Five Below squishies", "https://www.fivebelow.com/categories/toys-and-games/squishy-and-fidget-toys", "hot", None),
+    "fb-plush": ("Five Below stuffed animals", None, "https://www.fivebelow.com/categories/toys-and-games/stuffed-animals", "hot", None),
+    "fb-blind-bags": ("Five Below blind bags & collectibles", None, "https://www.fivebelow.com/categories/toys-and-games/blind-bags-and-collectibles", "hot", None),
+    "fb-collector-gifts": ("Five Below gift guide: collector gifts", None, "https://www.fivebelow.com/categories/gift-guide/toy-gifts/collector-gifts", "hot", None),
+    "fb-cute-gifts": ("Five Below gift guide: cute gifts", None, "https://www.fivebelow.com/categories/gift-guide/toy-gifts/cute-gifts", "hot", None),
+    "fb-craft-gifts": ("Five Below gift guide: craft kit gifts", None, "https://www.fivebelow.com/categories/gift-guide/toy-gifts/craft-kit-gifts", "hot", None),
+    "fb-sensory-gifts": ("Five Below gift guide: squishy & sensory gifts", None, "https://www.fivebelow.com/categories/gift-guide/toy-gifts/squishy-sensory-gifts", "hot", None),
+    "fb-fan-gifts": ("Five Below gift guide: fan shop", None, "https://www.fivebelow.com/categories/gift-guide/fan-shop-wonderland", "hot", None),
+    "fb-kpop": ("Five Below KPop Demon Hunters shop", None, "https://www.fivebelow.com/categories/fan-shop/k-pop-demon-hunters", "hot", (6, 17)),
+    "fb-girls-night": ("Five Below gift guide: girls' night in", None, "https://www.fivebelow.com/categories/gift-guide/girls-night-in", "hot", (13, 30)),
+    "fb-glow": ("Five Below gift guide: ready, set, glow", None, "https://www.fivebelow.com/categories/gift-guide/ready-set-glow", "hot", (13, 30)),
+    "fb-cozy": ("Five Below gift guide: cozy loungewear", None, "https://www.fivebelow.com/categories/gift-guide/cozy-loungewear", "hot", (13, 30)),
+    "fb-headphones": ("Five Below headphones", None, "https://www.fivebelow.com/categories/tech/headphone-shop", "hot", None),
+    "fb-gaming-acc": ("Five Below gaming accessories", None, "https://www.fivebelow.com/categories/tech/gaming-accessories", "hot", None),
+    "fb-board-games": ("Five Below board games", None, "https://www.fivebelow.com/categories/toys-and-games/board-games-and-more", "hot", None),
+    "fb-new-toys": ("Five Below new toys & games", None, "https://www.fivebelow.com/categories/new-and-now/new-toys-games", "new", None),
+    "fb-new-tech": ("Five Below new tech", None, "https://www.fivebelow.com/categories/new-and-now/new-tech-electronics", "new", None),
+    "fb-new-beauty": ("Five Below new beauty", None, "https://www.fivebelow.com/categories/new-and-now/new-beauty", "new", None),
+    "bn-best-toys": ("Barnes & Noble Best Toys & Games of 2026", "B&N best toys of 2026", "https://www.barnesandnoble.com/collections/toys-games/best-toys-games-of-the-year", "hot", None),
+    "bn-toys-0-2": ("Barnes & Noble toys for ages 0-2", None, "https://www.barnesandnoble.com/collections/toys-games/ages-0-2", "age", (1, 2)),
+    "bn-toys-3-5": ("Barnes & Noble toys for ages 3-5", None, "https://www.barnesandnoble.com/collections/toys-games/ages-3-5", "age", (3, 5)),
+    "bn-toys-6-8": ("Barnes & Noble toys for ages 6-8", None, "https://www.barnesandnoble.com/collections/toys-games/ages-6-8", "age", (6, 8)),
+    "bn-toys-9-12": ("Barnes & Noble toys for ages 9-12", None, "https://www.barnesandnoble.com/collections/toys-games/ages-9-12", "age", (9, 12)),
+    "bn-toys-teens": ("Barnes & Noble toys & games for teens", None, "https://www.barnesandnoble.com/collections/toys-games/teens", "age", (13, 17)),
+    "bn-lego": ("Barnes & Noble building toys & LEGO", None, "https://www.barnesandnoble.com/collections/toys-games/building-lego", "hot", None),
+    "bn-plush": ("Barnes & Noble dolls & stuffed animals", None, "https://www.barnesandnoble.com/collections/toys-games/dolls-stuffed-animals", "hot", None),
+    "bn-collectibles": ("Barnes & Noble collectibles", None, "https://www.barnesandnoble.com/collections/toys-games/collectibles", "hot", None),
+    "bn-funko": ("Barnes & Noble Funko", None, "https://www.barnesandnoble.com/collections/toys-games/special-collections/funko", "hot", None),
+    "bn-games": ("Barnes & Noble games", "B&N games", "https://www.barnesandnoble.com/collections/toys-games/games", "hot", None),
+    "bn-tcg": ("Barnes & Noble collectible card games", None, "https://www.barnesandnoble.com/collections/toys-games/games/collectible-card-games-1", "hot", None),
+    "bn-puzzles": ("Barnes & Noble puzzles", None, "https://www.barnesandnoble.com/collections/toys-games/puzzles", "hot", None),
+    "bn-advent": ("Barnes & Noble advent calendars", None, "https://www.barnesandnoble.com/collections/toys-games/advent-calendars", "hot", None),
+    "bn-gifts": ("Barnes & Noble gift ideas", None, "https://www.barnesandnoble.com/collections/stationery-gifts/gift-giving", "hot", None),
+    "bn-best-books": ("Barnes & Noble bestselling books", "B&N bestselling books", "https://www.barnesandnoble.com/collections/books/bestselling-books", "hot", None),
+    "bn-books-of-year": ("Barnes & Noble best books of the year", None, "https://www.barnesandnoble.com/collections/books/awards/best-books-of-the-year", "hot", None),
+    "bn-kids-books-0-2": ("Barnes & Noble books for ages 0-2", None, "https://www.barnesandnoble.com/collections/books/kids/ages-0-2", "age", (1, 2)),
+    "bn-kids-books-3-5": ("Barnes & Noble books for ages 3-5", None, "https://www.barnesandnoble.com/collections/books/kids/ages-3-5", "age", (3, 5)),
+    "bn-kids-books-6-8": ("Barnes & Noble books for ages 6-8", None, "https://www.barnesandnoble.com/collections/books/kids/ages-6-8", "age", (6, 8)),
+    "bn-kids-books-9-12": ("Barnes & Noble books for ages 9-12", None, "https://www.barnesandnoble.com/collections/books/kids/ages-9-12", "age", (9, 12)),
+    "bn-teen-books": ("Barnes & Noble teen & YA books", "B&N teen books", "https://www.barnesandnoble.com/collections/books/teens-ya", "age", (13, 17)),
+    "bn-manga": ("Barnes & Noble manga & graphic novels", None, "https://www.barnesandnoble.com/collections/books/graphic-novels-comics-manga", "hot", (13, 30)),
+    "bn-boxed-sets": ("Barnes & Noble kids' boxed sets", None, "https://www.barnesandnoble.com/collections/books/kids-boxed-sets", "hot", (5, 12)),
     "wm-tracked": ("Gifts this site tracks at Walmart", None, None, "tracked", None),
 }
 
@@ -95,14 +165,14 @@ FLAGS = {"B": "best-seller", "H": "deal", "R": "rollback", "P": "reduced", "C": 
          "E": "event", "O": "sold-out"}
 
 # Walmart's data drops some accented letters; put the common ones back.
-NAME_FIXES = {"Pokmon": "Pokémon", "Ragnark": "Ragnarök", "Mbapp ": "Mbappé ", "Smarwatch": "Smartwatch"}
+NAME_FIXES = {"Pokmon": "Pokémon", "Pok?mon": "Pokémon", "J?ADORE": "J'ADORE", "World’S": "World's", "Ragnark": "Ragnarök", "Mbapp ": "Mbappé ", "Smarwatch": "Smartwatch"}
 
 # Not gifts this site covers: groceries, big appliances, TVs, phones on carrier plans, tools, holiday decorations,
 # bedding, furniture and baby gear. Checked before the product-type rules.
 DROP_TERMS = [
     r"christmas tree", r"xmas tree", r"artificial .*tree", r"freezer", r"refrigerator", r"mini fridge", r"range oven",
     r"wall oven", r"gas range", r"vacuum cleaner", r"upright vacuum", r"deep cleaner", r"cake mix", r"biscuit mix",
-    r"olive oil", r"cooking oil", r"waffles", r"gummy", r"ring pop", r"lollipop", r"candy filled", r"chocolate kisses",
+    r"olive oil", r"cooking oil", r"waffles", r"gummy(?!.*(?:squish|slime|toy))", r"ring pop", r"lollipop", r"candy filled", r"chocolate kisses",
     r"energy drink", r"red bull", r"meat & cheese", r"charcuterie", r"gourmet", r"holiday treats", r"spices",
     r"iphone \d+", r"iphone duo", r"prepaid smartphone", r"straight talk", r"verizon", r"t-mobile",
     r"smart tv", r"\d+[″\"]? class", r"\d+ class", r"qled", r"crystal uhd", r"mini led", r"soundbar",
@@ -125,8 +195,13 @@ DROP_TERMS = [
     r"robot vacuum", r"tea kettle", r"corkscrew", r"milk frother", r"treadmill", r"sauna", r"playpen", r"play yard", r"swaddle",
     r"wash cloths", r"gummies", r"mini jars", r"popcorn", r"hershey", r"cocoa set", r"bottles of", r"fish ?finder|humminbird",
     r"luggage|carry on|checked\)", r"gps\b",
+    r"hot cocoa (?:bomb|mix)", r"cocoa bomb", r"mini drinks", r"alani nu", r"candy slime", r"gumm(?:y|i) candy", r"handheld vacuum",
+    r"storage chair", r"desktop fan", r"heated car cushion", r"cable end protectors", r"exfoliating gloves", r"cocoa butter formula",
+    r"puzzle glue", r"\d+ ?pc pdq", r"count display$",
 ]
 DROP = re.compile(r"\b(?:" + "|".join(DROP_TERMS) + r")", re.I)
+# Gifts a drop term would catch: craft kits that make ornaments or wreaths, puzzles of cookies, Funko figures.
+KEEP = re.compile(r"\b(?:diy|make your own|decorate your own|paint your own|digital photo|diamond art|puzzle(?! glue| conserver)|funko)\b", re.I)
 
 # (product type, pattern) — first match wins, so specific rules come before general ones.
 RULES = [
@@ -190,6 +265,7 @@ RULES = [
     ("vinyl", r"\bvinyl\b(?!.*(?:plush|figure))|splatter|\blp\b"),
     ("picture-books", r"board book|sound book|padded board|little golden books|picture book|electronic book"),
     ("kids-books", r"wimpy kid|dog man|advent christmas countdown.*books|lego make your own movie"),
+    ("kids-books", r"dog man|diary of a wimpy kid|cat kid comic|captain underpants|baby-sitters club|magic tree house|junie b\. jones|amelia bedelia|wild robot|bob books"),
     ("manga", r"\bmanga\b|graphic novel"),
     ("ya-books", r"court of|new moon|sixth faction|raven boys|nothing like the movies"),
     ("adult-books", r"a novel|mamba mentality|dungeon crawler"),
@@ -245,8 +321,10 @@ BOOK_PATHS = ("3920", "5440")  # Walmart's Books departments
 
 
 def classify(name: str, path: str = "", ages: list | None = None) -> str | None:
-    if DROP.search(name):
+    if (DROP.search(name) and not KEEP.search(name)) or FIVEBELOW_DROP.match(path or ""):
         return "drop"
+    if (path or "").startswith("bnbook:") and not re.search(r"\b(?:puzzle|game|kit|deck|journal|notebook|tarot|plush|desktop|wacky waving|talking button|crystal ball|lucky cat|mood lamp|sticker book)\b", name, re.I):
+        return book_type(name, ages)  # Barnes & Noble says it's a book (hardcover, paperback, board book)
     if re.match(r"[a-z-]+:", path or ""):
         for rx, t in GAMESTOP_PATHS:
             if re.match(rx, path):
@@ -254,10 +332,20 @@ def classify(name: str, path: str = "", ages: list | None = None) -> str | None:
     for t, rx in RULES:
         if rx.search(name):
             return t
+    if (path or "").startswith("fb:"):  # Five Below's aisle, when the name alone doesn't say
+        for rx, t in FIVEBELOW_PATHS:
+            if re.match(rx, path):
+                return t
     if path.split(":")[0] in BOOK_PATHS or re.search(r"\((?:hardcover|paperback|board book)\)", name, re.I):
-        lo = (ages or [18])[0]
-        return "picture-books" if lo <= 5 else "kids-books" if lo <= 12 else "ya-books" if lo <= 17 else "adult-books"
+        return book_type(name, ages)
     return None
+
+
+def book_type(name: str, ages: list | None) -> str:
+    if re.search(r"\bmanga\b|graphic novel|, vol\. \d", name, re.I):
+        return "manga" if not ages or ages[0] >= 13 else "kids-books"
+    lo = (ages or [18])[0]
+    return "picture-books" if lo <= 5 else "kids-books" if lo <= 12 else "ya-books" if lo <= 17 else "adult-books"
 
 
 def ages_from_name(name: str) -> tuple[int, int | None] | None:
@@ -351,6 +439,34 @@ RULES += [(t, re.compile(rx, re.I)) for t, rx in [
     ("shoes", r"slippers?\b|\bboots?\b|\bshoes?\b"),
     ("clothing", r"pants|shirt|dress|jogger|sleep top|footed sleep|crew &"),
 ]]
+# Barnes & Noble and Five Below names (Nov 24): games, plush, puppets, putty and the like.
+RULES += [(t, re.compile(rx, re.I)) for t, rx in [
+    ("board-games", r"exploding kittens|gloomhaven|wingspan|sushi go|rummikub|kanoodle|guess who|what do you meme|happy little dinosaurs"
+                    r"|boardgame|game of the (?:year|season)|magical athlete|monkey around|forbidden legacy|endearment|midnight on the christmas express|qboid|mah ?jong"),
+    ("slime", r"thinking putty|scentsory putty|\bslimy\b"), ("dough", r"playfoam|kiddough"),
+    ("squishies", r"squeeze toy|slimygloop"), ("pretend-play", r"puppet|critter clinic|lightsaber"),
+    ("baby-activity", r"leapfrog|geared to steer|activity soft cube|soft book|pop & surprise"),
+    ("plush", r"soft toy|cuteeze|barnsie bear|tuxedo kitten|fuggler|fuggs\b"), ("vehicles", r"tracktors|char car|matchbox|\bmoto asst"),
+    ("action-figures", r"schleich|lava scorpion"), ("science-kits", r"i dig it|thames & kosmos|gyroscope"),
+    ("craft-kits", r"illustory|diamond (?:art|painting)"), ("blocks", r"build(?:able)? blocks"), ("dolls", r"styling head|fashion dol"),
+    ("kids-tech", r"handheld gaming console|microphone"), ("kids-makeup", r"cosmetic set"), ("accessories", r"tripod|hand warmers"),
+    ("active-games", r"ping pong|billiards|desktop arcade"), ("charms", r"trinket charms|gacha"), ("bags", r"duffel|duffle"),
+    ("pc-gaming", r"wireless mouse|gaming mouse|wrist rest"), ("lighting", r"book light|table lamp|portable table l"),
+    ("figures", r"\bhippers\b"), ("sports-gear", r"glove, ball|bat kit"), ("drinkware", r"tritan|double-wall insul"),
+]]
+# Checked before every other rule: names the general rules sort wrongly (sports-card boxes aren't sports gear, a Funko
+# "POP Television" figure isn't a coat, a Ghibli plush beanbag isn't furniture).
+RULES[:0] = [(t, re.compile(rx, re.I)) for t, rx in [
+    ("tcg", r"panini|topps|bowman|mega box|blaster box"), ("active-games", r"desktop arcade|tabletop arcade"),
+    ("kids-tech", r"portable video gaming console|minimobile"),
+    ("board-games", r"rock 'em sock 'em|santa cookie elf candy snowman|karaoke chaos"),
+    ("craft-kits", r"make your own snow globe|crochet .*set|crochet kit"), ("decor", r"snow globe"), ("lighting", r"string light"),
+    ("plush", r"fluffy beanbag|plush .*beanbag"),
+    ("figures", r"\bpop (?:television|movies|animation|tv|rocks|games|books|premium|jumbo)\b|pocket pop"),
+]]
+# Lists whose unsorted products are books (Barnes & Noble's exclusive editions don't carry a format).
+BOOK_LISTS = {"bn-best-books", "bn-books-of-year", "bn-kids-books-0-2", "bn-kids-books-3-5", "bn-kids-books-6-8",
+              "bn-kids-books-9-12", "bn-teen-books", "bn-boxed-sets"}
 
 # GameStop's department and aisle (the first two parts of its product address) say what a product is.
 GAMESTOP_PATHS = [
@@ -361,6 +477,34 @@ GAMESTOP_PATHS = [
     (r"^collectibles:", "action-figures"), (r"^gift-cards:", "gift-cards"), (r"^clothing:t-shirts", "clothing"),
     (r"^clothing:", "accessories"),
 ]
+
+# Five Below's aisles (the last part of its category path), used when the product name doesn't match a rule.
+FIVEBELOW_DROP = re.compile(r"fb:(?:chocolate|christmas-candy|gummy-candy|candy|cleaning|hand-soaps-and-sanitizers|personal-care|bins-and-boxes|desk-supplies|cables)$")
+FIVEBELOW_PATHS = [
+    (r"fb:(?:squishy-and-fidget|a-mart-snacks-toys-and-more)$", "squishies"), (r"fb:slime-kits$", "slime"),
+    (r"fb:(?:squishmallows|plush|other-plush|character-plush|stuffed-animals-and-plush-toys)$", "plush"),
+    (r"fb:(?:blind-bags|clips)$", "blind-boxes"), (r"fb:(?:vinyl|funko-vinyl-action-figures)$", "figures"),
+    (r"fb:(?:action-figures|spiderman-toys-and-sets)$", "action-figures"), (r"fb:dolls$", "dolls"), (r"fb:toy-cars$", "vehicles"),
+    (r"fb:(?:construction|lego)$", "blocks"), (r"fb:(?:board-games|games)$", "board-games"), (r"fb:(?:cards|trading-cards)$", "card-games"),
+    (r"fb:puzzles$", "puzzles"), (r"fb:science-kits$", "science-kits"), (r"fb:journals$", "journals"),
+    (r"fb:(?:painting-kits|craft-kits-and-sets|crochet-kits|jewelry-kits|beauty-kits|branded-kits|craft-basket|crafts-and-activities)$", "craft-kits"),
+    (r"fb:(?:coloring-supplies|children-s-coloring|stickers|1-supplies)$", "art-supplies"),
+    (r"fb:(?:bluetooth-speakers-headphones-and-earbuds|speakers)$", "speakers"), (r"fb:earbuds$", "earbuds"),
+    (r"fb:(?:bluetooth-headphones-and-earbuds|wired-headphones|kid-safe-headphones)$", "headphones"),
+    (r"fb:(?:cables-and-chargers|wall-chargers)$", "chargers"), (r"fb:(?:gaming-gear|gamer-basket)$", "controllers"),
+    (r"fb:(?:phone-accessories|phone-cases|earbud-cases|computer-accessories|iphone-15-models|hats|bag-charms-and-more)$", "accessories"),
+    (r"fb:bags-and-wallets$", "bags"), (r"fb:(?:lip-gloss|lip-balm-and-lip-gloss)$", "lip"),
+    (r"fb:perfume-cologne-and-body-mist$", "fragrance"), (r"fb:(?:makeup|palettes|fake-nails)$", "makeup"),
+    (r"fb:(?:bath-and-body|body-care|skin-care|skincare-and-beauty|beauty-gift-sets|best-selling-beauty|amora-glow|travel-care)$", "skincare"),
+    (r"fb:(?:graphic-tees|lounge-tops|lounge-bottoms|other-tops|young-men-s-tops-and-tees|apparel-and-accessories)$", "clothing"),
+    (r"fb:(?:slippers-and-cozy-socks|throw-blankets|throw-pillows|bedding)$", "cozy"), (r"fb:(?:decor-and-lighting|home-decor)$", "decor"),
+    (r"fb:tumblers-and-bottles$", "drinkware"), (r"fb:(?:footballs|basketballs|outdoor)$", "sports-gear"),
+    (r"fb:(?:toning-and-conditioning|recovery)$", "fitness"), (r"fb:smart-home$", "kids-tech"),
+]
+# When neither the name nor the aisle sorts a product, the store list it came from can (Barnes & Noble's aisles).
+LIST_TYPES = {"bn-plush": "plush", "bn-puzzles": "puzzles", "bn-games": "board-games", "bn-tcg": "tcg", "bn-funko": "figures",
+              "bn-collectibles": "figures", "bn-lego": "blocks", "fb-squishies": "squishies", "fb-plush": "plush",
+              "fb-blind-bags": "blind-boxes", "fb-board-games": "board-games", "fb-headphones": "headphones"}
 
 GAME_TYPES = {"switch-games", "ps-xbox-games", "any-console-games"}
 ESRB_MIN = {"E": 1, "E10": 10, "T": 13, "M": 17, "RP-M": 17, "AO": 18}
@@ -446,8 +590,8 @@ def parse_capture(path: Path, later_files: bool = False) -> dict:
             if len(f) != 9:
                 raise ValueError(f"{path.name}:{n}: expected 9 fields, found {len(f)}")
             pid = f[0].split()[0]
-            if not pid.isdigit():
-                raise ValueError(f"{path.name}:{n}: product id {pid!r} isn't a number")
+            if not re.fullmatch(SKU_FORMS.get(store, r"\d+"), pid):
+                raise ValueError(f"{path.name}:{n}: product id {pid!r} isn't a {store} product id")
             products[pid] = {"price": num(f[1]), "was": num(f[2]), "seller": f[3], "path": f[4], "flags": f[5],
                              "rating": num(f[6]), "reviews": int(f[7]) if f[7].isdigit() else None, "name": f[8].split(" ~asked=")[0]}
             if f[0] != pid or "~asked=" in f[8]:
@@ -539,6 +683,10 @@ def build(catalog: dict, captures: list[dict], now: dt.datetime | None = None) -
         if t == "drop":
             stats["dropped"] += 1
             continue
+        if t is None:
+            t = next((LIST_TYPES[k] for k in in_lists if k in LIST_TYPES), None)
+        if t is None and set(in_lists) & BOOK_LISTS and not re.search(r"\b(?:puzzle|game|kit|deck|plush)\b", raw, re.I):
+            t = book_type(raw, hint)
         if t is None:
             stats["unsorted"].append(name)
             continue

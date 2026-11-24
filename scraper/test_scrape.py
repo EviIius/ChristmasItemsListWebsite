@@ -468,5 +468,37 @@ check(sp.classify("Grand Theft Auto VI - PlayStation 5 (Code in Box)", "video-ga
       and sp.STORES["lego"]["url"]("76476") == "https://www.lego.com/en-us/product/76476",
       "store picks: GameStop's aisles sort its products; GameStop and LEGO links are built from the product number")
 
+with tempfile.TemporaryDirectory() as d:
+    good = Path(d) / "fivebelow.txt"
+    good.write_text("#run fivebelow 2026-11-24T00:48:33Z\n#list fb-top-toys page=1 count=519\n"
+                    "worlds-smallest-nee-doh-toy-9198135|5||W|fb:squishy-and-fidget|B|||World's Smallest NeeDoh\n", encoding="utf-8")
+    bn_good = Path(d) / "bn.txt"
+    bn_good.write_text("#run barnesnoble 2026-11-24T00:56:48Z\n#list bn-best-toys page=1 count=51\n"
+                       "1150506380-0673419421980|22.99||W|bn:lego||||LEGO Botanicals Rocking Plants 11506\n", encoding="utf-8")
+    bad = Path(d) / "bad.txt"
+    bad.write_text("#run barnesnoble 2026-11-24T00:56:48Z\n#list bn-best-toys page=1\nlego-botanicals|22.99||W|||||LEGO Botanicals\n", encoding="utf-8")
+    try:
+        sp.parse_capture(bad)
+        bad_refused = False
+    except ValueError:
+        bad_refused = True
+    fb_ok = "worlds-smallest-nee-doh-toy-9198135" in sp.parse_capture(good)["products"]
+    bn_ok = "1150506380-0673419421980" in sp.parse_capture(bn_good)["products"]
+check(fb_ok and bn_ok and bad_refused
+      and sp.STORES["fivebelow"]["url"]("worlds-smallest-nee-doh-toy-9198135") == "https://www.fivebelow.com/products/worlds-smallest-nee-doh-toy-9198135"
+      and sp.STORES["barnesnoble"]["url"]("1150506380-0673419421980") == "https://www.barnesandnoble.com/w/1150506380?ean=0673419421980",
+      "store picks: Five Below ids are product slugs, Barnes & Noble ids are work id + EAN, and both build the product link")
+check(sp.classify("Mystery Dumpling Penguin Edition Set", "fb:squishy-and-fidget") == "squishies"
+      and sp.classify("The Grinch Dr.Seuss Hot Cocoa Bomb 1.3oz", "fb:chocolate") == "drop"
+      and sp.classify("Gummy Buddies Scented Squishy Toy", "fb:squishy-and-fidget") == "squishies"
+      and sp.classify("Christmas Cookies 1000 Piece Puzzle") == "puzzles"
+      and sp.classify("LEGO Star Wars New Republic X-Wing Starfighter Building Toy - Build and Display") == "lego"
+      and sp.classify("Goodnight Moon (Board Book) by Margaret Wise Brown", "bnbook:board-book", [1, 2]) == "picture-books"
+      and sp.classify("Jujutsu Kaisen, Vol. 1 by Gege Akutami", "bnbook:paperback", [13, 30]) == "manga"
+      and sp.classify("Desktop Skee-Ball: Give it a roll! by Running Press", "bnbook:paperback") != "adult-books"
+      and sp.classify("NFL 2023 Panini Select Football Mega Box") == "tcg"
+      and sp.classify("POP Television: Buffy- Punk Spike with Coat (B&N Exclusive)") == "figures",
+      "store picks: Five Below's aisles and Barnes & Noble's book formats sort their products; candy aisles are left out")
+
 print(f"\n{'All checks passed.' if not failures else f'{failures} check(s) failed.'}")
 sys.exit(1 if failures else 0)

@@ -1,0 +1,441 @@
+#run barnesnoble 2026-11-24T00:56:48Z
+#list bn-best-toys page=1 count=51
+1150506380-0673419421980|22.99||W|bn:lego||||LEGO Botanicals Rocking Plants 11506
+1146366008-0700304153760|25.99||W|||||Hues and Cues by Scott Brady
+1147198634-9780735385511|19.99||W|bn:peanuts-collection||||Peanuts Christmas Caroling 1000 Piece Puzzle
+1147705388-0681147097506|29.99||W|||||Barnsie Bear B&N Exclusive
+1150910759-0673419422024|29.99||W|bn:lego||||LEGO Botanicals Water Lilies 11511
+1150143865-0673419408615|59.99||W|bn:lego||||LEGO Star Wars Gingerbread AT-AT Walker 40806
+1149781978-0810171413543|19.99||W|||||Exploding Kittens Rage Mode (B&N Exclusive)
+1147224703-9780735387461|17.99||W|||||Michael Storrings Christmas at the Square 500 Piece Foil Puzzle
+1149559914-0850056808132|29.99||W|||||Magical Athlete by Richard Garfield and Takashi Ishida
+1150847266-0850068771363|59.99||W|||||Endearment Peacock Edition (B&N Exclusive)
+1149514219-0673419423717|89.99||W|bn:lego||||LEGO Ideas Peanuts: Snoopy's Doghouse 21368
+1146366253-0860001981704|39.99||W|||||Wavelength by Alex Hague, Justin Vickers and Wolfgang Warsch (2022 B&N Game of the Season)
+1148109770-0029877030811|49.99||W|||||Catan 6E by Klaus Teuber
+1151564759-4001505684456|59.99||W|||||Winnie the Pooh Plush
+1148891809-0673419408264|129.99||W|bn:lego||||LEGO Icons Holiday Express Train 10361
+1151303214-0850078252142|24.99||W|||||Midnight on the Christmas Express
+1149298166-0759751004323|49.99||W|||||Forbidden Legacy
+1149298165-0759751004330|29.99||W|||||Sushi Go Party Chef's Special
+1147127909-0894769000490|44.99||W|||||A Place For All My Books by Alex Cutler and Michael Mihealsick (B&N Exclusive) (Our 2025 Game of the Year)
+1151569635-0810186893620|24.99||W|||||Holiday Goose Plush Exclusive
+#list bn-toys-0-2 page=1 count=388
+1131133993-0767548106389|18.99||W|||||Brewster Black Lab
+1117796091-0767548130445|15.99||W|||||Bushy Fox
+1140495853-0092943440005|20.99||W|||||11" Clifford
+1146175986-9780593277089|14.99||W|||||Elephant and Piggie Mini Tote
+1009245051-9780641932649|36.99||W|||||Elephant & Piggie: Plush Toy
+1149160236-0081787542235|21.99||W|||||Miffy Halloween Pumpkin Costume 12"
+1122610499-0081787771000|21.99||W|||||13'' Llama Llama Plush
+1148211128-0773554080384|12.99||W|||||My First Tumbler- Soft Silicone 9oz.
+1146366280-0643356057641|21.99||W|||||Monkey Around by Department of Recreation
+1140034668-0062243344228|25.99||W|||||Battat - Geared to Steer Driving Wheel
+1148072194-9780735386204|12.99||W|||||Playful Pets 12 Piece Pouch Puzzle
+1146169928-0840183206147|15.99||W|||||J?ADORE ACTIVITY SOFT CUBE
+1148903459-0062243219922|36.99||W|||||B. Critter Clinic
+1126413809-0081787460843|17.99||W|||||Classic Pooh Piglet 9'' Plush
+1129148243-3417766013002|29.99||W|||||LeapFrog Phonics Fun Animal Bus
+1127238284-0878318007260|14.99||W|||||B&N Exclusive JADORE ZOO ANIMALS SOFT BOOK
+1118588407-3417761511008|22.99||W|||||Pop & Surprise Animal Train
+1143917380-3417766094001|19.99||W|||||LeapFrog Stack & Spin Shapes Hamburger
+1139203790-0819303005892|30.99||W|||||Toad 9" Soft Toy
+1139203789-0819303005885|30.99||W|||||Frog 12" Soft Toy
+#list bn-toys-3-5 page=1 count=1132
+1140778078-5037832222053|12.99||W|||||4 X 4 JUNIOR TRACKTORS ASSORTMENT
+1139822879-5037832315144|9.99||W|||||T-REX HAND PUPPET
+1140116075-0074299018060|8.99||W|||||Hot Wheels 5-Car Pack (Assortment, Styles Vary)
+1113109879-9781878257536|9.99||W||O|||Cat's Cradle: A Book of String Figures
+=1131133993-0767548106389
+1129367584-0020373218086|24.99||W|||||Calico Critters Comfy Living Room
+1021108965-0638348028457|24.99||W|||||Orange Tabby Kitten Puppet
+=1117796091-0767548130445
+1151918888-0705105858272|14.95||W|||||Crazy Aaron's Crystal Clear- Liquid Glass 4" Large Thinking Putty
+=1140495853-0092943440005
+1141417899-0086002019066|14.99||W|||||Educational Insights Playfoam Combo 8 Pack
+1139822870-5037832315083|9.99||W|||||GREAT WHITE SHARK HAND PUPPET
+1115419178-0767548127575|26.99||W|||||Spatter Leopard Cub Plush
+1126846952-0861025000402|31.99||W|||||IlluStory - Create Your Own Book
+1130012733-0887961705461|13.99||W|||||Hot wheels Monster Trucks 1:24 Assorted
+1130012732-0887961705430|9.99||W|||||Hot Wheels Monster Trucks 1:64 Assorted 2-Pack
+1151918885-0752830987180|8.99||W|||||Gumballer Scentsory Putty 2.75" Tin
+1149756958-0887961403725|11.99||W|||||CARS CHAR CAR 2PK 'DXV99 - ASSORTMENT
+1131295117-0794764012521|7.99||W|||||Eric Carle Alphabet Go Fish Card Game
+1147461040-0814743014459|2.99||W|||||I Dig It! Dinos - Blind Egg Assortment
+#list bn-toys-6-8 page=1 count=1405
+1146245699-0810119121004|29.99||W|||||GLOW IT! BY DOCTOR SQUISH - SQUISHY MAKER
+1125543037-0078206020016|7.99||W|||||UNO CARD GAME Soft pack
+=1140778078-5037832222053
+=1139822879-5037832315144
+=1113109879-9781878257536
+1151902110-0713757875226|14.99||W|||||Crazy Aarons Tidal Wave Magnetic Thinking Putty
+1151902192-0718122786855|14.99||W|||||Strange Attractor Magnetic Crazy Aarons Thinking Putty
+1150325733-0810031363315|20||W|||||Happy Little Dinosaurs: Base Game
+=1139822870-5037832315083
+1126588608-0847915180119|7.99||W|||||Qboid
+1140508973-0020373218369|14.99||W|||||Calico Critters Breakfast Playset, Dollhouse Furniture and Accessories with "Working" Features
+1140897776-0638348031792|24.99||W|||||Tuxedo Kitten
+1143891968-0081787917699|29.99||W|||||Curious George PJ Plush TV Version
+1147542405-0092633312575|24.99||W|||||Cuddly Kitten
+1141116481-0767548144299|28.99||W|||||Dunham Shiba Inu
+1149586256-4005555022220|17.99||W|||||Kpop Demon Hunters - Happy fans, happy Monmoon! 100 pc Puzzle
+1149664466-0714043011915|19.99||W|||||Guess Who? Classic Edition
+1146933062-0714043011267|34.99||W|||||Monopoly: The 1980s Edition
+1147106602-0081787541375|21.99||W|||||Miffy 12" Cuteeze White
+1143164770-0081787917668|21.99||W|||||Curious George 12" Plush
+#list bn-toys-9-12 page=1 count=655
+=1146245699-0810119121004
+1150420102-4002051686390|19.99||W|||||Fourth Wing Jigsaw Puzzle - Dragons
+1149771326-0724819267828|19.99||W|||||Christmas Cookies 1000 Piece Puzzle
+1149919646-0689196523038|3.99||W|||||Holiday Tiny Playing Card Asst. (6 styles, 4 of each)
+=1150325733-0810031363315
+1149588648-0724819267774|19.99||W|||||White Mountain Puzzles - Autumn In The City 1000 Piece Puzzle
+1149827750-4005555019336|18.99||W|||||Christmas Boutique 500 pc Puzzle
+=1126588608-0847915180119
+1149559842-0840391152526|6.99||W|||||Avatar The Last Airbender Playing Cards
+=1147461040-0814743014459
+=1149586256-4005555022220
+1146194689-0850050879176|22.99||W|||||Unicorn KidDough Kit
+1149778151-5900511992830|9.99||W|||||Red Holiday- A Warm Winter Night 1000pc Puzzle
+1143318412-9780593579497|20||W|||||The Bible is Funny Card Game
+=1146933062-0714043011267
+1136017063-4055744029981|24.99||W|||||Lava scorpion
+1139398444-4059433372419|24.99||W|||||Schleich Eldrador Lava Smasher
+1146366130-0021853004069|25.99||W|||||Rummikub Large Numbers Edition by Ephraim Hertzano
+1149778134-4005555004790|20.99||W|||||Owls in the Moonlight Glow-in-the Dark 500 pc Puzzle
+1146208979-0746775132040|7.99||W|||||Moto Asst.
+#list bn-toys-teens page=1 count=229
+1148544672-4542202670019|12.99||W|||||HIPPERS Mofusand
+=1151902110-0713757875226
+=1151902192-0718122786855
+30789212-0086002030238|15.99||W|||||Kanoodle Extreme
+1138666530-4580045303275|8.99||W|||||Kitan Club: Cat Cap Kirby (Blind Box)
+1128117557-0765940797051|19.99||W|||||STMT Bath Bombs
+1146366121-0634247295655|25||W|||||Red Flags Core Deck Party Game by Jack Dire
+1136743809-0810038610351|12.99||W|||||Gold Playing Cards
+1147217867-9798886639841|24.99||W|||||Gilmore Girls: Luke's Diner Coffee Cup Candle
+1148536537-0045557369309|24||W|||||"One Piece" BNTCA Anime Heroes
+1138583240-0067233250275|10.99||W|||||Foldable Cribbage Board with Playing Cards
+1151083074-0889698613576|15.99||W|||||Funko POP! Animation: Ju Jitsu Kaisen, Gojo
+1143643589-9781797244990|20||W|||||Pickles
+1115218033-0653569512103|42.99||W|bn:dungeons-and-dragons-collect||||Wrath of Ashardalon: A D&D Boardgame
+1146366263-0644216628322|37||W|||||Wingspan: Oceania Expansion by Elizabeth Hargrave
+1136593800-0644216610563|59.99||W|||||Gloomhaven: Jaws of the Lion
+1127764884-0765940743102|24.95||W|||||STMT Journaling Set
+1140977201-0814743016996|9.99||W|||||The Thames & Kosmos Gyroscope
+1142783400-0810816031262|29.99||W|||||What Do You Meme? Bigger Better Edition
+1138946146-0703396010874|119.99||W|||||Deluxe Tournament Mah Jong
+#list bn-lego page=1 count=200
+1146271398-0850025176378|19.99||W|||||MAGNA-TILES microMAGS Travel Set, 26-Piece Magnetic Construction Set, The ORIGINAL Magnetic Building Brand
+1147265250-0850025176545|39.99||W|||||MAGNA-TILES Advent Calendar 34-Piece Magnetic Construction Set, The Original Magnetic Building Brand
+1149800059-0850025176903|19.99||W|||||The Original MAGNA-TILES microMAGS Gingerbread House Travel 24-Piece Magnetic Construction Set
+1151089087-0860005765997|14.99||W|||||Clixo - Tiny & Mighty
+1148970171-0850025176880|19.99||W|||||MAGNA-TILES microMAGS Spooky Travel Set 26-Piece Magnetic Construction Set, The Original Magnetic Building Bra
+1149657519-0850025176781|19.99||W|||||The Original MAGNA-TILES microMAGS Cube Pack 9-Piece Magnetic Construction Set
+1136796437-9781338603453|24.99||W|||||LEGO Gear Bots
+1128820308-9781338219630|24.99||W|||||Lego Gadgets
+1142851005-0744476008541|49.99||W|||||Lincoln Logs 100th Anniversary Tin
+1147155691-0850025176590|39.99||W|||||MAGNA-TILES Travel Set Deluxe 55-Piece Magnetic Construction Set, The Original Magnetic Building Brand
+1133896876-0062243253681|17.99||W|||||Bristle Blocks 54 Pieces Jungle Advenutures
+1147437885-0850025176644|19.99||W|||||MAGNA-TILES Winter Travel Set
+1149657517-0850025176637|39.99||W|||||MAGNA-TILES microMAGS Learn Letters 56-Piece Magnetic Construction Set, The ORIGINAL Magnetic Building Brand, 
+1145245160-0850025176323|39.99||W|||||MAGNA-TILES Castle 25-Piece Magnetic Construction Set, The ORIGINAL Magnetic Building Brand
+1147155649-0850025176569|17.99||W|||||MAGNA-TILES Dog House 13-Piece Magnetic Construction Set, The Original Magnetic Building Brand
+1149657521-0850025176811|39.99||W|||||The Original MAGNA-TILES Coral Reef 25-Piece Magnetic Construction Set
+1144374644-4005556270606|59.99||W|||||Gravitrax Jr. Ice Starter Set
+1150093929-0850025176415|49.99||W|||||MAGNA-TILES Combo 62-Piece Magnetic Construction Set, The ORIGINAL Magnetic Building Brand
+1143864545-0850025176040|49.99||W|||||MAGNA-TILES Builder 32-Piece Magnetic Construction Set, The ORIGINAL Magnetic Building Brand
+1149657520-0850025176798|19.99||W|||||The Original MAGNA-TILES Shark Dive 13-Piece Magnetic Construction Set
+#list bn-plush page=1 count=1223
+1140382558-0192724201907|12.99||W|||||Madame Alexander - Little Cuties Baby Doll (Assorted; Styles Vary)
+1143669124-4990593456857|14||W|bn:studio-ghibli||||Small Totoro Hide and Seek Vegetables Collection (Seasonal) "My Neighbor Totoro" Benelic Blind Box
+1145422197-4549660701576|5||W|||||Kirby Friends Volume 2 "Kirby" Bandai Shokugan
+=1131133993-0767548106389
+=1129367584-0020373218086
+1143618576-0045557143725|19||W|bn:studio-ghibli||||Jiji Fluffy Beanbag (S) "Kiki's Delivery Service", Studio Ghibli Plush
+=1117796091-0767548130445
+1146420709-0045557143633|19||W|||||Studio Ghibli Plush Totoro with Leaf Beanbag
+=1115419178-0767548127575
+1143136453-0887961993448|14.99||W|||||Minecraft Basic Plush Assortment
+1141260930-0810407030704|16.99||W|||||Bellzi Mini Draggi the Dragon Plush
+=1143891968-0081787917699
+1147334270-0092943334731|9.99||W|||||Meow Kitty 5" Palm Pals
+=1147542405-0092633312575
+=1141116481-0767548144299
+1145193455-0814854017004|14.99||W|||||Plushee Pals Snuggler Boy Blue Eye
+=1009245051-9780641932649
+1117796092-0767548127551|26.99||W|||||Pancake Bengal Tiger Cub
+1143950070-9781797230696|3.99||W|||||Spirited Away Bookmark
+1146139521-0092943335325|9.99||W|||||5" SUNNY LAB
+#list bn-collectibles page=1 count=1052
+1151216928-0889698959650|15.99||W|||||Funko Pop! Books: A Court of Thorns and Roses, Feyre Archeron, Barnes and Noble Exclusive
+1151216869-0889698959667|15.99||W|||||Funko Pop! Books: A Court of Thorns and Roses, Rhysand
+1151216948-0889698959674|15.99||W|||||Funko Pop! Books: A Court of Thorns and Roses, The Suriel
+1140382556-0190187003472|11.99||W|bn:pusheen||||Pusheen Water-Filled Squishy Toy (Blind Boxed)
+1151216868-0889698959698|15.99||W|||||Funko Pop! Books: A Court of Thorns and Roses, Lucien Vanserra (Metallic)
+=1143669124-4990593456857
+=1145422197-4549660701576
+1151216927-0889698968492|19.99||W|||||Funko Pop! Premium: A Court of Thorns and Roses, Feyre Painting the Drawers
+1145826112-9781797236186|3.99||W|bn:studio-ghibli||||Studio Ghibli Spirited Away Bookmark 2024 (B&N)
+=1143618576-0045557143725
+=1146420709-0045557143633
+1116298520-0812370013852|34.95||W|bn:harry-potter||||Harry Potter Marauder's Map
+1145826111-9781797236193|3.99||W|bn:studio-ghibli||||Studio Ghibli My Neighbor Totoro Bookmark 2024 (B&N)
+1140116078-0077764480027|9.99||W|bn:harry-potter||||Harry Potter Snitch Pewter Keyring
+1141323794-3665361036104|49.99||W|||||DEATH NOTE - MISA Figure
+1151216909-0889698959681|15.99||W|||||Funko Pop! Books: A Court of Thorns and Roses, Tamlin (Metallic)
+=1143950070-9781797230696
+1145613904-4990593453979|17||W|bn:studio-ghibli||||Calcifer Coaster "Howl's Moving Castle", Benelic
+1146449616-4990593458387|14||W|bn:studio-ghibli||||KEY CHAIN - HANGING CALCIFER "HOWL'S MOVING CASTLE
+1146420713-0045557144579|26||W|bn:studio-ghibli||||Studio Ghibli Plush Fluffy Big 8" Grey Totoro
+#list bn-funko page=1 count=599
+=1151216928-0889698959650
+=1151216869-0889698959667
+=1151216948-0889698959674
+=1151216868-0889698959698
+=1151216927-0889698968492
+=1151216909-0889698959681
+1146583350-0889698787840|11.19|15.99|W|||||POP Television: Buffy- Punk Spike with Coat (B&N Exclusive)
+1150794315-0889698992336|15.99||W||O|||Funko Pop! TV: Heated Rivalry, Ilya Rozanov
+1146426273-0889698794527|15.99||W|||||POP Television: Sandman- Dream (B&N NYCC Exclusive)
+1150794314-0889698992343|15.99||W|||||Funko Pop! TV: Heated Rivalry, Shane Hollander
+1149657672-0889698806961|15.99||W|||||Funko Pop! Movies: Ghostface, Ghostface
+1119886717-0889698845809|11.19|15.99|W|||||Pop Movies: Where the Wild Things Are - Max (B&N Exclusive)
+1148048877-0889698828703|20.99|29.99|W|||||POP: Sesame Street Bert & Ernie (B&N Exclusive)
+=1151083074-0889698613576
+1146425999-0889698786553|11.19|15.99|W|||||POP Animation: Trigun- Meryl with Kuroneko Buddy (B&N NYCC Exclusive)
+1150854397-0889698613583|15.99||W|||||Funko POP! Animation: Jujutsu Kaisen, Itadori (Black Flash)
+1149657674-0889698850018|13.99|19.99|W|||||Funko POP! Premium: Demon Slayer Kyojuro Rengoku (9th Form)
+1151083073-0889698803656|15.99||W|||||Funko POP! Animation: One Piece, Luffy
+1147127873-0889698860970|4.99||W|||||Pocket POP Coal: TNBC- 12pc PDQ
+1149657716-0889698757010|44.99||W|||||Funko POP! Jumbo: Pok?mon, Cresselia , NYCC and Barnes & Noble Exclusive
+#list bn-games page=1 count=2024
+1143934292-0194735220809|11.99||W|||||UNO No Mercy
+1146365965-0700304159960|7.99||W|||||Flip 7 by Eric Olsen
+1149816125-5060282512474|49.99||W|||||EXIT: The Game - Advent Calendar - The Magic of Christmas
+=1146366008-0700304153760
+=1125543037-0078206020016
+1142683788-0086002029782|12.99||W|||||Kanoodle Game
+1146366197-0855836006319|10||W|||||Taco Cat Goat Cheese Pizza Bookworm (B&N Exclusive) by Dave Campbell
+1140034688-0073854008089|5.99||W|||||Bicycle Playing Cards - Poker Standard Index
+1150325734-0196744014295|10||W|||||Happy Little Dinosaurs: Vinyl Figure Blind Box
+1147138695-0810010992444|16.99||W|||||World's Smallest Bop It Extreme
+1143509458-0778988419533|11.99||W|||||Rubik's Cube Original 3x3
+=1146366253-0860001981704
+1145021524-0714043012585|11.99||W|||||Pass the Pigs
+=1148109770-0029877030811
+1141053716-0855836006173|10||W|||||Santa Cookie Elf Candy Snowman
+1145026402-0681147035775|17.99||W|||||Rubiks 3x3 Speed
+1147021146-0810083049670|19.99||W|||||Horrible Therapist - The Oatmeal & Exploding Kittens (B&N Exclusive Edition)
+1142633941-0887961606782|7.99||W|||||Uno Minecraft
+1110358738-0847563000340|12.99||W|||||IQ Fit game
+1148109761-0029877030828|24.99||W|||||Catan 5-6 Player Extension by Klaus Teuber
+#list bn-tcg page=1 count=31
+1147571514-0097712562742|64.99||W|||||NFL 2023 Panini Select Football Mega Box
+1146904840-0097712562759|34.99||W|||||NFL 2023 Panini Select Football Blaster Box
+1140113845-0841333111700|14.95||W|||||Marvel Champions LCG: Scarlet Witch Hero Pack
+1140113846-0841333112592|14.95||W|||||Marvel Champions LCG: Star-Lord Hero Pack
+1140113850-0841333112622|16.99||W|||||Marvel Champions LCG: Venom Hero Pack
+1140988057-0841333110550|16.99||W|||||Marvel Champions LCG: Hulk Hero Pack
+1140988053-0841333110536|16.99||W|||||Marvel Champions LCG: Black Widow Hero Pack
+1133444484-0841333109967|69.99||W||O|||Marvel Champions: The Card Game
+1128995146-0841333105662|9.95||W|||||Star Wars X-Wing 2nd Edition Rebel Alliance Maneuver Dial Upgrade Kit
+1140988060-0841333110529|16.99||W||O|||Marvel Champions LCG: Thor Hero Pack
+1146221209-0097712566825|64.99||W|||||NBA 2023-2024 NBA Premium Stock basketball Mega Box
+1128995147-0841333105679|9.95||W|||||Star Wars X-Wing 2nd Edition Galactic Empire Maneuver Dial Upgrade Kit
+1145803558-0097712562827|44.99||W||O|||MLB 2024 Topps Bowman Baseball Mega Box
+1145767566-0097712562728|29.99||W||O|||MLB 2024 Topps Bowman Baseball Blaster Box
+1140113847-0841333112585|44.99||W||O|||Marvel Champions LCG: The Galaxy's Most Wanted
+1111629610-9781616613778|14.95||W||O|||Star Wars X-Wing: X-Wing Expansion Pack
+1115566094-9781616616779|14.95||W||O|||Star Wars X-Wing: TIE Bomber Expansion Pack
+1140988054-0841333110505|16.99||W||O|||Marvel Champions LCG: Captain America Hero Pack
+1111629614-9781616613761|39.95||W||O|||Star Wars X-Wing Miniatures Game Core Set
+1140988059-0841333110499|15.99|19.99|W||O|||Marvel Champions LCG: The Wrecking Crew Scenario Pack
+#list bn-puzzles page=1 count=928
+1147062737-5056297258360|3.99||W|||||Zodiac Signs Jigsaw Collection- 24 Count Display
+=1142683788-0086002029782
+=1147198634-9780735385511
+=1147224703-9780735387461
+1148467674-9781399629621|24.99||W|||||The World of Grimms' Fairy Tales A 1000-piece jigsaw puzzle: by Adam Simpson
+=1143509458-0778988419533
+1146171809-0021081400244|15.99||W|||||Harry Potter Diagon Alley - Thomas Kinkade 1000 Piece Puzzle
+=1149771326-0724819267828
+1146660408-9780735383616|17.99||W|||||Joy Laforme Presentville 500 Piece Foil Puzzle
+1140034824-9781635447200|18.99|24.95|W|||||Cavallini & Co - National Parks 1,000 Piece Jigsaw Puzzle
+1144296798-9781399620000|24.99||W|||||The World of The Great Gatsby 1000 Piece Puzzle: A jigsaw by Adam Simpson
+1148351955-9781399629607|23.99||W|||||The World of Norse Mythology A 1000-piece jigsaw puzzle: by Adam Simpson
+1135454297-9780735362147|17.99||W|||||Winter Lights Foil Puzzle 500 Piece Puzzle
+1142927903-9781786279118|24.99||W|||||World of Jane Austen 1000 Piece Puzzle: A Jigsaw Puzzle with 60 Characters and Great Houses to Find
+1143997389-0023332307340|27.99||W|||||Zelda Master Sword Hanayama Puzzle Level 6
+1138008945-4005556179374|7.99||W|||||Puzzle Glue & Go Puzzle Conserver
+1146814292-9780735386112|19.99||W|||||Michael Storrings Snowfall Over New York City 1000 Piece Puzzle
+1133420544-9780735362604|13.99||W|||||Wonder & Bloom 500 Piece Puzzle
+1145125754-0840291700926|29||W|||||Cold Hollow 1,000 - Piece Jigsaw Puzzle
+1146742241-9781797233420|24.95||W|||||LEGO Countdown to Christmas Puzzles: 12 Days of Minifigure Advent Puzzles
+#list bn-advent page=1 count=49
+=1149816125-5060282512474
+1150269918-0673419422611|44.99||W|bn:lego||||LEGO Super Heroes Marvel Advent Calendar 2026 76340
+1150269914-0673419420761|34.99||W|bn:lego||||LEGO City Occasions Advent Calendar 2026 60510
+1149595392-0810174293449|39.99||W|||||Santa's Reindeer Thinking Putty Advent Calendar
+1149914332-0810070624101|25.99||W|||||National Geographic Gemstone Advent Calendar
+1149959543-0850081595694|49.99||W|||||Young, Wild, and Friedman Slime Advent Calendar
+1150269915-0673419419833|34.99||W|bn:lego||||LEGO Friends Advent Calendar 2026 42698
+1128942158-0194735363384|26.99||W|||||HOT WHEELS Advent Calendar
+1149827749-0079346950355|24.99||W|||||Charles Wysocki 24 Day Advent Calendar Puzzles
+1149658613-0194735383184|43.99||W|||||MINECRAFT Advent Calendar
+1151420191-0194735398386|26.99||W|||||UNO Advent Calendar
+=1146742241-9781797233420
+1150419748-5060282511989|49.99||W|||||EXIT: The Game - Advent Calendar - The Intergalactic Race by Inka Brand, Markus Brand
+1149923841-0889698926560|34.99||W|||||Funko Bitty POP! Countdown Calendar: Hello Kitty and Friends
+1149827748-0021081380072|24.99||W|||||12 Day Count Down Mini Puzzle Tins Featuring Thomas Kinkade
+1149816115-0195166334332|24.99||W|||||Monopoly Token Advent
+=1147265250-0850025176545
+1149655881-4069111638744|34.99||W|||||Schleich Horse Club Advent Calendar 2026
+1149729588-0193052100252|32.99||W|||||S001-MINI BRANDS-BOOKS-SERIES 2 ADVENT CALENDAR (24PCS MINIS) IN COLOR BOX,8PCS/CTN
+1150269916-0673419424608|44.99||W|bn:lego||||LEGO Disney Princess Advent Calendar 2026 43298
+#list bn-gifts page=1 count=363
+1130204263-9780762462872|14.95||W|bnbook:paperback||||Wacky Waving Inflatable Tube Guy: (The Original) by Conor Riordan
+1122652912-9780641568916|44.99||W|bn:special-editions||||Brown Monastery Refillable Italian Leather Journal (6"x8")
+1123253294-9788883701122|26||W|||||Moleskine Classic Notebook, Large, Ruled, Black, Hard Cover (5 x 8.25)
+1147123743-9788883707100|21||W|||||Moleskine Classic Notebook, Pocket, Ruled, Black, Soft Cover (3.5 x 5.5)
+1116243008-9780641596193|24.99||W|bn:special-editions||||Bombay Brown Leather Journal with Tie 6" x 8.5"
+1128997686-9780762492794|13.95||W|bnbook:paperback||||Everyday Tarot Mini Tarot Deck by Brigit Esselmont
+1123623769-9780762460816|13.95||W|bnbook:paperback||||Desktop Skee-Ball: Give it a roll! by Running Press
+1125863652-9780762460083|13.95||W|bnbook:paperback||||You Are a Badass Talking Button: Five Nuggets of In-Your-Face Inspiration by Jen Sincero
+1127786155-9780762465149|14.95||W|bnbook:paperback||||Magic Crystal Ball: See the Future! by Marlo Scrimizzi
+1122372775-9780762459445|13.95||W|bnbook:paperback||||Lucky Cat: Bearer of Good Fortune by Danielle Selber
+1129709197-9788867323067|33||W|||||Moleskine Classic Notebook, Extra Large, Ruled, Black, Hard Cover (7.5 x 10)
+1127924214-9780762464401|16.95||W|bnbook:paperback||||Harry Potter Hogwarts Castle and Sticker Book: Lights Up! by Running Press
+1122372773-9780762459308|9.95||W|bnbook:paperback||||Desktop Cornhole: Give it a toss! by Running Press
+1105350217-9780762438150|11.95||W|bnbook:paperback||||Desktop Golf by Chris Stone
+1134790778-0729578125204|14.99||W|||||Mighty Bright MiniFlex 2 Book Light, Black
+1134790782-0729578125273|14.99||W|||||Mighty Bright MiniFlex 2 Book Light, White
+1123253281-8051272892710|33||W|||||Moleskine Classic Notebook, Extra Large, Plain, Black, Hard Cover (7.5 x 10)
+1136320965-9780762497874|15.95||W|bnbook:paperback||||Wacky Waving Inflatable Tube Elf by Sam Stall
+1125057690-9781943200085|12.95||W|||||Because I Had A Teacher
+1127924213-9780762464135|13.95||W|bnbook:paperback||||Himalayan Mood Lamp: Made with Real Salt! by Marlo Scrimizzi
+#list bn-best-books page=1 count=156785
+1151104530-9781639739134|32||W|bnbook:hardcover||||A Court of Splintered Harmony (A Court of Thorns and Roses Series #6) by Sarah J. Maas
+1150799611-9781682818084|24.99||W|||||Threshing Day (Wing and Claw Collection)
+1149321315-9781419782701|7.99|15.99|W|bnbook:hardcover||||Fight or Flight (Diary of a Wimpy Kid #21) by Jeff Kinney
+1149485130-9798225088873|11.19|15.99|W|||||A Sprinkle in Time (B&N Exclusive Edition) (Dog Man Series #15)
+1144469070-9781464257902|17.99||W|bnbook:paperback||||The Christmas Stocking Murders by Denzil Meyrick
+1143923011-9781668236512|20||W|bnbook:paperback||||Theo of Golden: A Novel by Allen Levi
+1149510265-9781668224632|29||W|bnbook:hardcover||||Whale Harbor (2026 B&N Book of the Year) by Mary Beth Keane
+1147152028-9781454961796|18.99||W|bnbook:paperback||||Murdoku: 80 Murder Mystery Logic Puzzles by Manuel Garand
+1147007139-9781250503824|9.99||W|||||The Unlikely Tale of Chase and Finnegan (B&N Exclusive Edition) (2026 B&N Children's Book of the Year)
+1141976523-9781250892317|18||W|bnbook:paperback||||Murdle: Volume 1: 100 Elementary to Impossible Mysteries to Solve Using Logic, Skill, and the Power of Deducti
+1147098401-9781954118812|30|35|W|bnbook:hardcover||||The Calamity Club: A Novel by Kathryn Stockett
+1145437169-9780593820254|20||W|bnbook:paperback||||Dungeon Crawler Carl (Dungeon Crawler Carl Series #1) by Matt Dinniman
+1149667428-9780385550543|17.5|35|W|bnbook:hardcover||||The French Illusion: A Novel by John Grisham
+1148300427-9798217223138|19.99||W|bnbook:hardcover||||Is This a Plum? A Peek-Through Picture Book (2026 B&N Children's Gift Book of the Year) by Dan Ojari
+1151104531-9798260200568|38||W|bnbook:hardcover||||A Court of Forgotten Melody (A Court of Thorns and Roses Series #7) by Sarah J. Maas
+1149622698-9781464249648|24.99|29.99|W|bnbook:hardcover||||The Witch (Deluxe Edition) by Freida McFadden
+1146889511-9798347121151|6.49|12.99|W|bn:special-editions||||Falling Like Leaves (B&N Exclusive Edition)
+1149880732-9781538758069|16|32|W|bnbook:hardcover||||All In (6:20 Man #4) by David Baldacci
+1149460640-9780316563857|27|32|W|bnbook:hardcover||||The Hollow: A Harry Bosch Novel by Michael Connelly
+1110614785-9780345539809|16|18|W|bnbook:paperback||||Red Rising (Red Rising Series #1) by Pierce Brown
+#list bn-books-of-year page=1 count=33381
+=1151104530-9781639739134
+=1150799611-9781682818084
+=1149321315-9781419782701
+=1149485130-9798225088873
+=1149510265-9781668224632
+=1147007139-9781250503824
+=1147098401-9781954118812
+=1149667428-9780385550543
+=1148300427-9798217223138
+=1149622698-9781464249648
+=1149880732-9781538758069
+=1149460640-9780316563857
+#list bn-kids-books-0-2 page=1 count=34970
+1100472822-9780399226908|10.99||W|bnbook:board-book||||The Very Hungry Caterpillar by Eric Carle
+1105127857-9780694003617|10.99||W|bnbook:board-book||||Goodnight Moon (Board Book) by Margaret Wise Brown
+1100630720-9781442450707|7.99||W|bnbook:board-book||||Chicka Chicka Boom Boom by Bill Martin Jr
+1100469008-9780399240461|7.99||W|bnbook:board-book||||Where's Spot? by Eric Hill
+1111944184-9780805047905|8.99||W|bnbook:board-book||||Brown Bear, Brown Bear, What Do You See? by Bill Martin Jr
+1111829940-9780545153515|7.99||W|bnbook:board-book||||How Do Dinosaurs Say Good Night? by Jane Yolen
+1100058361-9780451470799|9.99||W|bnbook:board-book||||Corduroy by Don Freeman
+1120880415-9780358451228|10.99||W|bnbook:board-book||||Little Blue Truck Board Book by Alice Schertle
+1138779214-9781667211978|9.99||W|bnbook:board-book||||You're My Little Christmas Cookie (Board Book for Babies and Toddlers 0-2 years old) by Nicola Edwards
+1100465944-9781328884565|9.99||W|bnbook:board-book||||Five Little Monkeys Jumping on the Bed by Eileen Christelow
+1127396946-9780593123997|8.99||W|bnbook:board-book||||Grumpy Monkey by Suzanne Lang
+1100011100-9781536210637|8.99||W|bnbook:board-book||||Guess How Much I Love You (Board Book) by Sam McBratney
+#list bn-kids-books-3-5 page=1 count=179946
+=1148300427-9798217223138
+=1100472822-9780399226908
+=1100630720-9781442450707
+1149520079-9781685553500|19.95||W|bnbook:hardcover||||The Fly Who Flew to the North Pole by Lauren Sánchez Bezos
+=1111829940-9780545153515
+1150177146-9780063589834|19.99||W|bnbook:hardcover||||The Toast of the Town by Jory John
+1100253322-9780451474575|8.99||W|bnbook:board-book||||Llama Llama Red Pajama by Anna Dewdney
+=1100058361-9780451470799
+1149284092-9798217228072|19.99||W|bnbook:hardcover||||Dr. Seuss's How the Grinch Stole Christmas...According to Max! by Alastair Heim
+1149980947-9798217224913|19.99||W|bnbook:hardcover||||EXTRAordinary! A Little EXTRA to Reach BIG Dreams by Caitlin Clark
+1142775353-9780544320413|18.99||W|bnbook:hardcover||||Little Blue Truck's Christmas: A Christmas Holiday Book for Kids by Alice Schertle
+=1120880415-9780358451228
+#list bn-kids-books-6-8 page=1 count=188000
+=1149321315-9781419782701
+=1147007139-9781250503824
+=1148300427-9798217223138
+1145711348-9798217113231|10.99||W|bnbook:paperback||||Dragonborn by Struan Murray
+1149270136-9781546174363|14.99|16.99|W|bnbook:paperback||||Baby-sitters on Board!: A Graphic Novel (The Baby-sitters Club Super Special #1) by Ann M. Martin
+1148666191-9780063450882|13.99|15.99|W|bnbook:paperback||||Warriors Graphic Novel: The New Prophecy, Part One of Three by Erin Hunter
+=1149520079-9781685553500
+1148725786-9781419788109|12.99|15.99|W|bnbook:hardcover||||Rowley Jefferson's Awesome Friendly Spooky Stories 2: From the Creator of Diary of a Wimpy Kid by Jeff Kinney
+=1150177146-9780063589834
+=1149980947-9798217224913
+1122451135-9780316382007|8.99||W|bnbook:paperback||||The Wild Robot (Wild Robot Series #1) by Peter Brown
+1148706445-9780063203877|15.99||W|bnbook:paperback||||Warriors Graphic Novel: The Prophecies Begin, Part One of Three by Erin Hunter
+#list bn-kids-books-9-12 page=1 count=188000
+=1149321315-9781419782701
+=1147007139-9781250503824
+=1145711348-9798217113231
+=1149270136-9781546174363
+1100190320-9781368051477|10.99||W|bnbook:paperback||||The Lightning Thief (Percy Jackson and the Olympians Series #1) by Rick Riordan
+=1148666191-9780063450882
+=1149284092-9798217228072
+1100374412-9781416936473|8.99||W|bnbook:paperback||||Hatchet (Brian's Saga Series #1) by Gary Paulsen
+1144510238-9781536251265|9.99||W|||||I Am Rebel (B&N Exclusive Edition) (2025 B&N Children's Book of the Year)
+=1122451135-9780316382007
+=1148706445-9780063203877
+1100557638-9780380807345|9.99||W|bnbook:paperback||||Coraline by Neil Gaiman
+#list bn-teen-books page=1 count=144479
+=1146889511-9798347121151
+1145703863-9781546171607|17.99||W|bnbook:paperback||||Sunrise on the Reaping (The Hunger Games) by Suzanne Collins
+1149669107-9798347100217|10.99|21.99|W|bnbook:hardcover||||Trust Fall by Lynn Painter
+1149526112-9781665989824|12.99||W|bnbook:paperback||||Falling Like Snow by Misty Wilson
+1149664178-9780316592642|19.99|22.99|W|bnbook:hardcover||||A Conspiracy of Charming Monsters: Illustrated Tales from Elfhame by Holly Black
+1100171585-9780439023528|14.99||W|bnbook:paperback||||The Hunger Games (Hunger Games Series #1) by Suzanne Collins
+1145703863-9798225044473|14.99|17.99|W|bnbook:paperback||||Sunrise on the Reaping (Movie Tie-In Edition) (A Hunger Games Novel) by Suzanne Collins
+1145703863-9798225069230|14.99|17.99|W|||||Sunrise on the Reaping (B&N Exclusive Edition) (A Hunger Games Novel)
+1149594960-9780316606172|21.99|24.99|W|bnbook:hardcover||||Dangerous Impulses (Deluxe Limited Edition) by Jennifer Lynn Barnes
+1149914472-9780063462540|22.99|25.99|W|||||The Sixth Faction Deluxe Limited Edition
+1133952083-9781339016573|16.99||W|bnbook:paperback||||The Ballad of Songbirds and Snakes (A Hunger Games Novel) by Suzanne Collins
+1148883980-9781250289773|37||W|bnbook:hardcover||||Once Upon a Broken Heart Collector's Edition: [Limited Stenciled Edge edition] by Stephanie Garber
+#list bn-manga page=1 count=38609
+1149945133-9798855444209|20||W|bnbook:paperback||||The Guy She Was Interested In Wasn't a Guy at All, Vol. 4 by Sumiko Arai
+1130959945-9781974710027|11.99||W|bnbook:paperback||||Jujutsu Kaisen, Vol. 1 by Gege Akutami
+1145518904-9781975399689|20||W|bnbook:paperback||||The Guy She Was Interested In Wasn't a Guy at All, Vol. 1 by Sumiko Arai
+1142973723-9781975360542|15||W|bnbook:paperback||||The Summer Hikaru Died, Vol. 1 by Mokumokuren
+1137300517-9781974720149|11.99||W|bnbook:paperback||||Jujutsu Kaisen 0 by Gege Akutami
+1132292916-9781974710034|11.99||W|bnbook:paperback||||Jujutsu Kaisen, Vol. 2 by Gege Akutami
+1102845396-9781421539645|19.99||W|bnbook:paperback||||Death Note Black Edition, Vol. 1 by Tsugumi Ohba
+1149520114-9781974766512|11.99||W|bnbook:paperback||||Chainsaw Man, Vol. 22 by Tatsuki Fujimoto
+1149520153-9781974766703|11.99||W|bnbook:paperback||||One Piece, Vol. 113 by Eiichiro Oda
+1137572023-9781646090709|12.99||W|bnbook:paperback||||The Apothecary Diaries 01 (Manga) by Natsu Hyuuga
+1149520193-9781974768455|11.99||W|bnbook:paperback||||Kagurabachi, Vol. 9 by Takeru Hokazono
+1132292908-9781974710041|11.99||W|bnbook:paperback||||Jujutsu Kaisen, Vol. 3 by Gege Akutami
+#list bn-boxed-sets page=1 count=1160
+1113013015-9780375813658|23.96||W|bnbook:paperback||||Magic Tree House Books 1-4 Boxed Set by Mary Pope Osborne
+1137529171-9780375813610|19.96||W|bnbook:paperback||||Junie B. Jones First Boxed Set Ever!: Books 1-4 by Barbara Park
+1147722897-9780439845007|17.99||W|bnbook:hardcover||||Bob Books - Set 1: Beginning Readers Box Set Decodable Phonics Books, Ages 4 and up, Kindergarten (Stage 1: St
+1117024571-9781368098014|44.95||W|||||Percy Jackson and the Olympians 5 Book Paperback Boxed Set (new covers) (B&N Exclusive Edition)
+1146867928-9780062404527|15.99||W|bnbook:paperback||||Pete the Cat 12-Book Phonics Fun!: A Box of 12 Mini-Books Featuring Short and Long Vowel Sounds by James Dean
+1148547519-9780063440104|44.97|47.97|W|bnbook:paperback||||Warriors Graphic Novel: The Prophecies Begin #1-#3: The Complete First Arc by Erin Hunter
+1141674851-9780062465894|35.97||W|bnbook:paperback||||Wildwood Chronicles 3-Book Box Set: Wildwood, Under Wildwood, Wildwood Imperium by Colin Meloy
+1144342604-9780593752258|12.99||W|||||Bluey: Little Library 4-Book Box Set
+1138364088-9780062334206|27.96||W|bnbook:paperback||||Amelia Bedelia Chapter Book 4-Book Box Set: Books 1-4 by Herman Parish
+1143668372-9789387779266|24.99||W|bnbook:hardcover||||My First Library: Boxset of 10 Board Books for Kids by Wonder House Books
+1137571963-9780375851568|49.95||W|bnbook:hardcover||||Dr. Seuss's Beginner Book Collection: The Cat in the Hat; One Fish Two Fish Red Fish Blue Fish; Green Eggs and
+1108948862-9780545162074|100||W|bnbook:paperback||||Harry Potter Paperback Boxed Set, Books 1-7 by J. K. Rowling

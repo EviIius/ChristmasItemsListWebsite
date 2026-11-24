@@ -239,7 +239,7 @@ const asTypical = (id) => {
   const picksData = JSON.parse(fs.readFileSync(path.join(site, 'data/store-picks.json'), 'utf8'));
   app.prepPicks(JSON.parse(JSON.stringify(picksData)));
   const pickReset = () => Object.assign(app.state.picks, { band: '', type: '', show: '', max: '', sort: 'rank', q: '', shown: 24 });
-  const PICK_URL = { walmart: (s) => `https://www.walmart.com/ip/${s}`, gamestop: (s) => `https://www.gamestop.com/products/${s}.html`, lego: (s) => `https://www.lego.com/en-us/product/${s}` };
+  const PICK_URL = { walmart: (s) => `https://www.walmart.com/ip/${s}`, gamestop: (s) => `https://www.gamestop.com/products/${s}.html`, lego: (s) => `https://www.lego.com/en-us/product/${s}`, fivebelow: (s) => `https://www.fivebelow.com/products/${s}`, barnesnoble: (s) => { const [w, e] = s.split('-'); return `https://www.barnesandnoble.com/w/${w}?ean=${e}`; } };
   await check("store picks: every pick is typed, aged and links to the store's product page", () => {
     const P = app.picks;
     assert(P.items.length >= 300, `${P.items.length} picks`);
@@ -297,7 +297,7 @@ const asTypical = (id) => {
     const pk = shown[0];
     app.togglePick(pk.id, kid.id);
     const added = kid.items.find((i) => i.url === pk.url);
-    assert(added && added.gift === null && added.name === pk.name && added.store === 'walmart' && added.price === pk.price);
+    assert(added && added.gift === null && added.name === pk.name && added.store === pk.store && added.price === pk.price);
     app.togglePick(pk.id, kid.id);
     assert(!kid.items.some((i) => i.url === pk.url), 'a second click takes it back off the list');
     app.openDrawer('paw-patrol-megasaurus');
@@ -338,7 +338,7 @@ const asTypical = (id) => {
       assert(/^#\d+ on |^On /.test(it.blurb), it.id);
     }
     app.state.browse.type = ''; app.renderBrowse();
-    assert(element('#browse-sub').innerHTML.includes(` of ${app.items.length} gift ideas`));
+    assert(element('#browse-sub').innerHTML.includes(` of ${app.items.length.toLocaleString('en-US')} gift ideas`));
     const one = picks.find((it) => it.offers.length === 1);
     const kid = app.addPerson({ name: 'Pick Test', age: 9, interests: [] });
     assert(app.addGift(kid.id, one.id));

@@ -5,7 +5,8 @@
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
+  const num = (n) => Number(n).toLocaleString('en-US');
+  const plural = (n, word) => `${num(n)} ${word}${n === 1 ? '' : 's'}`;
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const money = (n) => (n == null || !Number.isFinite(+n) ? '—' : '$' + (Math.round(n * 100) % 100 === 0
     ? Math.round(n).toLocaleString('en-US') : (+n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })));
@@ -398,7 +399,7 @@
     const bits = [`age ${f.age}`];
     if (f.budget < BUDGET_ANY) bits.push(`up to ${money(f.budget)}`);
     if (f.interests.length) bits.push(`into ${interestNames(f.interests, 3)}`);
-    $('#find-sub').textContent = `${res.length} of ${ITEMS.length} ideas fit ${bits.join(', ')}. Gifts that are hot this year or on sale rank higher.`;
+    $('#find-sub').textContent = `${num(res.length)} of ${num(ITEMS.length)} ideas fit ${bits.join(', ')}. Gifts that are hot this year or on sale rank higher.`;
     const top = res.slice(0, state.shown);
     $('#top-picks').innerHTML = top.length ? top.map((it) => giftCard(it)).join('')
       : `<div class="empty"><strong>Nothing matches yet.</strong><span>Try a higher budget, fewer interests, or turn off the "Only show" filters.</span><button class="btn btn-sm" type="button" data-reset-find>Clear all filters</button></div>`;
@@ -576,7 +577,7 @@
     const tb = typeBrowserHtml(); $('#type-browser').innerHTML = tb; $('#type-browser').hidden = !tb;
     const what = b.type ? (b.type.startsWith('cat:') ? (CATS[b.type.slice(4)] || {}).label : (TYPES[b.type] || {}).label) : '';
     const inType = PICKS && b.type ? PICKS.items.filter((x) => (b.type.startsWith('cat:') ? x.category === b.type.slice(4) : x.type === b.type)).length : 0;
-    $('#browse-sub').innerHTML = `${rows.length} of ${ITEMS.length} gift ideas${what ? ` in ${esc(what)}` : ''}. Select a row for details, prices and every store that sells it.`
+    $('#browse-sub').innerHTML = `${num(rows.length)} of ${num(ITEMS.length)} gift ideas${what ? ` in ${esc(what)}` : ''}. Select a row for details, prices and every store that sells it.`
       + (inType ? ` <button class="linkish" type="button" data-picks-type="${esc(b.type)}">See ${inType} best seller${inType > 1 ? 's' : ''} and deal${inType > 1 ? 's' : ''} from ${esc(andList(Object.values(PICKS.stores).map((x) => x.name)))} in this type</button>` : '');
     $('#browse-table thead').innerHTML = '<tr>' + BROWSE_COLS.map((c) => c.sort
       ? `<th class="${c.cls || ''}" aria-sort="${b.sort === c.key ? (b.dir > 0 ? 'ascending' : 'descending') : 'none'}"><button type="button" data-sort="${c.key}">${c.label}</button></th>`
@@ -759,7 +760,7 @@
     const stores = Object.values(PICKS.stores).map((x) => x.name);
     const readOn = fmtDate(when) === fmtDate(PICKS.captured_at) ? fmtDate(when) : `${fmtDate(when)} to ${fmtDate(PICKS.captured_at)}`;
     $('#picks-h').textContent = `${andList(stores)} best sellers and deals`;
-    $('#picks-sub').innerHTML = `${PICKS.items.length} gifts from ${stores.length > 1 ? `the stores' own lists: ${esc(andList(stores))} best sellers, top gifts and toys, best sellers for each age group, and deal pages. Read from the stores ${esc(readOn)}` : `${esc(stores[0])}'s own lists: its top gifts and top toys, best sellers for each age group and its deal pages. Read from the store ${esc(readOn)}`}${days > 3 ? `, <b class="stale-note">${Math.round(days)} days ago, so some of these deals have likely ended</b>` : ''}. Prices change fast this week, so check the store before you buy.`;
+    $('#picks-sub').innerHTML = `${num(PICKS.items.length)} gifts from ${stores.length > 1 ? `the stores' own lists: ${esc(andList(stores))} best sellers, top gifts and toys, best sellers for each age group, and deal pages. Read from the stores ${esc(readOn)}` : `${esc(stores[0])}'s own lists: its top gifts and top toys, best sellers for each age group and its deal pages. Read from the store ${esc(readOn)}`}${days > 3 ? `, <b class="stale-note">${Math.round(days)} days ago, so some of these deals have likely ended</b>` : ''}. Prices change fast this week, so check the store before you buy.`;
     const types = {}; const cats = {};
     PICKS.items.forEach((x) => { types[x.type] = (types[x.type] || 0) + 1; cats[x.category] = (cats[x.category] || 0) + 1; });
     const typeOpts = Object.keys(CATS).filter((c) => cats[c]).map((c) => `<optgroup label="${esc(CATS[c].label)}"><option value="cat:${esc(c)}"${f.type === `cat:${c}` ? ' selected' : ''}>All ${esc(CATS[c].label.toLowerCase())} (${cats[c]})</option>${Object.entries(TYPES).filter(([k, t]) => t.category === c && types[k]).map(([k, t]) => `<option value="${esc(k)}"${f.type === k ? ' selected' : ''}>${esc(t.label)} (${types[k]})</option>`).join('')}</optgroup>`).join('');
@@ -781,10 +782,10 @@
     if (!PICKS || !$('#picks')) return;
     const rows = pickRows(state.picks);
     const shown = rows.slice(0, state.picks.shown);
-    $('#picks-count').textContent = `${rows.length} of ${PICKS.items.length} shown`;
+    $('#picks-count').textContent = `${num(rows.length)} of ${num(PICKS.items.length)} shown`;
     $('#picks').innerHTML = shown.length ? shown.map(pickCard).join('')
       : '<div class="empty"><strong>Nothing here matches.</strong><span>Try another age group or type, or a higher price.</span><button class="btn btn-sm" type="button" data-picks-reset>Clear the filters</button></div>';
-    $('#picks-more').innerHTML = rows.length > shown.length ? `<button class="btn more-btn" type="button" data-picks-more>Show ${Math.min(24, rows.length - shown.length)} more (${rows.length - shown.length} left)</button>` : '';
+    $('#picks-more').innerHTML = rows.length > shown.length ? `<button class="btn more-btn" type="button" data-picks-more>Show ${Math.min(24, rows.length - shown.length)} more (${num(rows.length - shown.length)} left)</button>` : '';
   }
   function renderStoreHot(f) {
     const box = $('#store-hot'); if (!box) return;
@@ -1129,9 +1130,9 @@
     if (n) {
       const hours = (Date.now() - new Date(DATA.prices_as_of).getTime()) / 36e5;
       el.classList.add(hours < 36 ? 'is-live' : hours < 96 ? 'is-aging' : 'is-stale');
-      $('#freshness-text').textContent = `${n} store price${n > 1 ? 's' : ''}, oldest ${ago(DATA.prices_as_of)}`;
+      $('#freshness-text').textContent = `${num(n)} store price${n > 1 ? 's' : ''}, oldest ${ago(DATA.prices_as_of)}`;
     } else {
-      $('#freshness-text').textContent = `${ITEMS.length} gifts, typical prices`;
+      $('#freshness-text').textContent = `${num(ITEMS.length)} gifts, typical prices`;
     }
     sizeHeader();
   }
