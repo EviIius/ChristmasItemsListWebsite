@@ -47,6 +47,7 @@ vm.runInContext(source.replace('  init();\n})();', `
 })();`), context);
 
 const data = JSON.parse(fs.readFileSync(path.join(site, 'data/gifts.json'), 'utf8'));
+const picksDataForInto = JSON.parse(fs.readFileSync(path.join(site, 'data/store-picks.json'), 'utf8'));
 const { app } = context;
 app.load(data);
 
@@ -185,7 +186,7 @@ const asTypical = (id) => {
     app.state.listView = app.state.lists.people[0].id; app.renderLists();
     assert(element('#list-main').innerHTML.includes("Mia's list"));
     app.renderFilters(); app.renderBrowse(); assert(element('#browse-table tbody').innerHTML.includes('data-open'));
-    const needoh = app.items.filter((it) => `${it.name} ${it.brand} ${it.blurb}`.toLowerCase().includes('needoh')).length;
+    const needoh = app.items.filter((it) => /(^|[^a-z0-9])nee-?doh/i.test(`${it.name} ${it.brand}`)).length; // search looks at names, brands and types first
     app.state.browse.q = 'needoh'; app.renderBrowse(); assert(needoh >= 3 && element('#browse-sub').innerHTML.startsWith(`${needoh} of`) && element('#browse-table tbody').innerHTML.includes('data-open="needoh-shapes"'));
     app.state.browse.q = '';
     app.renderDeals(); assert(element('#dates').innerHTML.includes('Black Friday'));
@@ -256,10 +257,10 @@ const asTypical = (id) => {
     assert(!q6.store && q6.words.length === 2, 'brand names are words, not stores');
   });
   await check('smart search: results fit what was asked, rank name matches first, fix a misspelling, and load 60 at a time', () => {
-    app.state.browse.sort = 'name'; app.state.browse.dir = 1;
+    app.state.browse.sort = 'match'; app.state.browse.dir = 1;
     app.state.browse.q = 'lego for an 8 year old under $50'; app.state.browse.shown = 60; app.renderBrowse();
     const rows = app.browseView;
-    assert(rows.length >= 5 && rows.every((it) => it.ages[0] <= 8 && it.ages[1] >= 8 && !(app.priceInfo(it).value > 50) && /lego/i.test(it._s)), `${rows.length} rows`);
+    assert(rows.length >= 2 && rows.every((it) => it.ages[0] <= 8 && it.ages[1] >= 8 && !(app.priceInfo(it).value > 50) && /lego/i.test(it._s)), `${rows.length} rows`);
     assert(/lego/i.test(rows[0].name) && element('#browse-understood').innerHTML.includes('Age 8') && element('#browse-understood').innerHTML.includes('Up to $50'));
     app.state.browse.q = 'squishmellow'; app.renderBrowse();
     assert(app.browseView.length && app.browseView.every((it) => /squishmallow/i.test(it._s)) && element('#browse-understood').innerHTML.includes('for “squishmellow”'));
@@ -268,6 +269,18 @@ const asTypical = (id) => {
     assert(shownRows === 60 && element('#browse-more').innerHTML.includes('data-browse-more') && element('#browse-more').innerHTML.includes(`Show all ${app.items.length.toLocaleString('en-US')}`), `${shownRows} rows`);
     app.loadMore('browse'); assert.equal((element('#browse-table tbody').innerHTML.match(/data-open=/g) || []).length, 120);
     app.state.browse.q = '';
+  });
+  await check('"Into" is precise: consoles come from product names, and squishy toys are not LEGO', () => {
+    app.prepPicks(JSON.parse(JSON.stringify(picksDataForInto))); app.load(JSON.parse(JSON.stringify(data)));
+    const plat = { playstation: /playstation|\bps[45]\b|psvr|dualsense|dualshock/i, xbox: /\bxbox\b/i, switch: /nintendo|\bswitch\b|joy-?cons?|amiibo/i };
+    const wrong = app.items.filter((it) => it.pick && Object.entries(plat).some(([i, rx]) => it.interests.includes(i) && !rx.test(it.name) && !(i === 'switch' && it.type === 'switch-games')));
+    assert(!wrong.length, wrong.slice(0, 4).map((it) => `${it.name} [${it.interests}]`).join(' | '));
+    assert(!app.items.some((it) => it.category === 'squish' || it.type === 'squishies' ? it.interests.includes('lego') : false), 'a squishy toy is tagged LEGO');
+    app.state.browse = Object.assign(app.state.browse, { q: 'lego at target', interest: '', type: '', store: '', sort: 'match', shown: 60 }); app.renderBrowse();
+    assert(app.browseView.length && app.browseView.every((it) => /\blego\b/i.test(`${it.name} ${it.brand} ${it.type}`) && (it.stores.includes('target') || it.offers.some((o) => o.retailer === 'target'))), app.browseView.filter((it) => !/lego/i.test(it.name)).map((it) => it.name).slice(0, 3).join(' | '));
+    app.state.browse = Object.assign(app.state.browse, { q: '', interest: 'playstation' }); app.renderBrowse();
+    assert(app.browseView.length && !app.browseView.some((it) => it.pick && /\bxbox\b/i.test(it.name) && !plat.playstation.test(it.name)), 'Xbox-only store items under PlayStation');
+    app.state.browse.interest = ''; app.prepPicks(null); app.load(JSON.parse(JSON.stringify(data))); app.prepPicks(JSON.parse(JSON.stringify(picksDataForInto)));
   });
   await check('Find: quick buttons narrow the ideas, and the list grows in place 24 at a time', () => {
     app.state.find = Object.assign({}, app.state.find, { who: '', age: 9, budget: 100, interests: [], hot: false, deals: false, live: false });

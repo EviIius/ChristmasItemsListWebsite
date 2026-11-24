@@ -88,7 +88,7 @@
     find: Object.assign({}, DEFAULT_FIND, store.get('find', {})),
     lists: normalizeLists(store.get('lists', null)),
     listView: store.get('listView', null),
-    browse: { q: '', interest: '', type: '', list: '', age: '', max: '', store: '', hot: false, live: false, sort: 'name', dir: 1, shown: 60 }, typesOpen: true,
+    browse: { q: '', interest: '', type: '', list: '', age: '', max: '', store: '', hot: false, sale: false, live: false, sort: 'match', dir: 1, shown: 60 }, typesOpen: true,
     shown: 24, findQuick: '',
     picks: { band: '', type: '', show: '', max: '', sort: 'rank', q: '', shown: 24 },
     storeQ: '',
@@ -541,23 +541,34 @@
         <div class="tb-types">${ts.map(([k, t]) => `<button type="button" class="tchip" data-type="${esc(k)}" aria-pressed="${b.type === k}"><span aria-hidden="true">${esc(t.emoji)}</span>${esc(t.label)}<span class="n">${count[k]}</span></button>`).join('')}</div></div>`;
     }).join('')}</div>`;
   }
+  const FILTER_KEYS = ['type', 'list', 'interest', 'age', 'max', 'store', 'hot', 'sale', 'live'];
+  const filtersOn = () => FILTER_KEYS.filter((k) => state.browse[k] !== '' && state.browse[k] !== false).length;
   function renderFilters() {
     const b = state.browse;
     const opts = (pairs, cur) => pairs.map(([v, l]) => `<option value="${esc(v)}" ${String(cur) === String(v) ? 'selected' : ''}>${esc(l)}</option>`).join('');
-    const on = ['type', 'list', 'interest', 'age', 'max', 'store', 'hot', 'live'].filter((k) => b[k] !== '' && b[k] !== false).length;
+    const sortVal = b.sort === 'price' ? (b.dir > 0 ? 'price-asc' : 'price-desc') : ['age', 'name'].includes(b.sort) ? b.sort : 'match';
     $('#filters').classList.toggle('open', !!state.filtersOpen);
     $('#filters').innerHTML = `
-      <button class="btn btn-sm filters-toggle" type="button" data-toggle-filters aria-expanded="${!!state.filtersOpen}">${state.filtersOpen ? 'Hide filters' : 'Filters'}${on ? ` (${on} on)` : ''}</button>
-      <div class="f"><label for="f-q">Search</label><input type="search" id="f-q" placeholder="NeeDoh, LEGO, Zelda…" value="${esc(b.q)}"></div>
+      <button class="btn btn-sm filters-toggle" type="button" data-toggle-filters aria-expanded="${!!state.filtersOpen}"></button>
+      <div class="f f-wide"><label for="f-q">Search</label><input type="search" id="f-q" placeholder="Try “lego for an 8 year old under $50”" value="${esc(b.q)}"></div>
       <div class="f"><label for="f-type">Type</label><select id="f-type"><option value="">Any type</option>${typeOptions(b.type)}</select></div>
-      ${Object.keys(HOT).length ? `<div class="f"><label for="f-list">Hot list</label><select id="f-list"><option value="">Any gift</option>${opts([['hot', 'On any 2026 hot list']].concat(Object.entries(HOT).map(([k, h]) => [k, h.short])), b.list)}</select></div>` : ''}
       <div class="f"><label for="f-interest">Into</label><select id="f-interest"><option value="">Anything</option>${opts(Object.entries(INT).map(([k, v]) => [k, v.label]), b.interest)}</select></div>
       <div class="f"><label for="f-age">Age</label><input type="number" id="f-age" min="1" max="30" placeholder="Any" value="${esc(b.age)}"></div>
       <div class="f"><label for="f-max">Price</label><select id="f-max"><option value="">Any price</option>${opts([[10, 'Up to $10'], [25, 'Up to $25'], [50, 'Up to $50'], [100, 'Up to $100'], [250, 'Up to $250'], [500, 'Up to $500']], b.max)}</select></div>
       <div class="f"><label for="f-store">Store</label><select id="f-store"><option value="">Any store</option>${opts(Object.entries(RET).map(([k, v]) => [k, v.name]), b.store)}</select></div>
+      <div class="f"><label for="f-sort">Sort</label><select id="f-sort">${opts([['match', 'Best match'], ['price-asc', 'Price: low to high'], ['price-desc', 'Price: high to low'], ['age', 'Age: youngest first'], ['name', 'Name: A to Z']], sortVal)}</select></div>
+      <label class="check"><input type="checkbox" id="f-sale" ${b.sale ? 'checked' : ''}> On sale</label>
       <label class="check"><input type="checkbox" id="f-hot" ${b.hot ? 'checked' : ''}> Hot this year</label>
-      <label class="check"><input type="checkbox" id="f-live" ${b.live ? 'checked' : ''}> Store price checked</label>`;
+      <button class="linkish clear-filters" type="button" data-clear-filters hidden>Clear filters</button>`;
+    filterMeta();
   }
+  // The Filters button's count and the "Clear filters" link, updated without redrawing the fields someone is typing in.
+  function filterMeta() {
+    const on = filtersOn();
+    const t = $('.filters-toggle'); if (t) t.textContent = (state.filtersOpen ? 'Hide filters' : 'Filters') + (on ? ` (${on} on)` : '');
+    const c = $('.clear-filters'); if (c) c.hidden = !on;
+  }
+
   function browseRows() {
     const b = state.browse; const Q = matchWords(parseQuery(b.q)); LAST_Q = Q;
     const rows = ITEMS.filter((it) => {
@@ -570,11 +581,14 @@
       if (b.store && !it.stores.includes(b.store) && !it.offers.some((o) => o.retailer === b.store)) return false;
       if (b.hot && !it.tags.includes('hot')) return false;
       if (b.live && priceInfo(it).kind !== 'live') return false;
+      if (b.sale && !onSale(it)) return false;
       return true;
     });
-    if ((Q.words.length || Q.chips.length) && b.sort === 'name' && b.dir === 1) {
-      const prof = Object.assign({}, DEFAULT_FIND, { age: Q.ageLo != null ? Math.round((Q.ageLo + Q.ageHi) / 2) : 18, budget: Q.max != null ? Q.max : BUDGET_ANY, interests: [] });
-      const score = (it) => Q.words.reduce((n, w) => n + (w.some((a) => hasWord(it._n, a)) ? 100 : 40), 0) + Math.max(0, scoreGift(it, Q.ageLo != null ? prof : Object.assign({}, prof, { age: clamp(Math.round((it.ages[0] + it.ages[1]) / 2), 1, 30) })));
+    if (b.sort === 'match') {
+      // Best match: words in the name first, then how well the gift fits the age and price (like Find), hot lists and deals.
+      const age = Q.ageLo != null ? Math.round((Q.ageLo + Q.ageHi) / 2) : b.age !== '' && Number.isFinite(+b.age) ? +b.age : null;
+      const prof = Object.assign({}, DEFAULT_FIND, { age: age ?? 18, budget: Q.max != null ? Q.max : b.max ? +b.max : BUDGET_ANY, interests: [] });
+      const score = (it) => Q.words.reduce((n, q) => n + (q.alts.some((a) => hasWord(it._n, a)) ? 100 : 40), 0) + Math.max(0, scoreGift(it, age != null ? prof : Object.assign({}, prof, { age: clamp(Math.round((it.ages[0] + it.ages[1]) / 2), 1, 30) })));
       const sc = new Map(rows.map((it) => [it, score(it)]));
       rows.sort((x, y) => sc.get(y) - sc.get(x) || x.name.localeCompare(y.name));
       return rows;
@@ -595,7 +609,9 @@
       ? `<th class="${c.cls || ''}" aria-sort="${b.sort === c.key ? (b.dir > 0 ? 'ascending' : 'descending') : 'none'}"><button type="button" data-sort="${c.key}">${c.label}</button></th>`
       : `<th class="${c.cls || ''}">${c.label ? c.label : '<span class="visually-hidden">Add</span>'}</th>`).join('') + '</tr>';
     BROWSE_RES = rows;
-    $('#browse-understood').innerHTML = understoodHtml(LAST_Q, rows.length);
+    const listChip = b.list ? `<span class="q-chip">${esc(b.list === 'hot' ? 'On a 2026 hot list' : `On ${(HOT[b.list] || {}).short || b.list}`)}<button type="button" data-clear-filter="list" aria-label="Remove this filter">×</button></span>` : '';
+    $('#browse-understood').innerHTML = (understoodHtml(LAST_Q, rows.length) + ' ' + listChip).trim();
+    filterMeta();
     const first = rows.slice(0, b.shown);
     $('#browse-table tbody').innerHTML = first.map(browseRow).join('') || `<tr><td colspan="7"><div class="empty">No gifts match${b.q.trim() ? ` “${esc(b.q.trim())}”` : ''}. Try fewer words or clear a filter.${b.q.trim() ? ` <button class="linkish" type="button" data-store-search="${esc(LAST_Q.words.length ? b.q.trim() : '')}">Search the stores for it</button>` : ''}</div></td></tr>`;
     $('#browse-cards').innerHTML = first.map((it) => giftCard(it, { compact: true })).join('');
@@ -703,24 +719,26 @@
     }
     return prev[b.length];
   }
-  // Turns the parsed words into what each must match; a word nothing contains gets its closest spelling.
+  // Turns the parsed words into what each must match: names, brands and types first; descriptions and interests only for a
+  // word none of those contain; otherwise the closest spelling.
   function matchWords(Q) {
     Q.words = Q.words.map(({ w, alts }) => {
-      if (ITEMS.some((it) => alts.some((a) => hasWord(it._s, a)))) { Q.chips.push({ label: `“${w}”`, raw: w }); return alts; }
+      if (ITEMS.some((it) => alts.some((a) => hasWord(it._s, a)))) { Q.chips.push({ label: `“${w}”`, raw: w }); return { w, alts }; }
+      if (ITEMS.some((it) => alts.some((a) => hasWord(it._x, a)))) { Q.chips.push({ label: `“${w}”`, raw: w }); return { w, alts, loose: true }; }
       if (w.length >= 4) {
         if (!VOCAB) { VOCAB = new Set(); ITEMS.forEach((it) => it._s.split(' ').forEach((t) => { if (t.length >= 4) VOCAB.add(t); })); }
         const max = w.length >= 8 ? 2 : 1; let best = null; let bd = max + 1;
         for (const t of VOCAB) { const d = lev(w, t, max); if (d < bd) { bd = d; best = t; if (!d) break; } }
-        if (best) { Q.chips.push(best === w ? { label: `“${w}”`, raw: w } : { label: `“${best}” (for “${w}”)`, raw: w, fixed: true }); return [best]; }
+        if (best) { Q.chips.push(best === w ? { label: `“${w}”`, raw: w } : { label: `“${best}” (for “${w}”)`, raw: w, fixed: true }); return { w, alts: [best] }; }
       }
-      Q.chips.push({ label: `“${w}”`, raw: w }); return alts;
+      Q.chips.push({ label: `“${w}”`, raw: w }); return { w, alts };
     });
     return Q;
   }
   const hasWord = (text, a) => (a.length <= 3 ? text.includes(` ${a} `) || text.includes(` ${a}s `) : text.includes(' ' + a));
   const onSale = (it) => !!dealInfo(it) || (isPick(it) && (PICKS_BY_GIFT[it.id] || []).some(pickOnSale));
   function queryFits(it, Q) {
-    if (Q.words.length && !Q.words.every((alts) => alts.some((a) => hasWord(it._s, a)))) return false;
+    if (Q.words.length && !Q.words.every((q) => q.alts.some((a) => hasWord(it._s, a) || (q.loose && hasWord(it._x, a))))) return false;
     if (Q.ageLo != null && !(it.ages[0] <= Q.ageHi && it.ages[1] >= Q.ageLo)) return false;
     if (Q.max != null && priceOf(it) > Q.max) return false;
     if (Q.min != null && !(priceOf(it) >= Q.min)) return false;
@@ -873,18 +891,26 @@
     ['characters', /star wars|marvel|disney|pixar|harry potter|frozen|spider-?man|bluey|paw patrol|sonic|mario|barbie|peanuts|snoopy|grinch|hello kitty|sanrio|stitch|toy story|batman|avengers|wicked|shrek|minions|transformers|jurassic|minecraft|roblox|fortnite/i],
     ['pokemon', /pok[eé]mon|pikachu/i], ['kpop', /k-?pop|anime|jujutsu|demon slayer|one piece|naruto|dragon ball|ghibli|totoro|chiikawa|mofusand|kirby/i],
     ['squishies', /squish|needoh|nee-?doh|fidget|smush|slime|putty/i], ['plush', /plush|squishmallow|stuffed|jellycat|soft toy/i],
-    ['lego', /\blego\b|magna-?tiles|building (?:set|toy)|\bblocks?\b/i], ['games', /board ?game|card game|\buno\b|catan|monopoly|puzzle|chess/i],
-    ['switch', /nintendo|switch 2/i], ['playstation', /playstation|\bps5\b/i], ['xbox', /\bxbox\b/i],
+    ['lego', /\blego\b|duplo|magna-?tiles|magnetic (?:building )?tiles|build(?:ing|able) (?:blocks?|sets?|toys?|bricks?)|\bbricks?\b|mega bloks|marble run|k'?nex|lincoln logs|gravitrax|clixo|bristle blocks/i], ['games', /board ?game|card game|\buno\b|catan|monopoly|puzzle|chess/i],
+    ['switch', /nintendo|\bswitch\b|joy-?cons?|amiibo/i], ['playstation', /playstation|\bps[45]\b|psvr|dualsense|dualshock/i], ['xbox', /\bxbox\b/i],
+    ['pc', /\bpc\b|steam deck|gaming (?:keyboard|mouse|pc|laptop)|meta quest|\bvr\b/i],
     ['collectibles', /blind (?:bag|box)|mystery|funko|collectible|advent/i], ['beauty', /\blip|makeup|perfume|parfum|skincare|nail|lotion|bath bomb|fragrance/i],
     ['arts', /craft|paint|drawing|coloring|crochet|diamond (?:art|painting)|sticker|jewelry (?:kit|making)/i], ['books', /\bbooks?\b|novel|vol\. \d|boxed set/i],
     ['music', /karaoke|speaker|headphone|earbud|microphone/i], ['outdoor', /football|basketball|soccer|baseball|scooter|\bbike\b|ping pong/i],
     ['tech', /camera|walkie|drone|charger|tablet|gaming (?:keyboard|mouse|headset)/i], ['room', /\blamps?\b|night ?light|string lights?|led (?:strip|lights?)|\bpillows?\b|throw blanket|\bblankets?\b|\bthrow\b|\bdecor\b/i],
     ['fashion', /beanie|slipper|socks|hoodie|tee\b|pajama|tote|backpack|wallet|earmuffs/i],
   ];
+  // Consoles (Switch, PlayStation, Xbox, PC) only ever come from the product's own name: a game or console type covers all of
+  // them, so its most common interest would put Xbox games under PlayStation.
+  const PLATFORMS = new Set(['switch', 'playstation', 'xbox', 'pc']);
+  const GAMING_TYPES = new Set(['switch-games', 'ps-xbox-games', 'any-console-games', 'consoles', 'controllers', 'vr', 'pc-gaming', 'headsets']);
   function pickInterests(x, typeInt) {
     const out = NAME_INTERESTS.filter(([i, rx]) => INT[i] && rx.test(x.name)).map(([i]) => i);
-    const top = Object.entries(typeInt[x.type] || {}).sort((a, b) => b[1] - a[1])[0];
-    if (top && !out.includes(top[0])) out.push(top[0]);
+    if (x.type === 'switch-games' && !out.includes('switch')) out.unshift('switch');
+    if (!GAMING_TYPES.has(x.type)) {
+      const top = Object.entries(typeInt[x.type] || {}).sort((a, b) => b[1] - a[1]).map(([i]) => i).find((i) => !PLATFORMS.has(i));
+      if (top && !out.includes(top)) out.push(top);
+    }
     return out.slice(0, 3);
   }
   function pickItems() {
@@ -1446,7 +1472,7 @@
     document.addEventListener('click', (e) => {
       const m = $('#menu');
       if (!m.hidden && !e.target.closest('#menu') && !e.target.closest('[data-add]')) closeMenu(false);
-      const t = e.target.closest('[data-toggle-filters],[data-find-quick],[data-more-all],[data-browse-more],[data-to-top],[data-q-drop],[data-store-search],[data-open],[data-add],[data-star],[data-toggle-gift],[data-new-person],[data-new-person-for],[data-example],[data-view-list],[data-edit-person],[data-delete-person],[data-share],[data-print],[data-find-for],[data-custom],[data-status],[data-remove],[data-band],[data-interest],[data-pick-interest],[data-swatch],[data-more],[data-more-interests],[data-reset-find],[data-sort],[data-quick],[data-type],[data-types-toggle],[data-show-list],[data-add-pick],[data-pick-to],[data-new-person-pick],[data-pick-band],[data-picks-more],[data-picks-reset],[data-picks-goto],[data-picks-type],[data-close-drawer],[data-close-modal],[data-copy],[data-copy-text],[data-save-share],[data-backup],[data-restore],[data-download-backup],[data-undo],[data-rescrape],#rescrape-btn,#freshness,#theme-btn,#snow-btn,#reset-find,#prefs-toggle,#go-scrape,#save-go,#forget-token,#reload-data');
+      const t = e.target.closest('[data-clear-filter],[data-clear-filters],[data-toggle-filters],[data-find-quick],[data-more-all],[data-browse-more],[data-to-top],[data-q-drop],[data-store-search],[data-open],[data-add],[data-star],[data-toggle-gift],[data-new-person],[data-new-person-for],[data-example],[data-view-list],[data-edit-person],[data-delete-person],[data-share],[data-print],[data-find-for],[data-custom],[data-status],[data-remove],[data-band],[data-interest],[data-pick-interest],[data-swatch],[data-more],[data-more-interests],[data-reset-find],[data-sort],[data-quick],[data-type],[data-types-toggle],[data-show-list],[data-add-pick],[data-pick-to],[data-new-person-pick],[data-pick-band],[data-picks-more],[data-picks-reset],[data-picks-goto],[data-picks-type],[data-close-drawer],[data-close-modal],[data-copy],[data-copy-text],[data-save-share],[data-backup],[data-restore],[data-download-backup],[data-undo],[data-rescrape],#rescrape-btn,#freshness,#theme-btn,#snow-btn,#reset-find,#prefs-toggle,#go-scrape,#save-go,#forget-token,#reload-data');
       if (!t) return;
       const d = t.dataset;
       if (d.add !== undefined) { e.preventDefault(); e.stopPropagation(); const m2 = $('#menu'); if (!m2.hidden && menuTrigger === t) closeMenu(); else openAddMenu(d.add, t); return; }
@@ -1457,6 +1483,8 @@
       if (d.picksMore !== undefined) { loadMore('picks'); return; }
       if (d.moreAll !== undefined) { loadMore(d.moreAll, Infinity); return; }
       if (d.browseMore !== undefined) { loadMore('browse'); return; }
+      if (d.clearFilter !== undefined) { state.browse[d.clearFilter] = ''; state.browse.shown = BROWSE_STEP; renderBrowse(); return; }
+      if (d.clearFilters !== undefined) { Object.assign(state.browse, { type: '', list: '', interest: '', age: '', max: '', store: '', hot: false, sale: false, live: false, shown: BROWSE_STEP }); renderFilters(); renderBrowse(); return; }
       if (d.toggleFilters !== undefined) { state.filtersOpen = !state.filtersOpen; renderFilters(); return; }
       if (d.findQuick !== undefined) { state.findQuick = d.findQuick; state.shown = FIND_STEP; renderFind(); return; }
       if (d.toTop !== undefined) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
@@ -1511,7 +1539,7 @@
       if (d.moreInterests !== undefined) { $('.prefs').classList.toggle('show-all'); renderFindPrefs(); return; }
       if (t.id === 'prefs-toggle') { const c = !$('.prefs').classList.contains('collapsed'); setPrefsCollapsed(c); return; }
       if (d.resetFind !== undefined || t.id === 'reset-find') { state.find = Object.assign({}, DEFAULT_FIND); state.shown = FIND_STEP; saveFind(); renderFindPrefs(); renderFind(); return; }
-      if (d.sort !== undefined) { const k = d.sort; state.browse.dir = state.browse.sort === k ? -state.browse.dir : 1; state.browse.sort = k; renderBrowse(); return; }
+      if (d.sort !== undefined) { const k = d.sort; state.browse.dir = state.browse.sort === k ? -state.browse.dir : 1; state.browse.sort = k; state.browse.shown = BROWSE_STEP; renderFilters(); renderBrowse(); return; }
       if (d.quick !== undefined) { state.storeQ = d.quick; $('#store-q').value = d.quick; renderStores(); return; }
       if (d.closeDrawer !== undefined) { closeDrawer(); return; }
       if (d.closeModal !== undefined) { closeModal(); return; }
@@ -1558,7 +1586,7 @@
       if (t.id === 'budget') { state.find.budget = +t.value; $('#budget-out').textContent = +t.value >= BUDGET_ANY ? 'Any amount' : money(+t.value); state.shown = FIND_STEP; saveFind(); renderFind(); return; }
       if (t.id === 'f-q') { clearTimeout(searchTimer); searchTimer = setTimeout(() => runSearch(t.value), 200); return; }
       if (t.id === 'q') { clearTimeout(searchTimer); searchTimer = setTimeout(() => runSearch(t.value), 300); return; }
-      if (t.id === 'f-age') { state.browse.age = t.value; renderBrowse(); return; }
+      if (t.id === 'f-age') { state.browse.age = t.value; state.browse.shown = BROWSE_STEP; renderBrowse(); return; }
       if (t.id === 'pk-q') { state.picks.q = t.value; state.picks.shown = PICK_STEP; renderPicks(); return; }
     });
     document.addEventListener('change', (e) => {
@@ -1569,10 +1597,11 @@
       }
       if (t.dataset.toggle) { setFind({ [t.dataset.toggle]: t.checked }); return; }
       const map = { 'f-interest': 'interest', 'f-max': 'max', 'f-store': 'store', 'f-type': 'type', 'f-list': 'list' };
-      if (map[t.id]) { state.browse[map[t.id]] = t.value; renderBrowse(); return; }
+      if (map[t.id]) { state.browse[map[t.id]] = t.value; state.browse.shown = BROWSE_STEP; renderBrowse(); return; }
+      if (t.id === 'f-sort') { const [k, dir] = t.value.split('-'); state.browse.sort = k; state.browse.dir = dir === 'desc' ? -1 : 1; state.browse.shown = BROWSE_STEP; renderBrowse(); return; }
       const pmap = { 'pk-type': 'type', 'pk-show': 'show', 'pk-max': 'max', 'pk-sort': 'sort' };
       if (pmap[t.id]) { state.picks[pmap[t.id]] = t.value; state.picks.shown = PICK_STEP; renderPicks(); return; }
-      if (t.id === 'f-hot' || t.id === 'f-live') { state.browse[t.id.slice(2)] = t.checked; renderBrowse(); return; }
+      if (t.id === 'f-hot' || t.id === 'f-live' || t.id === 'f-sale') { state.browse[t.id.slice(2)] = t.checked; state.browse.shown = BROWSE_STEP; renderBrowse(); return; }
       if (t.dataset.paid) {
         const [pid, u] = t.dataset.paid.split('|'); const p = person(pid); const x = p && p.items.find((y) => y.uid === u); if (!x) return;
         x.paid = t.value === '' ? null : Math.max(0, +t.value); if (x.paid != null && x.status === 'idea') x.status = 'bought';
@@ -1621,7 +1650,8 @@
   // Gifts on a store's or expert's 2026 list get the "Hot this year" seal; gift-guide picks are cited but not sealed.
   function prepItem(it) {
     it._n = ' ' + fold(it.name) + ' ';
-    it._s = ' ' + fold([it.name, it.brand, it.blurb, typeLabel(it), (CATS[it.category] || {}).label, (it.interests || []).map((i) => (INT[i] || {}).label).join(' '), (it.stores || []).map(retName).join(' ')].join(' ')) + ' ';
+    it._s = ' ' + fold([it.name, it.brand, typeLabel(it), (CATS[it.category] || {}).label].join(' ')) + ' ';
+    it._x = ' ' + fold([it.blurb, (it.interests || []).map((i) => (INT[i] || {}).label).join(' ')].join(' ')) + ' ';
     it.lists = Array.isArray(it.lists) ? it.lists.filter((l) => HOT[l]) : [];
     it.tags = Array.isArray(it.tags) ? it.tags.slice() : [];
     if (!it.tags.includes('hot') && it.lists.some((l) => HOT[l].kind !== 'guide')) it.tags.push('hot');

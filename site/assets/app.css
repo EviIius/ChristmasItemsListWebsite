@@ -562,3 +562,4 @@ details.fold h4 { margin: 16px 0 8px; }
   .filters:not(.open) > :not(.filters-toggle) { display: none; }
   .filters.open .filters-toggle { margin-bottom: 8px; }
 }
+.filters .clear-filters { align-self: center; }
