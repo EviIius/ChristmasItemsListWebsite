@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght,SOFT,WONK@9..144,500..900,0..100,0..1&family=Permanent+Marker&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/app.css?v=20261123-3">
+<link rel="stylesheet" href="assets/app.css?v=20261124-1">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='8' y='24' width='48' height='34' rx='5' fill='%23C4122F'/%3E%3Crect x='4' y='16' width='56' height='12' rx='4' fill='%23E0A92E'/%3E%3Crect x='28' y='16' width='8' height='42' fill='%23124734'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -29,6 +29,11 @@
         <p class="brand-sub" id="countdown">Gift ideas, store prices and everyone's lists</p>
       </div>
     </div>
+    <form class="site-search" id="site-search" role="search">
+      <label class="visually-hidden" for="q">Search every gift idea</label>
+      <input type="search" id="q" placeholder="Search gifts: “LEGO for an 8 year old under $50”" autocomplete="off" enterkeyhint="search">
+      <button type="submit" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="m16.5 16.5 4.5 4.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+    </form>
     <div class="topbar-actions">
       <button class="freshness" id="freshness" type="button" title="Where prices come from, and refreshing them">
         <span class="dot" aria-hidden="true"></span><span id="freshness-text">Loading gifts…</span>
@@ -46,11 +51,11 @@
     </div>
   </div>
   <nav class="tabs" aria-label="Sections">
-    <a href="#find" data-view="find">Find gifts</a>
-    <a href="#lists" data-view="lists">Lists <span class="tab-count" id="lists-count" hidden></span></a>
-    <a href="#browse" data-view="browse">Browse by type</a>
-    <a href="#deals" data-view="deals">Deals &amp; dates</a>
-    <a href="#stores" data-view="stores">Shop every store</a>
+    <a href="#find" data-view="find"><span class="tab-ico" aria-hidden="true">🎁</span><span class="tab-long">Find gifts</span><span class="tab-short" aria-hidden="true">Find</span></a>
+    <a href="#lists" data-view="lists"><span class="tab-ico" aria-hidden="true">📝</span><span class="tab-long">Lists</span><span class="tab-short" aria-hidden="true">Lists</span> <span class="tab-count" id="lists-count" hidden></span></a>
+    <a href="#browse" data-view="browse"><span class="tab-ico" aria-hidden="true">🔎</span><span class="tab-long">Browse &amp; search</span><span class="tab-short" aria-hidden="true">Browse</span></a>
+    <a href="#deals" data-view="deals"><span class="tab-ico" aria-hidden="true">🏷️</span><span class="tab-long">Deals &amp; dates</span><span class="tab-short" aria-hidden="true">Deals</span></a>
+    <a href="#stores" data-view="stores"><span class="tab-ico" aria-hidden="true">🛍️</span><span class="tab-long">Shop every store</span><span class="tab-short" aria-hidden="true">Stores</span></a>
   </nav>
 </header>
 
@@ -93,12 +98,11 @@
           <h2 id="find-h">Gift ideas</h2>
           <p class="sub" id="find-sub"></p>
         </div>
+        <details class="age-tips"><summary>Shopping tips for this age</summary><div class="guide" id="age-guide"></div></details>
+        <div class="quick-row" id="find-quick" role="group" aria-label="Show"></div>
         <div class="gift-grid" id="top-picks"></div>
         <div id="more-ideas"></div>
-        <h3 class="section-h" id="stocking-h">Stocking stuffers under $25</h3>
-        <div class="gift-grid compact" id="stocking"></div>
         <div class="store-hot" id="store-hot" hidden></div>
-        <div class="guide" id="age-guide"></div>
       </div>
     </div>
   </section>
@@ -121,6 +125,7 @@
     </div>
     <div class="type-browser panel" id="type-browser"></div>
     <div class="filters panel" id="filters"></div>
+    <div class="understood" id="browse-understood" aria-live="polite"></div>
     <div class="table-wrap">
       <table class="grid-table" id="browse-table">
         <thead></thead>
@@ -128,14 +133,31 @@
       </table>
     </div>
     <div class="card-list" id="browse-cards"></div>
+    <div id="browse-more"></div>
   </section>
 
   <section class="view" id="view-deals" aria-labelledby="deals-h" hidden>
     <div class="view-head">
       <h2 id="deals-h">Deals and dates</h2>
-      <p class="sub">Big sale days, the stores' own best sellers and holiday deals, gifts selling below their usual price, and the store links the price checker reads.</p>
+      <p class="sub">Big sale days, gifts selling below their usual price, and the stores' own best sellers and holiday deals.</p>
     </div>
     <div class="dates" id="dates"></div>
+    <div class="panel">
+      <h3>Below the usual price right now</h3>
+      <div id="deal-list"></div>
+    </div>
+    <details class="panel fold">
+      <summary><h3>Big gifts to price-check first</h3><span class="hint">Gifts usually $150 or more, where waiting for a sale pays off</span></summary>
+      <div id="big-list"></div>
+    </details>
+    <details class="panel fold">
+      <summary><h3>How prices are checked</h3><span class="hint">The store links the price checker reads, and the top-toys lists behind the "Hot this year" seals</span></summary>
+      <h4>Store links the price checker reads</h4>
+      <div id="tracked-list"></div>
+      <h4>Where the hot picks come from</h4>
+      <p class="hint">The 2026 top-toys lists and gift guides behind the "Hot this year" seals. Gift-guide picks are listed on each gift but don't get the seal.</p>
+      <div id="hot-sources"></div>
+    </details>
     <div class="panel picks-panel" id="picks-panel" hidden>
       <div class="picks-head">
         <h3 id="picks-h">Best sellers and deals</h3>
@@ -145,26 +167,6 @@
       <div id="picks-filters"></div>
       <div class="pick-grid" id="picks"></div>
       <div id="picks-more"></div>
-    </div>
-    <div class="panel">
-      <h3>Below the usual price right now</h3>
-      <div id="deal-list"></div>
-    </div>
-    <div class="two-col">
-      <div class="panel">
-        <h3>Big gifts to price-check first</h3>
-        <p class="hint" style="margin:-6px 0 8px">Gifts usually $150 or more. These are the ones where waiting for a sale pays off.</p>
-        <div id="big-list"></div>
-      </div>
-      <div class="panel">
-        <h3>Store links the price checker reads</h3>
-        <div id="tracked-list"></div>
-      </div>
-    </div>
-    <div class="panel">
-      <h3>Where the hot picks come from</h3>
-      <p class="hint" style="margin:-6px 0 8px">The 2026 top-toys lists and gift guides behind the "Hot this year" seals. Gift-guide picks are listed on each gift but don't get the seal.</p>
-      <div id="hot-sources"></div>
     </div>
   </section>
 
@@ -189,6 +191,7 @@
 <footer class="footer" id="footer"></footer>
 
 <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+<button class="to-top" id="to-top" type="button" data-to-top hidden>↑ Back to top</button>
 <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" hidden></aside>
 
 <div class="modal-backdrop" id="modal-backdrop" hidden>
@@ -199,6 +202,6 @@
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script src="assets/config.js"></script>
-<script src="assets/app.js?v=20261123-3"></script>
+<script src="assets/app.js?v=20261124-1"></script>
 </body>
 </html>

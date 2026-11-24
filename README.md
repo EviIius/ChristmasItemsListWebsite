@@ -6,13 +6,20 @@ A small website for Christmas shopping: gift ideas for ages 1 to 30, a Christmas
 
 | Page | What it does |
 | --- | --- |
-| Find gifts | Set an age (1–30), a budget and interests to get ranked gift ideas, stocking stuffers ($25 and under), Walmart's best sellers for that age and an age guide with safety notes. Choose someone from your lists to use their age, interests and budget. |
+| Find gifts | Set an age (1–30), a budget and interests to get ranked gift ideas, quick buttons (Under $25, On sale, Hot this year, Store best sellers) and an age guide with safety notes. Choose someone from your lists to use their age, interests and budget. |
 | Lists | One Christmas list per person: name, age, color, budget and interests. Add gifts from anywhere on the site (they get circled in that person's color) or add your own with a link. Mark each gift Idea, Bought or Wrapped, note what you paid and watch the budget bar. The shopping trip view groups everything by store. Share, copy as text, print, back up. Starred gifts go to a shortlist. |
-| Browse by type | Every gift sorted into 80 product types in 20 groups. Pick a type (Squishies & fidgets, LEGO sets, Switch 2 games…) or a whole group, then narrow by hot list, interest, age, price and store. A sortable table, or cards on phones. |
+| Browse & search | The search box's results, and every gift sorted into 80 product types in 20 groups. Pick a type (Squishies & fidgets, LEGO sets, Switch 2 games…) or a whole group, then narrow by hot list, interest, age, price and store. A sortable table, or cards on phones. |
 | Deals & dates | Countdown to Black Friday, Cyber Monday, Green Monday and Christmas Eve; Walmart's best sellers and deals, filtered by age group, product type, price, sale or best seller, and addable to anyone's list; gifts selling at least 8% under their usual price; the big-ticket gifts; the hot lists this year's picks come from; and the status of every tracked store link, grouped by store. |
 | Shop every store | Type a search once and open it at any of the 28 stores, plus a directory of what each store is good for. |
 
 Lists and settings are saved in each visitor's own browser. There are no accounts and no AI features, and nothing is sent anywhere.
+
+## Searching and browsing
+
+- **The search box at the top of every page** understands plain requests: "LEGO for an 8 year old under $50", "squishies under $10 at Five Below", "gift card for my boss", "books for a 3 year old", "switch games on sale", "stocking stuffers for a toddler". It picks out the age (numbers, "toddler", "teen", "my boss"), the price ("under $50", "$20-40", "cheap"), a store ("at Walmart"), "on sale" and "popular", and looks for the remaining words at the start of words in each gift's name, brand, type, interests and stores, with plurals, other words for the same thing (plushie → plush, PS5 → PlayStation) and the nearest spelling when a word matches nothing ("squishmellow" → squishmallow). The chips under the filters show what it understood; ✕ removes one. Results rank name matches first, then how well each gift fits the age and price. A search is a link (`#browse?q=...`), so it can be shared. Press `/` to jump to the box. It runs in the browser with no AI service.
+- **Long lists load as you scroll**: Find shows 24 ideas, Browse 60 rows and Deals 24 best sellers, and the next batch is added as you near the end ("Show all" loads the rest at once). "Back to top" appears on long pages.
+- **Find** has quick buttons above the ideas: Everything, Under $25, On sale, Hot this year and Store best sellers, each with its count.
+- **On phones** the sections are a tab bar at the bottom of the screen, and Browse's filters fold behind a Filters button.
 
 ## One-time setup
 

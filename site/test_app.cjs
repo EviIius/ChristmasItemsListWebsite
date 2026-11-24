@@ -42,6 +42,7 @@ vm.runInContext(source.replace('  init();\n})();', `
     renderStores, openDrawer, statusHtml, renderFreshness, profileOf, person, onLists,
     prepPicks, pickRows, renderPicksPanel, renderPicks, renderStoreHot, togglePick, offerStatus, get picks() { return PICKS; },
     get items() { return ITEMS; }, get byId() { return BYID; },
+    parseQuery, matchWords, browseRows, loadMore, setMoreRow, get findView() { return FIND_RES; }, get browseView() { return BROWSE_RES; },
   };
 })();`), context);
 
@@ -240,6 +241,44 @@ const asTypical = (id) => {
   app.prepPicks(JSON.parse(JSON.stringify(picksData)));
   const pickReset = () => Object.assign(app.state.picks, { band: '', type: '', show: '', max: '', sort: 'rank', q: '', shown: 24 });
   const PICK_URL = { walmart: (s) => `https://www.walmart.com/ip/${s}`, gamestop: (s) => `https://www.gamestop.com/products/${s}.html`, lego: (s) => `https://www.lego.com/en-us/product/${s}`, fivebelow: (s) => `https://www.fivebelow.com/products/${s}`, barnesnoble: (s) => { const [w, e] = s.split('-'); return `https://www.barnesandnoble.com/w/${w}?ean=${e}`; } };
+  await check('smart search reads ages, prices, stores, "on sale" and the words to look for', () => {
+    const q1 = app.parseQuery('LEGO for an 8 year old under $50');
+    assert(q1.ageLo === 8 && q1.ageHi === 8 && q1.max === 50 && q1.words.length === 1 && q1.words[0].w === 'lego', JSON.stringify(q1));
+    const q2 = app.parseQuery('squishies between $5 and $15 at five below for my 10yo nephew');
+    assert(q2.min === 5 && q2.max === 15 && q2.store === 'fivebelow' && q2.ageLo === 10 && q2.words.map((w) => w.w).join() === 'squishies', JSON.stringify(q2));
+    const q3 = app.parseQuery('gift card for my boss');
+    assert(q3.ageLo === 18 && q3.words.map((w) => w.w).join() === 'gift card', JSON.stringify(q3));
+    const q4 = app.parseQuery('teen deals 8-12');
+    assert(q4.ageLo === 8 && q4.ageHi === 12 && q4.sale, JSON.stringify(q4));
+    const q5 = app.parseQuery('stocking stuffers for a toddler');
+    assert(q5.max === 25 && q5.ageLo === 1 && q5.ageHi === 3 && !q5.words.length, JSON.stringify(q5));
+    const q6 = app.parseQuery('lego nintendo');
+    assert(!q6.store && q6.words.length === 2, 'brand names are words, not stores');
+  });
+  await check('smart search: results fit what was asked, rank name matches first, fix a misspelling, and load 60 at a time', () => {
+    app.state.browse.sort = 'name'; app.state.browse.dir = 1;
+    app.state.browse.q = 'lego for an 8 year old under $50'; app.state.browse.shown = 60; app.renderBrowse();
+    const rows = app.browseView;
+    assert(rows.length >= 5 && rows.every((it) => it.ages[0] <= 8 && it.ages[1] >= 8 && !(app.priceInfo(it).value > 50) && /lego/i.test(it._s)), `${rows.length} rows`);
+    assert(/lego/i.test(rows[0].name) && element('#browse-understood').innerHTML.includes('Age 8') && element('#browse-understood').innerHTML.includes('Up to $50'));
+    app.state.browse.q = 'squishmellow'; app.renderBrowse();
+    assert(app.browseView.length && app.browseView.every((it) => /squishmallow/i.test(it._s)) && element('#browse-understood').innerHTML.includes('for “squishmellow”'));
+    app.state.browse.q = ''; app.state.browse.shown = 60; app.renderBrowse();
+    const shownRows = (element('#browse-table tbody').innerHTML.match(/data-open=/g) || []).length;
+    assert(shownRows === 60 && element('#browse-more').innerHTML.includes('data-browse-more') && element('#browse-more').innerHTML.includes(`Show all ${app.items.length.toLocaleString('en-US')}`), `${shownRows} rows`);
+    app.loadMore('browse'); assert.equal((element('#browse-table tbody').innerHTML.match(/data-open=/g) || []).length, 120);
+    app.state.browse.q = '';
+  });
+  await check('Find: quick buttons narrow the ideas, and the list grows in place 24 at a time', () => {
+    app.state.find = Object.assign({}, app.state.find, { who: '', age: 9, budget: 100, interests: [], hot: false, deals: false, live: false });
+    app.state.findQuick = 'u25'; app.state.shown = 24; app.renderFind();
+    assert(app.findView.length > 24 && app.findView.every((it) => app.priceInfo(it).value <= 25), `${app.findView.length}`);
+    assert(element('#find-quick').innerHTML.includes('data-find-quick="u25"') && element('#find-quick').innerHTML.includes('aria-pressed="true"'));
+    const before = (element('#top-picks').innerHTML.match(/class="gift"/g) || []).length;
+    app.loadMore('find');
+    assert.equal((element('#top-picks').innerHTML.match(/class="gift"/g) || []).length, before + 24);
+    app.state.findQuick = ''; app.state.shown = 24; app.renderFind();
+  });
   await check("store picks: every pick is typed, aged and links to the store's product page", () => {
     const P = app.picks;
     assert(P.items.length >= 300, `${P.items.length} picks`);
@@ -350,6 +389,18 @@ const asTypical = (id) => {
     app.prepPicks(JSON.parse(JSON.stringify(picksData)));
   });
 
+  await check('store best sellers get interests from their names, and the "Store best sellers" button on Find shows only them', () => {
+    app.load(JSON.parse(JSON.stringify(data)));
+    const sw = app.items.filter((it) => it.pick && /star wars/i.test(it.name));
+    assert(sw.length && sw.every((it) => it.interests.includes('characters') && !it.interests.includes('room')), sw.map((it) => it.name + ':' + it.interests).slice(0, 3).join(' | '));
+    const nd = app.items.filter((it) => it.pick && /needoh/i.test(it.name));
+    assert(nd.length && nd.every((it) => it.interests.includes('squishies')));
+    app.state.find = Object.assign({}, app.state.find, { who: '', age: 9, budget: 100, interests: [] });
+    app.state.findQuick = 'store'; app.state.shown = 24; app.renderFind();
+    assert(app.findView.length && app.findView.every((it) => it.pick), 'the "Store best sellers" button shows only store best sellers');
+    app.state.findQuick = ''; app.renderFind();
+    app.prepPicks(null); app.load(JSON.parse(JSON.stringify(data))); app.prepPicks(JSON.parse(JSON.stringify(picksData)));
+  });
   await check('the Walmart browser snippet writes lines store_picks.py can read', () => {
     const snippet = fs.readFileSync(path.join(site, '../scraper/browser/walmart-capture.js'), 'utf8');
     const ss = new Map();

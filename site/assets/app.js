@@ -88,8 +88,8 @@
     find: Object.assign({}, DEFAULT_FIND, store.get('find', {})),
     lists: normalizeLists(store.get('lists', null)),
     listView: store.get('listView', null),
-    browse: { q: '', interest: '', type: '', list: '', age: '', max: '', store: '', hot: false, live: false, sort: 'name', dir: 1 }, typesOpen: true,
-    shown: 9,
+    browse: { q: '', interest: '', type: '', list: '', age: '', max: '', store: '', hot: false, live: false, sort: 'name', dir: 1, shown: 60 }, typesOpen: true,
+    shown: 24, findQuick: '',
     picks: { band: '', type: '', show: '', max: '', sort: 'rank', q: '', shown: 24 },
     storeQ: '',
     lastAdded: null,
@@ -400,14 +400,15 @@
     if (f.budget < BUDGET_ANY) bits.push(`up to ${money(f.budget)}`);
     if (f.interests.length) bits.push(`into ${interestNames(f.interests, 3)}`);
     $('#find-sub').textContent = `${num(res.length)} of ${num(ITEMS.length)} ideas fit ${bits.join(', ')}. Gifts that are hot this year or on sale rank higher.`;
-    const top = res.slice(0, state.shown);
+    const quick = FIND_QUICK.find((q) => q[0] === state.findQuick) ? state.findQuick : '';
+    $('#find-quick').innerHTML = FIND_QUICK.map(([k, label]) => { const n = k ? res.filter(QUICK_TEST[k]).length : res.length;
+      return `<button type="button" class="chip-btn${k === quick ? ' is-on' : ''}" data-find-quick="${k}" aria-pressed="${k === quick}"${n || !k ? '' : ' disabled'}>${esc(label)} <span class="n">${num(n)}</span></button>`; }).join('');
+    const view = quick ? res.filter(QUICK_TEST[quick]) : res;
+    FIND_RES = view;
+    const top = view.slice(0, state.shown);
     $('#top-picks').innerHTML = top.length ? top.map((it) => giftCard(it)).join('')
       : `<div class="empty"><strong>Nothing matches yet.</strong><span>Try a higher budget, fewer interests, or turn off the "Only show" filters.</span><button class="btn btn-sm" type="button" data-reset-find>Clear all filters</button></div>`;
-    $('#more-ideas').innerHTML = res.length > state.shown ? `<button class="btn more-btn" type="button" data-more>Show ${Math.min(12, res.length - state.shown)} more ideas (${res.length - state.shown} left)</button>` : '';
-    const topIds = new Set(top.map((it) => it.id));
-    const stock = res.filter((it) => priceOf(it) <= 25 && !topIds.has(it.id)).slice(0, 8);
-    $('#stocking-h').hidden = !stock.length;
-    $('#stocking').innerHTML = stock.map((it) => giftCard(it, { compact: true })).join('');
+    setMoreRow('find', view.length, top.length);
     renderStoreHot(f);
     $('#age-guide').innerHTML = guideHtml(f.age, f.interests);
     state.lastAdded = null;
@@ -543,7 +544,10 @@
   function renderFilters() {
     const b = state.browse;
     const opts = (pairs, cur) => pairs.map(([v, l]) => `<option value="${esc(v)}" ${String(cur) === String(v) ? 'selected' : ''}>${esc(l)}</option>`).join('');
+    const on = ['type', 'list', 'interest', 'age', 'max', 'store', 'hot', 'live'].filter((k) => b[k] !== '' && b[k] !== false).length;
+    $('#filters').classList.toggle('open', !!state.filtersOpen);
     $('#filters').innerHTML = `
+      <button class="btn btn-sm filters-toggle" type="button" data-toggle-filters aria-expanded="${!!state.filtersOpen}">${state.filtersOpen ? 'Hide filters' : 'Filters'}${on ? ` (${on} on)` : ''}</button>
       <div class="f"><label for="f-q">Search</label><input type="search" id="f-q" placeholder="NeeDoh, LEGO, Zelda…" value="${esc(b.q)}"></div>
       <div class="f"><label for="f-type">Type</label><select id="f-type"><option value="">Any type</option>${typeOptions(b.type)}</select></div>
       ${Object.keys(HOT).length ? `<div class="f"><label for="f-list">Hot list</label><select id="f-list"><option value="">Any gift</option>${opts([['hot', 'On any 2026 hot list']].concat(Object.entries(HOT).map(([k, h]) => [k, h.short])), b.list)}</select></div>` : ''}
@@ -555,9 +559,9 @@
       <label class="check"><input type="checkbox" id="f-live" ${b.live ? 'checked' : ''}> Store price checked</label>`;
   }
   function browseRows() {
-    const b = state.browse; const q = b.q.trim().toLowerCase();
+    const b = state.browse; const Q = matchWords(parseQuery(b.q)); LAST_Q = Q;
     const rows = ITEMS.filter((it) => {
-      if (q && !`${it.name} ${it.brand} ${it.blurb} ${typeLabel(it)} ${it.interests.map((i) => (INT[i] || {}).label).join(' ')}`.toLowerCase().includes(q)) return false;
+      if (!queryFits(it, Q)) return false;
       if (b.type && (b.type.startsWith('cat:') ? it.category !== b.type.slice(4) : it.type !== b.type)) return false;
       if (b.list && (b.list === 'hot' ? !it.tags.includes('hot') : !it.lists.includes(b.list))) return false;
       if (b.interest && !it.interests.includes(b.interest)) return false;
@@ -568,13 +572,21 @@
       if (b.live && priceInfo(it).kind !== 'live') return false;
       return true;
     });
+    if ((Q.words.length || Q.chips.length) && b.sort === 'name' && b.dir === 1) {
+      const prof = Object.assign({}, DEFAULT_FIND, { age: Q.ageLo != null ? Math.round((Q.ageLo + Q.ageHi) / 2) : 18, budget: Q.max != null ? Q.max : BUDGET_ANY, interests: [] });
+      const score = (it) => Q.words.reduce((n, w) => n + (w.some((a) => hasWord(it._n, a)) ? 100 : 40), 0) + Math.max(0, scoreGift(it, Q.ageLo != null ? prof : Object.assign({}, prof, { age: clamp(Math.round((it.ages[0] + it.ages[1]) / 2), 1, 30) })));
+      const sc = new Map(rows.map((it) => [it, score(it)]));
+      rows.sort((x, y) => sc.get(y) - sc.get(x) || x.name.localeCompare(y.name));
+      return rows;
+    }
     const col = BROWSE_COLS.find((c) => c.key === b.sort && c.sort) || BROWSE_COLS[0];
     rows.sort((x, y) => { const a = col.sort(x); const c = col.sort(y); return (a > c ? 1 : a < c ? -1 : 0) * b.dir; });
     return rows;
   }
   function renderBrowse() {
     const rows = browseRows(); const b = state.browse;
-    const tb = typeBrowserHtml(); $('#type-browser').innerHTML = tb; $('#type-browser').hidden = !tb;
+    const searching = !!b.q.trim(); $('#browse-h').textContent = searching ? 'Search results' : 'Shop by type';
+    const tb = searching ? '' : typeBrowserHtml(); $('#type-browser').innerHTML = tb; $('#type-browser').hidden = !tb;
     const what = b.type ? (b.type.startsWith('cat:') ? (CATS[b.type.slice(4)] || {}).label : (TYPES[b.type] || {}).label) : '';
     const inType = PICKS && b.type ? PICKS.items.filter((x) => (b.type.startsWith('cat:') ? x.category === b.type.slice(4) : x.type === b.type)).length : 0;
     $('#browse-sub').innerHTML = `${num(rows.length)} of ${num(ITEMS.length)} gift ideas${what ? ` in ${esc(what)}` : ''}. Select a row for details, prices and every store that sells it.`
@@ -582,7 +594,14 @@
     $('#browse-table thead').innerHTML = '<tr>' + BROWSE_COLS.map((c) => c.sort
       ? `<th class="${c.cls || ''}" aria-sort="${b.sort === c.key ? (b.dir > 0 ? 'ascending' : 'descending') : 'none'}"><button type="button" data-sort="${c.key}">${c.label}</button></th>`
       : `<th class="${c.cls || ''}">${c.label ? c.label : '<span class="visually-hidden">Add</span>'}</th>`).join('') + '</tr>';
-    $('#browse-table tbody').innerHTML = rows.map((it) => {
+    BROWSE_RES = rows;
+    $('#browse-understood').innerHTML = understoodHtml(LAST_Q, rows.length);
+    const first = rows.slice(0, b.shown);
+    $('#browse-table tbody').innerHTML = first.map(browseRow).join('') || `<tr><td colspan="7"><div class="empty">No gifts match${b.q.trim() ? ` “${esc(b.q.trim())}”` : ''}. Try fewer words or clear a filter.${b.q.trim() ? ` <button class="linkish" type="button" data-store-search="${esc(LAST_Q.words.length ? b.q.trim() : '')}">Search the stores for it</button>` : ''}</div></td></tr>`;
+    $('#browse-cards').innerHTML = first.map((it) => giftCard(it, { compact: true })).join('');
+    setMoreRow('browse', rows.length, first.length);
+  }
+  function browseRow(it) {
       const p = priceInfo(it); const people = onLists(it.id);
       return `<tr class="is-clickable" data-open="${esc(it.id)}" tabindex="0" aria-label="${esc(it.name)}">
         <td><div class="cell-title"><span aria-hidden="true">${esc(it.emoji)}</span>${esc(it.name)}${it.tags.includes('hot') ? ` <span class="chip gold" title="${esc(it.lists.map((l) => HOT[l].short).join(', '))}">Hot</span>` : ''}${people.map((x) => ` <span class="initial" style="--mark:${x.color};font-size:.9rem">${esc(initial(x.name))}</span>`).join('')}</div><div class="cell-sub">${esc(it.brand)}</div></td>
@@ -592,8 +611,183 @@
         <td class="r"><div class="num" style="font-weight:700">${money(p.value)}</div><div class="cell-sub">${p.kind === 'live' ? `${esc(retName(p.retailer))}, ${esc(ago(p.at))}` : p.kind === 'typical' ? 'typical' : 'check store'}</div></td>
         <td class="cell-sub">${esc(it.stores.slice(0, 3).map(retName).join(', '))}</td>
         <td><button class="btn btn-sm" type="button" data-add="${esc(it.id)}" aria-haspopup="menu">Add</button></td></tr>`;
-    }).join('') || '<tr><td colspan="7"><div class="empty">No gifts match. Clear a filter or two.</div></td></tr>';
-    $('#browse-cards').innerHTML = rows.map((it) => giftCard(it, { compact: true })).join('');
+  }
+
+  // ------------------------------------------------------------------ SMART SEARCH
+  // Reads plain requests like "lego for an 8 year old under $50" into an age, a price range, a store, "on sale" and
+  // the words to look for. No AI service: a few rules, other words people use for the same things, and a spelling fix.
+  const fold = (t) => String(t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/&/g, ' and ').replace(/['’]/g, '').replace(/-/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+  const STOP = new Set(('a an the for my our your his her their gift gifts idea ideas present presents something stuff thing things some any all who that likes like loves love '
+    + 'into is are with and or to of in christmas xmas holiday holidays good best cool fun awesome nice great find show me i want need buy get please items item toy toys '
+    + 'kid kids child children boy boys girl girls son sons daughter daughters nephew nephews niece nieces grandson granddaughter grandkids brother sister sibling siblings '
+    + 'mom dad mother father wife husband boyfriend girlfriend him he she them man men woman women guy guys friend friends coworker coworkers boss teacher family person people '
+    + 'year years yr yrs old olds age ages aged under over up between from at').split(' '));
+  const SYN = {
+    plushie: 'plush', plushies: 'plush', stuffy: 'plush', stuffies: 'plush', stuffed: 'plush|stuffed', squishy: 'squish', squishies: 'squish', fidgets: 'fidget',
+    legos: 'lego', ps5: 'playstation|ps5', ps4: 'playstation|ps4', playstation: 'playstation|ps5', nintendo: 'nintendo|switch', videogame: 'game', videogames: 'game',
+    earbuds: 'earbud|airpod', airpods: 'airpod|earbud', headphones: 'headphone|headset', headset: 'headset|headphone', makeup: 'makeup|cosmetic|lip|palette',
+    cosmetics: 'makeup|cosmetic', perfume: 'perfume|parfum|fragrance|cologne|mist', fragrance: 'fragrance|parfum|perfume|cologne|mist', cologne: 'cologne|fragrance|parfum',
+    dinosaur: 'dino', dinosaurs: 'dino', cars: 'car|truck|vehicle', trucks: 'truck|car', books: 'book', novel: 'book|novel', novels: 'book|novel', puzzles: 'puzzle', games: 'game',
+    boardgame: 'board game|boardgame', boardgames: 'board game|boardgame', cards: 'card', tcg: 'trading card|tcg|booster', crafts: 'craft', science: 'science|stem|experiment',
+    sports: 'sport|ball', bike: 'bike|scooter', ipad: 'ipad|tablet', tablet: 'tablet|ipad', dolls: 'doll', jewelry: 'jewelry|necklace|bracelet|earring', minifig: 'minifig',
+    kpop: 'kpop', anime: 'anime|kpop|manga', manga: 'manga|vol', blocks: 'block|lego|magnatile', magnatiles: 'magnatile', switch2: 'switch 2', mic: 'microphone|mic',
+  };
+  const AGE_WORDS = [[/\b(?:for\s+(?:a|an|my|our|the)?\s*)(?:newborns?|infants?|bab(?:y|ies))\b/, 1, 1, 'Baby'], [/\btoddlers?\b/, 1, 3, 'Toddler'],
+    [/\bpre-?school(?:ers?)?\b/, 3, 5, 'Preschool'], [/\bkindergart(?:en|ners?)\b/, 5, 6, 'Kindergarten'], [/\btweens?\b/, 9, 12, 'Tween'],
+    [/\b(?:teens?|teenagers?|high school(?:ers?)?)\b/, 13, 17, 'Teen'], [/\b(?:college(?: students?)?|dorm)\b/, 18, 22, 'College'],
+    [/\b(?:for\s+(?:a|an|my|our|the)?\s*)(?:adults?|grown-?ups?)\b/, 18, 30, 'Adult'],
+    [/\b(?:boss|coworkers?|co-workers?|colleagues?|mom|mother|dad|father|wife|husband|boyfriend|girlfriend|fiance|fiancee|grandma|grandpa|grandmother|grandfather|aunt|uncle|in-laws?|parents?)\b/, 18, 30, 'Adult']];
+  const BRANDISH = new Set(['lego', 'nintendo', 'apple', 'nike', 'pokemoncenter', 'pokemon center', 'buildabear', 'build a bear', 'sephora', 'ulta']);
+  function storeAliases() {
+    const out = [];
+    Object.entries(RET).forEach(([k, v]) => { const n = fold(v.name); out.push([n, k]); if (fold(k) !== n) out.push([fold(k), k]); });
+    out.push(['bn', 'barnesnoble'], ['b and n', 'barnesnoble'], ['barnes', 'barnesnoble'], ['bestbuy', 'bestbuy'], ['kohls', 'kohls'], ['lego com', 'lego'], ['lego store', 'lego']);
+    return out.filter(([n, k]) => n && RET[k]).sort((a, b) => b[0].length - a[0].length);
+  }
+  function parseQuery(text) {
+    const Q = { raw: String(text || ''), words: [], chips: [], ageLo: null, ageHi: null, min: null, max: null, store: '', sale: false, popular: false };
+    let s = ' ' + Q.raw.toLowerCase().replace(/[’']/g, '') + ' ';
+    const cut = (re, fn) => { s = s.replace(re, (...m) => (fn(m) === false ? m[0] : ' ')); };
+    const chip = (label, raw) => Q.chips.push({ label, raw: raw.trim() });
+    const setAge = (lo, hi, raw, label) => { if (Q.ageLo != null) return false; lo = clamp(lo, 1, 30); hi = clamp(Math.max(lo, hi), 1, 30); Q.ageLo = lo; Q.ageHi = hi; chip(label || (lo === hi ? `Age ${lo}` : `Ages ${lo}–${hi}`), raw); return true; };
+    // prices first, so "$20-40" isn't read as ages
+    cut(/(?:between\s*)?\$\s*(\d+)\s*(?:-|–|to|and)\s*\$?\s*(\d+)/g, (m) => { Q.min = +m[1]; Q.max = +m[2]; chip(`$${m[1]}–$${m[2]}`, m[0]); });
+    cut(/\b(\d+)\s*(?:-|–|to)\s*(\d+)\s*(?:dollars|bucks)\b/g, (m) => { Q.min = +m[1]; Q.max = +m[2]; chip(`$${m[1]}–$${m[2]}`, m[0]); });
+    cut(/\b(?:under|below|less than|max(?:imum)?|up to|upto|no more than|cheaper than|within|<)\s*\$?\s*(\d+)(?:\s*(?:dollars|bucks))?/g, (m) => { Q.max = +m[1]; chip(`Up to $${m[1]}`, m[0]); });
+    cut(/\b(?:over|above|more than|at least|min(?:imum)?|>)\s*\$?\s*(\d+)(?:\s*(?:dollars|bucks))?/g, (m) => { if (+m[1] < 31 && !/\$/.test(m[0])) return false; Q.min = +m[1]; chip(`$${m[1]} and up`, m[0]); });
+    cut(/\$\s*(\d+)/g, (m) => { if (Q.max != null) return false; Q.max = +m[1]; chip(`Up to $${m[1]}`, m[0]); });
+    cut(/\b(\d+)\s*(?:dollars|bucks)\b/g, (m) => { if (Q.max != null) return false; Q.max = +m[1]; chip(`Up to $${m[1]}`, m[0]); });
+    cut(/\bstocking\s*stuffers?\b/g, (m) => { if (Q.max == null) Q.max = 25; chip('Stocking stuffers (up to $25)', m[0]); });
+    cut(/\b(?:cheap|inexpensive|affordable|budget)\b/g, (m) => { if (Q.max == null) { Q.max = 25; chip('Up to $25', m[0]); } });
+    // ages
+    cut(/\b(?:ages?\s*)?(\d{1,2})\s*(?:-|–|to)\s*(\d{1,2})\s*(?:years?|yrs?|yo|y\/o)?(?:\s*-?\s*olds?)?\b/g, (m) => (+m[2] > +m[1] ? setAge(+m[1], +m[2], m[0]) : false));
+    cut(/\b(\d{1,2})\s*(?:-|\s)?\s*(?:years?|yrs?|yo|y\/o)(?:\s*-?\s*olds?)?\b/g, (m) => setAge(+m[1], +m[1], m[0]));
+    cut(/\b(\d{1,2})\s*-?\s*months?(?:\s*-?\s*olds?)?\b/g, (m) => setAge(1, 1, m[0], 'Baby'));
+    cut(/\bages?\s*(\d{1,2})\+?/g, (m) => setAge(+m[1], +m[1], m[0]));
+    AGE_WORDS.forEach(([re, lo, hi, label]) => cut(new RegExp(re.source, 'g'), (m) => setAge(lo, hi, m[0], label)));
+    // store
+    const f = ' ' + fold(s) + ' ';
+    for (const [n, k] of storeAliases()) {
+      const at = new RegExp(`\\b(?:at|from|on)\\s+${n.replace(/ /g, '\\s+')}\\b`);
+      const bare = new RegExp(`\\b${n.replace(/ /g, '\\s+')}\\b`);
+      const hit = f.match(at) || (!BRANDISH.has(n) && f.match(bare));
+      if (hit) { Q.store = k; chip(`At ${RET[k].name}`, hit[0]); s = ' ' + fold(s).replace(hit[0].trim(), ' ') + ' '; break; }
+    }
+    cut(/\b(?:on sale|sales?|deals?|discount(?:ed|s)?|markdowns?|marked down|clearance|rollbacks?|price drops?|bargains?)\b/g, (m) => { if (!Q.sale) chip('On sale', m[0]); Q.sale = true; });
+    cut(/\b(?:hot|trending|popular|viral|best[- ]?sell(?:ers?|ing)|top[- ]?sellers?|most wanted)\b/g, (m) => { if (!Q.popular) chip('Popular', m[0]); Q.popular = true; });
+    // phrases that mean one thing, then the words that are left
+    [[/\bgift\s*cards?\b/g, 'gift card'], [/\bboard\s*games?\b/g, 'board game|boardgame'], [/\bcard\s*games?\b/g, 'card game'], [/\bvideo\s*games?\b/g, 'video game'],
+      [/\bstuffed\s*animals?\b/g, 'stuffed animal|plush'], [/\baction\s*figures?\b/g, 'action figure|figure'], [/\bstar\s*wars\b/g, 'star wars'], [/\bharry\s*potter\b/g, 'harry potter']]
+      .forEach(([re, alts]) => cut(re, (m) => { Q.words.push({ w: m[0].trim(), alts: alts.split('|') }); }));
+    fold(s).split(' ').forEach((w) => {
+      if (!w || STOP.has(w) || (/^\d+$/.test(w) && +w < 100)) return;
+      Q.words.push({ w, alts: (SYN[w] || [...new Set([w, stem(w)])].join('|')).split('|').map(fold) });
+    });
+    return Q;
+  }
+  function stem(w) {
+    if (w.length > 4 && w.endsWith('ies')) return w.slice(0, -3) + 'y';
+    if (w.length > 4 && /(?:xes|ches|shes|sses)$/.test(w)) return w.slice(0, -2);
+    if (w.length > 3 && w.endsWith('s') && !w.endsWith('ss')) return w.slice(0, -1);
+    return w;
+  }
+  let VOCAB = null;
+  function lev(a, b, max) {
+    if (Math.abs(a.length - b.length) > max) return max + 1;
+    let prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+    for (let i = 1; i <= a.length; i++) {
+      const cur = [i]; let best = i;
+      for (let j = 1; j <= b.length; j++) { cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); best = Math.min(best, cur[j]); }
+      if (best > max) return max + 1;
+      prev = cur;
+    }
+    return prev[b.length];
+  }
+  // Turns the parsed words into what each must match; a word nothing contains gets its closest spelling.
+  function matchWords(Q) {
+    Q.words = Q.words.map(({ w, alts }) => {
+      if (ITEMS.some((it) => alts.some((a) => hasWord(it._s, a)))) { Q.chips.push({ label: `“${w}”`, raw: w }); return alts; }
+      if (w.length >= 4) {
+        if (!VOCAB) { VOCAB = new Set(); ITEMS.forEach((it) => it._s.split(' ').forEach((t) => { if (t.length >= 4) VOCAB.add(t); })); }
+        const max = w.length >= 8 ? 2 : 1; let best = null; let bd = max + 1;
+        for (const t of VOCAB) { const d = lev(w, t, max); if (d < bd) { bd = d; best = t; if (!d) break; } }
+        if (best) { Q.chips.push(best === w ? { label: `“${w}”`, raw: w } : { label: `“${best}” (for “${w}”)`, raw: w, fixed: true }); return [best]; }
+      }
+      Q.chips.push({ label: `“${w}”`, raw: w }); return alts;
+    });
+    return Q;
+  }
+  const hasWord = (text, a) => (a.length <= 3 ? text.includes(` ${a} `) || text.includes(` ${a}s `) : text.includes(' ' + a));
+  const onSale = (it) => !!dealInfo(it) || (isPick(it) && (PICKS_BY_GIFT[it.id] || []).some(pickOnSale));
+  function queryFits(it, Q) {
+    if (Q.words.length && !Q.words.every((alts) => alts.some((a) => hasWord(it._s, a)))) return false;
+    if (Q.ageLo != null && !(it.ages[0] <= Q.ageHi && it.ages[1] >= Q.ageLo)) return false;
+    if (Q.max != null && priceOf(it) > Q.max) return false;
+    if (Q.min != null && !(priceOf(it) >= Q.min)) return false;
+    if (Q.store && !it.stores.includes(Q.store) && !it.offers.some((o) => o.retailer === Q.store)) return false;
+    if (Q.sale && !onSale(it)) return false;
+    if (Q.popular && !(it.tags.includes('hot') || isPick(it))) return false;
+    return true;
+  }
+  function understoodHtml(Q, n) {
+    if (!Q || !Q.chips.length) return '';
+    return `<span class="hint">${num(n)} match${n === 1 ? '' : 'es'} for</span> ` + Q.chips.map((c) => `<span class="q-chip${c.fixed ? ' fixed' : ''}">${esc(c.label)}<button type="button" data-q-drop="${esc(c.raw)}" aria-label="Remove ${esc(c.label)}">×</button></span>`).join('')
+      + ` <button class="linkish" type="button" data-q-drop="${esc(Q.raw)}">Clear search</button>`;
+  }
+  let searchTimer = null;
+  function runSearch(q) {
+    q = String(q || '');
+    state.browse.q = q; state.browse.shown = BROWSE_STEP;
+    const want = '#browse' + (q.trim() ? '?q=' + encodeURIComponent(q.trim()) : '');
+    if (currentView() !== 'browse') { location.hash = want; return; }
+    if (history.replaceState) history.replaceState(null, '', want);
+    if ($('#q') && document.activeElement !== $('#q')) $('#q').value = q;
+    if ($('#f-q') && document.activeElement !== $('#f-q')) $('#f-q').value = q;
+    renderBrowse();
+  }
+
+  // ------------------------------------------------------------------ AUTO-LOADING LISTS
+  // Long lists add their next batch as the "more" row comes near the screen, so nobody has to click "show more".
+  // Without IntersectionObserver (old browsers, the tests) the row keeps a button that does the same.
+  const FIND_STEP = 24; const PICK_STEP = 24; const BROWSE_STEP = 60;
+  let FIND_RES = []; let PICK_RES = []; let BROWSE_RES = []; let LAST_Q = null;
+  const FIND_QUICK = [['', 'Everything'], ['u25', 'Under $25'], ['sale', 'On sale'], ['hot', 'Hot this year'], ['store', 'Store best sellers']];
+  const QUICK_TEST = { u25: (it) => priceOf(it) != null && priceOf(it) <= 25, sale: (it) => onSale(it), hot: (it) => it.tags.includes('hot'), store: (it) => isPick(it) };
+  const MORE = { find: ['#more-ideas', 'data-more', 'ideas'], picks: ['#picks-more', 'data-picks-more', 'gifts'], browse: ['#browse-more', 'data-browse-more', 'ideas'] };
+  function setMoreRow(kind, total, shown) {
+    const [sel, attr, what] = MORE[kind]; const el = $(sel); if (!el) return;
+    el.innerHTML = total > shown
+      ? `<div class="more-row"><span class="hint">Showing ${num(shown)} of ${num(total)} ${what}. More load as you scroll.</span><button class="btn more-btn" type="button" ${attr}>Show more</button><button class="linkish" type="button" data-more-all="${kind}">Show all ${num(total)}</button></div>`
+      : total > 12 ? `<div class="more-row done"><span class="hint">All ${num(total)} ${what} shown.</span><button class="linkish" type="button" data-to-top>Back to top</button></div>` : '';
+  }
+  function loadMore(kind, howMany) {
+    if (kind === 'find') {
+      const next = FIND_RES.slice(state.shown, state.shown + (howMany || FIND_STEP)); if (!next.length) return;
+      $('#top-picks').insertAdjacentHTML('beforeend', next.map((it) => giftCard(it)).join('')); state.shown += next.length;
+      setMoreRow('find', FIND_RES.length, state.shown);
+    } else if (kind === 'picks') {
+      const next = PICK_RES.slice(state.picks.shown, state.picks.shown + (howMany || PICK_STEP)); if (!next.length) return;
+      $('#picks').insertAdjacentHTML('beforeend', next.map(pickCard).join('')); state.picks.shown += next.length;
+      setMoreRow('picks', PICK_RES.length, state.picks.shown);
+    } else if (kind === 'browse') {
+      const b = state.browse; const next = BROWSE_RES.slice(b.shown, b.shown + (howMany || BROWSE_STEP)); if (!next.length) return;
+      $('#browse-table tbody').insertAdjacentHTML('beforeend', next.map(browseRow).join(''));
+      $('#browse-cards').insertAdjacentHTML('beforeend', next.map((it) => giftCard(it, { compact: true })).join('')); b.shown += next.length;
+      setMoreRow('browse', BROWSE_RES.length, b.shown);
+    }
+    pumpMore(kind);
+  }
+  let moreObs = null;
+  const nearScreen = (el) => { const r = el.getBoundingClientRect(); return r.top < (window.innerHeight || 800) + 1200 && r.bottom > -200 && el.offsetParent !== null; };
+  function pumpMore(kind) {
+    if (!moreObs) return;
+    const el = $(MORE[kind][0]);
+    (window.requestAnimationFrame || setTimeout)(() => { if (el && el.querySelector('.more-btn') && nearScreen(el)) loadMore(kind); });
+  }
+  function watchMore() {
+    if (typeof IntersectionObserver !== 'function' || moreObs) return;
+    moreObs = new IntersectionObserver((entries) => entries.forEach((e) => { if (e.isIntersecting && e.target.querySelector('.more-btn')) loadMore(e.target.dataset.moreKind); }), { rootMargin: '0px 0px 1200px 0px' });
+    Object.entries(MORE).forEach(([k, [sel]]) => { const el = $(sel); if (el) { el.dataset.moreKind = k; moreObs.observe(el); } });
   }
 
   // ------------------------------------------------------------------ DEALS & DATES
@@ -674,6 +868,25 @@
   const pickList = (k) => (PICKS && PICKS.lists[k]) || {};
   // Store best sellers count as gift ideas too. A pick that is already one of the catalog's gifts stays with that gift;
   // the rest become gift ideas of their own, and the same product at several stores becomes one idea with each store's link.
+  // Store best sellers: interests come from the name (Star Wars, NeeDoh, Pokémon...), then the type's most common one.
+  const NAME_INTERESTS = [
+    ['characters', /star wars|marvel|disney|pixar|harry potter|frozen|spider-?man|bluey|paw patrol|sonic|mario|barbie|peanuts|snoopy|grinch|hello kitty|sanrio|stitch|toy story|batman|avengers|wicked|shrek|minions|transformers|jurassic|minecraft|roblox|fortnite/i],
+    ['pokemon', /pok[eé]mon|pikachu/i], ['kpop', /k-?pop|anime|jujutsu|demon slayer|one piece|naruto|dragon ball|ghibli|totoro|chiikawa|mofusand|kirby/i],
+    ['squishies', /squish|needoh|nee-?doh|fidget|smush|slime|putty/i], ['plush', /plush|squishmallow|stuffed|jellycat|soft toy/i],
+    ['lego', /\blego\b|magna-?tiles|building (?:set|toy)|\bblocks?\b/i], ['games', /board ?game|card game|\buno\b|catan|monopoly|puzzle|chess/i],
+    ['switch', /nintendo|switch 2/i], ['playstation', /playstation|\bps5\b/i], ['xbox', /\bxbox\b/i],
+    ['collectibles', /blind (?:bag|box)|mystery|funko|collectible|advent/i], ['beauty', /\blip|makeup|perfume|parfum|skincare|nail|lotion|bath bomb|fragrance/i],
+    ['arts', /craft|paint|drawing|coloring|crochet|diamond (?:art|painting)|sticker|jewelry (?:kit|making)/i], ['books', /\bbooks?\b|novel|vol\. \d|boxed set/i],
+    ['music', /karaoke|speaker|headphone|earbud|microphone/i], ['outdoor', /football|basketball|soccer|baseball|scooter|\bbike\b|ping pong/i],
+    ['tech', /camera|walkie|drone|charger|tablet|gaming (?:keyboard|mouse|headset)/i], ['room', /\blamps?\b|night ?light|string lights?|led (?:strip|lights?)|\bpillows?\b|throw blanket|\bblankets?\b|\bthrow\b|\bdecor\b/i],
+    ['fashion', /beanie|slipper|socks|hoodie|tee\b|pajama|tote|backpack|wallet|earmuffs/i],
+  ];
+  function pickInterests(x, typeInt) {
+    const out = NAME_INTERESTS.filter(([i, rx]) => INT[i] && rx.test(x.name)).map(([i]) => i);
+    const top = Object.entries(typeInt[x.type] || {}).sort((a, b) => b[1] - a[1])[0];
+    if (top && !out.includes(top[0])) out.push(top[0]);
+    return out.slice(0, 3);
+  }
   function pickItems() {
     if (!PICKS) return [];
     const typeInt = {};
@@ -694,7 +907,7 @@
       PICKS_BY_GIFT[id] = xs;
       return {
         id, pick: x.id, name: x.name, emoji: t.emoji || '🎁', category: x.category, type: x.type,
-        interests: Object.entries(typeInt[x.type] || {}).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([i]) => i),
+        interests: pickInterests(x, typeInt),
         ages: x.ages.slice(), typical: x.was || x.price || 0, tags: ['store'], blurb: `${where}.${stars}`, search: x.name,
         stores: [...new Set(xs.map((q) => q.store))],
         offers: xs.map((q) => ({ retailer: q.store, retailer_name: pickStore(q), url: q.url, sku: q.sku, price: q.price, checked_at: q.checked_at, label: 'Store best seller' })),
@@ -781,11 +994,11 @@
   function renderPicks() {
     if (!PICKS || !$('#picks')) return;
     const rows = pickRows(state.picks);
-    const shown = rows.slice(0, state.picks.shown);
+    const shown = rows.slice(0, state.picks.shown); PICK_RES = rows;
     $('#picks-count').textContent = `${num(rows.length)} of ${num(PICKS.items.length)} shown`;
     $('#picks').innerHTML = shown.length ? shown.map(pickCard).join('')
       : '<div class="empty"><strong>Nothing here matches.</strong><span>Try another age group or type, or a higher price.</span><button class="btn btn-sm" type="button" data-picks-reset>Clear the filters</button></div>';
-    $('#picks-more').innerHTML = rows.length > shown.length ? `<button class="btn more-btn" type="button" data-picks-more>Show ${Math.min(24, rows.length - shown.length)} more (${num(rows.length - shown.length)} left)</button>` : '';
+    setMoreRow('picks', rows.length, shown.length);
   }
   function renderStoreHot(f) {
     const box = $('#store-hot'); if (!box) return;
@@ -1185,10 +1398,13 @@
 
   // ------------------------------------------------------------------ routing + events
   const VIEWS = ['find', 'lists', 'browse', 'deals', 'stores'];
-  const currentView = () => { const h = (location.hash || '').replace('#', ''); return VIEWS.includes(h) ? h : 'find'; };
+  const currentView = () => { const h = (location.hash || '').replace('#', '').split('?')[0]; return VIEWS.includes(h) ? h : 'find'; };
   const RENDER = { find: () => { renderFindPrefs(); renderFind(); }, lists: renderLists, browse: () => { renderFilters(); renderBrowse(); }, deals: renderDeals, stores: renderStores };
   function route() {
     const v = currentView();
+    const qm = (location.hash || '').match(/[?&]q=([^&]*)/);
+    if (v === 'browse' && qm) { state.browse.q = decodeURIComponent(qm[1].replace(/\+/g, ' ')); state.browse.shown = BROWSE_STEP; }
+    if ($('#q') && document.activeElement !== $('#q')) $('#q').value = v === 'browse' ? state.browse.q : '';
     VIEWS.forEach((x) => { $(`#view-${x}`).hidden = x !== v; });
     $$('.tabs a').forEach((a) => { a.classList.toggle('is-active', a.dataset.view === v); if (a.dataset.view === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
     RENDER[v]();
@@ -1198,7 +1414,7 @@
   function setFind(patch, keepWho = true) {
     Object.assign(state.find, patch);
     if (!keepWho) state.find.who = '';
-    state.shown = 9; saveFind(); renderFindPrefs(); renderFind();
+    state.shown = FIND_STEP; saveFind(); renderFindPrefs(); renderFind();
   }
   function toggleGift(giftId, pid) {
     const p = person(pid); if (!p) return;
@@ -1219,20 +1435,34 @@
       if (location.hash.startsWith('#share=')) { openShareFromHash(); return; }
       closeDrawer(); closeMenu(false); route(); window.scrollTo(0, 0);
     });
+    const sf = $('#site-search');
+    if (sf) sf.addEventListener('submit', (e) => { e.preventDefault(); clearTimeout(searchTimer); runSearch($('#q').value); if (window.matchMedia && matchMedia('(max-width: 760px)').matches) $('#q').blur(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && !/^(INPUT|TEXTAREA|SELECT)$/.test((e.target && e.target.tagName) || '') && !(e.target && e.target.isContentEditable)) { e.preventDefault(); const q = $('#q'); if (q) { q.focus(); q.select(); } }
+    });
+    window.addEventListener('scroll', () => { const t = $('#to-top'); if (t) t.hidden = window.scrollY < 1400; }, { passive: true });
+    watchMore();
     document.addEventListener('visibilitychange', () => { if (!document.hidden && !snowRaf) startSnow(); });
     document.addEventListener('click', (e) => {
       const m = $('#menu');
       if (!m.hidden && !e.target.closest('#menu') && !e.target.closest('[data-add]')) closeMenu(false);
-      const t = e.target.closest('[data-open],[data-add],[data-star],[data-toggle-gift],[data-new-person],[data-new-person-for],[data-example],[data-view-list],[data-edit-person],[data-delete-person],[data-share],[data-print],[data-find-for],[data-custom],[data-status],[data-remove],[data-band],[data-interest],[data-pick-interest],[data-swatch],[data-more],[data-more-interests],[data-reset-find],[data-sort],[data-quick],[data-type],[data-types-toggle],[data-show-list],[data-add-pick],[data-pick-to],[data-new-person-pick],[data-pick-band],[data-picks-more],[data-picks-reset],[data-picks-goto],[data-picks-type],[data-close-drawer],[data-close-modal],[data-copy],[data-copy-text],[data-save-share],[data-backup],[data-restore],[data-download-backup],[data-undo],[data-rescrape],#rescrape-btn,#freshness,#theme-btn,#snow-btn,#reset-find,#prefs-toggle,#go-scrape,#save-go,#forget-token,#reload-data');
+      const t = e.target.closest('[data-toggle-filters],[data-find-quick],[data-more-all],[data-browse-more],[data-to-top],[data-q-drop],[data-store-search],[data-open],[data-add],[data-star],[data-toggle-gift],[data-new-person],[data-new-person-for],[data-example],[data-view-list],[data-edit-person],[data-delete-person],[data-share],[data-print],[data-find-for],[data-custom],[data-status],[data-remove],[data-band],[data-interest],[data-pick-interest],[data-swatch],[data-more],[data-more-interests],[data-reset-find],[data-sort],[data-quick],[data-type],[data-types-toggle],[data-show-list],[data-add-pick],[data-pick-to],[data-new-person-pick],[data-pick-band],[data-picks-more],[data-picks-reset],[data-picks-goto],[data-picks-type],[data-close-drawer],[data-close-modal],[data-copy],[data-copy-text],[data-save-share],[data-backup],[data-restore],[data-download-backup],[data-undo],[data-rescrape],#rescrape-btn,#freshness,#theme-btn,#snow-btn,#reset-find,#prefs-toggle,#go-scrape,#save-go,#forget-token,#reload-data');
       if (!t) return;
       const d = t.dataset;
       if (d.add !== undefined) { e.preventDefault(); e.stopPropagation(); const m2 = $('#menu'); if (!m2.hidden && menuTrigger === t) closeMenu(); else openAddMenu(d.add, t); return; }
       if (d.addPick !== undefined) { e.preventDefault(); e.stopPropagation(); const m2 = $('#menu'); if (!m2.hidden && menuTrigger === t) closeMenu(); else openPickMenu(d.addPick, t); return; }
       if (d.pickTo !== undefined) { const [pk, pid] = d.pickTo.split('|'); closeMenu(false); togglePick(pk, pid); return; }
       if (d.newPersonPick !== undefined) { closeMenu(false); personModal(null, { forPick: d.newPersonPick }); return; }
-      if (d.pickBand !== undefined) { state.picks.band = d.pickBand; state.picks.shown = 24; $$('[data-pick-band]').forEach((b) => { const on = b.dataset.pickBand === d.pickBand; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', String(on)); }); renderPicks(); return; }
-      if (d.picksMore !== undefined) { state.picks.shown += 24; renderPicks(); return; }
-      if (d.picksReset !== undefined) { state.picks = Object.assign(state.picks, { band: '', type: '', show: '', max: '', q: '', shown: 24 }); renderPicksPanel(); return; }
+      if (d.pickBand !== undefined) { state.picks.band = d.pickBand; state.picks.shown = PICK_STEP; $$('[data-pick-band]').forEach((b) => { const on = b.dataset.pickBand === d.pickBand; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', String(on)); }); renderPicks(); return; }
+      if (d.picksMore !== undefined) { loadMore('picks'); return; }
+      if (d.moreAll !== undefined) { loadMore(d.moreAll, Infinity); return; }
+      if (d.browseMore !== undefined) { loadMore('browse'); return; }
+      if (d.toggleFilters !== undefined) { state.filtersOpen = !state.filtersOpen; renderFilters(); return; }
+      if (d.findQuick !== undefined) { state.findQuick = d.findQuick; state.shown = FIND_STEP; renderFind(); return; }
+      if (d.toTop !== undefined) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+      if (d.qDrop !== undefined) { const q = state.browse.q.split(d.qDrop).join(' ').replace(/\s+/g, ' ').trim(); runSearch(q); return; }
+      if (d.storeSearch !== undefined) { state.storeQ = d.storeSearch; location.hash = '#stores'; return; }
+      if (d.picksReset !== undefined) { state.picks = Object.assign(state.picks, { band: '', type: '', show: '', max: '', q: '', shown: PICK_STEP }); renderPicksPanel(); return; }
       if (d.picksGoto !== undefined || d.picksType !== undefined) {
         closeDrawer();
         Object.assign(state.picks, { band: d.picksGoto || '', type: d.picksType || '', show: '', max: '', q: '', shown: 24 });
@@ -1259,7 +1489,7 @@
       }
       if (d.share !== undefined) { shareModal(d.share, true); return; }
       if (d.print !== undefined) { closeModal(); if (currentView() !== 'lists') { location.hash = '#lists'; } setTimeout(() => window.print(), 50); return; }
-      if (d.findFor !== undefined) { const p = person(d.findFor); if (!p) return; state.find = profileOf(p); state.shown = 9; saveFind(); location.hash = '#find'; return; }
+      if (d.findFor !== undefined) { const p = person(d.findFor); if (!p) return; state.find = profileOf(p); state.shown = FIND_STEP; saveFind(); location.hash = '#find'; return; }
       if (d.custom !== undefined) { customModal(d.custom); return; }
       if (d.status !== undefined) {
         const [pid, u] = d.status.split('|'); const p = person(pid); const x = p && p.items.find((y) => y.uid === u); if (!x) return;
@@ -1277,10 +1507,10 @@
       if (d.interest !== undefined) { const s = new Set(state.find.interests); s.has(d.interest) ? s.delete(d.interest) : s.add(d.interest); setFind({ interests: [...s] }); return; }
       if (d.pickInterest !== undefined) { t.setAttribute('aria-pressed', String(t.getAttribute('aria-pressed') !== 'true')); return; }
       if (d.swatch !== undefined) { $$('[data-swatch]').forEach((s) => s.setAttribute('aria-pressed', String(s === t))); return; }
-      if (d.more !== undefined) { state.shown += 12; renderFind(); return; }
+      if (d.more !== undefined) { loadMore('find'); return; }
       if (d.moreInterests !== undefined) { $('.prefs').classList.toggle('show-all'); renderFindPrefs(); return; }
       if (t.id === 'prefs-toggle') { const c = !$('.prefs').classList.contains('collapsed'); setPrefsCollapsed(c); return; }
-      if (d.resetFind !== undefined || t.id === 'reset-find') { state.find = Object.assign({}, DEFAULT_FIND); state.shown = 9; saveFind(); renderFindPrefs(); renderFind(); return; }
+      if (d.resetFind !== undefined || t.id === 'reset-find') { state.find = Object.assign({}, DEFAULT_FIND); state.shown = FIND_STEP; saveFind(); renderFindPrefs(); renderFind(); return; }
       if (d.sort !== undefined) { const k = d.sort; state.browse.dir = state.browse.sort === k ? -state.browse.dir : 1; state.browse.sort = k; renderBrowse(); return; }
       if (d.quick !== undefined) { state.storeQ = d.quick; $('#store-q').value = d.quick; renderStores(); return; }
       if (d.closeDrawer !== undefined) { closeDrawer(); return; }
@@ -1325,22 +1555,23 @@
     document.addEventListener('input', (e) => {
       const t = e.target;
       if (t.id === 'age') { setFind({ age: +t.value }); $('#age').focus(); return; }
-      if (t.id === 'budget') { state.find.budget = +t.value; $('#budget-out').textContent = +t.value >= BUDGET_ANY ? 'Any amount' : money(+t.value); state.shown = 9; saveFind(); renderFind(); return; }
-      if (t.id === 'f-q') { state.browse.q = t.value; renderBrowse(); return; }
+      if (t.id === 'budget') { state.find.budget = +t.value; $('#budget-out').textContent = +t.value >= BUDGET_ANY ? 'Any amount' : money(+t.value); state.shown = FIND_STEP; saveFind(); renderFind(); return; }
+      if (t.id === 'f-q') { clearTimeout(searchTimer); searchTimer = setTimeout(() => runSearch(t.value), 200); return; }
+      if (t.id === 'q') { clearTimeout(searchTimer); searchTimer = setTimeout(() => runSearch(t.value), 300); return; }
       if (t.id === 'f-age') { state.browse.age = t.value; renderBrowse(); return; }
-      if (t.id === 'pk-q') { state.picks.q = t.value; state.picks.shown = 24; renderPicks(); return; }
+      if (t.id === 'pk-q') { state.picks.q = t.value; state.picks.shown = PICK_STEP; renderPicks(); return; }
     });
     document.addEventListener('change', (e) => {
       const t = e.target;
       if (t.id === 'for-who') {
         const p = person(t.value);
-        state.find = p ? profileOf(p) : Object.assign({}, state.find, { who: '' }); state.shown = 9; saveFind(); renderFindPrefs(); renderFind(); return;
+        state.find = p ? profileOf(p) : Object.assign({}, state.find, { who: '' }); state.shown = FIND_STEP; saveFind(); renderFindPrefs(); renderFind(); return;
       }
       if (t.dataset.toggle) { setFind({ [t.dataset.toggle]: t.checked }); return; }
       const map = { 'f-interest': 'interest', 'f-max': 'max', 'f-store': 'store', 'f-type': 'type', 'f-list': 'list' };
       if (map[t.id]) { state.browse[map[t.id]] = t.value; renderBrowse(); return; }
       const pmap = { 'pk-type': 'type', 'pk-show': 'show', 'pk-max': 'max', 'pk-sort': 'sort' };
-      if (pmap[t.id]) { state.picks[pmap[t.id]] = t.value; state.picks.shown = 24; renderPicks(); return; }
+      if (pmap[t.id]) { state.picks[pmap[t.id]] = t.value; state.picks.shown = PICK_STEP; renderPicks(); return; }
       if (t.id === 'f-hot' || t.id === 'f-live') { state.browse[t.id.slice(2)] = t.checked; renderBrowse(); return; }
       if (t.dataset.paid) {
         const [pid, u] = t.dataset.paid.split('|'); const p = person(pid); const x = p && p.items.find((y) => y.uid === u); if (!x) return;
@@ -1389,6 +1620,8 @@
   }
   // Gifts on a store's or expert's 2026 list get the "Hot this year" seal; gift-guide picks are cited but not sealed.
   function prepItem(it) {
+    it._n = ' ' + fold(it.name) + ' ';
+    it._s = ' ' + fold([it.name, it.brand, it.blurb, typeLabel(it), (CATS[it.category] || {}).label, (it.interests || []).map((i) => (INT[i] || {}).label).join(' '), (it.stores || []).map(retName).join(' ')].join(' ')) + ' ';
     it.lists = Array.isArray(it.lists) ? it.lists.filter((l) => HOT[l]) : [];
     it.tags = Array.isArray(it.tags) ? it.tags.slice() : [];
     if (!it.tags.includes('hot') && it.lists.some((l) => HOT[l].kind !== 'guide')) it.tags.push('hot');
