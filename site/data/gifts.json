@@ -1,10 +1,10 @@
 {
- "generated_at": "2026-11-27T11:46:02Z",
+ "generated_at": "2026-11-27T23:45:56Z",
  "prices_as_of": "2026-11-22T19:20:23Z",
  "live_prices": 32,
  "scrape": {
-  "started": "2026-11-27T11:45:30Z",
-  "finished": "2026-11-27T11:46:02Z",
+  "started": "2026-11-27T23:45:24Z",
+  "finished": "2026-11-27T23:45:56Z",
   "mode": "live",
   "runner": "github-actions",
   "ok": 5,
@@ -16,23 +16,23 @@
     "failed": 17,
     "blocked": 0
    },
-   "tonies": {
-    "ok": 2,
-    "failed": 0,
-    "blocked": 0
-   },
    "lego": {
     "ok": 0,
     "failed": 1,
     "blocked": 1
    },
-   "gamestop": {
+   "playstation": {
+    "ok": 1,
+    "failed": 0,
+    "blocked": 0
+   },
+   "tonies": {
     "ok": 2,
     "failed": 0,
     "blocked": 0
    },
-   "playstation": {
-    "ok": 1,
+   "gamestop": {
+    "ok": 2,
     "failed": 0,
     "blocked": 0
    }
@@ -1417,7 +1417,7 @@
      "retailer_name": "tonies",
      "url": "https://us.tonies.com/products/myfirsttonies-farmset-starter-set-toniebox2-pink",
      "label": "Farm set, Cloud Pink",
-     "checked_at": "2026-11-27T11:45:56Z",
+     "checked_at": "2026-11-27T23:45:51Z",
      "in_stock": true,
      "name": "My First Tonies Farm Set Toniebox 2 Starter Set - Cloud Pink",
      "price": 169.99,
@@ -1431,7 +1431,7 @@
    "price_retailer": "tonies",
    "price_url": "https://us.tonies.com/products/myfirsttonies-farmset-starter-set-toniebox2-pink",
    "price_status": "live",
-   "price_checked_at": "2026-11-27T11:45:56Z",
+   "price_checked_at": "2026-11-27T23:45:51Z",
    "history": [
     [
      "2026-11-21",
@@ -1500,7 +1500,7 @@
      "retailer_name": "tonies",
      "url": "https://us.tonies.com/products/toniebox2-starter-set-disney-frozen-sky-blue",
      "label": "Disney Frozen set, Sky Blue",
-     "checked_at": "2026-11-27T11:45:55Z",
+     "checked_at": "2026-11-27T23:45:50Z",
      "in_stock": true,
      "name": "Disney Frozen Toniebox 2 Starter Set - Sky Blue",
      "price": 149.99,
@@ -1518,7 +1518,7 @@
    "price_retailer": "tonies",
    "price_url": "https://us.tonies.com/products/toniebox2-starter-set-disney-frozen-sky-blue",
    "price_status": "live",
-   "price_checked_at": "2026-11-27T11:45:55Z",
+   "price_checked_at": "2026-11-27T23:45:50Z",
    "history": [
     [
      "2026-11-21",
@@ -3769,7 +3769,7 @@
      "sku": "72164",
      "blocked": true,
      "error": "HTTP 403 with a bot-check page",
-     "last_attempt": "2026-11-27T11:45:56Z",
+     "last_attempt": "2026-11-27T23:45:49Z",
      "on_sale": false,
      "stale": true
     },
@@ -4140,7 +4140,7 @@
      "url": "https://www.bestbuy.com/product/pokemon-trading-card-game-30th-celebration-elite-trainer-box/JJG2TL8XCJ",
      "sku": "13138238",
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-27T11:45:56Z",
+     "last_attempt": "2026-11-27T23:45:50Z",
      "on_sale": false,
      "stale": true
     },
@@ -5146,7 +5146,7 @@
      "url": "https://www.bestbuy.com/product/switch-2-mario-kart-world-bundle/J7GSL57WWG",
      "sku": "6689812",
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-27T11:45:56Z",
+     "last_attempt": "2026-11-27T23:45:50Z",
      "on_sale": false,
      "stale": true
     }
@@ -5233,7 +5233,7 @@
      "url": "https://www.bestbuy.com/product/the-legend-of-zelda-ocarina-of-time-nintendo-switch-2/J7GSL5C746",
      "sku": "6691853",
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-27T11:45:56Z",
+     "last_attempt": "2026-11-27T23:45:50Z",
      "on_sale": false,
      "stale": true
     },
@@ -5242,7 +5242,7 @@
      "retailer_name": "GameStop",
      "url": "https://www.gamestop.com/video-games/nintendo-switch-2/products/the-legend-of-zelda-ocarina-of-time---nintendo-switch-2/20036066.html",
      "sku": "20036066",
-     "checked_at": "2026-11-27T11:46:01Z",
+     "checked_at": "2026-11-27T23:45:51Z",
      "in_stock": true,
      "name": "The Legend of Zelda: Ocarina of Time - Nintendo Switch 2",
      "open_box": 64.99,
@@ -5257,7 +5257,7 @@
    "price_retailer": "gamestop",
    "price_url": "https://www.gamestop.com/video-games/nintendo-switch-2/products/the-legend-of-zelda-ocarina-of-time---nintendo-switch-2/20036066.html",
    "price_status": "live",
-   "price_checked_at": "2026-11-27T11:46:01Z",
+   "price_checked_at": "2026-11-27T23:45:51Z",
    "history": [
     [
      "2026-11-21",
@@ -5817,7 +5817,7 @@
      "retailer_name": "Best Buy",
      "url": "https://www.bestbuy.com/product/playstation-5-slim-digital-edition-console-825gb/JXHQ37TYYL",
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-27T11:45:56Z",
+     "last_attempt": "2026-11-27T23:45:56Z",
      "on_sale": false,
      "stale": true
     },
@@ -5825,7 +5825,7 @@
      "retailer": "playstation",
      "retailer_name": "PlayStation Direct",
      "url": "https://direct.playstation.com/en-us/buy-consoles/playstation5-digital-edition-console-825-gb",
-     "checked_at": "2026-11-27T11:46:01Z",
+     "checked_at": "2026-11-27T23:45:49Z",
      "price": 599.0,
      "source": "direct.playstation.com product page",
      "stale": false,
@@ -5837,7 +5837,7 @@
    "price_retailer": "playstation",
    "price_url": "https://direct.playstation.com/en-us/buy-consoles/playstation5-digital-edition-console-825-gb",
    "price_status": "live",
-   "price_checked_at": "2026-11-27T11:46:01Z",
+   "price_checked_at": "2026-11-27T23:45:49Z",
    "history": [
     [
      "2026-11-21",
@@ -5947,7 +5947,7 @@
      "sku": "6684968",
      "label": "PS5",
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-27T11:45:55Z",
+     "last_attempt": "2026-11-27T23:45:56Z",
      "on_sale": false,
      "stale": true
     },
@@ -5973,7 +5973,7 @@
      "url": "https://www.gamestop.com/video-games/playstation-5/products/grand-theft-auto-vi---playstation-5-code-in-box/448295.html",
      "sku": "448295",
      "label": "PS5",
-     "checked_at": "2026-11-27T11:45:56Z",
+     "checked_at": "2026-11-27T23:45:55Z",
      "in_stock": true,
      "name": "Grand Theft Auto VI - PlayStation 5 (Code in Box)",
      "price": 79.99,
@@ -6322,7 +6322,7 @@
      "url": "https://www.bestbuy.com/site/6562576.p?skuId=6562576",
      "sku": "6562576",
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-27T11:45:56Z",
+     "last_attempt": "2026-11-27T23:45:56Z",
      "on_sale": false,
      "stale": true
     },
@@ -11919,8 +11919,8 @@
      "retailer_name": "Best Buy",
      "url": "https://www.bestbuy.com/site/6689841.p?skuId=6689841",
      "sku": "6689841",
-     "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-27T11:46:01Z",
+     "error": "robots.txt unreachable (TimeoutError: The read operation timed out), so the site is skipped this run",
+     "last_attempt": "2026-11-27T23:45:24Z",
      "on_sale": false,
      "stale": true
     }
@@ -12640,7 +12640,7 @@
      "url": "https://www.bestbuy.com/site/6649427.p?skuId=6649427",
      "sku": "6649427",
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-27T11:46:01Z",
+     "last_attempt": "2026-11-27T23:45:56Z",
      "on_sale": false,
      "stale": true
     }
@@ -12851,7 +12851,7 @@
      "url": "https://www.bestbuy.com/site/6590415.p?skuId=6590415",
      "sku": "6590415",
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-27T11:45:56Z",
+     "last_attempt": "2026-11-27T23:45:49Z",
      "on_sale": false,
      "stale": true
     },
@@ -13371,7 +13371,7 @@
      "url": "https://www.bestbuy.com/site/6690617.p?skuId=6690617",
      "sku": "6690617",
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-27T11:45:56Z",
+     "last_attempt": "2026-11-27T23:45:49Z",
      "on_sale": false,
      "stale": true
     },
@@ -13468,7 +13468,7 @@
      "url": "https://www.bestbuy.com/site/6688297.p?skuId=6688297",
      "sku": "6688297",
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-27T11:46:01Z",
+     "last_attempt": "2026-11-27T23:45:56Z",
      "on_sale": false,
      "stale": true
     }
@@ -13623,7 +13623,7 @@
      "url": "https://www.bestbuy.com/site/6689374.p?skuId=6689374",
      "sku": "6689374",
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-27T11:45:56Z",
+     "last_attempt": "2026-11-27T23:45:50Z",
      "on_sale": false,
      "stale": true
     },
@@ -13725,7 +13725,7 @@
      "url": "https://www.bestbuy.com/site/6671294.p?skuId=6671294",
      "sku": "6671294",
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-27T11:46:01Z",
+     "last_attempt": "2026-11-27T23:45:56Z",
      "on_sale": false,
      "stale": true
     },
@@ -13779,7 +13779,7 @@
      "url": "https://www.bestbuy.com/site/6648272.p?skuId=6648272",
      "sku": "6648272",
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-27T11:45:56Z",
+     "last_attempt": "2026-11-27T23:45:56Z",
      "on_sale": false,
      "stale": true
     }
@@ -13841,8 +13841,8 @@
      "retailer_name": "Best Buy",
      "url": "https://www.bestbuy.com/site/6642854.p?skuId=6642854",
      "sku": "6642854",
-     "error": "robots.txt unreachable (TimeoutError: The read operation timed out), so the site is skipped this run",
-     "last_attempt": "2026-11-27T11:45:30Z",
+     "error": "skipped: the store kept refusing requests this run",
+     "last_attempt": "2026-11-27T23:45:50Z",
      "on_sale": false,
      "stale": true
     }
@@ -13893,7 +13893,7 @@
      "url": "https://www.bestbuy.com/site/6669669.p?skuId=6669669",
      "sku": "6669669",
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-27T11:45:55Z",
+     "last_attempt": "2026-11-27T23:45:56Z",
      "on_sale": false,
      "stale": true
     }
@@ -14225,7 +14225,7 @@
      "url": "https://www.bestbuy.com/site/6689836.p?skuId=6689836",
      "sku": "6689836",
      "error": "skipped: the store kept refusing requests this run",
-     "last_attempt": "2026-11-27T11:45:55Z",
+     "last_attempt": "2026-11-27T23:45:50Z",
      "on_sale": false,
      "stale": true
     },
