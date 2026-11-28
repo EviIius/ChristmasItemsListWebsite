@@ -419,7 +419,8 @@ const asTypical = (id) => {
     const snippet = fs.readFileSync(path.join(site, '../scraper/browser/walmart-capture.js'), 'utf8');
     const ss = new Map();
     const nd = { props: { pageProps: { initialData: { searchResult: { aggregatedCount: 3, paginationV2: { maxPage: 1 }, itemStacks: [{ items: [
-      { usItemId: '111', name: 'LEGO "Cozy" Plants | Ages 9+', sellerName: 'Walmart.com', priceInfo: { linePrice: '$22.96', wasPrice: '$29.99' }, badges: { flags: [{ key: 'BESTSELLER' }], groups: [{ members: [{ key: 'LOW_INVENTORY' }] }] }, annualEventV2: true, averageRating: 4.7, numberOfReviews: 150, category: { categoryPathId: '0:4171:4186:9' } },
+      { usItemId: '111', name: 'LEGO "Cozy" Plants | Ages 9+', sellerName: 'Walmart.com', priceInfo: { linePrice: '$22.96', wasPrice: '$29.99' }, badges: { flags: [{ key: 'BESTSELLER' }], groups: [{ members: [{ key: 'LOW_INVENTORY' }] }] }, annualEventV2: true, averageRating: 4.7, numberOfReviews: 150, category: { categoryPathId: '0:4171:4186:9' },
+        imageInfo: { thumbnailUrl: 'https://i5.walmartimages.com/seo/LEGO-Cozy-Plants_2384FBB2-237e-4e16-89bb-f39d20777a0f.a6d2c857ba5ab080f212f44d72baf0f4.png?odnHeight=180' } },
       { usItemId: '222', name: 'Sponsored Thing', isSponsoredFlag: true, priceInfo: { linePrice: '$5.00' } },
       { usItemId: '333', name: 'Marketplace Doll', sellerName: 'Some Shop', priceInfo: { linePrice: '$1,049.00' } },
       { usItemId: '444', name: 'Some Game - PlayStation 5', sellerName: 'Walmart.com', esrb: 'Mature 17+', priceInfo: { linePrice: '$29.00' } }] }] } } } } };
@@ -430,9 +431,9 @@ const asTypical = (id) => {
     assert.equal(first[0], '#list wm-top-toys page=2 count=3 maxPage=1');
     assert.equal(first.length, 5, 'sponsored listings are skipped');
     assert.equal(first[4], '#esrb 444:M', 'video game ratings are written on their own line');
-    assert.equal(first[1], '111|22.96|29.99|W|4171:4186|BLE|4.7|150|LEGO ″Cozy″ Plants Ages 9+');
-    assert.equal(first[2], '333|1049.00||M|||||Marketplace Doll');
-    assert(first.slice(1, 4).every((l) => l.split('|').length === 9));
+    assert.equal(first[1], '111|22.96|29.99|W|4171:4186|BLE|4.7|150|2384fbb2237e4e1689bbf39d20777a0f|LEGO ″Cozy″ Plants Ages 9+', 'the photo id comes before the name');
+    assert.equal(first[2], '333|1049.00||M||||||Marketplace Doll');
+    assert(first.slice(1, 4).every((l) => l.split('|').length === 10));
     assert.deepEqual(vm.runInContext("walmartCapture('wm-deals-toys')", ctx).split('\n').slice(1), ['=111', '=333', '=444', '#esrb 444:M'], 'products are saved once, then repeated by id');
   });
   await check("store photos: gifts and store picks show the store's own photo, checked before use", () => {
