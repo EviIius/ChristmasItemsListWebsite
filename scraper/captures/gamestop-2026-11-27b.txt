@@ -1,0 +1,5 @@
+#run gamestop 2026-11-27T20:44:00Z
+#note A product page for a gift the catalog lists, read in the Claude app's browser on Jake's Mac for its photo and price.
+#list gs-tracked page=1
+424544|79.99||W|video-games:nintendo-switch-2||||20021637|Mario Kart World - Nintendo Switch 2
+#esrb 424544:E

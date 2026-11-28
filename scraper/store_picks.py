@@ -21,7 +21,11 @@ Capture file format (one product per line, written by the browser snippet in the
   #run walmart 2026-11-22T19:20:23Z
   #list wm-top-toys page=1 count=83 maxPage=2
   id|price|was|seller|category path|flags|rating|reviews|name
+  id|price|was|seller|category path|flags|rating|reviews|photo|name   (newer files: with the product photo)
+  ^id|price|was|flags|photo   (a product an earlier file of the same store has: new price, badges and photo)
   =id          (the same product again, on another list)
+  ~N           (N products left out here: already in an earlier file, or not gifts this site covers)
+The photo is the part of the store's image address that changes from product to product (see STORES "img").
 """
 from __future__ import annotations
 
@@ -37,6 +41,7 @@ ROOT = Path(__file__).resolve().parent.parent
 CAPTURES = ROOT / "scraper" / "captures"
 CATALOG = ROOT / "site" / "data" / "catalog.json"
 OUT = ROOT / "site" / "data" / "store-picks.json"
+MATCHES = ROOT / "scraper" / "photo_matches.json"  # hand-checked photos for catalog gifts no tracked link covers
 MAX_AGE_DAYS = 10  # captures older than this are left out of store-picks.json (deals end)
 
 STORES = {
@@ -45,6 +50,8 @@ STORES = {
         "site": "walmart.com",
         "url": lambda sku: f"https://www.walmart.com/ip/{sku}",
         "own_seller": "Walmart.com",
+        # Product photos: the photo's id (a UUID; captures write it without dashes). {w} is the width the site asks for.
+        "img": "https://i5.walmartimages.com/asr/{id}.jpeg?odnHeight={w}&odnWidth={w}&odnBg=FFFFFF",
     },
     # GameStop draws its product grid in the browser; /products/<id>.html redirects to the full product page.
     "gamestop": {
@@ -52,6 +59,7 @@ STORES = {
         "site": "gamestop.com",
         "url": lambda sku: f"https://www.gamestop.com/products/{sku}.html",
         "own_seller": "GameStop",
+        "img": "https://media.gamestop.com/i/gamestop/{id}?h={w}&w={w}&sm=clamp&fmt=auto",  # id: GameStop's photo name (its SKU)
     },
     # LEGO.com: /en-us/product/<set number> redirects to the set's page.
     "lego": {
@@ -59,6 +67,7 @@ STORES = {
         "site": "lego.com",
         "url": lambda sku: f"https://www.lego.com/en-us/product/{sku}",
         "own_seller": "LEGO",
+        "img": "https://www.lego.com/cdn/cs/set/assets/{id}?format=jpg&width={w}",  # id: "blt.../<file>.png"
     },
     # Five Below: /products/<slug>; the slug ends in Five Below's style number.
     "fivebelow": {
@@ -73,8 +82,29 @@ STORES = {
         "site": "barnesandnoble.com",
         "url": lambda sku: "https://www.barnesandnoble.com/w/{}?ean={}".format(*sku.split("-", 1)),
         "own_seller": "Barnes & Noble",
+        "img": "https://cdn.shopify.com/s/files/1/0674/5433/7265/files/{id}_p0.jpg?width={w}",  # id: the EAN
     },
 }
+
+
+def photo_id(store: str, sku: str, token: str | None) -> str | None:
+    """The photo id the site puts into STORES[store]["img"], from the captured token (or the product id)."""
+    if store == "barnesnoble":
+        m = re.search(r"(\d{13})$", sku)
+        return m.group(1) if m else None  # B&N names its photos by EAN
+    token = (token or "").strip()
+    if not token:
+        return None
+    if store == "walmart":
+        h = token.replace("-", "").lower()
+        if not re.fullmatch(r"[0-9a-f]{32}", h):
+            return None
+        return f"{h[:8]}-{h[8:12]}-{h[12:16]}-{h[16:20]}-{h[20:]}"
+    if store == "gamestop":  # "11204090", "20023062-2e0ec255", "11184368_black"
+        return token if re.fullmatch(r"\d[\w-]*", token) else None
+    if store == "lego":
+        return token if re.fullmatch(r"blt[0-9a-f]{16}/[\w.%()-]+\.(?:png|jpe?g|webp)", token, re.I) else None
+    return None
 
 # Product ids are numbers, except Five Below's (the product's URL slug) and Barnes & Noble's ("<work id>-<EAN>").
 SKU_FORMS = {"fivebelow": r"[a-z0-9][a-z0-9-]*", "barnesnoble": r"\d+-\d{13}"}
@@ -98,8 +128,18 @@ LISTS = {
     "wm-deals-video-games": ("Walmart video game deals", "Video game deals", "https://www.walmart.com/shop/deals?catId=2636&sort=best_seller", "deals", None),
     "wm-deals-electronics": ("Walmart electronics deals", "Electronics deals", "https://www.walmart.com/shop/deals?catId=3944&sort=best_seller", "deals", None),
     "wm-deals-sports": ("Walmart sports & outdoors deals", "Sports deals", "https://www.walmart.com/shop/deals?catId=4125&sort=best_seller", "deals", None),
+    "wm-cyber-monday": ("Walmart Cyber Monday deals", "Cyber Monday deals", "https://www.walmart.com/shop/deals/cyber-monday?sort=best_seller", "deals", None),
+    "wm-cm-toys": ("Walmart Cyber Monday toy deals", "Cyber Monday toys", "https://www.walmart.com/shop/deals/cyber-monday?catId=4171&sort=best_seller", "deals", None),
+    "wm-cm-video-games": ("Walmart Cyber Monday video game deals", "Cyber Monday games", "https://www.walmart.com/shop/deals/cyber-monday?catId=2636&sort=best_seller", "deals", None),
+    "wm-cm-electronics": ("Walmart Cyber Monday electronics deals", "Cyber Monday tech", "https://www.walmart.com/shop/deals/cyber-monday?catId=3944&sort=best_seller", "deals", None),
     "gs-best-sellers": ("GameStop Best Sellers", "GameStop best sellers", "https://www.gamestop.com/best-sellers", "hot", None),
     "gs-deals": ("GameStop Black Friday deals", "GameStop deals", "https://www.gamestop.com/deals", "deals", None),
+    "gs-bf-games-20": ("GameStop Black Friday: games $19.99 or less", "Games $19.99 or less", "https://www.gamestop.com/links/select-video-games-20-under?pmax=20", "deals", None),
+    "gs-bf-games-30": ("GameStop Black Friday: games $29.99 or less", "Games $29.99 or less", "https://www.gamestop.com/links/select-video-games-30-under?pmax=30", "deals", None),
+    "gs-bf-games-40": ("GameStop Black Friday: games $39.99 or less", "Games $39.99 or less", "https://www.gamestop.com/links/select-video-games-40-under?pmax=40", "deals", None),
+    "lego-black-friday": ("LEGO.com Black Friday deals", "LEGO Black Friday", "https://www.lego.com/en-us/black-friday-deals", "deals", None),
+    "lego-cyber-monday": ("LEGO.com Cyber Monday deals", "LEGO Cyber Monday", "https://www.lego.com/en-us/cyber-monday-deals", "deals", None),
+    "bn-50off": ("Barnes & Noble 50% off books", "B&N 50% off books", "https://www.barnesandnoble.com/collections/books/50off", "deals", None),
     "lego-bestsellers": ("LEGO.com Best Sellers", "LEGO best sellers", "https://www.lego.com/en-us/categories/bestsellers", "hot", None),
     "lego-new": ("LEGO.com new sets", "New LEGO sets", "https://www.lego.com/en-us/categories/new-sets-and-products", "new", None),
     "lego-deals": ("LEGO.com sales & deals", "LEGO deals", "https://www.lego.com/en-us/categories/sales-and-deals", "deals", None),
@@ -159,13 +199,17 @@ LISTS = {
     "bn-manga": ("Barnes & Noble manga & graphic novels", None, "https://www.barnesandnoble.com/collections/books/graphic-novels-comics-manga", "hot", (13, 30)),
     "bn-boxed-sets": ("Barnes & Noble kids' boxed sets", None, "https://www.barnesandnoble.com/collections/books/kids-boxed-sets", "hot", (5, 12)),
     "wm-tracked": ("Gifts this site tracks at Walmart", None, None, "tracked", None),
+    "gs-tracked": ("Gifts this site tracks at GameStop", None, None, "tracked", None),
+    "lego-tracked": ("Gifts this site tracks at LEGO.com", None, None, "tracked", None),
 }
 
 FLAGS = {"B": "best-seller", "H": "deal", "R": "rollback", "P": "reduced", "C": "clearance", "L": "low-stock",
          "E": "event", "O": "sold-out"}
 
 # Walmart's data drops some accented letters; put the common ones back.
-NAME_FIXES = {"Pokmon": "Pokémon", "Pok?mon": "Pokémon", "J?ADORE": "J'ADORE", "World’S": "World's", "Ragnark": "Ragnarök", "Mbapp ": "Mbappé ", "Smarwatch": "Smartwatch"}
+NAME_FIXES = {"Pokmon": "Pokémon", "Pok?mon": "Pokémon", "J?ADORE": "J'ADORE", "World’S": "World's", "Ragnark": "Ragnarök", "Mbapp ": "Mbappé ", "Smarwatch": "Smartwatch",
+              # LEGO.com's theme names: "Other" isn't a theme, and some names repeat the brand
+              "LEGO Other LEGO® ": "LEGO ", "LEGO Other ": "LEGO ", "LEGO ǀ ": "LEGO ", "LEGO Minifigures LEGO® ": "LEGO Minifigures ", "LEGO Icons LEGO® ": "LEGO Icons "}
 
 # Not gifts this site covers: groceries, big appliances, TVs, phones on carrier plans, tools, holiday decorations,
 # bedding, furniture and baby gear. Checked before the product-type rules.
@@ -198,6 +242,14 @@ DROP_TERMS = [
     r"hot cocoa (?:bomb|mix)", r"cocoa bomb", r"mini drinks", r"alani nu", r"candy slime", r"gumm(?:y|i) candy", r"handheld vacuum",
     r"storage chair", r"desktop fan", r"heated car cushion", r"cable end protectors", r"exfoliating gloves", r"cocoa butter formula",
     r"puzzle glue", r"\d+ ?pc pdq", r"count display$",
+    # Black Friday pages mix in household and car gear
+    r"jump starter", r"jump box", r"tire inflator", r"air compressor", r"leaf (?:dust )?(?:air )?(?:blaster|blower)", r"snow (?:blower|thrower)",
+    r"ice maker", r"dresser\b", r"space heater", r"security camera", r"surveillance", r"doorbell", r"dash ?cam", r"bulb cam",
+    r"surge protector", r"outlet extender", r"driveway alarm", r"solar (?:outdoor |flood |motion )?lights?", r"flood light",
+    r"(?:permanent|outdoor) christmas lights", r"\btv antenna\b", r"(?:smart|outdoor|portable) (?:outdoor |portable )?tv\b",
+    r"knife set", r"kitchen tool", r"steam mop", r"rice (?:and grain )?cooker", r"slow cooker", r"pressure cooker", r"cat food",
+    r"wagon cart", r"collapsible (?:folding )?wagon", r"hot tub", r"hot tent", r"bike cases?", r"\bjeans\b", r"sleep mask",
+    r"dog food", r"wet cat", r"drip coffee maker",
 ]
 DROP = re.compile(r"\b(?:" + "|".join(DROP_TERMS) + r")", re.I)
 # Gifts a drop term would catch: craft kits that make ornaments or wreaths, puzzles of cookies, Funko figures.
@@ -463,6 +515,12 @@ RULES[:0] = [(t, re.compile(rx, re.I)) for t, rx in [
     ("craft-kits", r"make your own snow globe|crochet .*set|crochet kit"), ("decor", r"snow globe"), ("lighting", r"string light"),
     ("plush", r"fluffy beanbag|plush .*beanbag"),
     ("figures", r"\bpop (?:television|movies|animation|tv|rocks|games|books|premium|jumbo)\b|pocket pop"),
+    # Black Friday deal names
+    ("ride-ons", r"\bride[- ]on (?:car|truck|toy|utv|dump)|powered ride"), ("blasters", r"foam (?:dart|ball) (?:launcher|target)|dart launchers"),
+    ("pc-gaming", r"gaming desktop|desktop pc"), ("controllers", r"game control\b|cooling (?:stand|fan)|charging station for (?:xbox|ps5)"),
+    ("magnetic-tiles", r"magnetic building"), ("pretend-play", r"tea party set|tea time toys"), ("craft-kits", r"bedazzler"),
+    ("active-games", r"claw machine|bounce house|ball pit"), ("musical-toys", r"instruments toy|musical toys for"),
+    ("cameras", r"compact digital|digital camera"), ("decor", r"alarm clock|picture frame"),
 ]]
 # Lists whose unsorted products are books (Barnes & Noble's exclusive editions don't carry a format).
 BOOK_LISTS = {"bn-best-books", "bn-books-of-year", "bn-kids-books-0-2", "bn-kids-books-3-5", "bn-kids-books-6-8",
@@ -585,16 +643,28 @@ def parse_capture(path: Path, later_files: bool = False) -> dict:
             pid = line[1:].split()[0]
             if pid not in products and not later_files:
                 raise ValueError(f"{path.name}:{n}: repeat of {pid}, which wasn't listed before")
+        elif line.startswith("^"):  # an update: "^id|price|was|flags|photo" for a product an earlier file has
+            f = line[1:].split("|")
+            if len(f) != 5:
+                raise ValueError(f"{path.name}:{n}: expected 5 fields in an update line, found {len(f)}")
+            pid = f[0].strip()
+            if not re.fullmatch(SKU_FORMS.get(store, r"\d+"), pid):
+                raise ValueError(f"{path.name}:{n}: product id {pid!r} isn't a {store} product id")
+            products[pid] = {"update": True, "price": num(f[1]), "was": num(f[2]), "flags": f[3], "img": f[4].strip() or None}
         else:
             f = line.split("|")
-            if len(f) != 9:
-                raise ValueError(f"{path.name}:{n}: expected 9 fields, found {len(f)}")
+            if len(f) not in (9, 10):
+                raise ValueError(f"{path.name}:{n}: expected 9 or 10 fields, found {len(f)}")
+            img = (f[8].strip() or None) if len(f) == 10 else None
+            name = f[-1]
             pid = f[0].split()[0]
             if not re.fullmatch(SKU_FORMS.get(store, r"\d+"), pid):
                 raise ValueError(f"{path.name}:{n}: product id {pid!r} isn't a {store} product id")
             products[pid] = {"price": num(f[1]), "was": num(f[2]), "seller": f[3], "path": f[4], "flags": f[5],
-                             "rating": num(f[6]), "reviews": int(f[7]) if f[7].isdigit() else None, "name": f[8].split(" ~asked=")[0]}
-            if f[0] != pid or "~asked=" in f[8]:
+                             "rating": num(f[6]), "reviews": int(f[7]) if f[7].isdigit() else None, "name": name.split(" ~asked=")[0]}
+            if img:
+                products[pid]["img"] = img
+            if f[0] != pid or "~asked=" in name:
                 products[pid]["note"] = "the store answered with a different product number"
         rows = lists[cur]["rows"]
         rows.append((len(rows) + 1, pid))
@@ -618,8 +688,10 @@ def num(s: str) -> float | None:
     return v if v > 0 else None
 
 
-def build(catalog: dict, captures: list[dict], now: dt.datetime | None = None) -> tuple[dict, dict, dict]:
-    """Return (store_picks, observations by store, stats)."""
+def build(catalog: dict, captures: list[dict], now: dt.datetime | None = None,
+          matches: dict | None = None) -> tuple[dict, dict, dict]:
+    """Return (store_picks, observations by store, stats). matches: photo_matches.json ({"same": {gift id: "store:id"},
+    "examples": {...}})."""
     now = now or dt.datetime.now(dt.timezone.utc)
     spans = type_ages(catalog)
     types = catalog["types"]
@@ -629,6 +701,7 @@ def build(catalog: dict, captures: list[dict], now: dt.datetime | None = None) -
             if o["retailer"] in STORES and o.get("sku"):
                 tracked.setdefault((o["retailer"], str(o["sku"])), []).append((it, o))
     picks, lists_out, obs_by_store = [], {}, {}
+    photos: dict = {}  # catalog gift id -> [store, photo id]: product photos for the hand-picked gifts
     stats = {"products": 0, "kept": 0, "dropped": 0, "unsorted": [], "marketplace_dropped": 0, "observations": 0, "old_captures": 0}
     # Several capture files can hold pages of the same list (a later visit reads more pages, or reads a page again).
     # Combine them page by page, the newest reading of each page and of each product winning.
@@ -641,6 +714,13 @@ def build(catalog: dict, captures: list[dict], now: dt.datetime | None = None) -
             fresh.append(cap)
     pages: dict = {}     # (store, list) -> {page: (captured_at, [product ids])}
     products: dict = {}  # (store, product id) -> (captured_at, row)
+    # An update line ("^id|price|was|flags|photo") keeps the name, aisle, seller and reviews of the newest full reading of
+    # the product, even one from a capture too old to list (names don't go stale the way prices do).
+    bases: dict = {}
+    for cap in sorted(captures, key=lambda c: c["captured_at"]):
+        for pid, p in cap["products"].items():
+            if not p.get("update"):
+                bases[(cap["store"], pid)] = p
     for cap in sorted(fresh, key=lambda c: c["captured_at"]):
         for key, lst in cap["lists"].items():
             if key not in LISTS:
@@ -648,6 +728,18 @@ def build(catalog: dict, captures: list[dict], now: dt.datetime | None = None) -
             for page, pids in (lst.get("by_page") or {1: [pid for _, pid in lst["rows"]]}).items():
                 pages.setdefault((cap["store"], key), {})[page] = (cap["captured_at"], pids)
         for pid, p in cap["products"].items():
+            if p.get("update"):
+                base = (products.get((cap["store"], pid)) or (None, None))[1] or bases.get((cap["store"], pid))
+                if not base:
+                    stats["no_base"] = stats.get("no_base", 0) + 1
+                    continue
+                p = dict(base, price=p["price"], was=p["was"], flags=p["flags"], img=p["img"] or base.get("img"))
+                p.pop("update", None)
+            else:  # a full reading keeps the photo, rating and aisle an earlier reading found when it has none
+                old = (products.get((cap["store"], pid)) or (None, None))[1] or bases.get((cap["store"], pid)) or {}
+                fill = {k: old[k] for k in ("img", "rating", "reviews", "path", "esrb") if not p.get(k) and old.get(k)}
+                if fill:
+                    p = dict(p, **fill)
             products[(cap["store"], pid)] = (cap["captured_at"], p)
     member: dict = {}  # (store, product id) -> {list: rank}
     for (store, key), by_page in pages.items():
@@ -675,6 +767,9 @@ def build(catalog: dict, captures: list[dict], now: dt.datetime | None = None) -
         for it, off in tracked.get((store, pid), []):
             obs.append(observation(it, off, p, captured_at, STORES[store]))
             stats["observations"] += 1
+            photo = photo_id(store, pid, p.get("img"))
+            if photo:
+                photos.setdefault(it["id"], [store, photo])
         if not in_lists:
             continue
         gift_items = [it for it, _ in tracked.get((store, pid), [])]
@@ -712,18 +807,48 @@ def build(catalog: dict, captures: list[dict], now: dt.datetime | None = None) -
         if was and not set(flags) & {"deal", "rollback", "reduced", "clearance"}:
             flags.append("reduced")
         pick = {"id": f"{store}-{pid}", "store": store, "sku": pid, "name": name, "url": STORES[store]["url"](pid),
+                "img": photo_id(store, pid, p.get("img")),
                 "price": p["price"], "was": was, "pct": int((was - p["price"]) / was * 100 + 0.5) if was else None,  # half up, like the site
                 "seller": "store" if p["seller"] == "W" else "marketplace", "rating": p["rating"], "reviews": p["reviews"],
                 "flags": flags, "lists": sorted(in_lists, key=lambda k: list(LISTS).index(k)), "rank": in_lists,
                 "type": t, "category": types[t]["category"], "ages": lo_hi, "ages_from": ages_from, "esrb": rating, "gift": gift,
                 "checked_at": captured_at}
         picks.append({k: v for k, v in pick.items() if v not in (None, [], {})})
+        if gift and pick["img"]:
+            photos.setdefault(gift, [store, pick["img"]])
         stats["kept"] += 1
+    # Hand-picked gifts a store sells by EAN (Barnes & Noble) get that store's photo even when no list had them.
+    for (store, sku), pairs in tracked.items():
+        if store == "barnesnoble":
+            for it, _ in pairs:
+                if photo_id(store, sku, None):
+                    photos.setdefault(it["id"], [store, photo_id(store, sku, None)])
+    # Hand-checked matches: "same" (the same product; it wins over a tracked link's photo) and "examples" (one version
+    # of a gift idea that comes in many; the site labels the photo "Example").
+    gift_ids = {it["id"] for it in catalog["items"]}
+    stats["match_problems"] = []
+    for kind in ("same", "examples"):
+        for gid, ref in sorted(((matches or {}).get(kind) or {}).items()):
+            store, _, pid = ref.partition(":")
+            if gid not in gift_ids or store not in STORES:
+                stats["match_problems"].append(f"{gid} ({ref}): no such catalog gift or store")
+                continue
+            p = (products.get((store, pid)) or (None, None))[1] or bases.get((store, pid)) or {}
+            photo = photo_id(store, pid, p.get("img"))
+            if not photo:
+                stats["match_problems"].append(f"{gid} ({ref}): no capture has a photo of that product")
+                continue
+            if kind == "same":
+                photos[gid] = [store, photo]
+            else:
+                photos.setdefault(gid, [store, photo, "example"])
     picks.sort(key=lambda x: (min(x["rank"].values()), x["name"]))
+    stats["photos"] = sum(1 for x in picks if x.get("img"))
     newest = max((c["captured_at"] for c in fresh), default=None)
     out = {"generated_at": now.strftime("%Y-%m-%dT%H:%M:%SZ"), "captured_at": newest,
-           "stores": {s: {"name": STORES[s]["name"]} for s in sorted({c["store"] for c in fresh}, key=lambda s: (-sum(x["store"] == s for x in picks), s))},
-           "lists": lists_out, "items": picks}
+           "stores": {s: {k: v for k, v in {"name": STORES[s]["name"], "img": STORES[s].get("img")}.items() if v}
+                      for s in sorted({c["store"] for c in fresh}, key=lambda s: (-sum(x["store"] == s for x in picks), s))},
+           "lists": lists_out, "items": picks, "photos": dict(sorted(photos.items()))}
     return out, obs_by_store, stats
 
 
@@ -795,13 +920,19 @@ def main() -> int:
         print("No capture files in scraper/captures/. See 'Reading Walmart in your browser' in the README.")
         return 1
     captures = [parse_capture(p, later_files=True) for p in files]
-    out, obs_by_store, stats = build(catalog, captures)
+    matches = json.loads(MATCHES.read_text()) if MATCHES.exists() else None
+    out, obs_by_store, stats = build(catalog, captures, matches=matches)
     for c in captures:
         for p in c["problems"]:
             print("note:", p)
     print(f"{stats['products']} products read; {stats['kept']} store picks kept, {stats['dropped']} not gifts this site covers, "
           f"{stats['marketplace_dropped']} marketplace listings with few reviews left out, {len(stats['unsorted'])} with no product type.")
-    print(f"{stats['observations']} prices for gifts the catalog links to.")
+    print(f"{stats['observations']} prices for gifts the catalog links to. {stats.get('photos', 0)} store picks have a product photo, "
+          f"plus {len(out['photos'])} hand-picked gifts.")
+    for problem in stats["match_problems"]:
+        print("photo match:", problem)
+    if stats.get("no_base"):
+        print(f"{stats['no_base']} update lines skipped: no earlier reading of the product to update.")
     if stats["old_captures"]:
         print(f"{stats['old_captures']} capture file(s) older than {MAX_AGE_DAYS} days were skipped.")
     if args.unsorted:

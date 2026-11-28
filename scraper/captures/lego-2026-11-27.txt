@@ -1,0 +1,333 @@
+#run lego 2026-11-27T20:13:08Z
+#note Black Friday: LEGO.com's Black Friday and Cyber Monday deals and its Sales & deals, plus Best Sellers and new sets read again for current prices and product photos, in the Claude app's browser on Jake's Mac. "^" lines update a set an earlier LEGO file has.
+#list lego-black-friday page=1
+^40865|31.99|39.99|P|bltfba21087bfe92f42/blt2b3eb4df7154d352-40865_Prod_en-gb.png
+^75639|111.99|139.99|P|blt25bc5b8dc7d77c0b/75639_Prod_en-gb.png
+^10345|76.99|109.99|P|blt1e71e6f33218f354/10345_Prod.png
+77243|18.89|26.99|W||P|4.8||blt8dac22afe99a2c70/77243_Prod_en-gb.png|LEGO Speed Champions Oracle Red Bull Racing RB20 F1® Race Car (Ages 18+)
+^42209|71.99|119.99|P|blte0550cc3ef3afc1f/42209_Prod.png
+^10353|47.99|79.99|P|blte94c63168e761c74/10353_Prod_en-gb.png
+^80118|62.99|89.99|P|blt5279784a41879f35/80118_Prod_en-gb.png
+21355|55.99|79.99|W||P|4.5||blt9ea99aea2b526f91/21355_Prod.png|LEGO Ideas The Evolution of STEM (Ages 18+)
+^40743|27.99|39.99|P|blt6cc18cd0dcc98749/40743_Prod.png
+40516|24.49|34.99|W||P|4.6||bltced1e10e43211f84/40516_Prod.png|LEGO Other Everyone Is Awesome (Ages 18+)
+76444|159.99|199.99|W||P|4.6||blta8d5b7c13b5a3a81/76444_Prod_en-gb.png|LEGO Harry Potter Diagon Alley™ Wizarding Shops (Ages 18+)
+^43033|14.99|24.99|P|bltc011b73e798f9683/blt6b429e8ab51c040c-43033_Prod_en-gb.png
+^10459|41.99|69.99|P|bltca35daee82228bdd/10459_Prod.png
+^40879|27.99|39.99|P|blt74303d5727e548ae/40879_Prod_en-gb.png
+^40924|17.49|24.99|P|blt4a18d8d2577b78f9/40924_Prod.png
+^40958|27.99|34.99|P|blt4cc32e184a314402/blt3904de066105e8e7-40958_Prod_en-gb.png
+^40791|34.99|49.99|P|blt2b5650f5fa1f9752/40791_Prod_en-gb.png
+77260|23.99|29.99|W||P|4.8||blt770931e91e58912e/bltab8874e11ad4b2db-77260_Prod_en-gb.png|LEGO Speed Champions The Fast and The Furious Toyota Supra MK4 (Ages 10+)
+75446|103.99|129.99|W||P|4.8||bltb65ce1284755d194/blta8d62a90e62e020c-75446_Prod_en-gb.png|LEGO Star Wars Grogu™ (Mandalorian Apprentice) (Ages 10+)
+76339|59.99|74.99|W||P|4.7||blt085f29171651abc0/76339_Prod.png|LEGO Marvel The Fantastic Four H.E.R.B.I.E. (Ages 10+)
+^21369|199.99|||blt9b076638ac43e843/21369_Prod.png
+^72306|179.99|||blt59f8e9c961cb7e14/72306_Prod.png
+10356|399.99||W|||4.5||blt062f49aeb5924ace/10356_Prod_en-gb.png|LEGO Icons Star Trek: U.S.S. Enterprise NCC-1701-D™ (Ages 18+)
+72154|299.99||W|||4.0||blt59f10fadf173c1ba/blt3435be8c14df0276-72154_Prod_en-gb.png|LEGO Pokémon Iconic Trainer Moments Poké Ball (Ages 18+)
+11380|129.99||W|||4.5||blt9856b50107421ce5/blte9afc6fc58e0fa7b-11380_Prod_en-gb.png|LEGO Icons Road Bike (Ages 18+)
+^72046|59.99|||blt96a11f71928f8103/72046_Prod_en-gb.png
+72160|109.99||W|||4.3||blt95ad294b06a56865/blta15d46ce58a30281-72160_Prod_en-gb.png|LEGO Pokémon Arcanine (Ages 18+)
+^21066|139.99|||bltd1ddb9dd5c856269/blt9f9250d1b9de56b8-21066_Prod_en-gb.png
+^43031|119.99|||blte54581c2cb6417b7/bltb1fcd478fa6d7d70-43031_Prod_en-gb.png
+^11386|219.99|||blt4b982e955618efb3/blt5a0bc0d19682a2a8-11386_Prod_en-gb.png
+77984|199.99||W|||4.1||blt31bfdc5e1390b67b/blta3f06da64c7b7d72-77984_Prod_en-gb.png|LEGO Jurassic World Jurassic Park Jeep® Wrangler (Ages 18+)
+^72537|69.99|||blte9ccc3926979825e/blt69dcc92d7cf6a33f-72537_Prod_en-gb.png
+75452|89.99||W|||4.2||bltaeaf94035320fce0/75452_Prod_en-gb.png|LEGO Star Wars BB-8™ Astromech Droid (Ages 10+)
+31387|109.99||W|||4.8||blt1223855066b9b380/blte1f97ee73c17994d-31387_Prod_en-gb.png|LEGO Creator 3-in-1 Iconic Pirate Ship (Ages 9+)
+76477|49.99||W|||5.0||bltc1fd2278abcf33df/blt22f09cb3182905bb-76477_Prod_en-gb.png|LEGO Harry Potter Norbert: Hagrid's Baby Dragon (Ages 9+)
+43015|79.99||W|||4.3||blt71a2da536acd2460/blt4b2691e217fb0bc0-43015_Prod_en-gb.png|LEGO Editions Lionel Messi – Soccer Legend (Ages 12+)
+^21375|449.99|||bltfe10804751318bd4/21375_Prod.png
+#list lego-cyber-monday page=1
+^75457|799.99|||blta4cee150c80403bd/blta6d4a31cdd14d65d-75457_Prod_en-gb.png
+=72306
+^76355|229.99|||bltfbc74614e1423428/76355_Prod.png
+^21373|349.99|||blt859bd34dfebcd95a/21373_Prod.png
+^40874|59.99|||bltae642d0bcbe15f54/blt6caf97af32ad6473-40874_Prod_en-gb.png
+^40820|59.99|||bltc307fd1f5230e03d/40820_Prod_en-gb.png
+=11386
+^40809|39.99|||bltb7a1123d80cfb95b/40809_Prod_en-gb.png
+72152|199.99||W|||4.2||bltcc712e807c108c42/72152_Prod_en-gb.png|LEGO Pokémon Pikachu and Poké Ball (Ages 18+)
+=72046
+^72168|129.99|||blt1a9f38570c07d6ff/blt18a8af04322ee19c-72168_Prod_en-gb.png
+40806|59.99||W|||4.6||blt6d4c85ec676b3157/40806_Prod.png|LEGO Star Wars Gingerbread AT-AT™ Walker (Ages 10+)
+^75419|999.99|||blt725a94446f56dbe2/75419_Prod.png
+^40858|12.99|||blt7f144c903ce1d35e/bltddca44e48e587403-40858_Prod_en-gb.png
+^11505|79.99|||blt6eea34c98ee76abb/bltaa6c5faaf18aa138-11505_Prod_en-gb.png
+21368|89.99||W|||3.8||blt46208f9cf7697208/21368_Prod.png|LEGO Ideas Peanuts: Snoopy's Doghouse (Ages 18+)
+^11387|119.99|||blt22b7db1933ef70df/11387_Prod.png
+^11511|29.99|||blta24fb4240d01af9c/blt94b7e5a40e9cda89-11511_Prod_en-gb.png
+^72423|129.99|||bltcfa74b3048bb0594/blt0e4a2d591f4cfea9-72423_Prod_en-gb.png
+=21066
+^43026|99.99|||blt74e46e334af2481a/43026_Prod.png
+40868|79.99||W|||4.7||blt7c48475d7dbfec5d/bltb704864bcbaae140-40868_Prod_en-gb.png|LEGO Pokémon Up-Scaled Red Minifigure (Ages 10+)
+^40862|12.99|||bltf53a6463dbfd2356/blt48ab724c0180ca36-40862_Prod_en-gb.png
+75453|199.99||W|||4.9||blt53e994b7ffae6117/blt2993cb6d6e763651-75453_Prod_en-gb.png|LEGO Star Wars Offworld Sandcrawler™ and Mudhorn (Ages 14+)
+^40866|29.99|||blt70eb54487acc72aa/bltef325e4d60641b11-40866_Prod_en-gb.png
+^40975|39.99|||bltee88b051aa044bd0/blt4f8bf42325dcbdfa-40975_Prod_en-gb.png
+=40958
+^76788|69.99|||bltf1f4a0b23741fb92/76788_Prod.png
+=72537
+77256|27.99||W|||4.7||bltcf1faba2d5f4a688/77256_Prod_en-gb.png|LEGO Speed Champions Time Machine from Back to the Future (Ages 9+)
+31388|129.99||W|||4.9||bltf766834ceddecb3b/bltdbe92b725c4d93ff-31388_Prod_en-gb.png|LEGO Creator 3-in-1 Wild Animals: Family of Koalas (Ages 10+)
+40878|39.99||W|||5.0||bltddbfa8d3cf72796e/blt0ed7f6db378fc08b-40878_Prod_en-gb.png|LEGO BrickHeadz Teenage Mutant Ninja Turtles Figures (Ages 10+)
+^40478|39.99|||blt9a53be3e8553bce6/40478_Prod.png
+^40880|39.99|||blt8fc1f4281e1074ff/40880_Prod.png
+40921|59.99||W|||4.7||blt8f5c0124a628194a/blt2a9cb43f464b17e3-40921_Prod.png|LEGO Minifigures Up-Scaled Blue Astronaut Minifigure (Ages 10+)
+^77255|27.99|||blt81a65b6671890864/77255_Prod_en-gb.png
+850807|5.99||W|||3.9||blt2fafafdd58e0fc02/850807_Prod.png|LEGO Other LEGO® Gold Minifigure Key Chain (Ages 6+)
+854290|5.99||W|||3.0||bltfb0c6bf7efcb0272/854290.png|LEGO Spider-Man Key Chain (Ages 6+)
+11026|7.99||W|||5.0||bltacddd1ff021e705f/11026.png|LEGO Classic White Baseplate (Ages 4+)
+850808|4.19|5.99|W||P|4.4||blt0038f605a82aef4b/850808_Prod.png|LEGO Other LEGO® Gold 2x4 Stud Key Chain (Ages 6+)
+11023|7.99||W|||2.8||bltf2a3ea25d5fcb718/11023.png|LEGO Classic Green Baseplate (Ages 4+)
+11024|14.99||W|||3.7||blt3baed37200b0845a/11024.png|LEGO Classic Gray Baseplate (Ages 4+)
+5010478|20||W|||||blt1fb9d967fe315042/LG3OOKFL001_LEGO_SHERPA_FLEECE_03.jpg|LEGO Other Sherpa-Backed Throw (Ages 6+)
+5010392|9.99||W|||3.8||blt5f6f3b44ce3c34d0/40350800_LEGO_Vase_Brick_Art_Line.png|LEGO Botanicals Vase – Bricks (Ages 5+)
+5010393|9.99||W|||3.8||blte392f70a9e62fbd1/40350801_LEGO_Vase_Wild_Flower.png|LEGO Botanicals Vase - Wildflowers (Ages 5+)
+5006155|34.99||W|||5.0||bltcb25b9795c322d50/5006155.jpg|LEGO Minifigures Minifigure Display Case 16 (8 knob) Blue (Ages 4+)
+5005375|34.99||W|||4.6||blt0ef22ec88af0aa54/5005375.jpg|LEGO Minifigures LEGO® Minifigure Display Case 16 (Ages 4+)
+^5006161|16.99|||blta2d94d7dfc4c6cb4/5006161.png
+5006215|||W|||||blt1d8829635ae86d46/5006215.png|LEGO Other LEGO® Picture Frame
+5006355|39.99||W|||||blt50f96793e0091dcb/5006355.jpg|LEGO Other Brick Backpack 1 Stud – Blue (Ages 5-99)
+5006152|19.99||W|||5.0||blt4a91b9019b5c6b16/5006152.png|LEGO Minifigures Display Case 8 – Black (Ages 4+)
+5005821|4.99|9.99|W||P|||bltfaa44af696d861e0/5005821_alt1.jpg|LEGO Star Wars Yoda™ Bag Tag (Ages 6+)
+5005543|9.99||W|||||blta293cb67116028d2/5005543.jpg|LEGO Other 2x4 Blue Luggage Tag (Ages 6+)
+5007290|16.99||W|||4.0||blte46d42ceb4e3f1cf/5007290.jpg|LEGO Star Wars Darth Vader™ Key Light (Ages 6+)
+5007138|4.99|9.99|W||P|||bltf93a0adbaa9d7957/5007138.jpg|LEGO Star Wars The Mandalorian™ Bag Tag (Ages 6+)
+5005889|15.99||W|||5.0||blt42708b117563c8d5/5005889.jpg|LEGO Other LEGO® 4-Stud Blue Desk Drawer (Ages 5+)
+#list lego-deals page=1
+=40865
+=75639
+=10345
+=77243
+=42209
+=10353
+=80118
+=21355
+=40743
+=40516
+=76444
+=43033
+=10459
+=40879
+=40924
+=40958
+=40791
+=77260
+=75446
+=76339
+#list lego-deals page=2
+31172|20.99|29.99|W||P|4.8||blt504267e3d0f05a1a/31172_Prod_en-gb.png|LEGO Creator 3-in-1 Record Player with Flowers (Ages 8+)
+^76470|55.99|79.99|P|blt1225e4f894a3fce3/76470_Prod_en-gb.png
+43292|55.99|69.99|W||P|5.0||blt929b49dd229adcba/bltbc19e105e483f56b-43292_Prod_en-gb.png|LEGO Disney Pua (Ages 9+)
+77242|18.89|26.99|W||P|4.7||blt62a0047ef561f2db/77242_Prod_en-gb.png|LEGO Speed Champions Ferrari SF-24 F1® Race Car (Ages 10+)
+43290|47.99|59.99|W||P|4.9||blt3086efe7145c6915/43290_Prod.png|LEGO Disney Kevin & Dug (Ages 9+)
+^40884|14.99|24.99|P|bltf24c61f6090b6b16/40884_Prod_en-gb.png
+43293|31.99|39.99|W||P|4.7||blt63469b210283ded0/blt61ce460cf4bb9a88-43293_Prod_en-gb.png|LEGO Disney Kakamora (Ages 9+)
+^43258|59.99|99.99|P|blt245955053948ef0b/43258_Prod_en-gb.png
+40824|24.49|34.99|W||P|4.8||blt4276016e230b623e/40824_Prod_en-gb.png|LEGO Sweetheart Tweety Bird (Ages 12+)
+11504|39.99|49.99|W||P|4.3||bltf61cb3273fb972f3/11504_Prod_en-gb.png|LEGO Botanicals Peace Lily (Ages 18+)
+11201|13.99|19.99|W||P|5.0||blt5d8e09588294b069/11201_Prod.png|LEGO Playground Fun with Bluey and Chloe (Ages 4+)
+^71053|3.49|4.99|P|blt11defb77b4e145c4/blt4849c1b44cb1dbf6-71053_Prod_en-gb.png
+80120|47.99|59.99|W||P|4.9||bltfda5eca1223adf71/blt86e9a60d10a49026-80120_Prod_en-gb.png|LEGO Other Prosperity Carp Leaping (Ages 9+)
+43298|31.49|44.99|W||P|2.3||blt82f3c5cf5bc37ada/blt0fed8b3062f3baae-43298_Box1_v39_en-gb.png|LEGO ǀ Disney Princess Advent Calendar 2026 (Ages 5+)
+^77076|45.49|64.99|P|blt168b6e6636a725d4/77076_Prod_en-gb.png
+40856|31.99|39.99|W||P|5.0||blt058ca53a47183c2a/40856_Prod.png|LEGO Star Wars The Mandalorian and Grogu: Allies & Villains (Ages 10+)
+77059|47.99|59.99|W||P|5.0||bltf73c9b4850c6de31/77059_Prod.png|LEGO Animal Crossing Timmy & Tommy's Fun Day Out (Ages 10+)
+75444|35.99|44.99|W||P|3.9||blt043955a8ee1e2706/blt1a085f1ef4d5c931-75444_Prod_en-gb.png|LEGO Star Wars AT-RT™ Attack (Ages 7+)
+77259|22.39|27.99|W||P|4.0||blt95522a33acfc96b9/blt480f8e3525715603-77259_Prod_en-gb.png|LEGO Speed Champions Audi Revolut F1® Team R26 Race Car (Ages 10+)
+75691|103.99|129.99|W||P|4.9||blt79f454b59a9403a8/75691_Prod_en-gb.png|LEGO Wicked Glinda & Elphaba Bookends (Ages 18+)
+77258|22.39|27.99|W||P|4.6||blt5683b0970b609557/77258_Prod.png|LEGO Speed Champions F1 ACADEMY™ LEGO® Race Car (Ages 10+)
+^66815|20.95|29.94|P|blt519a8b2a2902811a/blt7ca855356bdbf7b0-66815_Box1_v39_en-gb.png
+77001|13.99|19.99|W||P|4.9||blte6c0f9cde3ca1ed2/77001_Prod.png|LEGO Sonic the Hedgehog Sonic's Campfire Clash (Ages 7+)
+43260|13.99|19.99|W||P|5.0||blte3899e6f083ec338/43260_Prod.png|LEGO Disney Moana's Island Fun (Ages 5+)
+#list lego-deals page=3
+88013|27.99|39.99|W||P|4.0||blt5f34c8d5e611bbe8/88013.jpg|LEGO Technic™ Large Motor (Ages 7+)
+43287|39.99|49.99|W||P|5.0||blt9bcf160a34a7c824/43287_Prod_en-gb.png|LEGO Frozen Olaf and Bruni’s Picnic Fun (Ages 7+)
+40957|27.99|39.99|W||P|4.9||bltd979e8936ef8f4e8/40957_Prod_en-gb.png|LEGO Other Spring Wreath (Ages 12+)
+40864|20.99|29.99|W||P|4.8||blt68d6bc876d650448/40864_Prod_en-gb.png|LEGO Other Fortune Master (Ages 9+)
+11217|55.99|69.99|W||P|4.9||blt74fd26d8a690662f/blt58eeee8d68bc4bb4-11217_Prod_en-gb.png|LEGO Brick-Built Bluey Family (Ages 5+)
+43027|23.99|29.99|W||P|5.0||bltcfbdce29a4cd3332/blt154d36ee16842b9a-43027_Prod_en-gb.png|LEGO Editions Vini Jr. – Soccer Highlights (Ages 10+)
+75443|15.99|19.99|W||P|5.0||blt5cfc120f8db94ad2/75443_Prod_en-gb.png|LEGO Star Wars Grogu's Homestead (Ages 4+)
+40816|13.99|19.99|W||P|4.3||blt5b5a06f12bb7094a/40816_Prod_en-gb.png|LEGO Other Decorative Easter Egg (Ages 9+)
+^10450|31.49|44.99|P|bltd1080925ad0a700b/10450_Prod.png
+75417|159.99|199.99|W||P|4.3||blt98568413538e8f35/75417_Prod_en-gb.png|LEGO Star Wars AT-ST™ Walker (Ages 18+)
+40656|62.99|89.99|W||P|3.4||bltc294bab7105e338c/40656_Box1_v39.png|LEGO Other Play with Braille – English Alphabet (Ages 6+)
+854261|7.99|9.99|W||P|||blt4e5af1ddddba9d39/854261.png|LEGO NINJAGO Imperium Sword (Ages 6+)
+88015|24.49|34.99|W||P|2.4||blted1e0594bb34c2ef/88015.png|LEGO Technic Battery Box (Ages 7+)
+88019|24.49|34.99|W||P|2.3||blt7c5e9d9fde9c0467/88019.png|LEGO Powered UP LEGO USB Power Adapter (Ages 7+)
+5010039|||W|||||blt3c0370ae3a31050c/5010039_Prod.jpg|LEGO Nike x LEGO® Collection Cropped T-Shirt
+5009948|||W|||||blt6ba201f6ecae7d9b/5009948_Prod.jpeg|LEGO Nike x LEGO® Collection Cropped T-Shirt
+5010252|||W|||||blt84546fdd8a5fb13c/5010252.png|LEGO Nike x LEGO® Collection Big Kids' Shorts – Lucky Green
+5008989|11.89|16.99|W||P|5.0||bltaf9fe4ee00d2a967/5008989_alt1.jpg|LEGO Minifigures Nutcracker Key Light (Ages 6+)
+5009220|20.99|29.99|W||P|||bltb02816dceb87bec8/5009220.png|LEGO Other World Builder Book (Ages 7-10)
+5009126|||W|||||blta410859aa2c7c26d/5009125.png|LEGO Minifigures Adults' Short Sleeve Dear Santa T-Shirt
+5009959|||W|||||bltf1c89072fae386d8/5009959_Prod.jpg|LEGO Minifigures Adults Christmas Pajamas – Off-White
+=5007138
+5007906|6.79|16.99|W||P|4.0||bltd91efca2ae632632/5007906.jpg|LEGO Harry Potter Hermione Granger™ Key Light (Ages 6+)
+5008982|20.99|29.99|W||P|||bltc04b69db33463c9a/5008982.jpg|LEGO Harry Potter™ Pen Pal Box Set (Ages 6+)
+#list lego-bestsellers page=1
+=75457
+=43026
+=72306
+=11386
+=40809
+=72046
+=40874
+=11505
+^40859|24.99|||blt52848b506011af0a/bltb213baf82cc46073-40859_Prod.png
+=40858
+=21368
+=72152
+=11511
+=72423
+=21066
+^11389|99.99|||blteb6b17f3f4ae151d/bltfe9034ee5bed08f3-11389_Prod.png
+=40478
+^11506|22.99|||blt0ecef35631d68f39/blte47c9a08c6295596-11506_Prod_en-gb.png
+=76355
+=11387
+#list lego-bestsellers page=2
+=40806
+^10371|22.99|||blt253c1cfce17d3a48/10371_Prod.png
+76344|129.99||W|||4.5||bltce8022e1d28c430d/76344_Prod_en-gb.png|LEGO Marvel Iron Man Mark 3 Collectors' Edition (Ages 18+)
+^31212|199.99|||bltbbddf9140f849bb9/31212.png
+^31221|299.99|||blt63e02a733621922e/blteb3348aef8bd5467-31221_Prod_en-gb.png
+=40820
+^31394|29.99|||bltd7d2623b85ac251a/blt663effde4ab2ca0d-31394_Prod_en-gb.png
+^77093|129.99|||bltd7895bf495988a25/77093_Prod.png
+75455|169.99||W|||4.4||blt01e72d2fd0c9fa53/blt0fed9d785e5abb17-75455_Prod_en-gb.png|LEGO Star Wars Boba Fett™ (Ages 18+)
+=21373
+^75461|99.99|||bltb2efb2318d0ec931/blt5dd4a50337c9d86b-75461_Prod_en-gb.png
+^31218|139.99|||blt3f6cace2ff7687c6/31218_Prod_en-gb.png
+^43302|399.99|||blt4084399ce5ccfe6b/43302_Prod.png
+21333|169.99||W|||4.7||bltc6d87e5e7bacb3ae/21333.png|LEGO Ideas Vincent van Gogh - The Starry Night (Ages 18+)
+=72537
+^40926|39.99|||blt7c82306f195e1ab9/blt443c77033df96caf-40926_Prod_en-gb.png
+^72051|199.99|||blt40ba11f38226fc58/72051_Prod.png
+^40919|24.99|||bltdb7bbd43358ecea3/40919_Prod.png
+^11377|649.99|||blt5e6d5f93a1811e3b/bltfbf117028d65c7c2-11377_Prod_en-gb.png
+^11371|249.99|||blt0fab61b6fb67d00c/11371_Prod_en-gb.png
+^11374|229.99|||blt0634150317c9de3f/blte7ecfac1aa09d7c5-11374_Prod_en-gb.png
+75192|849.99||W|||4.4||blt3349f56c6f192e18/75192_Prod.png|LEGO Star Wars Millennium Falcon™ (Ages 16+)
+11512|59.99||W|||3.3||blt621a9fb4f7d5deba/bltc8cac287dd2bee85-11512_Prod_en-gb.png|LEGO Botanicals Hanging Golden Pothos (Ages 18+)
+11370|299.99||W|||4.2||blt8170cb2935ea6596/11370_Prod_en-gb.png|LEGO Icons Stranger Things: The Creel House (Ages 18+)
+#list lego-bestsellers page=3
+10316|499.99||W|||4.8||bltec012c948c003fba/10316_alt16.png|LEGO THE LORD OF THE RINGS: RIVENDELL™ (Ages 18+)
+^76478|129.99|||bltd525ad92fc0f8813/blt769e7259c78b03c4-76478_Prod_en-gb.png
+^72050|179.99|||blt8b9de9e7d31005f9/72050_Prod.png
+76968|249.99||W|||4.8||blt490fcaeb0097ae2f/76968_Prod.png|LEGO Jurassic World Dinosaur Fossils: Tyrannosaurus rex (Ages 18+)
+^21582|29.99|||bltcbfe6f6babf61b8d/bltd9332c3bc0f557e7-21582_Prod_en-gb.png
+^76345|49.99|||blta7a2a9ec28607b76/bltaa1f5d2205b08b15-76345_Prod_en-gb.png
+=21369
+=77256
+^21372|139.99|||blt7a6fc4143082898d/bltcfca1e7974173b84-21372_Prod_en-gb.png
+43301|149.99||W|||4.9||blt48d40387c8ddf5ca/blt69f537b34c0b5ee2-43301_Prod_en-gb.png|LEGO Disney Toy Story Slinky Dog Bookends (Ages 18+)
+42228|229.99||W|||4.5||bltac01ce3b2335370b/blt94fedcc1daf48b2a-42228_Prod_en-gb.png|LEGO Technic McLaren MCL39 F1® Car (Ages 18+)
+=72168
+76352|109.99||W|||4.9||bltf041c34546857793/76352_Prod.png|LEGO Marvel Avengers: Doomsday New Avengers Tower (Ages 12+)
+^21067|349.99|||blt22f5cc04d8ebabf1/bltdc033ed672251563-21067_Prod_en-gb.png
+^3850082|11.99|||bltfef7be557161b17f/KV2_MTO_LEGO_Ecommerce_Minifigure_Factory_1HY24_Articles_Standard_700x500.jpg
+=43031
+^60494|129.99|||blt847704be5dc15e1f/blt6045e3b889a69670-60494_Prod_en-gb.png
+10354|269.99||W|||4.1||bltd183027c82558d22/10354_Prod.png|LEGO The Lord of the Rings: The Shire™ (Ages 18+)
+21349|99.99||W|||4.8||blte25a9ccc4d363ee2/21349.png|LEGO Ideas Tuxedo Cat (Ages 18+)
+^60511|89.99|||blt3c20dfe8449e0184/bltd44a5963267013d3-60511_Prod_en-gb.png
+=75419
+=40879
+^76476|449.99|||blt30328b4a768c9bf8/76476_Prod.png
+10294|679.99||W|||4.7||blt6cdf0b53146b5519/10294_Prod.png|LEGO Icons LEGO® Titanic (Ages 18+)
+#list lego-new page=1
+=21375
+=21373
+^11388|549.99|||blt608df627ce16d372/blt38b2ba1dce4ae572-11388_Prod.png
+=11387
+^11390|179.99|||bltd7e602957cfcae53/11390_Prod.png
+=75457
+=40874
+=40865
+=40866
+=40958
+=10371
+=72306
+=40862
+^40875|59.99|||blt6f93f9d207c92d6a/bltf1df1459ba3b1736-40875_Prod_en-gb.png
+^21371|99.99|||blt15588596f785864c/21371_Prod.png
+^11379|149.99|||blt93b12260f66cd50b/11379_Prod.png
+=40919
+=66815
+#list lego-new page=2
+=40859
+=40880
+=76355
+=43026
+=76788
+^854332|4.19|5.99|P|bltac0d71b644bade47/blt44fe33e667570967-854332_Prod_en-gb.png
+^76787|44.99|||blt454ff9d60950120b/76787_Prod.png
+^80123|119.99|||blte3f7ba1e32f65557/blt9adeb03a52242e6f-80123_Prod.png
+=71053
+^71888|279.99|||
+^67006|99.99||O|bltd9ed9c36c7d0f620/blt040f3d56eb77d555-67006_Prod_en-gb.png
+76481|59.99||W|||||blt3b7ad3c0475cfb59/blt52c6667099776cce-76481_Prod_en-gb.png|LEGO Harry Potter Privet Drive (Ages 8+)
+76482|89.99||W|||||blt923118ef712ac04d/blta7d2678000ffb047-76482_Prod.png|LEGO Harry Potter Gryffindor™ Common Room (Ages 9+)
+77088|19.99||W||O|||blt7f9462730ca95d44/bltc92e87a96d652f50-77088_Prod_en-gb.png|LEGO Fortnite Guaco's Tacos (Ages 14+)
+^11536|4.99||O|blt1dece3f1a1d25e3e/bltc8620f4b8633d691-11536_Prod_en-gb.png
+^77273|29.99||O|bltdc90ea18841043d2/bltce17bad337221a0d-77273_Prod_en-gb.png
+^77268|29.99||O|blt0da1aecf79651987/bltf2cb3dd3e72e5ae5-77268_Prod_en-gb.png
+40992|24.99||W||O|||blt52be20383b0a8aa7/blt7d74668d4be03810-40992_Prod_en-gb.png|LEGO Harry Potter Harry, Draco and Hagrid™ Figures (Ages 10+)
+^75495|79.99||O|bltd5603bf007e73fde/blt55584f2376fd0e89-75495_Prod_en-gb.png
+42717|39.99||W||O|||blte3c8e78c56a51604/blt482adc84fc4a3e27-42717_Prod_en-gb.png|LEGO Friends Family Dollhouse (Ages 5+)
+^40976|29.99||O|blt145020d095d1b566/blt9c8d29251f81ab32-40976_Prod_en-gb.png
+77084|99.99||W||O|||bltcb1f000a08dc8e5a/blt3682783896a1b9ed-77084_Prod_en-gb.png|LEGO Fortnite P-1000 (Ages 14+)
+76487|99.99||W||O|||blt77c2cd356b83a71d/blt6e5340cbfb03d74d-76487_Prod_en-gb.png|LEGO Harry Potter Hogwarts™ Express & Platform 9¾™ (Ages 9+)
+^77272|29.99||O|blt51bcbe42433dc8a8/blt7b83e899a91ad2bb-77272_Prod_en-gb.png
+#list lego-new page=3
+^77275|29.99||O|blt4ed54c9b906beead/blt0b2813e9e44b5a45-77275_Prod_en-gb.png
+^77274|29.99||O|blt987bdad6dd56206b/blt324bf6e78b800caf-77274_Prod_en-gb.png
+^77276|29.99||O|blt9264aee3f444c7e6/bltcfc07c15787fceef-77276_Prod_en-gb.png
+^77271|29.99||O|blt97a1d7ce97253afb/blt4fa5acfb1079b105-77271_Prod_en-gb.png
+^77269|29.99||O|blt1bc30439c1548f7d/blt92f4b4fe8c3ee069-77269_Prod_en-gb.png
+^77277|29.99||O|blt7d07c3f526811ec6/bltc81f4a50472c18ab-77277_Prod_en-gb.png
+67023|49.99||W||O|||blt6835d17a83367ef7/bltb6a230594d3ca7c2-67023_Prod.png|LEGO Marvel Rivals: Jeff the Land Shark (Ages 12+)
+^77267|29.99||O|blt8b67f593f57bf045/bltcda16d3b3a82f5f4-77267_Prod_en-gb.png
+^77270|29.99||O|bltdb3b15754cf3a268/blt9e006e42ccede3f9-77270_Prod_en-gb.png
+^80122|79.99||O|blt0170a939282f26c5/blt3dfb4222a2ab70e8-80122_Prod_en-gb.png
+^72052|9.99||O|blt10eed03191835556/72052_Prod.png
+^72055|19.99||O|bltb319e73660667bf3/72055_Prod.png
+^11537|4.99||O|blt82243e3d9b156dd5/blt1ccb1c0960097a27-11537_Prod_en-gb.png
+^11532|4.99||O|bltab3286017e6e8590/blt8c8a6a4d5cad372a-11532_Prod_en-gb.png
+^72061|29.99||O|blt779ee4550a5d3e6b/72061_Prod.png
+^11227|19.99||O|bltcfa3261fdab742ba/blt43d085a30853df0b-11227_Prod_en-gb.png
+^75478|79.99||O|blt8f1bd63e9fbf53e1/lt8c0c79883d631ab6-75478_Prod_en-gb.png
+^75482|99.99||O|
+^11533|4.99||O|bltc473e945a5194169/bltc58dbde5b54da504-11533_Prod_en-gb.png
+^11534|4.99||O|blta66c75eecfd92ef7/bltba7f52006c9473f4-11534_Prod_en-gb.png
+5010379|69.99||W|||5.0||blt1f43cda9f66ea6fa/NS2_UK_NOR_INT_STANDARD_2d.png|LEGO Batman™: Legacy of the Dark Knight - NINTENDO Switch 2™ (Ages 10+)
+^72056|29.99||O|blt6009fd3beca49464/72056_Prod.png
+^42709|49.99||O|blt758879c41eba5b11/bltf3aa423d58989424-42709_Prod_en-gb.png
+^42718|59.99||O|
+#list lego-new page=4
+^75466|69.99||O|blt41f22943539f3488/blt125bd219614393ea-75466_Prod_en-gb.png
+^11516|29.99||O|bltb5333cf9dda93da9/blt3f4035f5f90c6305-11516_Prod_en-gb.png
+^11519|59.99||O|blt40c7203f71f6193b/blte88d6e537681ce86-11519_Prod_en-gb.png
+^71873|9.99||O|blt9d1e6b573497a9a7/bltada4000bb8a3022f-71873_Prod_en-gb.png
+^75470|39.99||O|blt21d3697656d97773/blt1fd0090ce46ce34b-75470_Prod_en-gb.png
+^72057|39.99||O|bltdd4ecdcfe3edb1b3/72057_Prod.png
+^75480|79.99||O|
+^72054|14.99||O|
+^72058|59.99||O|bltd848d532123e7252/72058_Prod.png
+^11535|4.99||O|blt4e8d9523b61d4060/blt8421626e1115cf80-11535_Prod_en-gb.png
+^42254|99.99||O|blt00bfc23daa68ae6c/42254_Prod_en-gb.png
+^42719|99.99||O|blt0a9810fe2d9d18cd/blt92dd60dffd8f13b4-42719_Prod_en-gb.png
+^71875|19.99||O|blt52208b0f15f3b4e8/bltad8986e0b9e2c46a-71875_Prod_en-gb.png
+^11515|59.99||O|blt1526c64d9b4206a6/blt337595ab19479c11-11515_Prod_en-gb.png
+^11522|59.99||O|blt66feafa0951083d0/blt519178e53bea72b1-11522_Prod_en-gb.png
+^67012|169.99||O|blte6308ce7b5b80dba/67012_Prod.png
+^75467|299.99||O|blt72c6294e4df5e58c/blt9a03b85917ffc00a-75467_Prod_en-gb.png
+^72060|99.99||O|blt7f1dff380bb78179/72060_Prod.png
+^67009|29.99||O|blt52ca804037accb7a/bltaaa754068e2aecb5-67009_Prod_en-gb.png
+^67005|99.99||O|blt994b4b09c36e44fe/bltbbcbc30ff353ac10-67005_Prod_en-gb.png
+^67008|59.99||O|blt9d3b153c64c3b706/blt0eed5416d164cea7-67008_Prod_en-gb.png
+^75424|49.99|||blt57e366b866a35097/blt25801572ad058379-75424_Prod_en-gb.png
+^75421|69.99|||bltb61ed1b9765cd542/75421_Prod.png
+^75426|99.99|||blt3b90cd5ea56de0bd/bltcc4641b19ca76da2-75426_Prod_en-gb.png

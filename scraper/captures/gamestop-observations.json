@@ -1,12 +1,12 @@
 {
- "checked_at": "2026-11-23T07:29:38Z",
+ "checked_at": "2026-11-27T20:11:58Z",
  "observations": [
   {
    "item_id": "gta-vi",
    "retailer": "gamestop",
    "url": "https://www.gamestop.com/video-games/playstation-5/products/grand-theft-auto-vi---playstation-5-code-in-box/448295.html",
    "sku": "448295",
-   "checked_at": "2026-11-23T07:29:38Z",
+   "checked_at": "2026-11-27T20:11:58Z",
    "source": "gamestop.com, read in a browser",
    "verification_method": "browser",
    "ok": true,
@@ -15,5 +15,5 @@
    "name": "Grand Theft Auto VI - PlayStation 5 (Code in Box)"
   }
  ],
- "note": "GameStop prices read in a browser on 2026-11-23 (scraper/captures/gamestop.txt)."
+ "note": "GameStop prices read in a browser on 2026-11-27 (scraper/captures/gamestop.txt)."
 }

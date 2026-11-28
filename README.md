@@ -7,7 +7,7 @@ A small website for Christmas shopping: gift ideas for ages 1 to 30, a Christmas
 | Page | What it does |
 | --- | --- |
 | Find gifts | Set an age (1–30), a budget and interests to get ranked gift ideas, quick buttons (Under $25, On sale, Hot this year, Store best sellers) and an age guide with safety notes. Choose someone from your lists to use their age, interests and budget. |
-| Lists | One Christmas list per person: name, age, color, budget and interests. Add gifts from anywhere on the site (they get circled in that person's color) or add your own with a link. Mark each gift Idea, Bought or Wrapped, note what you paid and watch the budget bar. The shopping trip view groups everything by store. Share, copy as text, print, back up. Starred gifts go to a shortlist. |
+| Lists | One Christmas list per person, or a wish list of your own: name, age, color, budget and interests. Add gifts from anywhere on the site (they get circled in that person's color) or add your own with a link, and add a note to any gift (a color, a size). Mark each gift Idea, Bought or Wrapped, note what you paid and watch the budget bar. The shopping trip view groups everything by store. Send list texts or emails a link to the list; copy as text, print, back up. Starred gifts go to a shortlist. |
 | Browse & search | The search box's results, and every gift sorted into 80 product types in 20 groups. Pick a type (Squishies & fidgets, LEGO sets, Switch 2 games…) or a whole group, then narrow by hot list, interest, age, price and store. A sortable table, or cards on phones. |
 | Deals & dates | Countdown to Black Friday, Cyber Monday, Green Monday and Christmas Eve; Walmart's best sellers and deals, filtered by age group, product type, price, sale or best seller, and addable to anyone's list; gifts selling at least 8% under their usual price; the big-ticket gifts; the hot lists this year's picks come from; and the status of every tracked store link, grouped by store. |
 | Shop every store | Type a search once and open it at any of the 28 stores, plus a directory of what each store is good for. |
@@ -78,20 +78,28 @@ What to do instead:
 
 ## Store best sellers and deals (Walmart, GameStop, LEGO.com, Five Below, Barnes & Noble)
 
-The stores publish their own hot lists, and their pages carry clean product data, so a browser on a home computer can read them. The Deals page shows them (filter by age group, product type, price, "on sale" or "best seller"), the Find page shows the stores' best sellers for the chosen age, and Browse by type links to the picks in the chosen type. Anything can go on a person's list. The November 22 and 23 readings cover:
+The stores publish their own hot lists, and their pages carry clean product data, so a browser on a home computer can read them. The Deals page shows them (filter by age group, product type, price, "on sale", "best seller", or Black Friday and Cyber Monday deals), the Find page shows the stores' best sellers for the chosen age, and Browse by type links to the picks in the chosen type. Anything can go on a person's list. The November 22, 23 and 27 (Black Friday) readings cover:
 
 - **Hot lists:** Walmart's Top 100 Gifts, Top Toys, Trending Toys and best-selling stocking stuffers
 - **Best sellers for each age group:** baby, toddlers, little kids, big kids, teens, her and him
-- **Deals:** Walmart's toy, video game, electronics and sports deal pages, sorted by best sellers
-- **GameStop:** its Best Sellers and Black Friday deals (new items only; each game's ESRB rating comes from its product page)
-- **LEGO.com:** its Best Sellers, with LEGO's age rating for each set
+- **Deals:** Walmart's toy, video game, electronics and sports deal pages, sorted by best sellers, and its Cyber Monday deals (all, toys, video games and electronics)
+- **GameStop:** its Best Sellers, toys, collectibles, Black Friday deals and the Black Friday "games $19.99, $29.99 and $39.99 or less" pages (new items only; each game's ESRB rating comes from its product page)
+- **LEGO.com:** its Best Sellers, New, Deals, Black Friday and Cyber Monday pages, with LEGO's age rating for each set
 - **Five Below:** the first 24 products of 29 of its lists and gift guides, read from the page's own search results (`InstantSearchInitialResults`); its aisle sorts products the name doesn't, and candy aisles are left out
-- **Barnes & Noble:** the first page of 24 collections, read from the page's data as the site's own links open them; book formats (hardcover, paperback, board book) and the age lists sort books into picture, kids', teen and adult books and manga
+- **Barnes & Noble:** the first page of 24 collections and its 50%-off books, read from the page's data as the site's own links open them; book formats (hardcover, paperback, board book) and the age lists sort books into picture, kids', teen and adult books and manga
 - **Prices** for the 34 Walmart links in the catalog, which feed the gifts' prices and the "Below the usual price" deals
 
 Each product keeps Walmart's badges (Best seller, Deal, Rollback, Reduced price, Clearance, Low stock), its rating and its place on each list. Sponsored placements are skipped. Marketplace sellers are labeled, and only Walmart's own price counts for the catalog's gifts. Things this site doesn't cover are left out: groceries, TVs, big appliances, tools, phones on carrier plans, decorations, bedding, and open-box or refurbished items. `scraper/store_picks.py` sorts each product into the site's product types and works out who it's for, in this order: ages printed in the name ("Ages 9+"), the Walmart age-group list it's on, words like "Toddler" or "Women's", then the usual ages for its product type. Gifts the catalog already has keep the catalog's ages. Video games carry Walmart's ESRB rating: Mature games show for 17 and up, Teen games for 13 and up, and a game whose rating is still pending counts as Teen, or Mature if it's in a Mature series like Grand Theft Auto or Call of Duty.
 
 The site says when the reading happened. After three days it warns that some deals have likely ended, and captures more than 10 days old are left out the next time the import runs.
+
+### Product photos
+
+Each product shows the store's own photo, loaded straight from the store's image server (Walmart, GameStop, LEGO.com, and Shopify for Barnes & Noble) without sending which page asked for it; if a photo doesn't load, the gift's emoji shows instead. A capture line can carry the store's photo id as a tenth field (`id|price|was|seller|aisle|flags|rating|reviews|photo|name`), and `site/data/store-picks.json` lists each store's photo address with `{id}` and `{w}` in it. Barnes & Noble names its photos by the book's EAN, so those need no photo field. Five Below's pages couldn't be read on Black Friday (a bot check), so its products show emoji.
+
+Gifts in the catalog get a photo when a store pick or a tracked store link is the same product. `scraper/photo_matches.json` lists the rest by hand: `"same"` for the same product read at a store (for example `"lego-sw-throne-room": "lego:75427"`), and `"examples"` for one version of a gift idea that comes in many (the site labels those "Example photo"). The import reports any match whose product has no photo in the captures.
+
+A capture file can also say only what changed for a product an earlier file read in full: `^id|price|was|flags|photo`.
 
 ### Refreshing it
 
@@ -156,8 +164,9 @@ To add a product type, add it to `types` with a `label`, an `emoji` and its `cat
 ## Lists and share links
 
 - Lists are kept in the browser's local storage on that device. Clearing the site's data deletes them, so use **Back up** to save a file and **Restore** to load it on another device.
-- A share link carries the list inside the link itself, compressed. Nothing is uploaded, so anyone who has the link can read the list. Tick **Hide what's been bought or wrapped** before sharing with the person the list is for.
-- Opening a share link shows the list and lets you save it to your own lists, or add it to the matching person's list if you already have one.
+- **Send list** makes a link that carries the whole list inside it, compressed: each gift's name, photo, price, store link and note. Nothing is uploaded, so anyone who has the link can read the list, on any phone or computer, with no app or account. The dialog can copy the link, open a text message or an email with it, or use the phone's share sheet. **Leave out what's been bought or wrapped** is on by default, so a list you're buying from can go to the person it's for.
+- The link is a copy of the list when it was sent. Change the list and send a new link.
+- Opening a link shows the list as its own page: a card per gift with its photo, price, note and an Open at <store> button. The person who opened it can mark gifts as bought; those checkmarks stay on their device, carry over to a newer link for the same list, and the sender never sees them. They can also save the list to their own lists, print it or copy it as text. Links made before photos existed still open.
 
 ## Run it locally
 
@@ -187,14 +196,15 @@ site/                       the website (plain HTML, CSS and JavaScript; no buil
   assets/config.js          repo name, schedule text, site address
   data/catalog.json         the gifts, product types, hot lists, stores and interests (edit this)
   data/gifts.json           generated by the scraper (don't edit by hand)
-  data/store-picks.json     Walmart's best sellers and deals, generated by store_picks.py
+  data/store-picks.json     the stores' best sellers, deals and photo addresses, generated by store_picks.py
 scraper/
   scrape.py                 the price checker
   add_link.py               adds a store product link to a gift
   hotlists.py               pulls product links out of a top-toys list or gift guide
-  store_picks.py            imports store pages read in a browser: picks, product types, ages and prices
+  store_picks.py            imports store pages read in a browser: picks, product types, ages, prices and photos
+  photo_matches.json        hand-checked photos for catalog gifts no store link covers
   browser/walmart-capture.js  the snippet that reads Walmart's pages in a browser
-  captures/                 what the browser read (walmart*.txt, gamestop.txt, lego.txt) and the prices it found
+  captures/                 what the browser read (walmart*.txt, gamestop*.txt, lego*.txt, ...) and the prices it found
   test_scrape.py            offline parser, merge, hot list, store picks and catalog checks
   fixtures/                 saved page snippets the checks read
   probe-results.json        which stores answered the last probe (written by the workflow)

@@ -13,7 +13,14 @@
 //   4. For the gifts the catalog links to:  copy(await walmartTracked(['17153956345', '18879162573']))
 //   5. Run: python3 scraper/store_picks.py
 // Products already copied in this tab are written as "=id", so each product's details are saved once.
+// Each line carries the id of Walmart's product photo (the 32 hex digits of its image name), which the site shows.
 // Run sessionStorage.removeItem('__xm') before starting a new capture file.
+
+// The id in a Walmart photo address (".../Name_2384fbb2-237e-4e16-89bb-f39d20777a0f.a6d2....png"), without dashes.
+function walmartPhoto(url) {
+  const m = String(url || '').match(/([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})/i);
+  return m ? m.slice(1).join('').toLowerCase() : '';
+}
 
 function walmartCapture(L) {
   const nd = JSON.parse(document.getElementById('__NEXT_DATA__').textContent);
@@ -34,6 +41,7 @@ function walmartCapture(L) {
     const cat = ((i.category || {}).categoryPathId || '').split(':').slice(1, 3).join(':');
     return [i.usItemId, num(p.linePrice || p.itemPrice || p.priceRangeString), num(p.wasPrice), i.sellerName === 'Walmart.com' ? 'W' : 'M', cat,
       [...new Set(f)].join(''), i.averageRating ? (+i.averageRating).toFixed(1) : '', i.numberOfReviews || '',
+      walmartPhoto((i.imageInfo || {}).thumbnailUrl || i.image),
       i.name.replace(/[|\n\t]/g, ' ').replace(/"/g, '″').replace(/\s+/g, ' ').trim().slice(0, 80)].join('|');
   });
   sessionStorage.setItem('__xm', JSON.stringify(S));
@@ -60,7 +68,7 @@ async function walmartTracked(ids) {
       const v = (x) => (x == null ? '' : String(x));
       out.push([p.usItemId || id, v((pi.currentPrice || {}).price), v((pi.wasPrice || {}).price), own ? 'W' : 'M', '',
         p.availabilityStatus && p.availabilityStatus !== 'IN_STOCK' ? 'O' : '', p.averageRating ? (+p.averageRating).toFixed(1) : '',
-        p.numberOfReviews || '', (p.name || '').replace(/[|\n\t]/g, ' ').replace(/"/g, '″').replace(/\s+/g, ' ').trim().slice(0, 80)].join('|'));
+        p.numberOfReviews || '', walmartPhoto((p.imageInfo || {}).thumbnailUrl), (p.name || '').replace(/[|\n\t]/g, ' ').replace(/"/g, '″').replace(/\s+/g, ' ').trim().slice(0, 80)].join('|'));
     } catch (e) { out.push(`!error ${id} ${String(e).slice(0, 60)}`); }
     await new Promise((res) => setTimeout(res, 2800));
   }

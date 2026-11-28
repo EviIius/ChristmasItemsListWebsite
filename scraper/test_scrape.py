@@ -384,9 +384,11 @@ with tempfile.TemporaryDirectory() as td:
 
 real = [sp.parse_capture(p, later_files=True) for p in sorted(sp.CAPTURES.glob("*.txt"))]
 if real:
-    rout, robs, rst = sp.build(json.loads(CATALOG.read_text()), real, dt.datetime.fromisoformat(max(c["captured_at"] for c in real).replace("Z", "+00:00")))
+    rout, robs, rst = sp.build(json.loads(CATALOG.read_text()), real, dt.datetime.fromisoformat(max(c["captured_at"] for c in real).replace("Z", "+00:00")),
+                               json.loads(sp.MATCHES.read_text()))
     shipped = json.loads((sp.OUT).read_text()) if sp.OUT.exists() else {"items": []}
-    check(len(rout["items"]) >= 300 and {x["id"] for x in rout["items"]} == {x["id"] for x in shipped["items"]},
+    check(len(rout["items"]) >= 300 and {x["id"] for x in rout["items"]} == {x["id"] for x in shipped["items"]}
+          and rout["photos"] == shipped.get("photos") and all(x.get("img") == y.get("img") for x, y in zip(rout["items"], shipped["items"])),
           f"store picks: site/data/store-picks.json is up to date with scraper/captures ({len(rout['items'])} picks)")
     tps = json.loads(CATALOG.read_text())["types"]
     check(all(x["type"] in tps and tps[x["type"]]["category"] == x["category"] and 1 <= x["ages"][0] <= x["ages"][1] <= 30 for x in rout["items"]),
@@ -460,6 +462,47 @@ with tempfile.TemporaryDirectory() as td3:
     check(tc["105"]["rank"] == {"wm-gifts-teens": 3} and tc["102"]["rank"].get("wm-gifts-teens") == 4 and three["lists"]["wm-gifts-teens"]["count"] == 4
           and raises(ValueError, lambda: sp.parse_capture(c)),
           "store picks: \"~N\" keeps the places of products an earlier file has, and a later file can repeat an earlier file's product")
+
+# Photos: a 10-field line carries the store's photo id, a "^" line updates the price and photo of a product an earlier
+# file read in full, and hand-checked matches give catalog gifts a photo.
+with tempfile.TemporaryDirectory() as td4:
+    a, b, c = Path(td4) / "walmart.txt", Path(td4) / "walmart-2.txt", Path(td4) / "walmart-3.txt"
+    a.write_text("#run walmart 2026-11-22T19:00:00Z\n#list wm-top-toys page=1\n201|30.00||W|4171:4186|B|4.8|900|LEGO Classic Bricks Ages 4+\n"
+                 "202|50.00||W|4171:4187|B|4.7|500|0123456789ABCDEF0123456789abcdef|Barbie Doll Ages 3+\n")
+    b.write_text("#run walmart 2026-11-27T20:00:00Z\n#list wm-deals-toys page=1\n^201|19.99|30.00|H|fedcba98-7654-3210-fedc-ba9876543210\n"
+                 "^202|39.00|50.00|H|\n^203|5.00||H|\n")
+    c.write_text("#run walmart 2026-11-27T21:00:00Z\n#list wm-tracked page=1\n201|19.99|30.00|W|||||fedcba9876543210fedcba9876543210|LEGO Classic Bricks Ages 4+\n")
+    pcat = {"types": json.loads(CATALOG.read_text())["types"],
+            "items": [{"id": "g1", "type": "dolls", "ages": [3, 9]}, {"id": "g2", "type": "lego", "ages": [4, 12]},
+                      {"id": "g3", "type": "lego", "ages": [4, 12]}]}
+    matches = {"same": {"g1": "walmart:202", "g3": "walmart:999"}, "examples": {"g2": "walmart:201"}}
+    caps = [sp.parse_capture(a), sp.parse_capture(b), sp.parse_capture(c)]
+    pout, _, pst = sp.build(pcat, caps, dt.datetime(2026, 11, 27, 22, tzinfo=dt.timezone.utc), matches)
+    pb = {x["sku"]: x for x in pout["items"]}
+    check(pb["201"]["price"] == 19.99 and pb["201"]["was"] == 30.0 and pb["201"]["img"] == "fedcba98-7654-3210-fedc-ba9876543210"
+          and pb["201"]["name"].startswith("LEGO Classic Bricks") and pb["201"]["rating"] == 4.8 and set(pb["201"]["lists"]) == {"wm-top-toys", "wm-deals-toys"}
+          and pb["202"]["price"] == 39.0 and pb["202"]["img"] == "01234567-89ab-cdef-0123-456789abcdef" and pst["no_base"] == 1 and "203" not in pb,
+          "store picks: update lines change a product's price and photo, keep its name and rating, and are skipped with no earlier reading")
+    check(pout["photos"] == {"g1": ["walmart", "01234567-89ab-cdef-0123-456789abcdef"], "g2": ["walmart", "fedcba98-7654-3210-fedc-ba9876543210", "example"]}
+          and len(pst["match_problems"]) == 1 and "g3" in pst["match_problems"][0]
+          and "{id}" in pout["stores"]["walmart"]["img"] and "{w}" in pout["stores"]["walmart"]["img"],
+          "store picks: hand-checked matches give catalog gifts a photo (examples are marked), and the photo address is a template")
+    bad = Path(td4) / "bad.txt"
+    bad.write_text("#run walmart 2026-11-27T20:00:00Z\n#list wm-deals-toys page=1\n^201|19.99|30.00|H\n")
+    check(raises(ValueError, lambda: sp.parse_capture(bad)), "store picks: an update line with the wrong number of fields is an error")
+check(sp.photo_id("walmart", "1", "0123456789abcdef0123456789abcdef") == "01234567-89ab-cdef-0123-456789abcdef"
+      and sp.photo_id("walmart", "1", "not-a-photo") is None and sp.photo_id("walmart", "1", None) is None
+      and sp.photo_id("gamestop", "1", "20023062-2e0ec255") == "20023062-2e0ec255" and sp.photo_id("gamestop", "1", "../x") is None
+      and sp.photo_id("lego", "1", "bltf279b650862f34ce/75427_Prod.png") == "bltf279b650862f34ce/75427_Prod.png"
+      and sp.photo_id("lego", "1", "https://example.com/x.png") is None
+      and sp.photo_id("barnesnoble", "1150506380-0673419421980", None) == "0673419421980" and sp.photo_id("fivebelow", "x", "y") is None,
+      "store picks: photo ids are checked against each store's format before they reach the site")
+if real:
+    matches = json.loads(sp.MATCHES.read_text())
+    gifts = {it["id"] for it in json.loads(CATALOG.read_text())["items"]}
+    check(set(matches["same"]) <= gifts and set(matches["examples"]) <= gifts and not set(matches["same"]) & set(matches["examples"])
+          and not rst["match_problems"] and len(rout["photos"]) >= 80,
+          f"store picks: every hand-checked photo match names a catalog gift and a product a capture has a photo of ({len(rout['photos'])} gifts)")
 check(sp.classify("Grand Theft Auto VI - PlayStation 5 (Code in Box)", "video-games:playstation-5") == "ps-xbox-games"
       and sp.classify("Nintendo Switch 2", "consoles-hardware:nintendo-switch-2") == "consoles"
       and sp.classify("Pokemon Trading Card Game: 30th Celebration Booster Bundle", "toys-games:trading-cards") == "tcg"

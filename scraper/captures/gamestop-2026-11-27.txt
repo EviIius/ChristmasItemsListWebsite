@@ -1,0 +1,694 @@
+#run gamestop 2026-11-27T20:11:58Z
+#note Black Friday: GameStop's Black Friday page and its game deals ($19.99, $29.99 and $39.99 or less), plus Best Sellers, top toys and collectibles read again for current prices and product photos, in the Claude app's browser on Jake's Mac. "^" lines update a product an earlier GameStop file has. ESRB ratings come from each new game's product page.
+#list gs-deals page=1
+^402677|679.99||O|20009351
+^319309|19.99|29.99|P|11170499-11170552
+433979|399.99|499.99|W|consoles-hardware:playstation-5|PO|||20028327|Sony PlayStation 5 Slim Console Digital Edition - Fortnite Flowering Chaos Bundl
+^447197|49.99|69.99|P|20009361
+^435498|39.99|69.99|P|20023062-2e0ec255
+^432083|26.99|59.99|P|20026999
+^328284|54.99|74.99|P|11180322
+^222332|29.99|||11106283
+^153379|6.99|||10149556
+^445643|19.99|29.99|P|20008194-680826cd
+^399170|19.99|29.99|P|20008194
+435496|39.99|69.99|W|video-games:nintendo-switch-2|P|4.5|4|20023062-840f40cf|Resident Evil Requiem - Nintendo Switch 2
+^425781|19.99|39.99|P|20015339-680826cd
+433286|29.99|59.99|W|gaming-accessories:gaming-headsets|P|4.3|57|20027825|Turtle Beach Atlas 200 Wired Multiplatform Gaming Headset for Xbox, PlayStation,
+^423522|39.99|49.99|P|20021460-680826cd
+424711|24.99||W|gaming-accessories:racing-wheels||4.1|12|20021978|Nintendo Switch 2 Joy-Con 2 Wheel (Set of 2)
+^402375|120.98|199.99|P|20009342
+^344752|41.99|49.99|P|11206901-11206902
+^409635|12.99|19.99|P|10102928
+434961|2.98|4.99|W|toys-games:trading-cards|P|||20028958|Roblox Fisch Trading Card Booster Pack (Styles May Vary)
+391410|43.98|51.99|W|toys-games:stuffed-animals-plush|P|5.0|4|20003903|Jazwares Pokemon Pikachu 24-in Plush
+^399330|19.99|29.99|P|20008194-670822cd
+^344750|41.99|49.99|P|11206901-11206901
+433285|29.99|59.99|W|gaming-accessories:gaming-headsets|P|4.3|68|20027824|Turtle Beach Atlas 200 Wired Gaming Headset for PlayStation 5, PlayStation 4 - W
+^446459|34.99|||20035292
+413491|5.97|9.99|W|toys-games:blind-bags|P|5.0|3|20014381|MegaHouse Mega Cat Project Nyan Piece Nyan! ver. Luffy in Wano Kuni (Repeat) Bli
+^435501|39.99|69.99|P|20023062-050e3a4b
+^445155|10|19.99|P|20034487
+120745|4.99|6.99|W|consoles-hardware:retro-consoles|P|4.2|5|10127272|Nintendo 64 Memory Card Controller Pak (Styles May Vary)
+^406331|94.99|109.99|P|20011259-da0c6002
+407061|4.98|5.99|W|toys-games:trading-cards|P|||20011897|Nightmare Before Christmas Cybercel Collectible Art Card Foil Pack Series 1
+^440839|24.99|34.99|P|20032440-840f40cf
+^399114|41.99|69.99|P|20008463-680826cd
+415286|24.99|39.99|W|video-games:nintendo-switch|P|2.3|3|20015421|MySims Cozy Bundle - Nintendo Switch
+344324|20.98|29.99|W|gaming-accessories:chargers-cables|P|4.7|47|11206556|PowerA Joy-Con and Controller Charging Base for Nintendo Switch
+443589|44.99||W|collectibles:figures||||20033585|Banpresto Jujutsu Kaisen Grandista Maki Zen'in 10.2-in Figure
+407065|3.98|5.99|W|toys-games:trading-cards|P|||20011899|Five Nights at Freddy's: Help Wanted 2 Cybercel Collectible Art Card Foil Pack S
+421081|24.99|34.99|W|gaming-accessories:gaming-headsets|P|4.4|45|20019734|LucidSound LS10P Gen 2 Wired Gaming Headset for PlayStation 5, PlayStation 4, PC
+^425731|99.99|||20022535
+332085|44.99|69.99|W|gaming-accessories:gaming-headsets|P|3.3|143|11184368_black|Astro Gaming A10 Gen 2 Wired Headset for PlayStation 5, Xbox Series X/S, and PC
+^434669|599.99||O|20028862
+^416188|899.99||O|20015604
+^451607|519.99|||20037854
+^450871|2499|||20037642
+^415653|739.99|||20015278
+454745|79.99||W|gaming-accessories:controllers|O|||20037824|Sony DualSense Wireless Controller for PlayStation 5 - Grand Theft Auto VI White
+^143259|174.99|199.99|P|10141820_neon-blueneon-red
+^402616|199.99|||20009075
+^450924|499.99|549.99|P|20037680
+^415652|589.99|||20015255
+391799|214.99|239.99|W|consoles-hardware:nintendo-switch|P|4.7|5858|11149259|Nintendo Switch OLED Console
+409223|639.99||W|consoles-hardware:playstation-5||||20039337|Sony PlayStation 5 Console
+^453195|64.99|||20036066
+421841|199.99||W|consoles-hardware:playstation-5||3.9|165|20019591|Sony PlayStation Portal Remote Player for PlayStation 5 - Midnight Black
+^197217|174.99|199.99|P|11050717
+#list gs-bf-games-20 page=1
+=319309
+341252|14.99|19.99|W|video-games:playstation-5|P|4.5|3082|11204091|Grand Theft Auto V - PlayStation 5
+^341251|14.99|19.99|PO|11204090
+=399170
+^136142|14.99|19.99|P|10138091
+136143|14.99|19.99|W|video-games:products|P|||10162941-10138093|Red Dead Redemption 2 - Xbox One
+167065|14.99|19.99|W|video-games:playstation-4|P|4.5|3082|10161250|Grand Theft Auto V: Premium Edition - PlayStation 4
+=445643
+400731|16.99|49.99|W|video-games:playstation-5|P|4.0|55|20006332-7306d472|Final Fantasy VII Rebirth - PlayStation 5
+422741|18.99||W|video-games:nintendo-switch||||20013776-320f749e|Hello Kitty Island Adventure - Nintendo Switch
+=425781
+249429|16.99|69.99|W|video-games:playstation-5|P|4.5|352|11120691|Final Fantasy VII Remake Intergrade - PlayStation 5
+340599|19.99|29.99|W|video-games:playstation-5|P|4.6|938|11203515|Hogwarts Legacy - PlayStation 5
+427185|19.99|29.99|W|video-games:playstation-5|P|3.7|3|20015338-1a11f74d|Borderlands 4 - PlayStation 5
+167066|14.99|19.99|W|video-games:products|P|4.5|3082|10161249|Grand Theft Auto V: Premium Edition - Xbox One
+=399330
+424293|14.99||W|video-games:playstation-5||4.2|10|20008831|Tormented Souls 2 - PlayStation 5
+408809|9.99||W|video-games:nintendo-switch||5.0|2|20006792-6c0948f1|Eiyuden Chronicle: Hundred Heroes - Nintendo Switch
+427187|19.99|29.99|W|video-games:xbox-series-x%7Cs|P|3.7|3|20015338-f110df40|Borderlands 4: - Xbox Series X
+394354|19.99|29.99|W|video-games:playstation-5|P|4.3|346|20005542-2e0ec255|Mortal Kombat 1 - PlayStation 5
+425783|19.99|39.99|W|video-games:xbox-series-x%7Cs|P|3.4|5|20015339-3f0862c8|Mafia: The Old Country - Xbox Series X
+442662|19.99|29.99|W|video-games:nintendo-switch|P|||20033190-6c0948f1|Rayman: 30th Anniversary Edition - Nintendo Switch
+429276|19.99|29.99|W|video-games:nintendo-switch-2|P|||20024637-be099b16|PAC-MAN WORLD 2 Re-PAC - Nintendo Switch 2
+405276|14.99|29.99|W|video-games:playstation-5|P|3.8|59|20006549-2e0ec255|Star Wars Outlaws - PlayStation 5
+437078|19.99|29.99|W|video-games:nintendo-switch|P|||20030658-6c0948f1|Star Wars: Dark Forces Remaster - Nintendo Switch
+442664|19.99|29.99|W|video-games:playstation-5|P|||20033190-680826cd|Rayman: 30th Anniversary Edition - PlayStation 5
+405278|14.99|29.99|W|video-games:xbox-series-x%7Cs|P|3.8|59|20006549-8110a11d|Star Wars Outlaws - Xbox Series X
+426650|19.99|39.99|W|video-games:xbox-series-x%7Cs|P|||20023147-3f0862c8|Sonic Racing: CrossWorlds - Xbox Series X
+400286|19.99|29.99|W|video-games:playstation-5|P|2.0|2|20008508a-2e0ec255|Little Nightmares III - PlayStation 5
+431505|19.99|39.99|W|video-games:playstation-5|P|5.0|1|20027814-680826cd|Avatar: Frontiers of Pandora - From the Ashes Edition - PlayStation 5
+409951|19.99|49.99|W|video-games:playstation-5|P|5.0|1|20008649-680826cd|Sonic X Shadow Generations - PlayStation 5
+392720|19.99||W|video-games:playstation-5||3.6|34|20004714-2e0ec255|Lords of the Fallen - PlayStation 5
+431528|19.99|29.99|W|video-games:playstation-5|P|2.5|2|11097510-2e0ec255|Vampire: The Masquerade Bloodlines 2 - PlayStation 5
+413029|19.99|49.99|W|video-games:playstation-5|P|||20014104-680826cd|Dead Rising Deluxe Remaster - PlayStation 5
+404822|19.99|29.99|W|video-games:xbox-series-x%7Cs|P|3.0|15|20006805-050e3a4b|Warhammer 40,000: Space Marine 2 - Xbox Series X
+429272|19.99|29.99|W|video-games:nintendo-switch|P|||20024637-6c0948f1|PAC-MAN WORLD 2 Re-PAC - Nintendo Switch
+429270|19.99|29.99|W|video-games:playstation-5|P|||20024637-680826cd|PAC-MAN WORLD 2 Re-PAC - PlayStation 5
+432546|19.99|29.99|W|video-games:playstation-5|P|||20027043-680826cd|John Carpenter's Toxic Commando - PlayStation 5
+409950|19.99|49.99|W|video-games:xbox-series-x%7Cs|P|5.0|1|20008649-3f0862c8|Sonic X Shadow Generations - Xbox Series X, Xbox One
+431507|19.99|39.99|W|video-games:xbox-series-x%7Cs|P|5.0|1|20027814-3f0862c8|Avatar: Frontiers of Pandora - From the Ashes Edition - Xbox Series X
+=434669
+=416188
+=451607
+=450871
+=415653
+=454745
+=143259
+=402616
+=450924
+=415652
+=391799
+=409223
+=453195
+=421841
+=197217
+#list gs-bf-games-20 page=2
+444079|19.99|29.99|W|video-games:nintendo-switch|P|||20033893-6c0948f1|Monopoly: Star Wars Heroes vs. Villains Nintendo Switch
+444081|19.99|29.99|W|video-games:nintendo-switch-2|P|||20033893-be099b16|Monopoly: Star Wars Heroes vs. Villains Nintendo Switch 2
+431707|14.99||W|video-games:nintendo-switch||||20023051-320f749e|Nicktoons and The Dice of Destiny - Nintendo Switch
+396486|19.99|29.99|W|video-games:xbox-series-x%7Cs|P|3.7|19|20006750-3f0862c8|Sonic Superstars - Xbox Series X, Xbox One
+444077|19.99|29.99|W|video-games:playstation-5|P|||20033893-680826cd|Monopoly: Star Wars Heroes vs. Villains PlayStation 5
+392722|19.99||W|video-games:xbox-series-x%7Cs||3.6|34|20004714-050e3a4b|Lords of the Fallen - Xbox Series X
+424130|14.99||W|video-games:playstation-5||||20020046-2e0ec255|Gris - PlayStation 5
+392266|19.99|39.99|W|video-games:playstation-5|P|4.1|25|20004439-680826cd|Sonic Origins Plus - PlayStation 5
+442526|14.99||W|video-games:playstation-5||||20030658-680826cd|Star Wars: Dark Forces Remaster - PlayStation 5
+431530|19.99|29.99|W|video-games:xbox-series-x%7Cs|P|2.5|2|11097510-050e3a4b|Vampire: The Masquerade Bloodlines 2 - Xbox Series X
+431708|19.99||W|video-games:playstation-5||||20023051-2e0ec255|Nicktoons and The Dice of Destiny - Playstation 5
+426541|19.99||W|video-games:playstation-5||||20020600-680826cd|Legacy of Kain Soul Reaver 1 and 2 Remastered - PlayStation 5
+432548|19.99||W|video-games:xbox-series-x%7Cs||||20027043-3f0862c8|John Carpenter's Toxic Commando - Xbox Series X
+443569|14.99||W|video-games:playstation-5||5.0|1|20030181-2e0ec255|The Rogue Prince of Persia - PlayStation 5
+394219|19.99|39.99|W|video-games:playstation-5|PO|3.0|2|20005476|Hitman World of Assassination - PlayStation 5
+442611|19.99|29.99|W|video-games:nintendo-switch|P|||20033150-6c0948f1N|BALL x PIT - Nintendo Switch
+445087|19.99|29.99|W|video-games:xbox-series-x%7Cs|P|4.0|1|20034420-3f0862c8|Nickelodeon Extreme Tennis: Next! - Xbox Series X
+445085|19.99|29.99|W|video-games:playstation-5|P|4.0|1|20034420-680826cd|Nickelodeon Extreme Tennis: Next! - PlayStation 5
+=434669
+=416188
+=451607
+=450871
+=415653
+=454745
+=143259
+=402616
+=450924
+=415652
+=391799
+=409223
+=453195
+=421841
+=197217
+#list gs-bf-games-20 page=3
+=434669
+=416188
+=451607
+=450871
+=415653
+=454745
+=143259
+=402616
+=450924
+=415652
+=391799
+=409223
+=453195
+=421841
+=197217
+#list gs-bf-games-30 page=1
+449426|29.99|69.99|W|video-games:playstation-5|P|||20036747-680826cd|NBA 2K27 - PlayStation 5
+^449428|29.99|69.99|P|20036747-3f0862c8
+^419891|29.99|49.99|P|20019242-3f0862c8
+448642|29.99|39.99|W|video-games:playstation-5|P|||20036352-680826cd|Clive Barker's Hellraiser: Revival - PlayStation 5
+439022|24.99|39.99|W|video-games:nintendo-switch-2|P|||20023147-be099b16|Sonic Racing: CrossWorlds - Nintendo Switch 2
+409103|24.99|49.99|W|video-games:playstation-5|P|5.0|1|20012854-2e0ec255|Assassin's Creed Shadows - PlayStation 5
+426528|24.99|49.99|W|video-games:nintendo-switch|P|||20023070-6c0948f1|Final Fantasy Tactics - The Ivalice Chronicles - Nintendo Switch
+449430|29.99|69.99|W|video-games:nintendo-switch-2|P|||20036747-be099b16|NBA 2K27 - Nintendo Switch 2 (Game-Key Card)
+448761|29.99|39.99|W|video-games:nintendo-switch|P|||20036418|Just Dance: Decades of Hits - Nintendo Switch (Code-in-Box)
+^440835|24.99|34.99|P|20032440-2e0ec255
+431502|29.99|39.99|W|video-games:nintendo-switch-2|P|5.0|1|20012854-840f40cf|Assassin's Creed Shadows - Nintendo Switch 2
+448644|29.99|39.99|W|video-games:xbox-series-x%7Cs|P|||20036352-3f0862c8|Clive Barker's Hellraiser: Revival - Xbox Series X
+448397|24.99|39.99|W|video-games:nintendo-switch|P|||20036094-6c0948f1|The Grinch 2: Saving Christmas - Nintendo Switch
+^440837|24.99|34.99|P|20032440-050e3a4b
+448920|29.99|59.99|W|video-games:nintendo-switch|P|||20036509-6c0948f1|EA SPORTS FC 27 - Nintendo Switch
+425607|24.99|39.99|W|video-games:nintendo-switch-2|P|3.8|59|20006549-d90d2e58|Star Wars Outlaws Gold Edition - Nintendo Switch 2
+427398|19.99||W|video-games:playstation-5||||20022486-680826cd|WUCHANG: Fallen Feathers - PlayStation 5
+428663|29.99|39.99|W|video-games:playstation-5|P|4.3|6|20023739|Cronos: The New Dawn - PlayStation 5
+=440839
+445016|24.99|39.99|W|video-games:nintendo-switch|P|||20034413-6c0948f1|Paw Patrol Dino World - Nintendo Switch
+435056|19.99|39.99|W|video-games:nintendo-switch|P|||20029000-6c0948f1|Bluey's Quest for The Gold Pen - Nintendo Switch
+422053|29.99|49.99|W|video-games:playstation-5|P|3.3|3|20020465-680826cd|Digimon Story: Time Stranger - PlayStation 5
+426530|24.99|49.99|W|video-games:playstation-5|P|||20023070-680826cd|Final Fantasy Tactics - The Ivalice Chronicles - PlayStation 5
+442658|29.99|49.99|W|video-games:playstation-5|P|3.0|1|20020617-680826cd|Directive 8020 Deluxe Edition - PlayStation 5
+409106|24.99|49.99|W|video-games:xbox-series-x%7Cs|P|5.0|1|20012854-050e3a4b|Assassin's Creed Shadows - Xbox Series X
+425297|29.99|39.99|W|video-games:nintendo-switch-2|P|3.8|11|20022366|Hitman World of Assassination - Signature Edition - Nintendo Switch 2
+426652|24.99|39.99|W|video-games:nintendo-switch|P|||20023147-6c0948f1|Sonic Racing: CrossWorlds - Nintendo Switch
+446679|24.99|49.99|W|video-games:nintendo-switch-2|P|5.0|6|20035354|Sonic Frontiers: Definitive Edition - Nintendo Switch 2
+400268|24.99|69.99|W|video-games:playstation-5|P|4.7|27|20006816-2e0ec255|Persona 3 Reload - PlayStation 5
+416278|29.99|39.99|W|video-games:nintendo-switch|P|4.4|256|20001262-6c0948f1|Stray - Nintendo Switch
+429549|24.99|59.99|W|video-games:nintendo-switch-2|P|4.7|27|20006816-840f40cf|Persona 3 Reload - Nintendo Switch 2
+433310|24.99|59.99|W|video-games:playstation-5|P|3.5|2|20027828-680826cd|Yakuza Kiwami 3 and Dark Ties - PlayStation 5
+437132|29.99|39.99|W|video-games:playstation-5|P|||20030705|High On Life 2 - PlayStation 5
+416339|24.99|39.99|W|video-games:playstation-5|P|5.0|1|20006806-2e0ec255_GAM|Monster Hunter Wilds Standard Edition - PlayStation 5
+448023|24.99|44.99|W|video-games:playstation-5|P|||20036022-680826cd|Shinobi: Art of Vengeance Deluxe Edition - PlayStation 5
+408102|24.99|69.99|W|video-games:playstation-5|P|||20006808-580db21d|Metaphor: ReFantazio Launch Edition - PlayStation 5
+438018|29.99|49.99|W|video-games:playstation-5|P|||20031455-f511d792|Invincible VS - GameStop Exclusive - PlayStation 5
+448399|24.99|39.99|W|video-games:playstation-5|P|||20036094-680826cd|The Grinch 2: Saving Christmas - PlayStation 5
+409947|24.99|49.99|W|video-games:nintendo-switch|P|5.0|1|20008649-6c0948f1|Sonic X Shadow Generations - Nintendo Switch
+425354|24.99|49.99|W|video-games:nintendo-switch-2|P|5.0|1|20008649-840f40cf|Sonic X Shadow Generations - Nintendo Switch 2
+=434669
+=416188
+=451607
+=450871
+=415653
+=454745
+=143259
+=402616
+=450924
+=415652
+=391799
+=409223
+=453195
+=421841
+=197217
+#list gs-bf-games-30 page=2
+429554|29.99|49.99|W|video-games:playstation-5|P|1.0|1|20024675-2e0ec255|Mortal Kombat Legacy Kollection - PlayStation 5
+429552|29.99|49.99|W|video-games:nintendo-switch|P|1.0|1|20024675-320f749e|Mortal Kombat Legacy Kollection: Day 1 - Nintendo Switch
+448025|24.99|44.99|W|video-games:nintendo-switch-2|P|||20036022-be099b16|Shinobi: Art of Vengeance Deluxe Edition - Nintendo Switch 2
+433314|24.99|59.99|W|video-games:nintendo-switch-2|P|3.5|2|20027828-be099b16|Yakuza Kiwami 3 and Dark Ties - Nintendo Switch 2
+419889|29.99|49.99|W|video-games:playstation-5|PO|4.0|1|20019242-680826cd|Split Fiction - PlayStation 5
+408097|24.99|69.99|W|video-games:xbox-series-x%7Cs|P|||20006808-2f0dce13|Metaphor: ReFantazio Launch Edition - Xbox Series X
+351923|24.99|59.99|W|video-games:playstation-5|P|4.5|596|11098854-2e0ec255|Persona 5 Royal - PlayStation 5
+444908|24.99|39.99|W|video-games:nintendo-switch-2|P|||20034385|SnowRunner - Nintendo Switch 2
+430428|29.99|39.99|W|video-games:nintendo-switch-2|P|4.3|6|20023739-be099b16|Cronos: The New Dawn - Nintendo Switch 2
+447176|24.99|39.99|W|video-games:nintendo-switch|P|||20035565-6c0948f1|Cat in the Hat: Rainy Day Mayhem - Nintendo Switch
+440841|24.99|49.99|W|video-games:nintendo-switch-2|P|5.0|6|20019111|Virtua Fighter 5 REVO World Stage 30th Anniversary Edition - Nintendo Switch 2
+411888|24.99|39.99|W|video-games:playstation-5|P|4.0|2|20013775-680826cd|DRAGON QUEST III HD-2D Remake - PlayStation 5
+409196|24.99|29.99|W|video-games:playstation-5|P|2.3|17|20012908-2e0ec255|Undisputed - PlayStation 5
+444515|29.99|39.99|W|video-games:nintendo-switch|P|||20034140-6c0948f1|Bluey's Happy Snaps - Nintendo Switch
+442660|29.99|49.99|W|video-games:xbox-series-x%7Cs|P|3.0|1|20020617-3f0862c8|Directive 8020 Deluxe Edition - Xbox Series X
+411889|24.99|39.99|W|video-games:xbox-series-x%7Cs|P|4.0|2|20013775-3f0862c8|DRAGON QUEST III HD-2D Remake - Xbox Series X
+425142|24.99||W|video-games:playstation-5||||20021507-680826cd|Blades of Fire - PlayStation 5
+435060|19.99|39.99|W|video-games:playstation-5|P|||20029000-680826cd|Bluey's Quest for The Gold Pen - PlayStation 5
+420015|29.99||W|video-games:playstation-5||1.0|1|20019325-680826cd|Screamer - PlayStation 5
+416336|24.99|39.99|W|video-games:xbox-series-x%7Cs|P|5.0|1|20006806-050e3a4b|Monster Hunter Wilds Standard Edition - Xbox Series X
+433312|24.99|59.99|W|video-games:xbox-series-x%7Cs|P|3.5|2|20027828-3f0862c8|Yakuza Kiwami 3 and Dark Ties - Xbox Series X
+422227|29.99||W|video-games:nintendo-switch||||20020600-6c0948f1|Legacy of Kain Soul Reaver 1 and 2 Remastered - Nintendo Switch
+439015|29.99|39.99|W|video-games:nintendo-switch-2|P|||20030705-be099b16|High On Life 2 - Nintendo Switch 2
+425352|24.99|39.99|W|video-games:nintendo-switch-2|P|4.0|1|20022340|Puyo Puyo Tetris 2S - Nintendo Switch 2
+401255|29.99|59.99|W|video-games:playstation-5|P|5.0|5|20008854-2e0ec255|Unicorn Overlord - PlayStation 5
+421852|29.99||W|video-games:nintendo-switch||||20020046-320f749e|Gris - Nintendo Switch
+447178|24.99|39.99|W|video-games:playstation-5|P|||20035565-680826cd|Cat in the Hat: Rainy Day Mayhem - PlayStation 5
+436513|29.99|34.99|W|video-games:nintendo-switch-2|P|5.0|1|20030181-840f40cf|The Rogue Prince of Persia - Nintendo Switch 2
+438016|29.99|49.99|W|video-games:xbox-series-x%7Cs|P|||20031455-050e3a4b|Invincible VS - Xbox Series X
+444511|29.99|39.99|W|video-games:playstation-5|P|||20034140-680826cd|Bluey's Happy Snaps - PlayStation 5
+402139|19.99||W|video-games:playstation-5||5.0|2|20006792-680826cd|Eiyuden Chronicle: Hundred Heroes - PlayStation 5
+420533|29.99||W|video-games:xbox-series-x%7Cs||5.0|5|20012166-050e3a4b|Kingdom Come: Deliverance II - Xbox Series X/S
+444513|29.99|39.99|W|video-games:xbox-series-x%7Cs|P|||20034140-3f0862c8|Bluey's Happy Snaps - Xbox Series X, Xbox One
+448693|24.99|29.99|W|video-games:playstation-5|P|||20036355-680826cd|Hasbro Games Junior Collection - PlayStation 5
+420017|29.99||W|video-games:xbox-series-x%7Cs||1.0|1|20019325-3f0862c8|Screamer - Xbox Series X
+447961|29.99||W|video-games:playstation-5||||20033189-680826cd|K-Pop Idol Stories: Road to Debut - PlayStation 5
+409198|24.99|29.99|W|video-games:xbox-series-x%7Cs|P|2.3|17|20012908-050e3a4b|Undisputed - Xbox Series X
+445083|24.99|29.99|W|video-games:nintendo-switch|P|4.0|1|20034420-6c0948f1|Nickelodeon Extreme Tennis: Next! - Nintendo Switch
+447890|29.99||W|video-games:xbox-series-x%7Cs||||20035956-3f0862c8|Sesame Street: Friends and Fun - Xbox Series X
+394714|29.99||W|video-games:xbox-series-x%7Cs||3.6|34|20004714-3b0dde13|Lords of the Fallen Deluxe Edition - Xbox Series X
+=434669
+=416188
+=451607
+=450871
+=415653
+=454745
+=143259
+=402616
+=450924
+=415652
+=391799
+=409223
+=453195
+=421841
+=197217
+#list gs-bf-games-40 page=1
+^441936|34.99|69.99|P|20032728-680826cd
+=435498
+^448918|34.99|69.99|P|20036509-3f0862c8
+^402758|39.99|59.99|P|10178511-420e9e56
+448916|34.99|69.99|W|video-games:playstation-5|P|||20036509-680826cd|EA SPORTS FC 27 - PlayStation 5
+438088|39.99|59.99|W|video-games:playstation-5|P|5.0|1|20006550-680826cd|PRAGMATA - PlayStation 5
+445750|34.99|69.99|W|video-games:playstation-5|P|2.0|5|20034830-680826cd|EA SPORTS College Football 27 - PlayStation 5
+^428791|34.99|49.99|P|20024280-050e3a4b
+=435496
+441937|34.99|69.99|W|video-games:xbox-series-x%7Cs|P|||20032728-3f0862c8|EA SPORTS Madden NFL 27 - Xbox Series X
+441935|34.99|69.99|W|video-games:nintendo-switch-2|P|||20032728-be099b16|EA SPORTS Madden NFL 27 - Nintendo Switch 2
+=435501
+448910|34.99|69.99|W|video-games:playstation-5|P|||20036511-680826cd|NHL 27 - PlayStation 5
+428792|34.99|49.99|W|video-games:playstation-5|P|3.0|11|20024280-2e0ec255|Battlefield 6 - PlayStation 5
+438090|39.99|59.99|W|video-games:nintendo-switch-2|P|5.0|1|20006550-be099b16|PRAGMATA - Nintendo Switch 2
+445753|34.99|69.99|W|video-games:xbox-series-x%7Cs|P|2.0|5|20034830-3f0862c8|EA SPORTS College Football 27 - Xbox Series X
+445565|39.99|69.99|W|video-games:playstation-5|P|1.0|1|20034740-680826cd|UFC 6 - PlayStation 5
+445177|39.99|59.99|W|video-games:playstation-5|P|5.0|1|20023154-680826cd|Resonance: A Plague Tale Legacy - PlayStation 5
+441861|39.99|59.99|W|video-games:nintendo-switch|P|3.3|3|20020465-320f749e|Digimon Story Time Stranger - Nintendo Switch
+441863|39.99|59.99|W|video-games:nintendo-switch-2|P|3.3|3|20020465-840f40cf|Digimon Story Time Stranger - Nintendo Switch 2
+448925|34.99|69.99|W|video-games:nintendo-switch-2|P|||20036509-be099b16|EA SPORTS FC 27 - Nintendo Switch 2
+426327|34.99|59.99|W|video-games:nintendo-switch-2|P|3.7|3|20013778_NS2|Dragon Quest I and II HD 2D Remake - Nintendo Switch 2
+445567|39.99|69.99|W|video-games:xbox-series-x%7Cs|P|1.0|1|20034740-3f0862c8|UFC 6 - Xbox Series X
+429284|39.99|49.99|W|video-games:nintendo-switch-2|P|4.2|71|20009983-840f40cf|DRAGON BALL: Sparking! ZERO - Nintendo Switch 2
+448677|39.99|49.99|W|video-games:playstation-5|P|||20036373|Dune: Awakening - PlayStation 5
+444710|39.99|59.99|W|video-games:nintendo-switch|P|||20034191-6c0948f1|Cult of the Lamb Definitive Edition - Nintendo Switch
+448912|34.99|69.99|W|video-games:xbox-series-x%7Cs|P|||20036511-3f0862c8|NHL 27 - Xbox Series X
+422760|39.99|59.99|W|video-games:nintendo-switch|P|||20019122-6c0948f1|Demon Slayer - Kimetsu no Yaiba - The Hinokami Chronicles 2 - Nintendo Switch
+429556|39.99|59.99|W|video-games:nintendo-switch-2|P|1.0|1|20024675-840f40cf|Mortal Kombat Legacy Kollection - Nintendo Switch 2
+435054|29.99|49.99|W|video-games:nintendo-switch-2|P|||20029000-be099b16|Bluey's Quest for The Gold Pen - Nintendo Switch 2
+422759|39.99|59.99|W|video-games:playstation-5|P|||20019122-680826cd|Demon Slayer - Kimetsu no Yaiba - The Hinokami Chronicles 2 - PlayStation 5
+424406|34.99|59.99|W|video-games:playstation-5|P|3.7|3|20013778-680826cd|Dragon Quest I and II HD-2D Remake - PlayStation 5
+424404|34.99|59.99|W|video-games:nintendo-switch|P|3.7|3|20013778-6c0948f1|Dragon Quest I and II HD-2D Remake - Nintendo Switch
+447424|39.99|49.99|W|video-games:playstation-5|P|||20035710-680826cd|Hot Wheels Infinite Rush - PlayStation 5
+429282|39.99|49.99|W|video-games:nintendo-switch|P|4.2|71|20009983-320f749e|DRAGON BALL: Sparking! ZERO - Nintendo Switch
+447428|39.99|49.99|W|video-games:nintendo-switch-2|P|||20035710-be099b16|Hot Wheels Infinite Rush - Nintendo Switch 2
+425409|34.99|49.99|W|video-games:nintendo-switch-2|P|4.0|1|20019242-be099b16|Split Fiction - Nintendo Switch 2 (Code-in-Box)
+438092|39.99|59.99|W|video-games:xbox-series-x%7Cs|P|5.0|1|20006550-3f0862c8|PRAGMATA - Xbox Series X
+448906|39.99|59.99|W|video-games:nintendo-switch-2|P|||20036505|Octopath Traveler - Nintendo Switch 2 (Game-Key-Card)
+427926|39.99||W|video-games:playstation-5||||20023724-680826cd|MY HERO ACADEMIA: Alls Justice - PlayStation 5
+=434669
+=416188
+=451607
+=450871
+=415653
+=454745
+=143259
+=402616
+=450924
+=415652
+=391799
+=409223
+=453195
+=421841
+=197217
+#list gs-bf-games-40 page=2
+444712|39.99|59.99|W|video-games:playstation-5|P|||20034191-680826cd|Cult of the Lamb Definitive Edition - PlayStation 5
+424414|34.99|59.99|W|video-games:xbox-series-x%7Cs|P|3.7|3|20013778-3f0862c8|Dragon Quest I and II HD-2D Remake - Xbox Series X
+441891|34.99|49.99|W|video-games:nintendo-switch-2|P|||20032678-be099b16|Bubsy 4D Pawsome Edition - Nintendo Switch 2
+445179|39.99|59.99|W|video-games:xbox-series-x%7Cs|P|5.0|1|20023154-3f0862c8|Resonance: A Plague Tale Legacy - Xbox Series X
+447426|39.99|49.99|W|video-games:xbox-series-x%7Cs|P|||20035710-3f0862c8|Hot Wheels Infinite Rush - Xbox Series X
+448914|34.99|69.99|W|video-games:playstation-4|P|||20036509-670822cd|EA SPORTS FC 27 - PlayStation 4
+447586|39.99|49.99|W|video-games:nintendo-switch-2|P|||20035819-840f40cf|Hello Kitty Party Land - Nintendo Switch 2
+447584|39.99|49.99|W|video-games:nintendo-switch|P|||20035819-320f749e|Hello Kitty Party Land - Nintendo Switch
+448908|39.99|59.99|W|video-games:nintendo-switch-2|P|||20036506|Octopath Traveler 2 - Nintendo Switch 2 (Game-Key-Card)
+448030|39.99|59.99|W|video-games:nintendo-switch-2|PO|||20023724-be099b16|MY HERO ACADEMIA: Alls Justice - Nintendo Switch 2
+=434669
+=416188
+=451607
+=450871
+=415653
+=454745
+=143259
+=402616
+=450924
+=415652
+=391799
+=409223
+=453195
+=421841
+=197217
+#list gs-best-sellers page=1
+^438438|629.99||O|20028862
+=402677
+^224744|799.99||O|11108371
+^415038|749.99|||20015278
+^229025|639.99|||11108140
+=450924
+^224746|499.99|||11207109
+^416576|1499.99|||20015604
+^229026|619.99||O|11108141
+^448295|79.99|||20036131-680826cd
+=143259
+^402378|599.99||O|20009347
+^131069|164.99|189.99|P|10138875
+^415000|599.99|||20015255
+^424543|499.99|||20019700
+^450768|399.99|||20036364
+^448297|79.99|||20036131-3f0862c8
+434725|449.99|499.99|W|toys-games:trading-cards|P|||20028151|Magic: The Gathering Lorwyn Eclipsed Collector Booster Box
+^299009|399.99|||11149258
+^453744|499.99|||20038907
+206013|174.99|199.99|W|consoles-hardware:nintendo-switch|P|4.6|13716|11095819|Nintendo Switch Console with Neon Red/Neon Blue Joy-Con Controller
+^450740|54.99|||20037566
+^401639|249.99|||20009075
+=450871
+^454725|89.99|||20040156
+^158465|204.99|249.99|P|10174659
+451623|69.99||W|video-games:nintendo-switch-2||||20036066|The Legend of Zelda: Ocarina of Time - Nintendo Switch 2
+^277649|229.99|||11137570
+=197217
+204520|229.99||W|consoles-hardware:nintendo-switch||4.4|3558|11095775|Nintendo Switch Lite Handheld Console - Turquoise
+134406|164.99|189.99|W|consoles-hardware:playstation-4|P|4.5|9421|10134659|Sony PlayStation 4 Pro Black 1TB
+^450739|99.99|||20037568
+453729|39.99||W|toys-games:trading-cards||||20038878|2026 Topps Chrome Updates Baseball Value Box
+131999|104.99|129.99|W|consoles-hardware:playstation-4|P|4.4|10376|10138857|Sony PlayStation 4 Slim Console 500GB - Black
+^452105|79.99|||20036326
+147255|259.98|299.99|W|consoles-hardware:retro-consoles|PO|4.4|10376|10147719|Sony PlayStation 4 Slim 1TB Console - Black
+^444436|499.99|||20033241_ALT05
+^446840|59.49|69.99|P|20035419-3f0862c8
+^131061|144.99|169.99|P|10138879
+^206007|174.99|199.99|P|11095821_ALT01
+=434669
+=416188
+=451607
+=415653
+=454745
+=402616
+=415652
+=391799
+=409223
+=453195
+=421841
+#list gs-best-sellers page=2
+454446|449.99||W|toys-games:trading-cards||||20039308|Pokemon Trading Card Game: 30th Celebration Ultra-Premium Collection with Pokemo
+^294963|54.99|74.99|P|11146116
+^453096|74.99|||20038548
+^909275|104.99|129.99|P|10114375
+^454735|299.99|||20040193
+^453587|59.99|||20038771
+^420414|249.99|||20019591
+^452301|99.99|159.99|PO|20036547
+^424546|49.99|69.99|P|20021654
+^453094|44.99|||20038547
+^453567|99.99|||20038770
+^450696|59.99|||20037543
+^451655|529.99|||20037892
+=409223
+^306473|204.99|229.99|P|11149259
+^106429|119.99|||10121186
+^446838|59.49|69.99|P|20035419-680826cd
+^454724|49.99|||20040155
+^416350|119.99|||20015862
+^119149|94.99|119.99|P|10129112
+^450119|24.99|||20037175
+^445745|54.99|||20034822
+^450719|9.99|||20037567
+^448638|99.99|||20036369
+^450927|129.99|||20037652-680826cd
+=447197
+=448918
+^452296|549.99|699.99|P|20036541
+^443852|54.99|||20033748
+^141784|59.99|||10141928
+=441936
+^451952|29.99|||20037999
+^450757|299.99|||20037565
+^439001|99.99|||20032015
+^438516|49.99|||20032989
+^206014|174.99|199.99|P|11095819
+^415531|299.99|349.99|P|20015561-cd05ae78
+^421027|79.99|||20019705
+^424549|89.99|||20021639
+^452199|139.99|||20038131
+=434669
+=416188
+=451607
+=450871
+=415653
+=454745
+=143259
+=402616
+=450924
+=415652
+=391799
+=453195
+=421841
+=197217
+#list gs-best-sellers page=3
+435070|89.99||W|toys-games:trading-cards||||20029039|Magic: The Gathering Teenage Mutant Ninja Turtles Pizza Bundle Box
+=328284
+^123658|159.99|||10129109
+^417631|179.99|||20018505
+453098|19.99||W|toys-games:trading-cards||||20038550|2026 Topps Chrome NFL Football Hanger Box
+^450929|129.99|||20037652-3f0862c8
+453743|89.99||W|toys-games:trading-cards||||20038908|Pokemon Trading Card Game 30th Celebration Booster Bundle and Squishmallows Poke
+^425395|34.99|54.99|P|20015837
+=428791
+909062|159.99||W|consoles-hardware:retro-consoles||3.4|65|10002635|Sony PlayStation 2 Console
+428855|109.99||W|toys-games:trading-cards||||20024316|2025 Hit Parade Ignite Series 1 Hobby Box
+^334744|54.99|74.99|P|11190633
+=435498
+^436173|69.99|||20027422
+443824|89.99||W|toys-games:trading-cards||||20033177|Magic: The Gathering Secrets of Strixhaven Draft Night Box
+=449426
+^452271|59.99|||20038177
+^445744|99.99|||20034819
+^175852|149.99|||10107581
+^453530|29.99|||20036368
+168860|29.99||W|video-games:nintendo-switch||3.9|519|10113355-10162373|Minecraft - Nintendo Switch
+909128|129.99||W|consoles-hardware:retro-consoles||4.1|319|10101891|Sony PlayStation 3 Slim Console 320GB - Black
+^168886|59.99|||10162381
+^443858|99.99|||20033749
+431302|44.99||W|toys-games:trading-cards||||20026411|Magic: The Gathering Avatar: The Last Airbender Collector Booster Omega
+437435|174.99|209.99|W|consoles-hardware:nintendo-switch|P|3.8|4|20034383_ALT01|Nintendo Switch Console - Mario Red and Blue Edition
+113691|124.99|149.99|W|consoles-hardware:xbox-one|P|3.7|3662|10123513|Microsoft Xbox One Console 1TB - Black
+^448636|89.99|||20036367
+^179366|59.99|||10168434
+=402758
+419152|309.99||W|consoles-hardware:playstation-5|O|||20021513|Sony PlayStation Portal Remote Player 30th Anniversary for PlayStation 5
+^431537|49.99|69.99|P|20026871
+450760|44.99||W|toys-games:trading-cards||||20037569|Pokemon Trading Card Game: Delta Reign Build and Battle Box
+453588|6.99||W|toys-games:trading-cards||||20038772|2025-26 Topps Stadium Club Basketball Fat Pack
+424448|39.99||W|toys-games:trading-cards||||20021584|Pokemon Trading Card Game: Destined Rivals Three Booster Blister
+445743|8.99||W|toys-games:trading-cards||||20034824|Pokemon Trading Card Game: Pitch Black Sleeved Booster Pack
+^428147|54.99|||20023831
+^444113|29.99|||20033919
+909079|89.99||W|consoles-hardware:retro-consoles||||10107525|Microsoft Xbox 360 Console with Wireless Controller - White
+^164255|59.99|||10159620
+=434669
+=416188
+=451607
+=450871
+=415653
+=454745
+=143259
+=402616
+=450924
+=415652
+=391799
+=409223
+=453195
+=421841
+=197217
+#list gs-toys page=1
+=450768
+=434725
+=454725
+=450740
+=453744
+=450739
+=453729
+=452105
+393095|79.99||W|toys-games:trading-cards|O|||20004913|Magic: The Gathering Universes Beyond Lord of the Rings: Tales of Middle-Earth S
+=444436
+=431302
+443825|179.99||W|toys-games:trading-cards||||20033179|Magic: The Gathering Secrets of Strixhaven Play Booster Box
+=453096
+=454446
+^454610|399.99|||20039976
+=454735
+=453587
+=453094
+=452301
+443831|499.99||W|toys-games:trading-cards|O|||20033176|Magic: The Gathering Secrets of Strixhaven Collector Booster Box
+=450696
+=450757
+=454724
+=452199
+=453567
+437101|99.99||W|toys-games:trading-cards|O|||20030569|Pokemon Trading Card Game: Ascended Heroes Booster Bundle
+=417631
+=448638
+=450119
+454302|99.99||W|toys-games:trading-cards||||20039144|2026-27 Upper Deck Series 1 NHL Advent Calendar
+=445745
+^454323|119.99|||20039166
+=450719
+=451952
+=443824
+=452296
+=443852
+=453098
+=450760
+443822|149.99||W|toys-games:trading-cards|O|||20033180|Magic: The Gathering Secrets of Strixhaven Special Codex Bundle
+=434669
+=416188
+=451607
+=450871
+=415653
+=454745
+=143259
+=402616
+=450924
+=415652
+=391799
+=409223
+=453195
+=421841
+=197217
+#list gs-toys page=2
+=453743
+=421027
+413989|259.99||W|toys-games:trading-cards||||20014863|2024 Leaf Trading Cards Metal Pop Century
+=435070
+=428855
+450646|129.99||W|toys-games:trading-cards||||20037511|Magic: The Gathering Reality Fracture Secret Lair Bundle
+440805|29.99||W|toys-games:trading-cards||||20032531|Riftbound: League of Legends SpiritForged Champion Deck: Fiora (SPF)
+=452271
+=445744
+^446097|749.99||O|20035072
+=453530
+=448636
+451631|59.99||W|toys-games:trading-cards||||20037841|One Piece Card Game: Illustration Box Volume 9 (IB-09)
+=443858
+438345|16.99||W|toys-games:stuffed-animals-plush||5.0|4|20031600|Jazwares KPop Demon Hunters Rumi 8-in Plush
+450486|44.99||W|toys-games:trading-cards||||20037435|2026 Panini Prizm MLB Baseball Mega Box
+450743|29.99||W|toys-games:trading-cards||||20037564|Pokemon Trading Card Game: Delta Reign Three-Booster Blister
+=453588
+=424448
+451632|59.99||W|toys-games:trading-cards||||20037842|One Piece Card Game: Illustration Box Volume 10 (IB-10)
+=445743
+435634|79.99||W|toys-games:trading-cards||||20029679|Magic: The Gathering Final Fantasy VII Commander Deck (Game Edition)
+^453566|29.99|||20038750
+^421782|39.99|||20020210
+449731|39.99||W|toys-games:trading-cards||||20036903|2026 Topps NFL Football Super Box
+^454722|24.99|||20040154
+450120|49.99||W|toys-games:trading-cards||||20037178|2026 Panini Donruss NFL Football Mega Box - 6-Pack
+438990|99.99||W|toys-games:trading-cards||||20031957|Pokemon Trading Card Game: Perfect Order Elite Trainer Box
+^454507|39.99|||20039379
+432697|109.99||W|toys-games:trading-cards|O|||20027456|2024-25 Panini Prizm Premier League EPL Soccer Choice Box
+450921|11.99||W|toys-games:blind-bags||||20037675|TapCap Slime Guy Series 2 - 40 mm Keycap Fidget Mystery Box (Styles May Vary)
+^454737|7.99|||20040158
+^454308|89.99|||20039150
+^430336|54.99|||20025584
+444151|19.99||W|toys-games:trading-cards||||20033935|Dragon Ball Super Card Game: Fusion World Story Booster 01 Pack (SB01)
+448930|14.99||W|toys-games:trading-cards||||20036523|One Piece Card Game: The Dominance of God Booster Pack (OP-18)
+431304|59.99||W|toys-games:trading-cards||||20025990|Magic: The Gathering Avatar: The Last Airbender Bundle Box
+446605|39.99||W|toys-games:trading-cards||||20036416|Pokemon Trading Card Game: First Partner Illustration Collection Series 3
+438488|39.99||W|toys-games:stuffed-animals-plush||||20032707|Jazwares Five Nights at Freddy's Classic Foxy Sleeping 18-in Plush
+443847|8.99||W|toys-games:trading-cards||||20033753|Pokemon Trading Card Game: Chaos Rising Sleeved Booster Pack
+=434669
+=416188
+=451607
+=450871
+=415653
+=454745
+=143259
+=402616
+=450924
+=415652
+=391799
+=409223
+=453195
+=421841
+=197217
+#list gs-collectibles page=1
+=416350
+=439001
+=438516
+446309|129.99||W|collectibles:figures||||20035203|HIYA Toys Exquisite Basic Godzilla vs. King Ghidorah (1991) King Ghidorah 13-in
+^436169|54.99|||20029874
+=428147
+^447454|49.99|||20035731
+^451847|44.99|||20037910
+=444113
+^452599|119.99|||20038317
+446182|21.99||W|collectibles:figures||||20035092|McFarlane Toys Poppy Playtime Coffin Huggy Wuggy 12-in Action Figure
+^421226|36.98|44.99|PO|20019851
+^445333|99.99|||20034643
+436887|99.99||W|collectibles:figures||3.1|12|20030496|Hasbro Transformers Age of the Primes Commander Class Combaticon Onslaught 6.75-
+^423500|129.99|||20021414A
+^443807|109.99|||20033716
+^447478|27.99|||20035725
+^438494|44.99|||20032937
+^421290|49.99|||20019878
+^430895|34.99|||20026122
+^444880|29.99|||20034314
+^430342|39.99|||20025611
+443294|15.99||W|collectibles:funko||||20033411|Funko POP! Animation: Solo Leveling Sung Jinwoo 4.5-in Glow-in-the-Dark Vinyl Fi
+432228|62.99||W|collectibles:figures||||20027082|HIYA Toys Godzilla Final Wars Monster X (2004) 8.2-in Action Figure
+446812|29.99||W|collectibles:figures|O|||20037722|Playmates Dungeon Crawler Carl Collectible Crawlers Princess Donut and Carl 6-in
+450693|119.99||W|collectibles:replicas||||20037546|Hasbro Star Wars: The Black Series Clone Commander Jesse Premium Electronic Role
+^443736|39.99|||20033670
+^421307|49.99|||20019885
+402528|15.99||W|collectibles:funko||3.8|12|20009457|Funko POP! Animation: One Piece Luffy Gear 5 5.2-in Vinyl Figure GameStop Exclus
+^447930|39.99|||20035986
+^446810|29.99|||20037721
+423315|24.99||W|collectibles:funko||4.9|18|20021155|Funko POP! Super: Jujutsu Kaisen Mahoraga 6.3-in Vinyl Figure
+445329|99.99||W|collectibles:figures||5.0|1|20034646|Tamashii Nations S.H.Figuarts One Piece Sir Crocodile (Marineford) 7.1-in Action
+444903|15.99||W|collectibles:funko||||20034315|Funko POP! Animation: Attack on Titan Eren Jaeger 4.6-in Glow-in-the-Dark Vinyl
+^438493|39.99||O|20032703
+^436495|99.99|||20030158
+428439|15.99||W|collectibles:funko||4.6|43|20023997|Funko POP! Animation: One Piece Monkey D. Luffy 5.3-in Glow-in-the-Dark Vinyl Fi
+448868|99.99||W|collectibles:figures||||20036479|Tamashii Nations Marvel Gamerverse S.H. Figuarts Psylocke 5.9-in Figure
+444691|99.99||W|collectibles:statues||||20034234|Bandai One Piece Revible Moment Ichibansho Loki Giant Bash (Vol. 1) 6-in Statue
+^431441|69.99|||20026503
+=434669
+=416188
+=451607
+=450871
+=415653
+=454745
+=143259
+=402616
+=450924
+=415652
+=391799
+=409223
+=453195
+=421841
+=197217
+#esrb 435496:M 415286:E 341252:M 136143:M 167065:M 400731:T 422741:E 249429:T 340599:T 427185:M 167066:M 424293:M 408809:E10 427187:M 394354:M 425783:M 442662:E 429276:E10 405276:T 437078:T 442664:E 405278:T 426650:E 400286:T 431505:T 409951:E10 392720:M 431528:M 413029:M 404822:M 429272:E10 429270:E10 432546:M 409950:E10 431507:T 444079:E10 444081:E10 431707:E10 396486:E 444077:E10
+#esrb 392722:M 424130:E 392266:E 442526:T 431530:M 431708:E10 426541:M 432548:M 443569:T 394219:M 442611:T 445087:E 445085:E 449426:E 448642:M 439022:E 409103:M 426528:T 449430:E 448761:E 431502:M 448644:M 448397:E 448920:E 425607:T 427398:M 428663:M 445016:E 435056:E 422053:T 426530:T 442658:M 409106:M 425297:M 426652:E 446679:E10 400268:M 416278:E10 429549:M 433310:M
+#esrb 437132:M 416339:T 448023:T 408102:T 438018:M 448399:E 409947:E10 425354:E10 429554:M 429552:M 448025:T 433314:M 419889:T 408097:T 351923:M 444908:E 430428:M 447176:E 440841:T 411888:E10 409196:T 444515:E 442660:M 411889:E10 425142:M 435060:E 420015:M 416336:T 433312:M 422227:M 439015:M 425352:E10 401255:T 421852:E 447178:E 436513:T 438016:M 444511:E 402139:E10 420533:M
+#esrb 444513:E 448693:E 420017:M 447961:E10 409198:T 445083:E 447890:E 394714:M 448916:E 438088:T 445750:E 441937:E 441935:E 448910:E10 428792:M 438090:T 445753:E 445565:M 445177:M 441861:T 441863:T 448925:E 426327:E10 445567:M 429284:T 448677:M 444710:T 448912:E10 422760:M 429556:M 435054:E 422759:M 424406:E10 424404:E10 447424:E 429282:T 447428:E 425409:T 438092:T 448906:T
+#esrb 427926:T 444712:T 424414:E10 441891:E10 445179:M 447426:E 448914:E 447586:E 447584:E 448908:T 448030:T 451623:E10 168860:E10

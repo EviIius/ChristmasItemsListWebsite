@@ -1,0 +1,6 @@
+#run lego 2026-11-27T20:42:00Z
+#note Product pages for LEGO sets the catalog lists, read in the Claude app's browser on Jake's Mac for their photos and prices.
+#list lego-tracked page=1
+75427|159.99||W|||||bltf279b650862f34ce/75427_Prod.png|LEGO Star Wars SMART Play: Throne Room Duel & A-Wing (Ages 9+)
+72164|69.99||W|||||blt815145aa4c16625c/blt559eb617476f464f-72164_Prod_en-gb.png|LEGO Pokémon SMART Play: Training House with Pikachu
+10913|29.99||W|||||blte88e29b40e206dc1/10913.jpg|LEGO DUPLO Classic Brick Box

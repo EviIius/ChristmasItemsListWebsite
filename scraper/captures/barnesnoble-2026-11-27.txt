@@ -1,0 +1,16 @@
+#run barnesnoble 2026-11-27T20:13:48Z
+#note Black Friday: Barnes & Noble's 50% off books collection (the only deal list it keeps outside its search pages, which robots.txt asks bots to skip), read in the Claude app's browser on Jake's Mac.
+#list bn-50off page=1 count=13
+1149258686-9781250374073|16|32|W|bnbook:hardcover|P|||Confronting America: What Has to Change by Bill O'Reilly
+1149937967-9781668229897|15|30|W|bnbook:hardcover|P|||Rapid and Fatal: A Scarpetta Novel by Patricia Cornwell
+1148656669-9781496753991|15|30|W|bnbook:hardcover|P|||Behind Every Face: Deluxe Stenciled Edges by Charlie Donlea
+1150488633-9780593981429|17.5|35|W|bnbook:hardcover|P|||shredhappens: High Protein, Big Flavor: Unlock 100+ Grams of Protein a Day with
+1150010266-9780593474303|15|30|W|bnbook:hardcover|P|||The Jewel of Sugar Hill: A Novel by Fiona Davis
+1150846908-9781668066553|15|30|W|bnbook:hardcover|P|||Fire Fall: A Novel by Brad Thor
+1150200692-9798217225408|9.99|19.99|W|bnbook:hardcover|P|||Buffalo Fluffalo and the Very Big Scruffalo by Bess Kalb
+1150533758-9781538783979|15|30|W|bnbook:hardcover|P|||Cold Comfort by Sandra Brown
+1151207713-9781426224553|15|30|W|bnbook:hardcover|P|||The Blue Zones Evolution: 10 New Lessons for Living Your Longest Life in Full He
+1151580695-9780316614917|16|32|W|bnbook:hardcover|P|||Daybreak: A Catalina Novel by Michael Connelly
+1149945430-9781250424853|15|30|W|bnbook:hardcover|P|||Last Man Standing (Orphan X Series #12) by Gregg Hurwitz
+1150454080-9781250492845|19.99|39.99|W|bnbook:hardcover|P|||20-Minute Meals: Real Fast Food by Jamie Oliver
+1151222152-9780063495388|15|30|W|bnbook:hardcover|P|||White Picket Liars: A Novel by Summer Northbrook

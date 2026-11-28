@@ -1,0 +1,19 @@
+{
+ "checked_at": "2026-11-27T20:42:00Z",
+ "observations": [
+  {
+   "item_id": "lego-pokemon-pikachu-house",
+   "retailer": "lego",
+   "url": "https://www.lego.com/en-us/product/smart-play-training-house-with-pikachu-72164",
+   "sku": "72164",
+   "checked_at": "2026-11-27T20:42:00Z",
+   "source": "lego.com, read in a browser",
+   "verification_method": "browser",
+   "ok": true,
+   "price": 69.99,
+   "in_stock": true,
+   "name": "LEGO Pok\u00e9mon SMART Play: Training House with Pikachu"
+  }
+ ],
+ "note": "LEGO.com prices read in a browser on 2026-11-27 (scraper/captures/lego.txt)."
+}

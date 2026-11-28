@@ -64,7 +64,14 @@
 
   // ------------------------------------------------------------------ data and state
   let DATA = null; let ITEMS = []; let BYID = {}; let RET = {}; let INT = {}; let TYPES = {}; let HOT = {}; let CATS = {};
-  let PICKS = null; let PICK_BY_ID = {}; let PICKS_BY_GIFT = {};
+  let PICKS = null; let PICK_BY_ID = {}; let PICKS_BY_GIFT = {}; let PICK_BY_URL = {}; let PHOTO_TPL = {};
+  // Product photos are the stores' own: store-picks.json gives each store's photo address with {id} and {w} in it.
+  const PHOTO_ID = /^[\w.%()/-]{1,200}$/;
+  const PH_TEXT = /^[a-z]{2,20}:[\w.%()/-]{1,200}$/;
+  const photoRef = (s, i, ex) => (PHOTO_TPL[s] && typeof i === 'string' && PHOTO_ID.test(i) && !i.includes('..') ? { s, i, ex: !!ex } : null);
+  const phText = (ph) => (ph ? `${ph.s}:${ph.i}` : undefined);
+  const phFrom = (t, ex) => { if (typeof t !== 'string' || !PH_TEXT.test(t)) return null; const k = t.indexOf(':'); return photoRef(t.slice(0, k), t.slice(k + 1), ex); };
+  const photoUrl = (ph, w = 300) => PHOTO_TPL[ph.s].replace('{id}', ph.i).replace(/\{w\}/g, String(w));
   function normalizeLists(raw) {
     const out = { version: 1, people: [], shortlist: [] };
     if (!raw || typeof raw !== 'object') return out;
@@ -74,9 +81,12 @@
       budget: Number.isFinite(+p.budget) && p.budget !== null && p.budget !== '' ? Math.max(0, +p.budget) : null,
       interests: Array.isArray(p.interests) ? p.interests.filter((x) => typeof x === 'string') : [],
       color: MARKS.includes(p.color) ? p.color : MARKS[i % MARKS.length], note: String(p.note || '').slice(0, 500),
+      // A gift from the site keeps a copy of its name, link, store, price and photo, for when it leaves the site's data
+      // (store deals end); anything else is the person's own entry.
       items: (Array.isArray(p.items) ? p.items : []).filter((x) => x && (x.gift || x.name)).map((x) => ({
-        uid: String(x.uid || uid()), gift: x.gift ? String(x.gift) : null, name: x.gift ? undefined : String(x.name).slice(0, 120),
-        url: x.gift ? undefined : (/^https?:\/\//i.test(x.url || '') ? String(x.url) : undefined), store: x.gift ? undefined : (x.store || undefined),
+        uid: String(x.uid || uid()), gift: x.gift ? String(x.gift) : null, name: x.name ? String(x.name).slice(0, 120) : undefined,
+        url: /^https?:\/\//i.test(x.url || '') ? String(x.url) : undefined, store: x.store && /^[\w:.-]{1,60}$/.test(x.store) ? String(x.store) : undefined,
+        ph: typeof x.ph === 'string' && PH_TEXT.test(x.ph) ? x.ph : undefined,
         price: Number.isFinite(+x.price) && x.price !== null && x.price !== '' ? +x.price : undefined,
         paid: Number.isFinite(+x.paid) && x.paid !== null && x.paid !== '' ? +x.paid : null,
         status: STATUS[x.status] ? x.status : 'idea', note: String(x.note || '').slice(0, 300), added: x.added || new Date().toISOString(),
@@ -194,9 +204,9 @@
   function addGift(personId, giftId) {
     const p = person(personId);
     if (!p || !BYID[giftId] || p.items.some((x) => x.gift === giftId)) return false;
-    const g = BYID[giftId];
-    p.items.push(Object.assign({ uid: uid(), gift: giftId, paid: null, status: 'idea', note: '', added: new Date().toISOString() },
-      g.pick ? { name: g.name, url: g.price_url || (g.offers[0] || {}).url || '' } : {}));
+    const g = BYID[giftId]; const link = giftLink(g);
+    p.items.push({ uid: uid(), gift: giftId, name: g.name, url: /^https?:/.test(link.url) ? link.url : undefined, store: link.store,
+      price: priceOf(g), ph: phText(g.photo), paid: null, status: 'idea', note: '', added: new Date().toISOString() });
     state.lastAdded = { gift: giftId, person: personId };
     state.lists.shortlist = state.lists.shortlist.filter((g) => g !== giftId);
     saveLists();
@@ -220,7 +230,8 @@
     const p = person(personId);
     if (!p || !d.name) return null;
     const x = { uid: uid(), gift: null, name: String(d.name).slice(0, 120), url: /^https?:\/\//i.test(d.url || '') ? d.url : undefined,
-      store: storeFromUrl(d.url) || undefined, price: Number.isFinite(+d.price) && d.price !== '' ? +d.price : undefined,
+      store: storeFromUrl(d.url) || d.store || undefined, ph: typeof d.ph === 'string' && PH_TEXT.test(d.ph) ? d.ph : undefined,
+      price: Number.isFinite(+d.price) && d.price !== '' ? +d.price : undefined,
       paid: null, status: 'idea', note: String(d.note || '').slice(0, 300), added: new Date().toISOString() };
     p.items.push(x);
     saveLists();
@@ -232,18 +243,32 @@
     const hit = Object.entries(RET).find(([, r]) => (r.hosts || []).some((h) => host === h || host.endsWith('.' + h)));
     return hit ? hit[0] : null;
   }
+  // The store link for a gift: the store with the current price, or its first tracked link, or a store search.
+  function giftLink(g) {
+    const p = priceInfo(g);
+    const store = p.kind === 'live' ? g.price_retailer : (g.offers[0] || {}).retailer || g.stores[0];
+    const url = p.kind === 'live' && g.price_url ? g.price_url : (g.offers.find((o) => o.retailer === store) || {}).url || searchUrl(store, g.search);
+    return { store, url };
+  }
+  // A photo for something on a list: the gift's own, the copy saved with it, or the photo of the store pick it links to.
+  function listPhoto(x) {
+    const saved = phFrom(x.ph); if (saved) return saved;
+    const pk = x.url && PICK_BY_URL[x.url];
+    if (pk && pk.img) return photoRef(pk.store, pk.img);
+    const ean = /barnesandnoble\.com\/.*[?&]ean=(\d{13})\b/.exec(x.url || '');
+    return ean ? photoRef('barnesnoble', ean[1]) : null;
+  }
   function itemInfo(x) {
     const g = x.gift ? BYID[x.gift] : null;
     if (g) {
-      const p = priceInfo(g);
-      const where = p.kind === 'live' ? g.price_retailer : (g.offers[0] || {}).retailer || g.stores[0];
-      const url = p.kind === 'live' && g.price_url ? g.price_url : (g.offers.find((o) => o.retailer === where) || {}).url || searchUrl(where, g.search);
-      return { name: g.name, emoji: g.emoji, tile: TILE[g.category] || 'pine', price: x.paid ?? p.value, current: p.value, kind: p.kind, store: where, url, gift: g };
+      const p = priceInfo(g); const { store, url } = giftLink(g);
+      return { name: g.name, emoji: g.emoji, tile: TILE[g.category] || 'pine', price: x.paid ?? p.value, current: p.value, kind: p.kind, store, url, gift: g,
+        photo: g.photo || listPhoto(x) };
     }
     let host = '';
     try { host = x.url ? new URL(x.url).hostname.replace(/^www\./, '') : ''; } catch (e) { host = ''; }
-    return { name: x.name || 'Gift', emoji: '🎁', tile: 'cranberry', price: x.paid ?? x.price ?? null, current: x.price ?? null, kind: 'custom',
-      store: x.store || (host ? 'host:' + host : 'other'), url: x.url || null, gift: null, host };
+    return { name: x.name || 'Gift', emoji: '🎁', tile: 'cranberry', price: x.paid ?? x.price ?? null, current: x.price ?? null, kind: x.gift ? 'saved' : 'custom',
+      store: x.store || (host ? 'host:' + host : 'other'), url: x.url || null, gift: null, host, photo: listPhoto(x) };
   }
   const storeLabel = (s, info) => (s && s.startsWith('host:') ? s.slice(5) : s === 'other' ? 'Any store' : retName(s)) || (info && info.host) || 'Store';
   function totals(p) {
@@ -266,14 +291,21 @@
     const out = new Response(new Blob([bytes]).stream().pipeThrough(stream));
     return new Uint8Array(await out.arrayBuffer());
   }
+  // A share link carries the whole list: each gift's name, store link, price and photo, so it opens the same way on any
+  // phone or computer, even after the site's own data changes. A gift from the site also carries its id ("g").
   function sharePayload(p, hideStatus) {
     const items = p.items.map((x) => {
-      const o = x.gift ? { g: x.gift } : { n: x.name, u: x.url, p: x.price, s: x.store };
+      const info = itemInfo(x);
+      const o = { g: info.gift ? x.gift : undefined, n: info.name, u: info.url && /^https?:/.test(info.url) ? info.url : undefined,
+        p: info.current ?? undefined, t: info.kind === 'typical' ? 1 : undefined,
+        s: info.store && info.store !== 'other' && !info.store.startsWith('host:') ? info.store : undefined,
+        ph: phText(info.photo), e: info.photo && info.photo.ex ? 1 : undefined };
       if (!hideStatus && x.status !== 'idea') o.st = x.status[0];
       if (x.note) o.no = x.note;
       return Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined && v !== null && v !== ''));
     });
-    return { v: 1, n: p.name, a: p.age, c: p.color, i: p.interests, items };
+    const now = new Date(); const day = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    return { v: 1, n: p.name, a: p.age, c: p.color, i: p.interests, d: day, items };
   }
   async function encodeShare(obj) {
     const bytes = new TextEncoder().encode(JSON.stringify(obj));
@@ -294,7 +326,8 @@
     const full = { s: 'idea', b: 'bought', w: 'wrapped' };
     return {
       name: obj.n, age: obj.a, color: obj.c, interests: obj.i || [], note: '',
-      items: obj.items.map((o) => ({ gift: o.g || null, name: o.n, url: o.u, price: o.p, store: o.s, status: full[o.st] || 'idea', note: o.no || '' })),
+      items: obj.items.filter((o) => o && typeof o === 'object').map((o) => ({ gift: o.g ? String(o.g) : null, name: o.n || (o.g && BYID[o.g] ? BYID[o.g].name : undefined),
+        url: o.u, price: o.p, store: o.s, ph: o.ph, status: full[o.st] || 'idea', note: o.no || '' })),
     };
   }
   function listText(p, hideStatus) {
@@ -313,10 +346,18 @@
 
   // ------------------------------------------------------------------ small components
   const markerSvg = (draw) => `<svg class="marker${draw ? ' draw' : ''}" viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="100" d="${MARK_PATH}"/></svg>`;
+  // A product photo: lazy, sent without a referrer, and swapped for the emoji if the store's server doesn't answer.
+  const photoImg = (ph, w, emoji, cls = 'ph') => `<img class="${cls}" src="${esc(photoUrl(ph, w))}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-emoji="${esc(emoji || '🎁')}">`;
   function tile(it, cls = '') {
     const seal = it.tags.includes('hot') ? '<span class="seal">Hot this year</span>' : it.tags.includes('new') ? '<span class="seal new">New this year</span>' : '';
-    return `<button class="tile ${cls}" type="button" data-open="${esc(it.id)}" data-c="${TILE[it.category] || 'pine'}" tabindex="-1" aria-hidden="true"><span class="tag">${esc(it.emoji)}</span>${seal}</button>`;
+    const big = cls.includes('drawer-tile');
+    const face = it.photo ? photoImg(it.photo, big ? 640 : 320, it.emoji) + (big && it.photo.ex ? '<span class="ph-note">Example photo; it comes in many versions</span>' : '')
+      : `<span class="tag">${esc(it.emoji)}</span>`;
+    return `<button class="tile ${it.photo ? 'has-photo ' : ''}${cls}" type="button" data-open="${esc(it.id)}" data-c="${TILE[it.category] || 'pine'}" tabindex="-1" aria-hidden="true">${face}${seal}</button>`;
   }
+  // A small square for lists and tables: the photo, or the emoji on the gift's wrapping color.
+  const thumb = (photo, emoji, color, cls = 'thumb') => (photo ? `<span class="${cls} has-photo" aria-hidden="true">${photoImg(photo, 160, emoji)}</span>`
+    : `<span class="${cls}" style="--tile:var(--tile-${color || 'pine'})" aria-hidden="true"><span class="emo">${esc(emoji || '🎁')}</span></span>`);
   function priceBlock(it, size = '') {
     const p = priceInfo(it); const deal = dealInfo(it);
     let note;
@@ -447,7 +488,9 @@
       <p class="sub">Add their age and what they're into, and the site suggests gifts that fit. Circle gifts for them from any page with Add to list, then mark them bought and wrapped as you go.</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-accent" type="button" data-new-person>Add a person</button>
       <button class="btn" type="button" data-example>Start from an example</button></div>
-      <p class="hint">The example is a 10-year-old into squishies, plush, LEGO, Switch and PlayStation. You'll type their name.</p></div>`;
+      <p class="hint">The example is a 10-year-old into squishies, plush, LEGO, Switch and PlayStation. You'll type their name.</p>
+      <h3 style="margin-top:6px">Making your own wish list?</h3>
+      <p class="sub">Add yourself as a person, with your age and what you're into. Pick gifts with Add to list, add a note to any of them (a color, a size), then press Send list to text or email it. Family gets a link with each gift's photo, price and store link.</p></div>`;
   }
   function personPane(p) {
     const t = totals(p);
@@ -457,7 +500,7 @@
     const ideas = findResults(profileOf(p)).filter((it) => !p.items.some((x) => x.gift === it.id)).slice(0, 6);
     const desc = [p.age ? `Age ${p.age}` : null, p.interests.length ? `into ${interestNames(p.interests, 5)}` : null].filter(Boolean).join(', ');
     return `<div class="list-head"><div class="ident">${avatar(p, 'lg')}<div><h2>${esc(p.name)}'s list</h2><p class="sub">${esc(desc || 'Add an age and interests to get matched ideas.')}${p.note ? `. ${esc(p.note)}` : ''}</p></div></div>
-      <div class="list-actions"><button class="btn btn-sm" type="button" data-edit-person="${esc(p.id)}">Edit</button><button class="btn btn-sm" type="button" data-share="${esc(p.id)}">Share</button><button class="btn btn-sm" type="button" data-print>Print</button><button class="btn btn-sm btn-pine" type="button" data-find-for="${esc(p.id)}">Find ideas for ${esc(p.name)}</button></div></div>
+      <div class="list-actions"><button class="btn btn-sm" type="button" data-edit-person="${esc(p.id)}">Edit</button><button class="btn btn-sm" type="button" data-print>Print</button><button class="btn btn-sm btn-pine" type="button" data-find-for="${esc(p.id)}">Find ideas for ${esc(p.name)}</button><button class="btn btn-sm btn-accent" type="button" data-share="${esc(p.id)}">Send list</button></div></div>
       <div class="panel budget">
         <div class="budget-bar ${over ? 'over' : ''}" role="img" aria-label="${esc(`Bought ${money(t.spent)} of ${budget ? money(budget) + ' budget' : 'no set budget'}; ${money(t.planned)} planned`)}"><span class="planned" style="width:${(100 * t.planned / scale).toFixed(1)}%"></span><span class="spent" style="width:${(100 * t.spent / scale).toFixed(1)}%"></span></div>
         <div class="budget-legend"><span>Bought <b>${money(t.spent)}</b></span><span>Planned <b>${money(t.planned)}</b></span><span>${budget ? `Budget <b>${money(budget)}</b>${t.planned > budget ? ` <span class="chip bad">${money(t.planned - budget)} over</span>` : ` <span class="chip good">${money(budget - t.planned)} left</span>`}` : `<button class="linkish" type="button" data-edit-person="${esc(p.id)}">Set a budget</button>`}</span><span>${t.done} of ${t.count} bought</span></div>
@@ -465,6 +508,7 @@
       <div class="list-rows">${p.items.length ? p.items.map((x) => listRow(p, x)).join('')
         : `<div class="empty"><strong>Nothing on ${esc(p.name)}'s list yet.</strong><span>Use Add to list on any gift, or add something from any store.</span></div>`}</div>
       <div class="no-print"><button class="btn" type="button" data-custom="${esc(p.id)}">Add something from any store</button></div>
+      ${p.items.length ? `<div class="panel send-callout no-print"><div><b>Send ${esc(p.name)}'s list</b><span class="sub">Text or email a link. It opens on any phone with each gift's photo, price, store link and your notes. No app or account needed.</span></div><button class="btn btn-accent" type="button" data-share="${esc(p.id)}">Send list</button></div>` : ''}
       ${ideas.length ? `<div class="no-print" style="display:grid;gap:12px"><h3 class="section-h">Ideas for ${esc(p.name)} <small>matched to ${p.age ? `age ${p.age}` : 'any age'}${p.interests.length ? ' and interests' : ''}</small></h3><div class="gift-grid compact">${ideas.map((it) => giftCard(it, { compact: true })).join('')}</div></div>` : ''}`;
   }
   function listRow(p, x) {
@@ -472,12 +516,13 @@
     const where = info.url && info.url !== '#' ? `<a href="${esc(info.url)}" target="_blank" rel="noopener">${esc(storeLabel(info.store, info))}</a>` : esc(storeLabel(info.store, info));
     const priceText = info.current != null ? `${info.kind === 'typical' ? 'about ' : ''}${money(info.current)}` : 'price not set';
     return `<div class="lrow ${x.status !== 'idea' ? 'is-done' : ''}" data-uid="${esc(x.uid)}">
-      <div class="mini" style="--tile:var(--tile-${info.tile})"><span aria-hidden="true">${esc(info.emoji)}</span></div>
+      ${thumb(info.photo, info.emoji, info.tile, 'mini')}
       <div class="what">${info.gift ? `<button class="gift-title" type="button" data-open="${esc(info.gift.id)}" style="font-size:0.98rem">${esc(info.name)}</button>` : `<b>${esc(info.name)}</b>`}
-        <span class="gift-meta">${priceText} at ${where}${x.note ? `. ${esc(x.note)}` : ''}</span></div>
+        <span class="gift-meta">${priceText} at ${where}</span>${x.note ? `<span class="lnote">${esc(x.note)}</span>` : ''}</div>
       <div class="right">
         <label class="visually-hidden" for="paid-${esc(x.uid)}">Price paid for ${esc(info.name)}</label>
         <input class="paid" id="paid-${esc(x.uid)}" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Paid" value="${x.paid ?? ''}" data-paid="${esc(p.id)}|${esc(x.uid)}" title="What you paid (optional)">
+        <button class="btn btn-sm btn-ghost no-print" type="button" data-note="${esc(p.id)}|${esc(x.uid)}" aria-label="${x.note ? 'Edit the note' : 'Add a note'} for ${esc(info.name)}">${x.note ? 'Edit note' : 'Add note'}</button>
         <button class="status" type="button" data-s="${x.status}" data-status="${esc(p.id)}|${esc(x.uid)}" title="Change status">${STATUS[x.status]}</button>
         <button class="x" type="button" data-remove="${esc(p.id)}|${esc(x.uid)}" aria-label="Remove ${esc(info.name)}">✕</button>
       </div></div>`;
@@ -502,7 +547,7 @@
       const rows = groups[k]; const sum = rows.reduce((m, r) => m + (r.info.price || 0), 0);
       const home = RET[k] ? `<a class="btn btn-sm" href="${esc(RET[k].home)}" target="_blank" rel="noopener">Open ${esc(RET[k].name)}</a>` : '';
       return `<div class="panel store-group"><h3>${esc(storeLabel(k, rows[0].info))} <small>${rows.length} gift${rows.length > 1 ? 's' : ''}, about ${money(sum)}</small></h3>
-        <div class="rows">${rows.map((r) => `<div class="row"><div><b>${esc(r.info.name)}</b> <span class="for-tag" style="--mark:${r.p.color}">for ${esc(r.p.name)}</span><div class="cell-sub">${r.info.current != null ? `${r.info.kind === 'typical' ? 'about ' : ''}${money(r.info.current)}` : ''}${r.info.url && r.info.url !== '#' ? ` <a href="${esc(r.info.url)}" target="_blank" rel="noopener">Open listing</a>` : ''}</div></div>
+        <div class="rows">${rows.map((r) => `<div class="row with-thumb">${thumb(r.info.photo, r.info.emoji, r.info.tile)}<div><b>${esc(r.info.name)}</b> <span class="for-tag" style="--mark:${r.p.color}">for ${esc(r.p.name)}</span><div class="cell-sub">${r.info.current != null ? `${r.info.kind === 'typical' ? 'about ' : ''}${money(r.info.current)}` : ''}${r.info.url && r.info.url !== '#' ? ` <a href="${esc(r.info.url)}" target="_blank" rel="noopener">Open listing</a>` : ''}</div></div>
           <button class="btn btn-sm" type="button" data-status="${esc(r.p.id)}|${esc(r.x.uid)}" data-s="idea">Mark bought</button></div>`).join('')}</div>${home}</div>`;
     }).join('');
     return `<div class="list-head"><div class="ident"><span class="avatar lg ghost" aria-hidden="true">🛒</span><div><h2>Shopping trip</h2><p class="sub">Everything still marked Idea, grouped by the store with the best known price${keys.length ? `: about ${money(total)} in all` : ''}.</p></div></div></div>
@@ -620,7 +665,7 @@
   function browseRow(it) {
       const p = priceInfo(it); const people = onLists(it.id);
       return `<tr class="is-clickable" data-open="${esc(it.id)}" tabindex="0" aria-label="${esc(it.name)}">
-        <td><div class="cell-title"><span aria-hidden="true">${esc(it.emoji)}</span>${esc(it.name)}${it.tags.includes('hot') ? ` <span class="chip gold" title="${esc(it.lists.map((l) => HOT[l].short).join(', '))}">Hot</span>` : ''}${people.map((x) => ` <span class="initial" style="--mark:${x.color};font-size:.9rem">${esc(initial(x.name))}</span>`).join('')}</div><div class="cell-sub">${esc(it.brand)}</div></td>
+        <td><div class="cell-title">${thumb(it.photo, it.emoji, TILE[it.category])}<span class="cell-name">${esc(it.name)}${it.tags.includes('hot') ? ` <span class="chip gold" title="${esc(it.lists.map((l) => HOT[l].short).join(', '))}">Hot</span>` : ''}${people.map((x) => ` <span class="initial" style="--mark:${x.color};font-size:.9rem">${esc(initial(x.name))}</span>`).join('')}<span class="cell-sub">${esc(it.brand)}</span></span></div></td>
         <td class="cell-sub type-cell">${esc(typeLabel(it))}</td>
         <td class="num" style="white-space:nowrap">${esc(ageText(it))}</td>
         <td class="cell-sub">${esc(it.interests.slice(0, 2).map((i) => (INT[i] || {}).label || i).join(', '))}</td>
@@ -872,18 +917,35 @@
   const optionList = (pairs, cur) => pairs.map(([v, l]) => `<option value="${esc(v)}"${String(cur) === String(v) ? ' selected' : ''}>${esc(l)}</option>`).join('');
   function prepPicks(data) {
     PICKS = data && Array.isArray(data.items) && data.items.length ? data : null;
-    PICK_BY_ID = {}; PICKS_BY_GIFT = {};
+    PICK_BY_ID = {}; PICKS_BY_GIFT = {}; PICK_BY_URL = {}; PHOTO_TPL = {};
     if (!PICKS) return;
-    PICKS.lists = PICKS.lists || {}; PICKS.stores = PICKS.stores || {};
+    PICKS.lists = PICKS.lists || {}; PICKS.stores = PICKS.stores || {}; PICKS.photos = PICKS.photos || {};
+    Object.entries(PICKS.stores).forEach(([k, st]) => {
+      if (st && typeof st.img === 'string' && /^https:\/\/[^\s"'<>]+$/.test(st.img) && st.img.includes('{id}')) PHOTO_TPL[k] = st.img;
+    });
     PICKS.items = PICKS.items.filter((x) => x && x.id && x.name && x.url && /^https:\/\//.test(x.url) && Array.isArray(x.ages));
     PICKS.items.forEach((x) => {
       const ranks = Object.values(x.rank || {});
       x.score = (ranks.length ? Math.min(...ranks) : 999) - Math.min(4, (x.lists || []).length) * 2;
-      PICK_BY_ID[x.id] = x;
+      x.photo = x.img ? photoRef(x.store, x.img) : null;
+      PICK_BY_ID[x.id] = x; PICK_BY_URL[x.url] = x;
       if (x.gift) (PICKS_BY_GIFT[x.gift] = PICKS_BY_GIFT[x.gift] || []).push(x);
     });
   }
+  // A gift's photo: a store pick's own, a hand-checked photo of the same product (or an example of a gift idea that
+  // comes in many versions), or the photo of a store pick linked to the gift.
+  function itemPhoto(it) {
+    const xs = PICKS_BY_GIFT[it.id] || [];
+    if (it.pick) { const x = xs.find((q) => q.photo); return x ? x.photo : null; }
+    const m = PICKS && PICKS.photos[it.id];
+    const hand = Array.isArray(m) ? photoRef(m[0], m[1], m[2] === 'example') : null;
+    if (hand) return hand;
+    const x = xs.find((q) => q.photo);
+    return x ? x.photo : null;
+  }
   const pickList = (k) => (PICKS && PICKS.lists[k]) || {};
+  const EVENTS = [['cm', 'Cyber Monday deal', /cyber-monday|^wm-cm-/], ['bf', 'Black Friday deal', /black-friday|^gs-bf-|^gs-deals$/]];
+  const pickEvents = (x) => EVENTS.filter(([, , rx]) => (x.lists || []).some((l) => rx.test(l)));
   // Store best sellers count as gift ideas too. A pick that is already one of the catalog's gifts stays with that gift;
   // the rest become gift ideas of their own, and the same product at several stores becomes one idea with each store's link.
   // Store best sellers: interests come from the name (Star Wars, NeeDoh, Pokémon...), then the type's most common one.
@@ -959,6 +1021,7 @@
       if (f.show === 'sale' && !pickOnSale(x)) return false;
       if (f.show.startsWith('list:') && !(x.lists || []).includes(f.show.slice(5))) return false;
       if (f.show.startsWith('flag:') && !(x.flags || []).includes(f.show.slice(5))) return false;
+      if (f.show.startsWith('event:') && !pickEvents(x).some(([k]) => k === f.show.slice(6))) return false;
       if (max < Infinity && !(x.price != null && x.price <= max)) return false;
       if (q && !`${x.name} ${(TYPES[x.type] || {}).label || ''}`.toLowerCase().includes(q)) return false;
       return true;
@@ -970,13 +1033,15 @@
   function pickCard(x) {
     const t = TYPES[x.type] || {};
     const top = Object.entries(x.rank || {}).filter(([k]) => pickList(k).short).sort((a, b) => a[1] - b[1])[0];
-    const flags = (x.flags || []).filter((f) => PICK_FLAGS[f]).map((f) => `<span class="chip ${PICK_FLAGS[f][1]}">${esc(PICK_FLAGS[f][0])}</span>`).join('');
+    const flags = pickEvents(x).map(([, label]) => `<span class="chip red">${esc(label)}</span>`).join('')
+      + (x.flags || []).filter((f) => PICK_FLAGS[f] && !(f === 'deal' && pickEvents(x).length)).map((f) => `<span class="chip ${PICK_FLAGS[f][1]}">${esc(PICK_FLAGS[f][0])}</span>`).join('');
     const holders = pickHolders(x);
     const meta = [pickAges(x)];
     if (x.esrb) meta.push(ESRB_TEXT[x.esrb] || `ESRB ${x.esrb}`);
     if (x.rating) meta.push(`${x.rating} stars${x.reviews ? ` from ${x.reviews.toLocaleString('en-US')} reviews` : ''}`);
     if (x.seller === 'marketplace') meta.push('sold by a marketplace seller');
     return `<article class="pick" data-c="${esc(TILE[x.category] || 'pine')}">
+      <a class="pick-ph${x.photo ? ' has-photo' : ''}" href="${esc(x.url)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${x.photo ? photoImg(x.photo, 320, t.emoji) : `<span class="tag">${esc(t.emoji || '🎁')}</span>`}</a>
       <div class="pick-top">${top ? `<span class="pick-rank" title="${esc(pickList(top[0]).name || '')}">#${esc(top[1])} ${esc(pickList(top[0]).short || '')}</span>` : ''}<span class="pick-type">${esc(t.emoji || '🎁')} ${esc(t.label || x.type)}</span></div>
       <a class="pick-name" href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.name)}</a>
       <div class="gift-meta">${esc(meta.join(', '))}</div>
@@ -1004,7 +1069,8 @@
     PICKS.items.forEach((x) => { types[x.type] = (types[x.type] || 0) + 1; cats[x.category] = (cats[x.category] || 0) + 1; });
     const typeOpts = Object.keys(CATS).filter((c) => cats[c]).map((c) => `<optgroup label="${esc(CATS[c].label)}"><option value="cat:${esc(c)}"${f.type === `cat:${c}` ? ' selected' : ''}>All ${esc(CATS[c].label.toLowerCase())} (${cats[c]})</option>${Object.entries(TYPES).filter(([k, t]) => t.category === c && types[k]).map(([k, t]) => `<option value="${esc(k)}"${f.type === k ? ' selected' : ''}>${esc(t.label)} (${types[k]})</option>`).join('')}</optgroup>`).join('');
     const lists = Object.entries(PICKS.lists).filter(([, l]) => l.kind !== 'tracked' && l.short);
-    const show = [['', 'Everything'], ['sale', 'On sale'], ['flag:best-seller', 'Best sellers'], ['flag:deal', 'Holiday deals']]
+    const events = EVENTS.filter(([k]) => PICKS.items.some((x) => pickEvents(x).some(([e]) => e === k))).map(([k, label]) => [`event:${k}`, `${label}s`]);
+    const show = [['', 'Everything'], ['sale', 'On sale']].concat(events, [['flag:best-seller', 'Best sellers'], ['flag:deal', 'Holiday deals']])
       .concat(lists.map(([k, l]) => [`list:${k}`, `${l.short} list`]));
     $('#picks-filters').innerHTML = `
       <div class="picks-who" role="group" aria-label="Who it's for">${[['', 'Every age']].concat(AGE_BANDS.map((b) => [b.id, `Ages ${b.label}`])).map(([v, l]) => `<button type="button" class="band ${f.band === v ? 'is-on' : ''}" data-pick-band="${esc(v)}" aria-pressed="${f.band === v}">${esc(l)}</button>`).join('')}</div>
@@ -1063,7 +1129,7 @@
       const [gone] = pp.items.splice(idx, 1); saveLists();
       toast(`Removed from ${pp.name}'s list`, () => { pp.items.splice(idx, 0, gone); saveLists(); refresh(); });
     } else {
-      addCustom(pp.id, { name: x.name, url: x.url, price: x.price ?? '', note: `${pickStore(x)} ${x.was ? `deal, usually ${money(x.was)}` : 'best seller'}` });
+      addCustom(pp.id, { name: x.name, url: x.url, price: x.price ?? '', store: x.store, ph: phText(x.photo), note: `${pickStore(x)} ${x.was ? `deal, usually ${money(x.was)}` : 'best seller'}` });
       toast(`Added to ${pp.name}'s list`);
     }
     refresh();
@@ -1219,42 +1285,141 @@
         <div class="modal-actions"><button class="btn" type="button" data-close-modal>Cancel</button><button class="btn btn-accent" type="submit">Add to ${esc(p.name)}'s list</button></div>
       </form>`);
   }
+  function noteModal(pid, u) {
+    const p = person(pid); const x = p && p.items.find((y) => y.uid === u); if (!x) return;
+    const name = itemInfo(x).name;
+    modal(`<h3 id="modal-title">Note for ${esc(name.length > 60 ? name.slice(0, 58) + '…' : name)}</h3>
+      <p class="sub">It shows with the gift on ${esc(p.name)}'s list and in links you send: a color, a size, which version, or "any of these is great".</p>
+      <form id="note-form" data-for="${esc(pid)}|${esc(u)}" style="display:grid;gap:12px">
+        <div class="field"><label for="nf-note">Note</label><textarea id="nf-note" maxlength="300" autofocus placeholder="The black one, please">${esc(x.note || '')}</textarea></div>
+        <div class="modal-actions"><button class="btn" type="button" data-close-modal>Cancel</button><button class="btn btn-accent" type="submit">Save note</button></div>
+      </form>`);
+  }
+  let shareLink = { link: '', title: '' };
   async function shareModal(pid, hide = true) {
     const p = person(pid); if (!p) return;
     const code = await encodeShare(sharePayload(p, hide));
-    const link = `${location.href.split('#')[0]}#share=${code}`;
-    modal(`<h3 id="modal-title">Share ${esc(p.name)}'s list</h3>
-      <p class="sub">Anyone with this link can see the list and save a copy in their own browser. The list travels inside the link itself, so nothing is uploaded anywhere.</p>
-      <label class="check"><input type="checkbox" id="share-hide" data-share-hide="${esc(pid)}" ${hide ? 'checked' : ''}> Hide what's been bought or wrapped (no spoilers)</label>
-      <div class="share-link"><input type="text" id="share-url" readonly value="${esc(link)}" aria-label="Share link"><button class="btn btn-accent" type="button" data-copy="#share-url">Copy link</button></div>
-      <div class="modal-actions" style="justify-content:flex-start"><button class="btn" type="button" data-copy-text="${esc(pid)}">Copy as text</button><button class="btn" type="button" data-print>Print</button><span class="spacer"></span><button class="btn" type="button" data-close-modal>Done</button></div>`);
+    const link = `${location.origin}${location.pathname}#share=${code}`;
+    const title = `${p.name}'s Christmas list`;
+    shareLink = { link, title };
+    const n = p.items.length; const pics = p.items.filter((x) => itemInfo(x).photo).length;
+    const body = encodeURIComponent(`${title}, with a photo, price and store link for each gift:\n${link}`);
+    modal(`<h3 id="modal-title">Send ${esc(p.name)}'s list</h3>
+      <p class="sub">${n ? `The link opens ${esc(p.name)}'s ${plural(n, 'gift')}${pics ? `, with ${pics === n ? 'a photo' : `photos for ${pics}`}` : ''}, prices, store links and notes on any phone or computer. No app or account needed.` : `${esc(p.name)}'s list is empty. Add a few gifts first, then send the link.`}</p>
+      <div class="share-link"><input type="text" id="share-url" readonly value="${esc(link)}" aria-label="Link to ${esc(title)}"><button class="btn btn-accent" type="button" data-copy="#share-url">Copy link</button></div>
+      <div class="share-ways">
+        <a class="btn" href="sms:?&amp;body=${esc(body)}">Text it</a>
+        <a class="btn" href="mailto:?subject=${esc(encodeURIComponent(title))}&amp;body=${esc(body)}">Email it</a>
+        ${typeof navigator !== 'undefined' && navigator.share ? '<button class="btn" type="button" data-native-share>Share…</button>' : ''}
+        <a class="btn btn-ghost" href="${esc(link)}" target="_blank" rel="noopener">See what they'll see</a>
+      </div>
+      <label class="check"><input type="checkbox" id="share-hide" data-share-hide="${esc(pid)}" ${hide ? 'checked' : ''}> Leave out what's been bought or wrapped (no spoilers)</label>
+      <p class="hint">Lists are saved in this browser. The link carries a copy of the list as it is right now, so if you change it later, send a new link. The person you send it to can check off what they buy; only they see those checkmarks.</p>
+      <div class="modal-actions" style="justify-content:flex-start"><button class="btn btn-sm" type="button" data-copy-text="${esc(pid)}">Copy as text</button><button class="btn btn-sm" type="button" data-print>Print</button><span class="spacer"></span><button class="btn" type="button" data-close-modal>Done</button></div>`);
   }
-  function sharedModal(obj) {
-    const d = normalizeLists({ people: [fromShare(obj)] }).people[0];
-    if (!d) throw new Error('not a Christmas list');
-    const existing = state.lists.people.find((p) => p.name.toLowerCase() === String(d.name).toLowerCase());
-    const rows = d.items.map((x) => { const g = x.gift && BYID[x.gift]; const name = g ? g.name : x.name;
-      return `<li>${esc(g ? g.emoji + ' ' : '')}${esc(name)}${g ? `, about ${money(priceOf(g))}` : x.price ? `, ${money(x.price)}` : ''}${x.status !== 'idea' ? ` <span class="chip good">${STATUS[x.status]}</span>` : ''}${x.url ? ` <a href="${esc(x.url)}" target="_blank" rel="noopener">link</a>` : ''}${x.note ? ` <span class="cell-sub">(${esc(x.note)})</span>` : ''}</li>`; }).join('');
-    pendingShare = d;
-    modal(`<h3 id="modal-title">${esc(d.name)}'s Christmas list</h3>
-      <p class="sub">Someone shared this list with you${d.age ? `. ${esc(d.name)} is ${d.age}` : ''}. Save it to see matched ideas, mark things bought and coordinate.</p>
-      <ul style="margin:0;padding-left:20px;display:grid;gap:4px">${rows || '<li>No gifts on it yet.</li>'}</ul>
-      <div class="modal-actions">${existing ? `<button class="btn" type="button" data-save-share="merge">Add to my ${esc(existing.name)}'s list</button>` : ''}<button class="btn" type="button" data-close-modal>Just looking</button><button class="btn btn-accent" type="button" data-save-share="new">Save as ${existing ? 'a new person' : 'a list'}</button></div>`);
+  let SHARED = { code: null, obj: null, err: null };
+  const sharedName = (obj) => String((obj && obj.n) || 'Someone').slice(0, 40);
+  const gotKey = (obj) => sharedName(obj).toLowerCase();  // checkmarks carry over to a newer link for the same list
+  const gotAll = () => { const all = store.get('got', {}); return all && typeof all === 'object' && !Array.isArray(all) ? all : {}; };
+  const gotSet = (obj) => { const v = gotAll()[gotKey(obj)]; return new Set(Array.isArray(v) ? v.map(String) : []); };
+  function sharedRows(obj) {
+    return obj.items.filter((o) => o && typeof o === 'object').slice(0, 300).map((o) => {
+      const g = o.g && BYID[o.g] ? BYID[o.g] : null;
+      const link = g ? giftLink(g) : null;
+      const url = /^https?:\/\//i.test(o.u || '') ? String(o.u) : link && /^https?:\/\//.test(link.url) ? link.url : null;
+      const store = (typeof o.s === 'string' && /^[\w.-]{1,40}$/.test(o.s) ? o.s : null) || (link && link.store) || storeFromUrl(url);
+      let host = ''; try { host = url ? new URL(url).hostname.replace(/^www\./, '') : ''; } catch (e) { host = ''; }
+      const p = g ? priceInfo(g) : null;  // a gift the site knows: its current price; anything else: the price when it was sent
+      const sent = Number.isFinite(+o.p) && o.p !== null && o.p !== '' ? +o.p : null;
+      const name = String((g && g.name) || o.n || 'Gift').slice(0, 120);
+      return { gk: String(url || name).toLowerCase().slice(0, 200), name, url, store, host, photo: phFrom(o.ph, o.e) || (g && g.photo) || listPhoto({ url }),
+        price: p ? p.value : sent, about: p ? p.kind === 'typical' : !!o.t, note: String(o.no || '').slice(0, 300),
+        status: { b: 'bought', w: 'wrapped' }[o.st] || 'idea', emoji: g ? g.emoji : '🎁', tile: g ? TILE[g.category] || 'pine' : 'cranberry' };
+    });
   }
-  let pendingShare = null;
+  const sharedStore = (r) => (r.store && RET[r.store] ? RET[r.store].name : r.store && PICKS && PICKS.stores[r.store] ? PICKS.stores[r.store].name : r.host || '');
+  function sharedCard(r, got, who) {
+    const where = sharedStore(r);
+    const price = r.price != null ? `${r.about ? 'About ' : ''}${money(r.price)}${where ? ` at ${esc(where)}` : ''}` : where ? `At ${esc(where)}` : '';
+    const face = r.photo ? photoImg(r.photo, 400, r.emoji) : `<span class="tag">${esc(r.emoji)}</span>`;
+    const open = r.url ? `<a class="btn btn-sm btn-accent" href="${esc(r.url)}" target="_blank" rel="noopener">Open${where ? ` at ${esc(where)}` : ''}</a>`
+      : `<button class="btn btn-sm btn-accent" type="button" data-store-search="${esc(r.name)}">Search the stores</button>`;
+    return `<li class="sgift${got ? ' is-got' : ''}">
+      ${r.url ? `<a class="sg-ph${r.photo ? ' has-photo' : ''}" data-c="${esc(r.tile)}" href="${esc(r.url)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${face}</a>` : `<span class="sg-ph${r.photo ? ' has-photo' : ''}" data-c="${esc(r.tile)}" aria-hidden="true">${face}</span>`}
+      <div class="sg-body">
+        ${r.url ? `<a class="sg-name" href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.name)}</a>` : `<span class="sg-name">${esc(r.name)}</span>`}
+        ${price ? `<div class="sg-price">${price}</div>` : ''}
+        ${r.photo && r.photo.ex ? '<div class="cell-sub">The photo shows one version; it comes in several.</div>' : ''}
+        ${r.status !== 'idea' ? `<div><span class="chip good">Already ${esc(STATUS[r.status].toLowerCase())}</span></div>` : ''}
+        ${r.note ? `<p class="sg-note"><b>${esc(who)}'s note:</b> ${esc(r.note)}</p>` : ''}
+        <div class="sg-actions no-print">${open}<button class="btn btn-sm got" type="button" data-got="${esc(r.gk)}" aria-pressed="${got}">${got ? '✓ Bought' : 'Mark as bought'}</button></div>
+      </div></li>`;
+  }
+  function sharedHtml(obj) {
+    const rows = sharedRows(obj); const name = sharedName(obj);
+    const color = MARKS.includes(obj.c) ? obj.c : MARKS[0];
+    const got = gotSet(obj);
+    const nGot = rows.filter((r) => got.has(r.gk)).length;
+    const sent = /^\d{4}-\d{2}-\d{2}$/.test(obj.d || '') ? new Date(`${obj.d}T12:00:00`).toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) : '';
+    const age = Number.isFinite(+obj.a) && +obj.a > 0 ? clamp(Math.round(+obj.a), 1, 30) : null;
+    const mine = state.lists.people.find((p) => p.name.toLowerCase() === name.toLowerCase());
+    return `<div class="shared-head">
+        <div class="ident">${avatar({ name, color }, 'lg')}<div><h2 id="shared-h">${esc(name)}'s Christmas list</h2>
+          <p class="sub">${rows.length ? `${plural(rows.length, 'gift')}${sent ? `, sent ${esc(sent)}` : ''}.${age ? ` ${esc(name)} is ${age}.` : ''} Tap a gift to see it at the store.` : `There's nothing on ${esc(name)}'s list yet.`}</p></div></div>
+        <div class="shared-actions no-print">
+          <button class="btn btn-pine" type="button" data-save-share="${mine ? 'merge' : 'new'}">${mine ? `Add to my ${esc(mine.name)} list` : 'Save to my lists'}</button>
+          <button class="btn" type="button" data-print>Print</button><button class="btn" type="button" data-copy-shared>Copy as text</button>
+        </div>
+      </div>
+      ${rows.length ? `<p class="shared-how no-print"><span class="got-count">${nGot ? `${nGot} of ${rows.length} bought. ` : ''}</span>Mark gifts as you buy them. The checkmarks are saved on this device only, so ${esc(name)} won't see them.</p>` : ''}
+      <ol class="shared-list">${rows.map((r) => sharedCard(r, got.has(r.gk), name)).join('')}</ol>
+      <p class="hint">This is ${esc(name)}'s list as it was when they sent the link. If they change it, ask for a new link; your checkmarks carry over. Prices change quickly this time of year, so check the store before you buy.</p>`;
+  }
+  function renderShared() {
+    const box = $('#shared'); const code = (location.hash || '').slice('#share='.length);
+    if (SHARED.code !== code) {
+      SHARED = { code, obj: null, err: null };
+      decodeShare(code).then((o) => { SHARED.obj = o; }, (e) => { SHARED.err = (e && e.message) || 'unreadable'; })
+        .then(() => { if (SHARED.code === code && currentView() === 'shared') renderShared(); });
+    }
+    if (!SHARED.obj) {
+      box.innerHTML = SHARED.err ? `<div class="panel" style="display:grid;gap:10px;justify-items:start"><h2 id="shared-h">That list link didn't open</h2>
+        <p class="sub">Part of the link may be missing (${esc(SHARED.err)}). Ask for the link again, or copy the whole thing into the address bar.</p>
+        <a class="btn" href="#find">Look for gift ideas instead</a></div>` : '<p class="sub" id="shared-h">Opening the list…</p>';
+      return;
+    }
+    box.innerHTML = sharedHtml(SHARED.obj);
+  }
+  function toggleGot(gk) {
+    if (!SHARED.obj) return;
+    const all = gotAll(); const k = gotKey(SHARED.obj);
+    const set = gotSet(SHARED.obj); set.has(gk) ? set.delete(gk) : set.add(gk);
+    all[k] = [...set].slice(0, 500); store.set('got', all);
+    renderShared();
+  }
+  function sharedText(obj) {
+    const name = sharedName(obj);
+    const lines = [`${name}'s Christmas list`];
+    for (const r of sharedRows(obj)) {
+      const where = sharedStore(r);
+      lines.push(`- ${r.name}${r.price != null ? `, ${r.about ? 'about ' : ''}${money(r.price)}` : ''}${where ? ` at ${where}` : ''}${r.note ? ` (${r.note})` : ''}`);
+      if (r.url) lines.push(`  ${r.url}`);
+    }
+    return lines.join('\n');
+  }
   function saveShared(mode) {
-    const d = pendingShare; if (!d) return;
+    const d = SHARED.obj ? normalizeLists({ people: [fromShare(SHARED.obj)] }).people[0] : null; if (!d) return;
     let p = mode === 'merge' ? state.lists.people.find((x) => x.name.toLowerCase() === String(d.name).toLowerCase()) : null;
     if (!p) p = addPerson({ name: state.lists.people.some((x) => x.name === d.name) ? `${d.name} (shared)` : d.name, age: d.age, interests: d.interests, color: d.color });
     for (const x of d.items) {
-      if (x.gift ? BYID[x.gift] && !p.items.some((y) => y.gift === x.gift) : !p.items.some((y) => y.name === x.name)) {
+      if (x.gift ? !p.items.some((y) => y.gift === x.gift) : !p.items.some((y) => y.name === x.name)) {
         p.items.push(Object.assign({}, x, { uid: uid(), paid: null, added: new Date().toISOString() }));
       }
     }
-    saveLists(); pendingShare = null; closeModal();
+    saveLists();
     state.listView = p.id; store.set('listView', p.id);
-    location.hash = '#lists'; route();
-    toast(`Saved ${p.name}'s list`);
+    location.hash = '#lists';
+    toast(`Saved ${p.name}'s list. Find it under Lists.`);
   }
   function backupModal() {
     modal(`<h3 id="modal-title">Back up or restore your lists</h3>
@@ -1423,15 +1588,19 @@
   }
 
   // ------------------------------------------------------------------ routing + events
-  const VIEWS = ['find', 'lists', 'browse', 'deals', 'stores'];
-  const currentView = () => { const h = (location.hash || '').replace('#', '').split('?')[0]; return VIEWS.includes(h) ? h : 'find'; };
-  const RENDER = { find: () => { renderFindPrefs(); renderFind(); }, lists: renderLists, browse: () => { renderFilters(); renderBrowse(); }, deals: renderDeals, stores: renderStores };
+  const VIEWS = ['find', 'lists', 'browse', 'deals', 'stores', 'shared'];
+  const currentView = () => {
+    const raw = location.hash || ''; if (raw.startsWith('#share=')) return 'shared';
+    const h = raw.replace('#', '').split('?')[0]; return VIEWS.includes(h) && h !== 'shared' ? h : 'find';
+  };
+  const RENDER = { find: () => { renderFindPrefs(); renderFind(); }, lists: renderLists, browse: () => { renderFilters(); renderBrowse(); }, deals: renderDeals, stores: renderStores, shared: renderShared };
   function route() {
     const v = currentView();
     const qm = (location.hash || '').match(/[?&]q=([^&]*)/);
     if (v === 'browse' && qm) { state.browse.q = decodeURIComponent(qm[1].replace(/\+/g, ' ')); state.browse.shown = BROWSE_STEP; }
     if ($('#q') && document.activeElement !== $('#q')) $('#q').value = v === 'browse' ? state.browse.q : '';
     VIEWS.forEach((x) => { $(`#view-${x}`).hidden = x !== v; });
+    if (document.body) document.body.dataset.view = v;  // the shared-list page hides the price-refresh controls
     $$('.tabs a').forEach((a) => { a.classList.toggle('is-active', a.dataset.view === v); if (a.dataset.view === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
     RENDER[v]();
   }
@@ -1457,10 +1626,17 @@
   function bind() {
     sizeHeader(); window.addEventListener('resize', () => { sizeHeader(); closeMenu(false); });
     if (document.fonts) document.fonts.ready.then(sizeHeader);
-    window.addEventListener('hashchange', () => {
-      if (location.hash.startsWith('#share=')) { openShareFromHash(); return; }
-      closeDrawer(); closeMenu(false); route(); window.scrollTo(0, 0);
-    });
+    window.addEventListener('hashchange', () => { closeDrawer(); closeMenu(false); closeModal(); route(); window.scrollTo(0, 0); });
+    // A store photo that doesn't load turns back into the gift's emoji.
+    document.addEventListener('error', (e) => {
+      const img = e.target;
+      if (!img || img.tagName !== 'IMG' || !img.dataset || img.dataset.emoji === undefined) return;
+      const box = img.parentElement; if (!box) return;
+      box.classList.remove('has-photo');
+      const span = document.createElement('span'); span.className = box.classList.contains('tile') || box.classList.contains('pick-ph') || box.classList.contains('sg-ph') ? 'tag' : 'emo';
+      span.textContent = img.dataset.emoji || '🎁'; img.replaceWith(span);
+      const note = box.querySelector('.ph-note'); if (note) note.remove();
+    }, true);
     const sf = $('#site-search');
     if (sf) sf.addEventListener('submit', (e) => { e.preventDefault(); clearTimeout(searchTimer); runSearch($('#q').value); if (window.matchMedia && matchMedia('(max-width: 760px)').matches) $('#q').blur(); });
     document.addEventListener('keydown', (e) => {
@@ -1472,7 +1648,7 @@
     document.addEventListener('click', (e) => {
       const m = $('#menu');
       if (!m.hidden && !e.target.closest('#menu') && !e.target.closest('[data-add]')) closeMenu(false);
-      const t = e.target.closest('[data-clear-filter],[data-clear-filters],[data-toggle-filters],[data-find-quick],[data-more-all],[data-browse-more],[data-to-top],[data-q-drop],[data-store-search],[data-open],[data-add],[data-star],[data-toggle-gift],[data-new-person],[data-new-person-for],[data-example],[data-view-list],[data-edit-person],[data-delete-person],[data-share],[data-print],[data-find-for],[data-custom],[data-status],[data-remove],[data-band],[data-interest],[data-pick-interest],[data-swatch],[data-more],[data-more-interests],[data-reset-find],[data-sort],[data-quick],[data-type],[data-types-toggle],[data-show-list],[data-add-pick],[data-pick-to],[data-new-person-pick],[data-pick-band],[data-picks-more],[data-picks-reset],[data-picks-goto],[data-picks-type],[data-close-drawer],[data-close-modal],[data-copy],[data-copy-text],[data-save-share],[data-backup],[data-restore],[data-download-backup],[data-undo],[data-rescrape],#rescrape-btn,#freshness,#theme-btn,#snow-btn,#reset-find,#prefs-toggle,#go-scrape,#save-go,#forget-token,#reload-data');
+      const t = e.target.closest('[data-clear-filter],[data-clear-filters],[data-toggle-filters],[data-find-quick],[data-more-all],[data-browse-more],[data-to-top],[data-q-drop],[data-store-search],[data-open],[data-add],[data-star],[data-toggle-gift],[data-new-person],[data-new-person-for],[data-example],[data-view-list],[data-edit-person],[data-delete-person],[data-share],[data-print],[data-find-for],[data-custom],[data-status],[data-remove],[data-band],[data-interest],[data-pick-interest],[data-swatch],[data-more],[data-more-interests],[data-reset-find],[data-sort],[data-quick],[data-type],[data-types-toggle],[data-show-list],[data-add-pick],[data-pick-to],[data-new-person-pick],[data-pick-band],[data-picks-more],[data-picks-reset],[data-picks-goto],[data-picks-type],[data-close-drawer],[data-close-modal],[data-copy],[data-copy-text],[data-save-share],[data-got],[data-native-share],[data-copy-shared],[data-note],[data-backup],[data-restore],[data-download-backup],[data-undo],[data-rescrape],#rescrape-btn,#freshness,#theme-btn,#snow-btn,#reset-find,#prefs-toggle,#go-scrape,#save-go,#forget-token,#reload-data');
       if (!t) return;
       const d = t.dataset;
       if (d.add !== undefined) { e.preventDefault(); e.stopPropagation(); const m2 = $('#menu'); if (!m2.hidden && menuTrigger === t) closeMenu(); else openAddMenu(d.add, t); return; }
@@ -1516,7 +1692,7 @@
         saveLists(); closeModal(); state.listView = null; toast(`Deleted ${p.name}`); refresh(); return;
       }
       if (d.share !== undefined) { shareModal(d.share, true); return; }
-      if (d.print !== undefined) { closeModal(); if (currentView() !== 'lists') { location.hash = '#lists'; } setTimeout(() => window.print(), 50); return; }
+      if (d.print !== undefined) { closeModal(); if (!['lists', 'shared'].includes(currentView())) { location.hash = '#lists'; } setTimeout(() => window.print(), 50); return; }
       if (d.findFor !== undefined) { const p = person(d.findFor); if (!p) return; state.find = profileOf(p); state.shown = FIND_STEP; saveFind(); location.hash = '#find'; return; }
       if (d.custom !== undefined) { customModal(d.custom); return; }
       if (d.status !== undefined) {
@@ -1546,6 +1722,10 @@
       if (d.copy !== undefined) { const inp = $(d.copy); copyText(inp.value).then((ok) => { t.textContent = ok ? 'Copied' : 'Select and copy'; if (!ok) inp.select(); }); return; }
       if (d.copyText !== undefined) { const p = person(d.copyText); const hide = ($('#share-hide') || {}).checked; copyText(listText(p, hide)).then((ok) => { t.textContent = ok ? 'Copied' : 'Copy failed'; }); return; }
       if (d.saveShare !== undefined) { saveShared(d.saveShare); return; }
+      if (d.got !== undefined) { toggleGot(d.got); return; }
+      if (d.note !== undefined) { const [pid, u] = d.note.split('|'); noteModal(pid, u); return; }
+      if (d.copyShared !== undefined) { if (SHARED.obj) copyText(sharedText(SHARED.obj)).then((ok) => { t.textContent = ok ? 'Copied' : 'Copy failed'; }); return; }
+      if (d.nativeShare !== undefined) { navigator.share({ title: shareLink.title, text: `${shareLink.title}, with a photo, price and store link for each gift`, url: shareLink.link }).catch(() => {}); return; }
       if (d.backup !== undefined || d.restore !== undefined) { backupModal(); return; }
       if (d.downloadBackup !== undefined) { downloadBackup(); return; }
       if (d.undo !== undefined) { const u = toastUndo; $('#toast').hidden = true; toastUndo = null; if (u) u(); return; }
@@ -1571,6 +1751,12 @@
         closeModal();
         if (!f.dataset.id && currentView() === 'lists') { state.listView = p.id; store.set('listView', p.id); }
         refresh(); return;
+      }
+      if (f.id === 'note-form') {
+        e.preventDefault();
+        const [pid, u] = f.dataset.for.split('|'); const p = person(pid); const x = p && p.items.find((y) => y.uid === u);
+        if (x) { x.note = $('#nf-note').value.trim().slice(0, 300); saveLists(); }
+        closeModal(); toast(x && x.note ? 'Note saved' : 'Note removed'); refresh(); return;
       }
       if (f.id === 'custom-form') {
         e.preventDefault();
@@ -1634,12 +1820,6 @@
     $('#drawer-backdrop').addEventListener('click', closeDrawer);
     $('#modal-backdrop').addEventListener('click', (e) => { if (e.target.id === 'modal-backdrop') closeModal(); });
   }
-  async function openShareFromHash() {
-    const code = location.hash.slice('#share='.length);
-    history.replaceState(null, '', location.pathname + location.search + '#lists');
-    route();
-    try { sharedModal(await decodeShare(code)); } catch (e) { toast(`That share link couldn't be read (${e.message}).`); }
-  }
   async function reloadData() {
     try {
       const picksReq = fetch(`data/store-picks.json?ts=${Date.now()}`, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
@@ -1661,7 +1841,7 @@
     RET = DATA.retailers || {}; INT = DATA.interests || {};
     TYPES = DATA.types || {}; HOT = DATA.hot_lists || {}; CATS = DATA.categories || {};
     ITEMS = DATA.items.concat(pickItems()); BYID = Object.fromEntries(ITEMS.map((it) => [it.id, it]));
-    ITEMS.forEach(prepItem);
+    ITEMS.forEach(prepItem); ITEMS.forEach((it) => { it.photo = itemPhoto(it); });
     if (state.browse.type && !TYPES[state.browse.type] && !CATS[state.browse.type.replace(/^cat:/, '')]) state.browse.type = '';
     state.find.interests = state.find.interests.filter((i) => INT[i]);
     if (state.find.who && !person(state.find.who)) state.find.who = '';
@@ -1685,7 +1865,6 @@
       return;
     }
     boot(false);
-    if (location.hash.startsWith('#share=')) openShareFromHash();
   }
   init();
 })();

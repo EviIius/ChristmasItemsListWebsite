@@ -25,7 +25,7 @@ const context = vm.createContext({
   window: { SITE_CONFIG: { repo: 'EviIius/ChristmasItemsListWebsite', christmas: { month: 12, day: 25 } }, matchMedia: () => ({ matches: false }), addEventListener() {} },
   document: { querySelector: element, querySelectorAll: () => [], documentElement: { style: { setProperty() {} }, dataset: {} }, addEventListener() {}, activeElement: null, hidden: false },
   localStorage: { getItem: (k) => (storage.has(k) ? storage.get(k) : null), setItem: (k, v) => storage.set(k, String(v)), removeItem: (k) => storage.delete(k) },
-  location: { hash: '', href: 'https://eviiius.github.io/ChristmasItemsListWebsite/', pathname: '/ChristmasItemsListWebsite/', search: '' },
+  location: { hash: '', href: 'https://eviiius.github.io/ChristmasItemsListWebsite/', origin: 'https://eviiius.github.io', pathname: '/ChristmasItemsListWebsite/', search: '' },
   history: { replaceState() {} },
   matchMedia: () => ({ matches: false }), innerWidth: 1200, innerHeight: 800,
   console, setTimeout, clearTimeout, TextEncoder, TextDecoder, Blob, Response, btoa, atob, URL,
@@ -36,13 +36,14 @@ assert(source.includes('  init();\n})();'), 'test hook must replace the startup 
 vm.runInContext(source.replace('  init();\n})();', `
   globalThis.app = {
     load(d) { DATA = d; boot(true); },
-    state, findResults, sharedModal, scoreGift, priceInfo, dealInfo, ageFit, ageText, ageLabel, normalizeLists, addPerson, addGift, removeGift,
+    state, findResults, sharedHtml, sharedRows, renderShared, saveShared, toggleGot, shareModal, noteModal, tile, pickCard, scoreGift, priceInfo, dealInfo, ageFit, ageText, ageLabel, normalizeLists, addPerson, addGift, removeGift,
     toggleShortlist, addCustom, totals, itemInfo, sharePayload, encodeShare, decodeShare, fromShare, listText, searchUrl, keyDates,
     christmasDate, daysUntil, interestNames, giftCard, renderFindPrefs, renderFind, renderLists, renderBrowse, renderFilters, renderDeals,
     renderStores, openDrawer, statusHtml, renderFreshness, profileOf, person, onLists,
     prepPicks, pickRows, renderPicksPanel, renderPicks, renderStoreHot, togglePick, offerStatus, get picks() { return PICKS; },
     get items() { return ITEMS; }, get byId() { return BYID; },
     parseQuery, matchWords, browseRows, loadMore, setMoreRow, get findView() { return FIND_RES; }, get browseView() { return BROWSE_RES; },
+    setShared(obj) { SHARED = { code: 'test', obj, err: null }; },
   };
 })();`), context);
 
@@ -196,8 +197,8 @@ const asTypical = (id) => {
     assert(app.statusHtml().includes('exact product pages'));
     app.state.lists = app.normalizeLists(null); app.state.listView = null; app.renderLists();
     assert(element('#list-main').innerHTML.includes('Start from an example'));
-    app.sharedModal({ v: 1, n: 'Eve', items: [{ n: 'Prize', u: 'javascript:alert(1)' }] });
-    assert(element('#modal').innerHTML.includes('Prize') && !element('#modal').innerHTML.includes('javascript:'), 'no script links in the shared-list preview');
+    const evilShared = app.sharedHtml({ v: 1, n: 'Eve', items: [{ n: 'Prize', u: 'javascript:alert(1)', ph: 'walmart:x"><b>', s: '"><i>' }] });
+    assert(evilShared.includes('Prize') && !evilShared.includes('javascript:') && !evilShared.includes('"><b>') && !evilShared.includes('"><i>'), 'no script links or stray markup in a list someone sent');
   });
   await check('product types: every gift has one, and Browse filters by type, group and hot list', () => {
     const types = data.types; const cats = data.categories;
@@ -433,6 +434,84 @@ const asTypical = (id) => {
     assert.equal(first[2], '333|1049.00||M|||||Marketplace Doll');
     assert(first.slice(1, 4).every((l) => l.split('|').length === 9));
     assert.deepEqual(vm.runInContext("walmartCapture('wm-deals-toys')", ctx).split('\n').slice(1), ['=111', '=333', '=444', '#esrb 444:M'], 'products are saved once, then repeated by id');
+  });
+  await check("store photos: gifts and store picks show the store's own photo, checked before use", () => {
+    app.prepPicks(JSON.parse(JSON.stringify(picksData))); app.load(JSON.parse(JSON.stringify(data)));
+    const withPhoto = app.items.filter((it) => it.photo);
+    assert(withPhoto.length >= 1500, `${withPhoto.length} gifts with photos`);
+    const throne = app.byId['lego-sw-throne-room'];
+    const tt = app.tile(throne);
+    assert(tt.includes('src="https://www.lego.com/cdn/cs/set/assets/bltf279b650862f34ce/75427_Prod.png?format=jpg&amp;width=320"') && tt.includes('referrerpolicy="no-referrer"') && tt.includes('loading="lazy"'), tt);
+    const ex = app.items.find((it) => it.photo && it.photo.ex);
+    app.openDrawer(ex.id); assert(element('#drawer').innerHTML.includes('Example photo'), 'a photo of one version of a gift idea says so');
+    const wm = app.picks.items.find((x) => x.photo && x.store === 'walmart');
+    assert(app.pickCard(wm).includes(`i5.walmartimages.com/asr/${wm.img}.jpeg?odnHeight=320&amp;odnWidth=320`));
+    const five = app.picks.items.find((x) => x.store === 'fivebelow');
+    assert(!five || (!five.photo && app.pickCard(five).includes('<span class="tag">')), 'a pick without a photo shows its emoji');
+    app.state.browse = Object.assign(app.state.browse, { q: '', type: '', interest: '', age: '', max: '', store: '', hot: false, sale: false, live: false, list: '', sort: 'match', shown: 60 });
+    app.renderBrowse(); assert(element('#browse-table tbody').innerHTML.includes('<span class="thumb has-photo"'), 'Browse rows show photos');
+    const bad = JSON.parse(JSON.stringify(picksData));
+    bad.stores.walmart.img = 'javascript:alert(1)//{id}'; bad.items[0].img = '"><script>';
+    app.prepPicks(bad);
+    assert(!app.picks.items.some((x) => x.photo && x.store === 'walmart') && !app.picks.items[0].photo, 'photo addresses and ids are checked');
+    app.prepPicks(JSON.parse(JSON.stringify(picksData))); app.load(JSON.parse(JSON.stringify(data)));
+  });
+  await check('lists keep a copy of each gift, so names, links and photos survive when a deal leaves the data', () => {
+    app.state.lists = app.normalizeLists(null);
+    const me = app.addPerson({ name: 'Jake', age: 25, interests: ['tech'] });
+    const idea = app.items.find((it) => it.pick && it.photo && it.offers.length === 1);
+    assert(app.addGift(me.id, idea.id) && app.addGift(me.id, 'lego-sw-throne-room'));
+    const sp = app.picks.items.find((x) => x.photo && x.store === 'gamestop' && !x.gift);
+    app.togglePick(sp.id, me.id);
+    app.state.lists = app.normalizeLists(JSON.parse(JSON.stringify(app.state.lists)));  // as if reloaded from storage
+    const saved = app.state.lists.people[0].items;
+    assert(saved.length === 3 && saved.every((x) => x.name && /^https:/.test(x.url) && x.ph), JSON.stringify(saved));
+    assert(saved.every((x) => app.itemInfo(x).photo), 'every item on the list has a photo');
+    const fewer = JSON.parse(JSON.stringify(picksData)); fewer.items = fewer.items.filter((x) => !idea.offers.some((o) => o.url === x.url));
+    app.prepPicks(fewer); app.load(JSON.parse(JSON.stringify(data)));
+    assert(!app.byId[idea.id], 'the deal left the data');
+    const gone = app.itemInfo(saved[0]);
+    assert(gone.name === idea.name && gone.url === saved[0].url && gone.photo && gone.kind === 'saved', JSON.stringify(gone));
+    app.state.listView = me.id; app.renderLists();
+    const lm = element('#list-main').innerHTML;
+    assert(lm.includes(idea.name) && (lm.match(/<span class="mini has-photo"/g) || []).length === 3 && lm.includes('Send list') && lm.includes('data-note='), 'list rows show photos, a note button and Send list');
+    app.prepPicks(JSON.parse(JSON.stringify(picksData))); app.load(JSON.parse(JSON.stringify(data)));
+  });
+  await check('a sent list opens as its own page with photos, store buttons, notes and checkmarks', async () => {
+    const me = app.state.lists.people.find((p) => p.name === 'Jake');
+    me.items[1].note = 'The A-Wing one!'; me.items[0].status = 'bought';
+    await app.shareModal(me.id, true);
+    const m = element('#modal').innerHTML;
+    assert(m.includes('value="https://eviiius.github.io/ChristmasItemsListWebsite/#share=z') && m.includes('sms:?&amp;body=') && m.includes('mailto:?subject=') && m.includes("See what they'll see") && m.includes('No app or account needed'), m);
+    app.noteModal(me.id, me.items[1].uid); assert(element('#modal').innerHTML.includes('The A-Wing one!'));
+    const obj = await app.decodeShare(await app.encodeShare(app.sharePayload(me, true)));
+    assert(obj.items.length === 3 && obj.items.every((o) => o.n && /^https:/.test(o.u) && o.ph && !o.st), JSON.stringify(obj.items));
+    const html = app.sharedHtml(obj);
+    assert(html.includes("Jake's Christmas list") && (html.match(/<li class="sgift/g) || []).length === 3, 'one card per gift');
+    assert((html.match(/<img class="ph"/g) || []).length === 3 && html.includes('Open at ') && html.includes("Jake's note:</b> The A-Wing one!"), html.slice(0, 600));
+    app.setShared(obj); app.toggleGot(app.sharedRows(obj)[0].gk);
+    assert(app.sharedHtml(obj).includes('1 of 3 bought') && app.sharedHtml(Object.assign({}, obj, { d: '2026-12-01' })).includes('1 of 3 bought'), 'checkmarks stay on this device and carry over to a newer link');
+    const old = app.sharedHtml({ v: 1, n: 'Mia', items: [{ g: 'needoh-nice-cube' }, { n: 'Thing', u: 'https://www.target.com/p/x/-/A-1', p: 5 }] });
+    assert(old.includes(app.byId['needoh-nice-cube'].name) && old.includes('Thing') && old.includes('Open at Target'), 'links made before this change still open');
+    context.location.hash = '#share=' + (await app.encodeShare(app.sharePayload(me, true))); app.renderShared();
+    await new Promise((r) => setTimeout(r, 50));
+    assert(element('#shared').innerHTML.includes("Jake's Christmas list"), 'a #share= link renders the shared page');
+    context.location.hash = '#share=jbroken'; app.renderShared(); await new Promise((r) => setTimeout(r, 50));
+    assert(element('#shared').innerHTML.includes("didn't open"));
+    app.setShared(obj); app.saveShared('new');
+    const copy = app.state.lists.people.find((p) => p.name === 'Jake (shared)');
+    assert(copy && copy.items.length === 3 && copy.items.every((x) => x.name && x.ph && x.url), 'saving a sent list keeps every gift');
+    context.location.hash = '';
+  });
+  await check('store picks from Black Friday and Cyber Monday pages are labeled and can be shown on their own', () => {
+    const bf = app.picks.items.filter((x) => (x.lists || []).some((l) => /black-friday|^gs-bf-/.test(l)));
+    const cm = app.picks.items.filter((x) => (x.lists || []).some((l) => /cyber-monday|^wm-cm-/.test(l)));
+    assert(bf.length >= 20 && cm.length >= 20, `${bf.length} Black Friday, ${cm.length} Cyber Monday`);
+    assert(app.pickCard(cm[0]).includes('Cyber Monday deal'));
+    Object.assign(app.state.picks, { band: '', type: '', show: 'event:cm', max: '', sort: 'rank', q: '', shown: 24 });
+    assert(app.pickRows(app.state.picks).length === cm.length);
+    app.renderPicksPanel(); assert(element('#picks-filters').innerHTML.includes('value="event:bf"'));
+    Object.assign(app.state.picks, { show: '' });
   });
   await check('names are escaped everywhere they are shown', () => {
     app.state.lists = app.normalizeLists(null);
