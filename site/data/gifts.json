@@ -1,48 +1,29 @@
 {
- "generated_at": "2026-11-27T23:45:56Z",
+ "generated_at": "2026-11-28T04:55:32Z",
  "prices_as_of": "2026-11-22T19:20:23Z",
- "live_prices": 32,
+ "live_prices": 33,
  "scrape": {
-  "started": "2026-11-27T23:45:24Z",
-  "finished": "2026-11-27T23:45:56Z",
-  "mode": "live",
+  "started": "2026-11-28T04:55:32Z",
+  "finished": "2026-11-28T04:55:32Z",
+  "mode": "manual",
   "runner": "github-actions",
-  "ok": 5,
-  "failed": 18,
+  "ok": 15,
+  "failed": 0,
   "tracked_links": 199,
   "by_retailer": {
-   "bestbuy": {
-    "ok": 0,
-    "failed": 17,
-    "blocked": 0
-   },
    "lego": {
-    "ok": 0,
-    "failed": 1,
-    "blocked": 1
-   },
-   "playstation": {
     "ok": 1,
     "failed": 0,
     "blocked": 0
    },
-   "tonies": {
-    "ok": 2,
-    "failed": 0,
-    "blocked": 0
-   },
-   "gamestop": {
-    "ok": 2,
+   "walmart": {
+    "ok": 14,
     "failed": 0,
     "blocked": 0
    }
   },
   "notes": [
-   "Amazon links (101) open the product but aren't price-checked: Amazon doesn't allow automated price checks (its pages say automated and AI-agent access breaks its Conditions of Use), so Amazon links open the product but aren't price-checked.",
-   "Target links (41) open the product but aren't price-checked: Target's product pages no longer include prices (they load separately in the browser), so Target links open the product but aren't price-checked.",
-   "Walmart links (34) are priced from a browser on a home computer, not here: Walmart shows a bot check to GitHub's servers, so Walmart prices, best sellers and deals are read in a browser on a home computer and imported with scraper/store_picks.py.",
-   "Best Buy didn't give this machine any prices, most likely because it blocks automated traffic from cloud servers. Last known prices kept. Running the scraper on a home computer usually helps (see README).",
-   "LEGO.com didn't give this machine any prices, most likely because it blocks automated traffic from cloud servers. Last known prices kept. Running the scraper on a home computer usually helps (see README)."
+   "Merged 15 LEGO.com and Walmart price(s) read in a browser on 2026-11-27 (scraper/captures/)."
   ],
   "api": false
  },
@@ -1144,7 +1125,7 @@
      "retailer_name": "Walmart",
      "url": "https://www.walmart.com/ip/17153956345",
      "sku": "17153956345",
-     "checked_at": "2026-11-22T19:20:23Z",
+     "checked_at": "2026-11-27T20:09:05Z",
      "in_stock": true,
      "name": "Fisher-Price Little People My Mario Adventure Playset, Musical Toddler Toy…",
      "on_sale": true,
@@ -1152,7 +1133,7 @@
      "rating": 4.7,
      "regular": 54.99,
      "reviews": 384,
-     "source": "Walmart.com, read in a browser",
+     "source": "walmart.com, read in a browser",
      "stale": false,
      "verification_method": "browser"
     }
@@ -1165,11 +1146,15 @@
    "price_retailer": "walmart",
    "price_url": "https://www.walmart.com/ip/17153956345",
    "price_status": "live",
-   "price_checked_at": "2026-11-22T19:20:23Z",
+   "price_checked_at": "2026-11-27T20:09:05Z",
    "regular": 54.99,
    "history": [
     [
      "2026-11-22",
+     44.97
+    ],
+    [
+     "2026-11-27",
      44.97
     ]
    ]
@@ -1972,7 +1957,7 @@
      "retailer_name": "Walmart",
      "url": "https://www.walmart.com/ip/18657315988",
      "sku": "18657315988",
-     "checked_at": "2026-11-23T07:18:20Z",
+     "checked_at": "2026-11-27T20:09:05Z",
      "in_stock": true,
      "name": "PAW Patrol: The Dino Movie Megasaurus Dino Vehicle, Ages 3+",
      "on_sale": true,
@@ -2005,7 +1990,7 @@
    "price_retailer": "walmart",
    "price_url": "https://www.walmart.com/ip/18657315988",
    "price_status": "live",
-   "price_checked_at": "2026-11-23T07:18:20Z",
+   "price_checked_at": "2026-11-27T20:09:05Z",
    "regular": 64.99,
    "history": [
     [
@@ -2014,6 +1999,10 @@
     ],
     [
      "2026-11-23",
+     49.97
+    ],
+    [
+     "2026-11-27",
      49.97
     ]
    ]
@@ -2520,13 +2509,13 @@
      "retailer_name": "Walmart",
      "url": "https://www.walmart.com/ip/19170773004",
      "sku": "19170773004",
-     "checked_at": "2026-11-22T19:20:23Z",
+     "checked_at": "2026-11-27T20:09:05Z",
      "in_stock": true,
      "name": "Primal Hatch Megalodon Hatching Egg Shark Toy for Kids 5 and up",
      "price": 49.97,
      "rating": 4.7,
      "reviews": 76,
-     "source": "Walmart.com, read in a browser",
+     "source": "walmart.com, read in a browser",
      "stale": false,
      "verification_method": "browser"
     }
@@ -2541,10 +2530,14 @@
    "price_retailer": "walmart",
    "price_url": "https://www.walmart.com/ip/19170773004",
    "price_status": "live",
-   "price_checked_at": "2026-11-22T19:20:23Z",
+   "price_checked_at": "2026-11-27T20:09:05Z",
    "history": [
     [
      "2026-11-22",
+     49.97
+    ],
+    [
+     "2026-11-27",
      49.97
     ]
    ]
@@ -2688,7 +2681,7 @@
      "url": "https://www.walmart.com/ip/19351951484",
      "sku": "19351951484",
      "label": "Zoey",
-     "checked_at": "2026-11-23T07:18:20Z",
+     "checked_at": "2026-11-27T20:09:05Z",
      "in_stock": true,
      "name": "KPop Demon Hunters HUNTR/X Zoey Golden Singing Doll in Removable Outfit & 5…",
      "price": 31.98,
@@ -2713,11 +2706,11 @@
      "url": "https://www.walmart.com/ip/19392303648",
      "sku": "19392303648",
      "label": "Mira",
-     "checked_at": "2026-11-23T12:35:15Z",
+     "checked_at": "2026-11-27T20:09:05Z",
      "in_stock": true,
      "marketplace_only": true,
      "name": "KPop Demon Hunters HUNTR/X Mira Golden Singing Doll in Removable Outfit",
-     "price": 88.99,
+     "price": 31.98,
      "rating": 4.7,
      "reviews": 717,
      "seller": "a marketplace seller",
@@ -2736,7 +2729,7 @@
    "price_retailer": "walmart",
    "price_url": "https://www.walmart.com/ip/19351951484",
    "price_status": "live",
-   "price_checked_at": "2026-11-23T07:18:20Z",
+   "price_checked_at": "2026-11-27T20:09:05Z",
    "history": [
     [
      "2026-11-22",
@@ -2744,6 +2737,10 @@
     ],
     [
      "2026-11-23",
+     31.98
+    ],
+    [
+     "2026-11-27",
      31.98
     ]
    ]
@@ -3087,13 +3084,13 @@
      "retailer_name": "Walmart",
      "url": "https://www.walmart.com/ip/18879462675",
      "sku": "18879462675",
-     "checked_at": "2026-11-22T19:20:23Z",
+     "checked_at": "2026-11-27T20:09:05Z",
      "in_stock": true,
      "name": "CrunchLabs by Mark Rober, Crunchinator, Crunch, Smoosh, Squeeze & Pop Objects…",
      "price": 34.97,
      "rating": 4.6,
      "reviews": 198,
-     "source": "Walmart.com, read in a browser",
+     "source": "walmart.com, read in a browser",
      "stale": false,
      "verification_method": "browser"
     }
@@ -3108,10 +3105,14 @@
    "price_retailer": "walmart",
    "price_url": "https://www.walmart.com/ip/18879462675",
    "price_status": "live",
-   "price_checked_at": "2026-11-22T19:20:23Z",
+   "price_checked_at": "2026-11-27T20:09:05Z",
    "history": [
     [
      "2026-11-22",
+     34.97
+    ],
+    [
+     "2026-11-27",
      34.97
     ]
    ]
@@ -3374,7 +3375,7 @@
      "retailer_name": "Walmart",
      "url": "https://www.walmart.com/ip/18852401509",
      "sku": "18852401509",
-     "checked_at": "2026-11-22T19:20:23Z",
+     "checked_at": "2026-11-27T20:09:05Z",
      "in_stock": true,
      "name": "Gui Gui Mega Slime Haul, 50+ Pieces, 5 Scented Slimes Cloud, Clear, Butter…",
      "on_sale": true,
@@ -3382,7 +3383,7 @@
      "rating": 4.6,
      "regular": 29.99,
      "reviews": 453,
-     "source": "Walmart.com, read in a browser",
+     "source": "walmart.com, read in a browser",
      "stale": false,
      "verification_method": "browser"
     }
@@ -3398,11 +3399,15 @@
    "price_retailer": "walmart",
    "price_url": "https://www.walmart.com/ip/18852401509",
    "price_status": "live",
-   "price_checked_at": "2026-11-22T19:20:23Z",
+   "price_checked_at": "2026-11-27T20:09:05Z",
    "regular": 29.99,
    "history": [
     [
      "2026-11-22",
+     20.99
+    ],
+    [
+     "2026-11-27",
      20.99
     ]
    ]
@@ -3767,11 +3772,13 @@
      "retailer_name": "LEGO.com",
      "url": "https://www.lego.com/en-us/product/smart-play-training-house-with-pikachu-72164",
      "sku": "72164",
-     "blocked": true,
-     "error": "HTTP 403 with a bot-check page",
-     "last_attempt": "2026-11-27T23:45:49Z",
-     "on_sale": false,
-     "stale": true
+     "checked_at": "2026-11-27T20:42:00Z",
+     "in_stock": true,
+     "name": "LEGO Pokémon SMART Play: Training House with Pikachu",
+     "price": 69.99,
+     "source": "lego.com, read in a browser",
+     "stale": false,
+     "verification_method": "browser"
     },
     {
      "retailer": "amazon",
@@ -3787,8 +3794,17 @@
     "amazon",
     "walmart"
    ],
-   "price_status": "typical",
-   "history": []
+   "price": 69.99,
+   "price_retailer": "lego",
+   "price_url": "https://www.lego.com/en-us/product/smart-play-training-house-with-pikachu-72164",
+   "price_status": "live",
+   "price_checked_at": "2026-11-27T20:42:00Z",
+   "history": [
+    [
+     "2026-11-27",
+     69.99
+    ]
+   ]
   },
   {
    "id": "lego-sw-throne-room",
@@ -4157,17 +4173,17 @@
      "retailer_name": "Walmart",
      "url": "https://www.walmart.com/ip/20640569221",
      "sku": "20640569221",
-     "checked_at": "2026-11-22T19:20:23Z",
-     "in_stock": false,
+     "checked_at": "2026-11-27T20:09:05Z",
+     "in_stock": true,
      "marketplace_only": true,
      "name": "Pokemon TCG: 30th Celebration Elite Trainer Box",
      "on_sale": true,
-     "price": 119.46,
+     "price": 115.96,
      "rating": 4.8,
      "regular": 237.98,
-     "reviews": 22764,
+     "reviews": 962,
      "seller": "a marketplace seller",
-     "source": "Walmart.com, read in a browser",
+     "source": "walmart.com, read in a browser",
      "stale": false,
      "verification_method": "browser"
     }
@@ -4314,13 +4330,13 @@
      "retailer_name": "Walmart",
      "url": "https://www.walmart.com/ip/18859357645",
      "sku": "18859357645",
-     "checked_at": "2026-11-22T19:20:23Z",
+     "checked_at": "2026-11-27T20:09:05Z",
      "in_stock": true,
      "name": "MGA's Miniverse Real Music Record Player Mini Collectibles, Mini Playable…",
      "price": 21.88,
      "rating": 4.5,
      "reviews": 350,
-     "source": "Walmart.com, read in a browser",
+     "source": "walmart.com, read in a browser",
      "stale": false,
      "verification_method": "browser"
     }
@@ -4333,10 +4349,14 @@
    "price_retailer": "walmart",
    "price_url": "https://www.walmart.com/ip/18859357645",
    "price_status": "live",
-   "price_checked_at": "2026-11-22T19:20:23Z",
+   "price_checked_at": "2026-11-27T20:09:05Z",
    "history": [
     [
      "2026-11-22",
+     21.88
+    ],
+    [
+     "2026-11-27",
      21.88
     ]
    ]
@@ -5957,7 +5977,7 @@
      "url": "https://www.walmart.com/ip/Grand-Theft-Auto-VI-PlayStation-5-Game/20482917228",
      "sku": "20482917228",
      "label": "PS5",
-     "checked_at": "2026-11-23T07:18:20Z",
+     "checked_at": "2026-11-27T20:09:05Z",
      "in_stock": true,
      "name": "Grand Theft Auto VI, PlayStation 5 Game, (Code in Box)",
      "price": 79.99,
@@ -5990,7 +6010,7 @@
    "price_retailer": "walmart",
    "price_url": "https://www.walmart.com/ip/Grand-Theft-Auto-VI-PlayStation-5-Game/20482917228",
    "price_status": "live",
-   "price_checked_at": "2026-11-23T07:18:20Z",
+   "price_checked_at": "2026-11-27T20:09:05Z",
    "history": [
     [
      "2026-11-21",
@@ -6002,6 +6022,10 @@
     ],
     [
      "2026-11-23",
+     79.99
+    ],
+    [
+     "2026-11-27",
      79.99
     ]
    ]
@@ -8354,15 +8378,15 @@
      "retailer_name": "Walmart",
      "url": "https://www.walmart.com/ip/19265274356",
      "sku": "19265274356",
-     "checked_at": "2026-11-22T19:20:23Z",
+     "checked_at": "2026-11-27T20:09:05Z",
      "in_stock": true,
      "name": "Disney 6V Minnie Roadster Ride-On by Dynacraft Perfect for Ages 3 and up…",
      "on_sale": true,
      "price": 98.0,
-     "rating": 4.7,
+     "rating": 4.6,
      "regular": 148.0,
-     "reviews": 81,
-     "source": "Walmart.com, read in a browser",
+     "reviews": 97,
+     "source": "walmart.com, read in a browser",
      "stale": false,
      "verification_method": "browser"
     }
@@ -8371,11 +8395,15 @@
    "price_retailer": "walmart",
    "price_url": "https://www.walmart.com/ip/19265274356",
    "price_status": "live",
-   "price_checked_at": "2026-11-22T19:20:23Z",
+   "price_checked_at": "2026-11-27T20:09:05Z",
    "regular": 148.0,
    "history": [
     [
      "2026-11-22",
+     98.0
+    ],
+    [
+     "2026-11-27",
      98.0
     ]
    ]
@@ -9354,10 +9382,10 @@
      "retailer_name": "Walmart",
      "url": "https://www.walmart.com/ip/4029710",
      "sku": "4029710",
-     "checked_at": "2026-11-23T07:18:20Z",
+     "checked_at": "2026-11-27T20:09:05Z",
      "in_stock": true,
      "name": "Hot Wheels Set of 20 Toy Sports & Race Cars in 1:64 Scale, Collectible…",
-     "price": 23.94,
+     "price": 23.98,
      "rating": 4.7,
      "reviews": 4633,
      "source": "walmart.com, read in a browser",
@@ -9365,11 +9393,11 @@
      "verification_method": "browser"
     }
    ],
-   "price": 23.94,
+   "price": 23.98,
    "price_retailer": "walmart",
    "price_url": "https://www.walmart.com/ip/4029710",
    "price_status": "live",
-   "price_checked_at": "2026-11-23T07:18:20Z",
+   "price_checked_at": "2026-11-27T20:09:05Z",
    "history": [
     [
      "2026-11-22",
@@ -9378,6 +9406,10 @@
     [
      "2026-11-23",
      23.94
+    ],
+    [
+     "2026-11-27",
+     23.98
     ]
    ]
   },
@@ -9593,7 +9625,7 @@
      "retailer_name": "Walmart",
      "url": "https://www.walmart.com/ip/19434906588",
      "sku": "19434906588",
-     "checked_at": "2026-11-23T12:35:15Z",
+     "checked_at": "2026-11-27T20:09:05Z",
      "in_stock": true,
      "name": "Nerf Rumi's Four Tiger Sword KPop Demon Hunters Foam Blade 24 inches, Ho",
      "price": 14.97,
@@ -9608,7 +9640,7 @@
    "price_retailer": "walmart",
    "price_url": "https://www.walmart.com/ip/19434906588",
    "price_status": "live",
-   "price_checked_at": "2026-11-23T12:35:15Z",
+   "price_checked_at": "2026-11-27T20:09:05Z",
    "history": [
     [
      "2026-11-22",
@@ -9616,6 +9648,10 @@
     ],
     [
      "2026-11-23",
+     14.97
+    ],
+    [
+     "2026-11-27",
      14.97
     ]
    ]
@@ -10099,22 +10135,25 @@
      "retailer_name": "Walmart",
      "url": "https://www.walmart.com/ip/19210859223",
      "sku": "19210859223",
-     "checked_at": "2026-11-23T12:35:15Z",
+     "checked_at": "2026-11-27T20:09:05Z",
      "in_stock": true,
      "name": "Nook Nooks Series 1 Blind Box Figurines by STARBOX - Surprise Mini Colle",
-     "price": 12.97,
+     "on_sale": true,
+     "price": 9.09,
      "rating": 4.6,
+     "regular": 12.97,
      "reviews": 341,
      "source": "walmart.com, read in a browser",
      "stale": false,
      "verification_method": "browser"
     }
    ],
-   "price": 12.97,
+   "price": 9.09,
    "price_retailer": "walmart",
    "price_url": "https://www.walmart.com/ip/19210859223",
    "price_status": "live",
-   "price_checked_at": "2026-11-23T12:35:15Z",
+   "price_checked_at": "2026-11-27T20:09:05Z",
+   "regular": 12.97,
    "history": [
     [
      "2026-11-22",
@@ -10123,6 +10162,10 @@
     [
      "2026-11-23",
      12.97
+    ],
+    [
+     "2026-11-27",
+     9.09
     ]
    ]
   },
